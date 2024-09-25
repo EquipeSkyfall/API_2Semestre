@@ -29,6 +29,8 @@
 <img src="https://img.shields.io/badge/Photoshop-239120?style=for-the-badge&logo=adobe-photoshop&logoColor=black&color=2271B3">
 <img src="https://img.shields.io/badge/Canva-239120?&style=for-the-badge&logo=canva&logoColor=black&color=2271B3">
 <img src="https://img.shields.io/badge/Microsoft Excel-000000?style=for-the-badge&logo=microsoft-excel&logoColor=black&color=2271B3">
+<img src="https://img.shields.io/badge/html5-000000?style=for-the-badge&logo=html5&logoColor=black&color=2271B3">
+<img src="https://img.shields.io/badge/css3-000000?style=for-the-badge&logo=css3&logoColor=black&color=2271B3">
 
 
 </div>
