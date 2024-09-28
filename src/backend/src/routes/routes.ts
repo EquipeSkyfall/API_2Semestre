@@ -33,9 +33,13 @@ router
   .post(productController.createProduct);
 
 router
-  .route('/products/:id')
+  .route('/products/id')
   .get(productController.getProductById)
   .patch(productController.updateProduct)
   .delete(productController.deleteProduct);
 
+  router.route('/products/search').get((req, res, next) => {
+    console.log('Search route hit:', req.query); // Log the query parameters
+    next(); // Pass control to the next handler (the controller method)
+}, productController.searchProductName);
 export default router

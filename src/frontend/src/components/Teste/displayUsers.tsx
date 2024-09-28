@@ -1,31 +1,38 @@
-import React from "react";
-import FetchAllUsers from "../../Hooks/Users/fetchAllUsersHook"; // Adjust the path as necessary
+// src/components/SearchBar2.tsx
+import React, { useState } from 'react';
+import FetchAllProducts from '../../Hooks/Products/fetchAllProductsHook'; // Hook to fetch all products
 
-const DisplayAllUsers: React.FC = () => {
-  const { data, error, isLoading, refetch } = FetchAllUsers();
+const SearchBar2: React.FC = () => {
+    const { data: products } = FetchAllProducts(); // Fetch all products
+    const [searchTerm, setSearchTerm] = useState<string>(''); // State for search term
 
-  if (isLoading) return <div>Loading...</div>; // Consider adding a spinner or skeleton
-
-  if (error) {
-    return (
-      <div role="alert">
-        <p>Error: {error.message}</p>
-        <button onClick={() => refetch()}>Retry</button> {/* Retry button for better UX */}
-      </div>
+    // Filter products based on search term
+    const filteredProducts = products?.filter(product => 
+        product.product_name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }
 
-  return (
-    <div>
-      {data?.map(user => (
-        <div key={user.id} className="user-card"> {/* You can style this div as needed */}
-          <p>Name: {user.name}</p>
-          <p>Email: {user.email}</p>
-          <p>Role: {user.role}</p>
+    return (
+        <div>
+            <h2>Search Products</h2>
+            <input
+                type="text"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+            />
+            <div>
+                {filteredProducts?.length ? (
+                    <ul>
+                        {filteredProducts.map(product => (
+                            <li key={product.id}>{product.product_name}</li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p>No products found</p>
+                )}
+            </div>
         </div>
-      ))}
-    </div>
-  );
+    );
 };
 
-export default DisplayAllUsers;
+export default SearchBar2;

@@ -11,6 +11,9 @@ import NavBar from './components/NavBar/index.tsx'
 // import ProductForm from './components/ProductForm/index.tsx'
 // import ProductsList from './components/ProductsList/index.tsx'
 import ProductsUpdateAndDelete from './components/ProductUpdateDeleteList/index.tsx'
+import SearchBar from './components/SearchBar/index.tsx'
+import SearchBar2 from './components/Teste/displayUsers.tsx'
+
 // import Teste from './teste/teste.tsx'
  {/* <UserForm /> */}
   {/* <ProductsList/> */}
@@ -21,6 +24,7 @@ createRoot(document.getElementById('root')!).render(
      <QueryClientProvider client={queryClient}>
     <Header></Header>
     <NavBar></NavBar>
+    
     <MainWrapper>
     {/* <ProductForm/> */}
      {/* <DisplayAllUsers/> */}
@@ -28,6 +32,7 @@ createRoot(document.getElementById('root')!).render(
    {/* <Teste/> */}
     </MainWrapper>
     <Footer></Footer>
+    {/* <SearchBar2/> */}
      </QueryClientProvider>
 
 )

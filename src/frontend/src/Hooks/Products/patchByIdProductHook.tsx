@@ -23,7 +23,7 @@ interface Product {
 const useUpdateProduct = () => {
     return useMutation<Product, Error, Product>({
         mutationFn: async (product: Product) => {
-            const { data } = await axios.patch<Product>(`http://127.0.0.1:3000/products/${product.id}`, product);
+            const { data } = await axios.patch<Product>(`http://127.0.0.1:3000/products/id?id=${product.id}`, product);
             return data;
         },
     });

@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { zodResolver } from '@hookform/resolvers/zod'; // Import zodResolver
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import FetchAllProducts from '../../Hooks/Products/fetchAllProductsHook'; // Fetch products hook
-import useUpdateProduct from '../../Hooks/Products/patchByIdProductHook'; // Update product hook
-import useDeleteProduct from '../../Hooks/Products/deleteProductByIdHook'; // Delete product 
-import { ProductSchema, productSchema } from '../ProductForm/ProductSchema/productSchema'; // Zod schema
-import Modal from '../Modal/index'; // Modal component
+import FetchAllProducts from '../../Hooks/Products/fetchAllProductsHook';
+import useUpdateProduct from '../../Hooks/Products/patchByIdProductHook';
+import useDeleteProduct from '../../Hooks/Products/deleteProductByIdHook';
+import { ProductSchema, productSchema } from '../ProductForm/ProductSchema/productSchema';
+import Modal from '../Modal/index';
 import ProductForm from '../ProductForm';
+import SearchBar from '../SearchBar';
+ // Import the SearchBar component
 
-// Extending the Product interface with the Zod schema
 interface Product extends ProductSchema {
     id: number;
     url_image?: string | null | undefined;
 }
 
 const ProductsUpdateAndDelete: React.FC = () => {
-    const { data: products, isLoading, isError, error, refetch } = FetchAllProducts(); // Fetching all products
-    const updateProductMutation = useUpdateProduct(); // Mutation for updating product
-    const deleteProductMutation = useDeleteProduct(); // Mutation for deleting product
-    const [editingProduct, setEditingProduct] = useState<Product | null>(null); // Holds the product to edit
-    const [isModalOpen, setIsModalOpen] = useState(false); // Controls modal state
+    const { data: products, isLoading, isError, error, refetch } = FetchAllProducts();
+    const updateProductMutation = useUpdateProduct();
+    const deleteProductMutation = useDeleteProduct();
+    const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string>(''); // State for search term
 
     // Open modal for editing product
     const handleEdit = (product: Product) => {
@@ -32,13 +34,13 @@ const ProductsUpdateAndDelete: React.FC = () => {
     // Handle updating product
     const handleUpdate = async (updatedProduct: Product) => {
         try {
-            await updateProductMutation.mutateAsync(updatedProduct);//Não liguem pra esse "erro", isso é só o TS sendo irritante
-            setIsModalOpen(false); // Close modal on success
-            refetch(); // Refetch products to update the list
-            setSuccessMessage('Product updated successfully!'); // Notify user of success
+            await updateProductMutation.mutateAsync(updatedProduct);
+            setIsModalOpen(false);
+            refetch();
+            setSuccessMessage('Product updated successfully!');
         } catch (error) {
-            const err = error as Error; // Type assertion
-            setErrorMessage(`Error updating product: ${err.message}`); // Notify user of error
+            const err = error as Error;
+            setErrorMessage(`Error updating product: ${err.message}`);
         }
     };
 
@@ -48,11 +50,11 @@ const ProductsUpdateAndDelete: React.FC = () => {
         if (confirmed) {
             try {
                 await deleteProductMutation.mutateAsync(id);
-                refetch(); // Update the product list after deletion
-                setSuccessMessage('Product deleted successfully!'); // Notify user of successful deletion
+                refetch();
+                setSuccessMessage('Product deleted successfully!');
             } catch (error) {
-                const err = error as Error; // Type assertion
-                alert(`Failed to delete product: ${err.message}`); // Notify user of error
+                const err = error as Error;
+                alert(`Failed to delete product: ${err.message}`);
             }
         }
     };
@@ -60,25 +62,34 @@ const ProductsUpdateAndDelete: React.FC = () => {
     if (isLoading) return <div>Loading...</div>;
     if (isError) return <div>Error: {error?.message}</div>;
 
+    // Filter products based on search term
+    const filteredProducts = products?.filter((product: Product) =>
+        product.product_name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className='flex gap-x-80'>
             <ProductForm refetch={refetch} />
-           
-           <div className='flex flex-col items-center border '>
 
-            <h1 className='border'>Produtos</h1>
-            {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
-            <ul>
-                {products?.map((product: Product) => (
-                    <li key={product.id}>
-                        <span>{product.product_name}</span>
-                        <button onClick={() => handleEdit(product)}>Edit</button>
-                        <button onClick={() => handleDelete(product.id)}>Delete</button> {/* Delete button */}
-                    </li>
-                ))}
-            </ul>
-                </div>
+            <div className='flex flex-col items-center border'>
+                <h1 className='border'>Produtos</h1>
+                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+
+                {/* Include the SearchBar component */}
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                
+                <ul>
+                    {filteredProducts?.map((product: Product) => (
+                        <li key={product.id}>
+                            <span>{product.product_name}</span>
+                            <button onClick={() => handleEdit(product)}>Edit</button>
+                            <button onClick={() => handleDelete(product.id)}>Delete</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
             {/* Render modal and pass the editing product */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 {editingProduct && (
@@ -89,8 +100,6 @@ const ProductsUpdateAndDelete: React.FC = () => {
                     />
                 )}
             </Modal>
-            {/* Display success or error messages */}
-           
         </div>
     );
 };
@@ -100,24 +109,20 @@ const EditProduct: React.FC<{
     onUpdate: (product: Product) => void; 
     onClose: () => void; 
 }> = ({ product, onUpdate, onClose }) => {
-    
-    // React Hook Form with Zod validation
     const { 
         register, 
         handleSubmit, 
         setValue, 
         formState: { errors } 
     } = useForm<Product>({
-        resolver: zodResolver(productSchema), // Use Zod resolver for validation
-        defaultValues: product, // Set initial values from the passed product
+        resolver: zodResolver(productSchema),
+        defaultValues: product,
     });
 
-    // Submit handler for updating product
     const onSubmit = async (formData: Product) => {
-        // Prepare data for submission, converting strings to numbers where necessary
         const preparedData = {
             ...formData,
-            id: product.id, // Ensure product ID stays the same
+            id: product.id,
             quantity: Number(formData.quantity),
             url_image: formData.url_image ?? undefined,
             price: Number(formData.price),
@@ -129,30 +134,25 @@ const EditProduct: React.FC<{
             id_sector: formData.id_sector ? Number(formData.id_sector) : undefined,
         };
 
-        // Call onUpdate with the validated and prepared data
         await onUpdate(preparedData);
     };
 
-    // Set the form values when product changes
     useEffect(() => {
         (Object.keys(product) as (keyof Product)[]).forEach((key) => {
-            setValue(key, product[key]); // This is now type-safe
+            setValue(key, product[key]);
         });
     }, [product, setValue]);
 
     return (
-        <>
-        
         <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Edit Product</h2>
-            {/* Dynamically render form fields based on product schema */}
             {Object.keys(productSchema.shape).map((key) => {
                 const keyAsType = key as keyof Product;
                 return (
                     <div key={key}>
                         <label>
                             {key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, a => a.toUpperCase())}:
-                            <input {...register(keyAsType)} /> {/* Register each field */}
+                            <input {...register(keyAsType)} />
                         </label>
                         {errors[keyAsType] && <p style={{ color: 'red' }}>{errors[keyAsType]?.message}</p>}
                     </div>
@@ -161,7 +161,6 @@ const EditProduct: React.FC<{
             <button type="submit">Update</button>
             <button type="button" onClick={onClose}>Cancel</button>
         </form>
-        </>
     );
 };
 

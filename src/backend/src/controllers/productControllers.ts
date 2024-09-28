@@ -42,8 +42,9 @@ class ProductControllers {
   }
 
   public updateProduct = async (request: Request, response: Response) => {
-    const { id } = request.params; // Get the products ID from the URL
-   // Data to update
+    const { id } = request.query; // Get the products ID from the URL
+    console.log('update query:'+ request.query)
+    // Data to update
     console.log(request.body)
     console.log(request.params)
     const {createdAt,updatedAT, ...dataToUpdate} =request.body
@@ -62,8 +63,8 @@ class ProductControllers {
 
   // Delete a products by ID
   public deleteProduct = async (request: Request, response: Response) => {
-    const { id } = request.params; // Get the products ID from the URL
-
+    const { id } = request.query; // Get the products ID from the URL
+    console.log(request.query)
     try {
       await prisma.products.delete({
         where: { id: Number(id) } // Delete based on ID
@@ -74,22 +75,10 @@ class ProductControllers {
     }
   };
   
-  // public checkEmailExists = async (request: Request, response: Response) => {
-  //   const { email } = request.body;
-  
-  //   try {
-  //     const existingUser = await prisma.products.findUnique({
-  //       where: { email },
-  //     });
-  
-  //     return response.status(200).json({ exists: !!existingUser });
-  //   } catch (error) {
-  //     response.status(500).json({ message: 'Error checking email', error });
-  //   }
-  // }
 
   public getProductById = async (request: Request, response: Response) => {
-    const { id } = request.params; // Get the products ID from the URL
+    const { id } = request.query; // Get the products ID from the URL
+    console.log(request.query)
     try {
       const products = await prisma.products.findUnique({
         where: { id: Number(id) }, // Find based on ID
@@ -105,22 +94,28 @@ class ProductControllers {
     }
   };
 
-  public getProductName = async (request: Request, response: Response) => {
-    const { product_name } = request.params; // Get the product Name from the URL
+  public searchProductName = async (request: Request, response: Response) => {
+    const { product_name } = request.params; // Use query for searching
+    console.log(request.query)
     try {
-      const products = await prisma.products.findMany({
-        where: {product_name: product_name }, // Find based on Name
-      });
+        const products = await prisma.products.findMany({
+            where: {
+                product_name: {
+                    contains: product_name as string,
+                },
+            },
+        });
 
-      if (!products) {
-        return response.status(404).json({ message: 'Product not found' });
-      }
+        if (products.length === 0) {
+            return response.status(404).json({ message: 'Product not found' });
+        }
 
-      response.status(200).json(products); // Send the products data as JSON response
+        response.status(200).json(products);
     } catch (error) {
-      response.status(500).json({ message: 'Error fetching products by ID', error });
+      console.error('Error fetching products:', error);
+        response.status(500).json({ message: 'Error fetching products', error });
     }
-  };
+};
 
 
 
