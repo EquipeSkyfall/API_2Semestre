@@ -31,6 +31,10 @@
 <img src="https://img.shields.io/badge/Microsoft Excel-000000?style=for-the-badge&logo=microsoft-excel&logoColor=black&color=2271B3">
 <img src="https://img.shields.io/badge/html5-000000?style=for-the-badge&logo=html5&logoColor=black&color=2271B3">
 <img src="https://img.shields.io/badge/css3-000000?style=for-the-badge&logo=css3&logoColor=black&color=2271B3">
+<img src="https://img.shields.io/badge/prisma-000000?style=for-the-badge&logo=prisma&logoColor=black&color=2271B3">
+<img src="https://img.shields.io/badge/typescript-000000?style=for-the-badge&logo=typescript&logoColor=black&color=2271B3">
+<img src="https://img.shields.io/badge/javascript-000000?style=for-the-badge&logo=javascript&logoColor=black&color=2271B3">
+<img src="https://img.shields.io/badge/node.js-000000?style=for-the-badge&logo=node.js&logoColor=black&color=2271B3">
 
 
 </div>
