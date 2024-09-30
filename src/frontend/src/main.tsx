@@ -9,30 +9,33 @@ import Footer from './components/Footer/index.tsx'
 import NavBar from './components/NavBar/index.tsx'
 // import DisplayAllUsers from './components/Teste/displayUsers.tsx'
 // import ProductForm from './components/ProductForm/index.tsx'
-// import ProductsList from './components/ProductsList/index.tsx'
+import ProductsList from './components/ProductsList/index.tsx'
 import ProductsUpdateAndDelete from './components/ProductUpdateDeleteList/index.tsx'
-import SearchBar from './components/SearchBar/index.tsx'
-import SearchBar2 from './components/Teste/displayUsers.tsx'
+import App from './App.tsx'
+// import SearchBar from './components/SearchBar/index.tsx'
+// import SearchBar2 from './components/Teste/displayUsers.tsx'
 
 // import Teste from './teste/teste.tsx'
  {/* <UserForm /> */}
-  {/* <ProductsList/> */}
-const queryClient = new QueryClient();
-
+ const queryClient = new QueryClient();
+ 
 createRoot(document.getElementById('root')!).render(
-
-     <QueryClientProvider client={queryClient}>
-    <Header></Header>
-    <NavBar></NavBar>
+<>
+   <App/>
+  
+</>
+//      <QueryClientProvider client={queryClient}>
+//     <Header></Header>
     
-    <MainWrapper>
-    {/* <ProductForm/> */}
-     {/* <DisplayAllUsers/> */}
-    <ProductsUpdateAndDelete/>
-   {/* <Teste/> */}
-    </MainWrapper>
-    <Footer></Footer>
-    {/* <SearchBar2/> */}
-     </QueryClientProvider>
+//     <MainWrapper>
+//  <ProductsList/>
+//     {/* <ProductForm/> */}
+//      {/* <DisplayAllUsers/> */}
+//     <ProductsUpdateAndDelete/>
+//    {/* <Teste/> */}
+//     </MainWrapper>
+//     <Footer></Footer>
+//     {/* <SearchBar2/> */}
+//      </QueryClientProvider>
 
 )
