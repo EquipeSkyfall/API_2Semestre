@@ -1,30 +1,38 @@
 import React, { useState } from 'react';
-import useSearchProducts from '../../Hooks/Products/getSearchProductbyNameHook'; 
-import useDeleteProduct from '../../Hooks/Products/deleteProductByIdHook';
-import ProductForm from '../ProductForm';
-import Modal from '../Modal';
-import EditProduct from './EditProduct'; 
-import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
-import useUpdateProduct from '../../Hooks/Products/patchByIdProductHook';
 import ProductList from '../ProductsList';
 import SearchBar from '../SearchBar';
+import Modal from '../Modal';
+import EditProduct from './EditProduct';
+import useDeleteProduct from '../../Hooks/Products/deleteProductByIdHook';
+import useUpdateProduct from '../../Hooks/Products/patchByIdProductHook';
+import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
 
 interface Product extends ProductSchema {
     id: number;
     url_image?: string | null | undefined;
 }
 
-const ProductsUpdateAndDelete: React.FC = () => {
+interface ProductsUpdateAndDeleteProps {
+    products: Product[];
+    searchTerm: string;
+    onSearchTermChange: (term: string) => void;
+    currentPage: number;
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+    totalPages: number;
+    refetch: () => void; // Pass refetch function
+}
+
+const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
+    products,
+    searchTerm,
+    onSearchTermChange,
+    currentPage,
+    setCurrentPage,
+    totalPages,
+    refetch,
+}) => {
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [successMessage, setSuccessMessage] = useState<string | null>(null);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [searchTerm, setSearchTerm] = useState<string>(''); // Keep searchTerm state here
-    const itemsPerPage = 10;
-
-    const { products, refetch, isLoading, isError } = useSearchProducts(currentPage, itemsPerPage, searchTerm);
-
     const updateProductMutation = useUpdateProduct();
     const deleteProductMutation = useDeleteProduct();
 
@@ -37,57 +45,42 @@ const ProductsUpdateAndDelete: React.FC = () => {
         try {
             await updateProductMutation.mutateAsync(updatedProduct);
             setIsModalOpen(false);
-            setSuccessMessage('Product updated successfully!');
-            refetch(); // Refetch products after update
+            refetch(); // Refetch only after updating
         } catch (error) {
-            const err = error as Error;
-            setErrorMessage(`Error updating product: ${err.message}`);
+            console.error('Error updating product:', error);
         }
     };
-
+    
     const handleDelete = async (id: number) => {
-        const confirmed = window.confirm('Are you sure you want to delete this product?');
-        if (confirmed) {
+        if (window.confirm('Are you sure you want to delete this product?')) {
             try {
                 await deleteProductMutation.mutateAsync(id);
-                setSuccessMessage('Product deleted successfully!');
-                refetch(); // Refetch products after deletion
+                refetch(); // Refetch only after deletion
             } catch (error) {
-                const err = error as Error;
-                alert(`Failed to delete product: ${err.message}`);
+                console.error('Error deleting product:', error);
             }
         }
     };
 
-    const handlePageChange = (newPage: number) => {
-        setCurrentPage(newPage);
-        refetch(); // Refetch when page changes
-    };
-
-    if (isLoading) return <div>Loading...</div>;
-    if (isError) return <div>Error: Unable to fetch products.</div>;
-
     return (
-        <div className='flex gap-x-80'>
-            <ProductForm refetch={refetch} />
+        <div className='flex flex-col items-center border'>
+            <h1 className='border'>Products</h1>
 
-            <div className='flex flex-col items-center border'>
-                <h1 className='border'>Products</h1>
-                {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+            {/* Search Bar */}
+            <SearchBar searchTerm={searchTerm} setSearchTerm={onSearchTermChange} />
 
-                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+            {/* Product List */}
+            <ProductList
+                products={products}
+                onEdit={handleEdit}
+                currentPage={currentPage}
+                handlePageChange={setCurrentPage}
+                totalPages={totalPages} // Pass totalPages for pagination logic
+                onDelete={handleDelete}
+                itemsPerPage={10}
+            />
 
-                <ProductList
-                    products={products}
-                    onEdit={handleEdit}
-                    currentPage={currentPage}
-                    handlePageChange={handlePageChange}
-                    itemsPerPage={itemsPerPage}
-                    onDeleteSuccess={refetch}
-                />
-            </div>
-
+            {/* Modal for Editing Product */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 {editingProduct && (
                     <EditProduct

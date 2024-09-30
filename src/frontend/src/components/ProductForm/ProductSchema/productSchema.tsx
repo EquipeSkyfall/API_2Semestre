@@ -18,7 +18,7 @@ export const productSchema = z.object({
         (value) => (value === undefined ? undefined : Number(value)),
         z.number().optional()
     ),
-    url_image: z.string().url().optional().nullable(),
+    url_image: z.string().optional().nullable(),
     weight: z.preprocess(
         (value) => (value === undefined ? undefined : Number(value)),
         z.number().optional()

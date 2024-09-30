@@ -2,18 +2,17 @@ import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ProductSchema, productSchema } from '../ProductForm/ProductSchema/productSchema';
-// Adjust the path based on your project structure
 
 interface Product extends ProductSchema {
     id: number;
-    url_image?: string | null | undefined;
+    url_image?: string | null | undefined | '';
 }
 
 interface EditProductProps {
     product: Product;
     onUpdate: (product: Product) => void;
     onClose: () => void;
-    refetch: () => void; // Add refetch prop
+    refetch: () => void;
 }
 
 const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, refetch }) => {
@@ -42,8 +41,13 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
             id_sector: formData.id_sector ? Number(formData.id_sector) : undefined,
         };
 
-        await onUpdate(preparedData);
-        refetch(); // Call refetch after updating
+        try {
+            await onUpdate(preparedData);
+            refetch(); // Call refetch after updating
+        } catch (error) {
+            console.error('Error updating product:', error);
+            alert('Failed to update product. Please try again later.');
+        }
     };
 
     useEffect(() => {
@@ -57,11 +61,19 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
             <h2>Edit Product</h2>
             {Object.keys(productSchema.shape).map((key) => {
                 const keyAsType = key as keyof Product;
+
+                const isNumericField = ['quantity', 'price', 'retail_price', 'weight', 'height', 'width'].includes(key);
+
                 return (
                     <div key={key}>
                         <label>
-                            {key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, a => a.toUpperCase())}:
-                            <input {...register(keyAsType)} />
+                            {key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, (a) => a.toUpperCase())}:
+                            <input
+                                {...register(keyAsType, {
+                                    valueAsNumber: isNumericField, // Ensure parsing to number
+                                })}
+                                type={isNumericField ? 'number' : 'text'} // Set input type to 'number' if necessary
+                            />
                         </label>
                         {errors[keyAsType] && <p style={{ color: 'red' }}>{errors[keyAsType]?.message}</p>}
                     </div>
