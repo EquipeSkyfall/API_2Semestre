@@ -6,17 +6,45 @@ import prisma  from '../dbConnector'; // Make sure your prisma import is correct
 class ProductControllers {
 
   public getAllProducts = async (request: Request, response: Response) => {
+    const { page = '1', limit = '10', search = '' } = request.query;
+
+    const pageNumber = Number(page);
+    const pageSize = Number(limit);
+    const skip = (pageNumber - 1) * pageSize;
+
     try {
-      // Fetch data from the database using Prisma
-      const products = await prisma.products.findMany();
-      
-      // Send the result as a JSON response
-      response.status(200).json(products);
+        const products = await prisma.products.findMany({
+            where: {
+                product_name: {
+                    contains: String(search), // Ensure search is treated as a string
+                  
+                },
+            },
+            skip,
+            take: pageSize,
+        });
+
+        const totalProducts = await prisma.products.count({
+            where: {
+                product_name: {
+                    contains: String(search),
+                    
+                },
+            },
+        });
+
+        response.status(200).json({
+            totalProducts,
+            products,
+            currentPage: pageNumber,
+            totalPages: Math.ceil(totalProducts / pageSize),
+        });
     } catch (error) {
-      // Handle any errors that occur during the database query
-      response.status(500).json({ message: 'Error fetching products', error });
+        response.status(500).json({ message: 'Error fetching products', error });
     }
-  }
+};
+
+
 
 
   public createProduct = async (request: Request, response: Response) => {
@@ -95,24 +123,50 @@ class ProductControllers {
   };
 
   public searchProductName = async (request: Request, response: Response) => {
-    const { product_name } = request.params; // Use query for searching
-    console.log(request.query)
-    try {
-        const products = await prisma.products.findMany({
-            where: {
-                product_name: {
-                    contains: product_name as string,
-                },
-            },
-        });
+    const { product_name, page = '1', limit = '10' } = request.query; // Pagination parameters
+    const pageNumber = parseInt(page as string);
+    const limitNumber = parseInt(limit as string);
+    const skip = (pageNumber - 1) * limitNumber; // Calculate the skip for pagination
 
-        if (products.length === 0) {
-            return response.status(404).json({ message: 'Product not found' });
+    try {
+        let products, totalProducts;
+
+        if (!product_name) {
+            // Fetch all products with pagination if no search term is provided
+            totalProducts = await prisma.products.count(); // Total count for pagination
+            products = await prisma.products.findMany({
+                skip,
+                take: limitNumber,
+            });
+        } else {
+            // Fetch filtered products based on search term with pagination
+            totalProducts = await prisma.products.count({
+                where: {
+                    product_name: {
+                        contains: product_name as string,
+                    },
+                },
+            });
+            products = await prisma.products.findMany({
+                where: {
+                    product_name: {
+                        contains: product_name as string,
+                    },
+                },
+                skip,
+                take: limitNumber,
+            });
         }
 
-        response.status(200).json(products);
+        // Return products even if the list is empty (avoid 404)
+        response.status(200).json({
+            products,
+            totalProducts, // Add total products for pagination metadata
+            totalPages: Math.ceil(totalProducts / limitNumber),
+            currentPage: pageNumber,
+        });
     } catch (error) {
-      console.error('Error fetching products:', error);
+        console.error('Error fetching products:', error);
         response.status(500).json({ message: 'Error fetching products', error });
     }
 };

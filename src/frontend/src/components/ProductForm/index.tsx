@@ -11,7 +11,7 @@ interface ProductFormProps {
 const ProductForm: React.FC<ProductFormProps>=({refetch}) => {
     const [serverError, setServerError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
-    
+    console.log('YourComponent re-rendered FORM');
     const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset } = useForm<ProductSchema>({
         resolver: zodResolver(productSchema),
     });

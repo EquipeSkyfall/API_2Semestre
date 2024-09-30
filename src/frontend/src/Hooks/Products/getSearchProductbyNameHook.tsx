@@ -1,24 +1,26 @@
-// src/hooks/useSearchProducts.ts
-import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-const useSearchProducts = () => {
-    const [searchTerm, setSearchTerm] = useState<string>('');
-
-    const { data: products = [], isLoading, isError } = useQuery({
-        queryKey: ['searchProducts', searchTerm],
-    
-        queryFn: () => {
-            console.log(searchTerm)
-            if (searchTerm.trim() === '') return []; // Return empty array if searchTerm is empty
-            return axios.get(`http://127.0.0.1:3000/products/search?product_name=${searchTerm}`).then(res => res.data);
+const useSearchProducts = (page: number, limit: number, searchTerm: string) => {
+    const { data = { products: [], totalPages: 1 }, isLoading, isError, refetch } = useQuery({
+        queryKey: ['searchProducts', searchTerm, page, limit],
+        queryFn: async () => {
+            const response = searchTerm.trim() === ''
+                ? await axios.get(`http://127.0.0.1:3000/products?page=${page}&limit=${limit}`)
+                : await axios.get(`http://127.0.0.1:3000/products/search?product_name=${searchTerm}&page=${page}&limit=${limit}`);
+                
+            return response.data || { products: [], totalPages: 1 };
         },
-        enabled: !!searchTerm, // Only run query if searchTerm is not empty
-        retry: false, // Optionally prevent retry on failure
+        retry: false,
     });
 
-    return { products, searchTerm, setSearchTerm, isLoading, isError };
+    return {
+        products: data.products,
+        totalPages: data.totalPages,
+        isLoading,
+        isError,
+        refetch,
+    };
 };
 
 export default useSearchProducts;
