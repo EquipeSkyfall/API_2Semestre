@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface SearchBarProps {
-    searchTerm: string; // Current search term
-    setSearchTerm: React.Dispatch<React.SetStateAction<string>>; // Function to update the search term
+    searchTerm: string;
+    setSearchTerm: (term: string) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
+    const [inputValue, setInputValue] = useState(searchTerm);
+
+    useEffect(() => {
+        setInputValue(searchTerm); // Update input value when searchTerm changes
+    }, [searchTerm]);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setSearchTerm(inputValue); // Set search term after 300ms
+        }, 300);
+
+        return () => {
+            clearTimeout(handler); // Cleanup timeout
+        };
+    }, [inputValue, setSearchTerm]);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value); // Update input value
+    };
+
     return (
         <input
             type="text"
-            placeholder="Search products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)} // Update search term on change
-            className="search-input" // You can add custom styles here
+            value={inputValue}
+            onChange={handleChange} // Handle input change
+            placeholder="Search for products..."
         />
     );
 };

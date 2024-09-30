@@ -1,38 +1,43 @@
-// src/components/SearchBar2.tsx
-import React, { useState } from 'react';
-import FetchAllProducts from '../../Hooks/Products/fetchAllProductsHook'; // Hook to fetch all products
+import React from 'react';
+import FetchAllUsers from '../../Hooks/Users/fetchAllUsersHook';
+ // Adjust the import path as needed
 
-const SearchBar2: React.FC = () => {
-    const { data: products } = FetchAllProducts(); // Fetch all products
-    const [searchTerm, setSearchTerm] = useState<string>(''); // State for search term
+const UsersList: React.FC = () => {
+    const { data: users, isLoading, isError, error } = FetchAllUsers();
 
-    // Filter products based on search term
-    const filteredProducts = products?.filter(product => 
-        product.product_name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    if (isLoading) {
+        return <div>Loading users...</div>;
+    }
+
+    if (isError) {
+        return <div>Error: {error?.message}</div>;
+    }
 
     return (
         <div>
-            <h2>Search Products</h2>
-            <input
-                type="text"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)} // Update search term
-            />
-            <div>
-                {filteredProducts?.length ? (
-                    <ul>
-                        {filteredProducts.map(product => (
-                            <li key={product.id}>{product.product_name}</li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No products found</p>
-                )}
-            </div>
+            <h1>Users List</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map(user => (
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.role}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };
 
-export default SearchBar2;
+export default UsersList;
