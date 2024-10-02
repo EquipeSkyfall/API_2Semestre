@@ -13,6 +13,111 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Categoria {
+  id_categoria         Int        @id @default(autoincrement())
+  nome_categoria       String     @db.VarChar(100)
+  descricao_categoria  String?    @db.VarChar(255)
+  produtos             Produto[]
+}
+
+model Setor {
+  id_setor      Int      @id @default(autoincrement())
+  nome_setor    String   @db.VarChar(100)
+  produtos      Produto[]
+}
+
+model Produto {
+  id_produto           Int                 @id @default(autoincrement())
+  nome_produto         String              @db.VarChar(255)
+  descricao_produto    String?             @db.VarChar(255)
+  marca_produto        String?             @db.VarChar(255)
+  modelo_produto       String?             @db.VarChar(255)
+  preco_custo          Decimal             @db.Decimal(10, 2)
+  preco_venda          Decimal             @db.Decimal(10, 2)
+  altura_produto       Decimal             @db.Decimal(10, 2)
+  largura_produto      Decimal             @db.Decimal(10, 2)
+  comprimento_produto  Decimal             @db.Decimal(10, 2)
+  unidade_medida       String              @db.Char(2)
+  localizacao_estoque  String?             @db.VarChar(255)
+  permalink_imagem     String?             @db.VarChar(255)
+  peso_produto         Decimal             @db.Decimal(10, 2)
+  produto_deletedAt    DateTime?           @db.Date
+  id_categoria         Int?
+  id_setor             Int?
+  categoria            Categoria?           @relation(fields: [id_categoria], references: [id_categoria])
+  setor                Setor?               @relation(fields: [id_setor], references: [id_setor])
+  fornecedores         ProdutosFornecedor[]
+  lotes                LoteProdutos[]
+
+  @@index([nome_produto], name: "idx_nome_produto")
+  @@index([id_categoria], name: "idx_id_categoria")
+  @@index([id_setor], name: "idx_id_setor")
+  @@index([produto_deletedAt], name: "idx_produto_deletedAt")
+}
+
+model Fornecedor {
+  id_fornecedor         Int               @id @default(autoincrement())
+  cnpj_fornecedor       String            @unique @db.VarChar(14)
+  razao_social          String            @db.VarChar(255)
+  nome_fantasia         String?           @db.VarChar(255)
+  endereco_fornecedor   String?           @db.VarChar(255)
+  cidade                String            @db.VarChar(100)
+  estado                String            @db.Char(2)
+  cep                   String            @db.VarChar(9)
+  fornecedor_deletedAt  DateTime?         @db.Date
+  produtos              ProdutosFornecedor[]
+  lotes                 Lote[]
+
+  @@index([razao_social], name: "idx_razao_social")
+  @@index([cidade], name: "idx_cidade")
+  @@index([estado], name: "idx_estado")
+  @@index([fornecedor_deletedAt], name: "idx_fornecedor_deletedAt")
+}
+
+model ProdutosFornecedor {
+  id_fornecedor        Int
+  id_produto           Int
+  fornecedor           Fornecedor         @relation(fields: [id_fornecedor], references: [id_fornecedor])
+  produto              Produto            @relation(fields: [id_produto], references: [id_produto])
+  @@id([id_fornecedor, id_produto])
+}
+
+model Lote {
+  id_lote              Int               @id @default(autoincrement())
+  id_fornecedor        Int
+  data_compra          DateTime          @db.Date
+  fornecedor           Fornecedor        @relation(fields: [id_fornecedor], references: [id_fornecedor])
+  produtos             LoteProdutos[]
+}
+
+model LoteProdutos {
+  id_lote              Int
+  id_produto           Int
+  quantidade           Int
+  validade_produto     DateTime?         @db.Date
+  lote                 Lote              @relation(fields: [id_lote], references: [id_lote])
+  produto              Produto           @relation(fields: [id_produto], references: [id_produto])
+  saidas               SaidaProduto[]
+  
+  @@id([id_lote, id_produto])
+}
+
+model Saida {
+  id_saida             Int               @id @default(autoincrement())
+  data_venda           DateTime          @db.Date
+  saidaProdutos        SaidaProduto[]
+}
+
+model SaidaProduto {
+  id_saida             Int
+  id_produto           Int
+  id_lote              Int
+  quantidade_retirada  Int
+  saida                Saida         @relation(fields: [id_saida], references: [id_saida])
+  loteProduto          LoteProdutos  @relation(fields: [id_produto, id_lote], references: [id_produto, id_lote])
+  @@id([id_saida, id_produto, id_lote])
+}
+
 model Users{
   id Int @id @default(autoincrement())
   name String
@@ -22,24 +127,3 @@ model Users{
   updatedAT DateTime @updatedAt
   role String
 }
-
-model Products{
-  id Int @id @default(autoincrement())
-  product_name String
-  description String?
-  batch String 
-  brand String
-  quantity Int
-  price Float
-  retail_price Float
-  stock_location String?
-  id_category Int?
-  id_sector Int?
-  url_image String?
-  weight Float?
-  height Float?
-  width Float?
-  updatedAT DateTime @updatedAt
-  createdAt DateTime @default(now())
-}
-
