@@ -184,6 +184,9 @@ class ProductControllers {
       const hasRelationships = hasLoteRelationships > 0 || hasSaidaRelationships > 0;
 
       if (hasRelationships) {
+        await prisma.produtosFornecedor.deleteMany({
+          where: { id_produto: Number(id) }, // Delete all supplier relationships for this product
+        });
         // If there are existing relationships, perform a soft delete
         await prisma.produto.update({
             where: { id_produto: Number(id) },

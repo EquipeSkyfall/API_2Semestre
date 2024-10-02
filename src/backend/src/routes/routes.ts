@@ -3,6 +3,7 @@ import { userControllers } from '../controllers/userControllers';
 import { productController } from '../controllers/productControllers';
 import { supplierController } from '../controllers/supplierControllers';
 import { categoryController } from '../controllers/categoryControllers';
+import { sectorController } from '../controllers/sectorControllers';
 
 const router = express.Router();
 
@@ -78,5 +79,17 @@ router
   .get(categoryController.getCategoryById)
   .patch(categoryController.updateCategory)
   .delete(categoryController.deleteCategory)
+
+// Sector routes
+router
+  .route('/sectors')
+  .get(sectorController.getSectors)
+  .post(sectorController.createSector)
+
+router
+  .route('/sectors/:id')
+  .get(sectorController.getSectorById)
+  .patch(sectorController.updateSector)
+  .delete(sectorController.deleteSector)
 
 export default router
