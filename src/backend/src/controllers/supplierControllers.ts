@@ -81,7 +81,7 @@ class SupplierControllers {
 
     public addProductToSupplier = async (request: Request, response: Response) => {
         const { id } = request.params
-        const { id_produto } = request.body;
+        const { id_produto, preco_custo } = request.body;
       
         try {
           // Check if the association already exists
@@ -101,6 +101,7 @@ class SupplierControllers {
             data: {
               id_produto: Number(id_produto),
               id_fornecedor: Number(id),
+              preco_custo: preco_custo
             },
           });
       
@@ -200,7 +201,6 @@ class SupplierControllers {
                         select: {
                             nome_produto: true,
                             id_categoria: true,
-                            preco_custo: true,
                             permalink_imagem: true,
                             categoria: {
                                 select: {

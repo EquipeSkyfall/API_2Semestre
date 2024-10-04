@@ -32,7 +32,6 @@ model Produto {
   descricao_produto    String?             @db.VarChar(255)
   marca_produto        String?             @db.VarChar(255)
   modelo_produto       String?             @db.VarChar(255)
-  preco_custo          Decimal             @db.Decimal(10, 2)
   preco_venda          Decimal             @db.Decimal(10, 2)
   altura_produto       Decimal             @db.Decimal(10, 2)
   largura_produto      Decimal             @db.Decimal(10, 2)
@@ -77,6 +76,7 @@ model Fornecedor {
 model ProdutosFornecedor {
   id_fornecedor        Int
   id_produto           Int
+  preco_custo          Decimal            @db.Decimal(10, 2)
   fornecedor           Fornecedor         @relation(fields: [id_fornecedor], references: [id_fornecedor])
   produto              Produto            @relation(fields: [id_produto], references: [id_produto])
   @@id([id_fornecedor, id_produto])
@@ -105,6 +105,7 @@ model LoteProdutos {
 model Saida {
   id_saida             Int               @id @default(autoincrement())
   data_venda           DateTime          @db.Date
+  motivo_saida         String            @db.VarChar(100)
   saidaProdutos        SaidaProduto[]
 }
 

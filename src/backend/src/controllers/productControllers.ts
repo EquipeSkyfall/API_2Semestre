@@ -54,7 +54,7 @@ class ProductControllers {
       // Extract supplier information from the request body
       console.log('Full Request Body:', request.body)
 
-      const { id_fornecedor, ...productData } = request.body;
+      const { id_fornecedor, preco_custo, ...productData } = request.body;
 
       console.log('Product Data:', productData);
 
@@ -68,6 +68,7 @@ class ProductControllers {
           data: {
             id_fornecedor,
             id_produto: product.id_produto,
+            preco_custo: preco_custo
           },
         });
       }
@@ -78,7 +79,7 @@ class ProductControllers {
       // Handle any errors that occur during the database query
       response.status(500).json({ message: 'Error creating product', error });
     }
-  }
+  };
 
 
 
@@ -105,7 +106,7 @@ class ProductControllers {
 
   public addSupplierToProduct = async (request: Request, response: Response) => {
     const { id } = request.params
-    const { id_fornecedor } = request.body;
+    const { id_fornecedor, preco_custo } = request.body;
   
     try {
       // Check if the association already exists
@@ -125,6 +126,7 @@ class ProductControllers {
         data: {
           id_produto: Number(id),
           id_fornecedor: Number(id_fornecedor),
+          preco_custo: preco_custo
         },
       });
   

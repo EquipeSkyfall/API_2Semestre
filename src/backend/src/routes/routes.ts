@@ -4,6 +4,8 @@ import { productController } from '../controllers/productControllers';
 import { supplierController } from '../controllers/supplierControllers';
 import { categoryController } from '../controllers/categoryControllers';
 import { sectorController } from '../controllers/sectorControllers';
+import { batchController } from '../controllers/batchControllers';
+import { shipmentController } from '../controllers/shippingControllers';
 
 const router = express.Router();
 
@@ -32,23 +34,28 @@ router
 // Product routes
 router
   .route('/products')
-  .get(productController.getProducts)
-  .post(productController.createProduct);
+  .get(productController.getProducts) // Generate product list with/without search terms/filters
+  .post(productController.createProduct); //Adds new product to database
 
+// Find Products with missing data
 router
-  .route('/products/missingdata')
-  .get(productController.getProductsWithMissingData)
+  .route('/products/missingdata') 
+  .get(productController.getProductsWithMissingData) // Searches for products missing category/sector data
 
+// Updating, deleting and selecting unique product
 router
   .route('/products/:id')
-  .get(productController.getProductById)
-  .patch(productController.updateProduct)
-  .delete(productController.deleteProduct)
+  .get(productController.getProductById) // Pulls product info by ID
+  .patch(productController.updateProduct) // Updates product by ID
+  .delete(productController.deleteProduct) // Deletes product by ID
 
+// Editing product/supplier relationships for unique product
 router
   .route('/products/:id/suppliers')
-  .post(productController.addSupplierToProduct)
-  .delete(productController.removeSupplierFromProduct)
+  .post(productController.addSupplierToProduct) // Adds supplier for product by ID
+  .delete(productController.removeSupplierFromProduct) // Removes supplier from product by ID
+
+
 
 // Supplier routes
 router
@@ -68,6 +75,8 @@ router
   .post(supplierController.addProductToSupplier)
   .delete(supplierController.removeProductFromSupplier)
 
+
+
 // Category routes
 router
   .route('/categories')
@@ -80,6 +89,8 @@ router
   .patch(categoryController.updateCategory)
   .delete(categoryController.deleteCategory)
 
+
+
 // Sector routes
 router
   .route('/sectors')
@@ -91,5 +102,33 @@ router
   .get(sectorController.getSectorById)
   .patch(sectorController.updateSector)
   .delete(sectorController.deleteSector)
+
+
+
+// Batch routes
+router
+  .route('/batches')
+  .get(batchController.getBatches)
+  .post(batchController.createBatch)
+
+router
+  .route('/batches/:id')
+  .get(batchController.getBatchById)
+  .patch(batchController.updateBatch)
+  .delete(batchController.deleteBatch)
+
+
+
+// Shipment routes
+router
+  .route('/shipments')
+  .get(shipmentController.getShipments)
+  .post(shipmentController.createShipment)
+
+router
+  .route('/shipments/:id')
+  .get(shipmentController.getShipmentById)
+  .patch(shipmentController.updateShipment)
+  .delete(shipmentController.deleteShipment)
 
 export default router
