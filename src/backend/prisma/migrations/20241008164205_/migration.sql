@@ -1,12 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the `products` table. If the table is not empty, all the data it contains will be lost.
-
-*/
--- DropTable
-DROP TABLE `products`;
-
 -- CreateTable
 CREATE TABLE `Categoria` (
     `id_categoria` INTEGER NOT NULL AUTO_INCREMENT,
@@ -31,12 +22,10 @@ CREATE TABLE `Produto` (
     `descricao_produto` VARCHAR(255) NULL,
     `marca_produto` VARCHAR(255) NULL,
     `modelo_produto` VARCHAR(255) NULL,
-    `preco_custo` DECIMAL(10, 2) NOT NULL,
     `preco_venda` DECIMAL(10, 2) NOT NULL,
     `altura_produto` DECIMAL(10, 2) NOT NULL,
     `largura_produto` DECIMAL(10, 2) NOT NULL,
     `comprimento_produto` DECIMAL(10, 2) NOT NULL,
-    `unidade_medida` CHAR(2) NOT NULL,
     `localizacao_estoque` VARCHAR(255) NULL,
     `permalink_imagem` VARCHAR(255) NULL,
     `peso_produto` DECIMAL(10, 2) NOT NULL,
@@ -75,6 +64,7 @@ CREATE TABLE `Fornecedor` (
 CREATE TABLE `ProdutosFornecedor` (
     `id_fornecedor` INTEGER NOT NULL,
     `id_produto` INTEGER NOT NULL,
+    `preco_custo` DECIMAL(10, 2) NOT NULL,
 
     PRIMARY KEY (`id_fornecedor`, `id_produto`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -102,6 +92,7 @@ CREATE TABLE `LoteProdutos` (
 CREATE TABLE `Saida` (
     `id_saida` INTEGER NOT NULL AUTO_INCREMENT,
     `data_venda` DATE NOT NULL,
+    `motivo_saida` VARCHAR(100) NOT NULL,
 
     PRIMARY KEY (`id_saida`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -114,6 +105,20 @@ CREATE TABLE `SaidaProduto` (
     `quantidade_retirada` INTEGER NOT NULL,
 
     PRIMARY KEY (`id_saida`, `id_produto`, `id_lote`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `Users` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
+    `password` VARCHAR(191) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAT` DATETIME(3) NOT NULL,
+    `role` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `Users_email_key`(`email`),
+    PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey

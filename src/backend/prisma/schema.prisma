@@ -36,7 +36,6 @@ model Produto {
   altura_produto       Decimal             @db.Decimal(10, 2)
   largura_produto      Decimal             @db.Decimal(10, 2)
   comprimento_produto  Decimal             @db.Decimal(10, 2)
-  unidade_medida       String              @db.Char(2)
   localizacao_estoque  String?             @db.VarChar(255)
   permalink_imagem     String?             @db.VarChar(255)
   peso_produto         Decimal             @db.Decimal(10, 2)

@@ -55,6 +55,9 @@ router
   .post(productController.addSupplierToProduct) // Adds supplier for product by ID
   .delete(productController.removeSupplierFromProduct) // Removes supplier from product by ID
 
+router
+  .route('/products/:id/batches')
+  .get(productController.getProductBatches)
 
 
 // Supplier routes

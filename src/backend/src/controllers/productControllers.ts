@@ -231,6 +231,35 @@ class ProductControllers {
     }
   };
 
+  public getProductBatches = async (request: Request, response: Response) => {
+    const { id } = request.params
+
+    try {
+      const productBatch = await prisma.loteProdutos.findMany({
+        where: { id_produto: Number(id) },
+        include: {
+          saidas: true
+        }
+      })
+
+      const result = productBatch.map(batch => {
+        const totalSaida = batch.saidas.reduce((sum: any, saida: any) => {
+          return sum + saida.quantidade_retirada
+        }, 0)
+
+        return {
+          id_lote: batch.id_lote,
+          id_produto: batch.id_produto,
+          quantidadeDisponivel: batch.quantidade - totalSaida,
+          validade_produto: batch.validade_produto
+        }
+      })
+      response.status(200).json(result)
+    } catch (error) {
+      response.status(500).json({ message: 'Error fetching batches for product:', error })
+    }
+  };
+
   public getProductsWithMissingData = async (request: Request, response: Response) => {
     try {
         const productsWithMissingData = await prisma.produto.findMany({

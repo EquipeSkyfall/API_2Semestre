@@ -2,8 +2,7 @@ import React from 'react';
 import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
 
 interface Product extends ProductSchema {
-    id: number;
-    url_image?: string | null | undefined;
+    id_produto: number;
 }
 
 interface ProductListProps {
@@ -13,7 +12,7 @@ interface ProductListProps {
     handlePageChange: (newPage: number) => void;
     totalPages: number;
     itemsPerPage: number;
-    onDelete: (id: number) => void;
+    onDelete: (id_produto: number) => void;
 }
 
 const ProductList: React.FC<ProductListProps> = React.memo(({
@@ -30,10 +29,10 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
             <ul>
                 {products.length > 0 ? (
                     products.map((product: Product) => (
-                        <li key={product.id}>
-                            <span>{product.product_name}</span>
+                        <li key={product.id_produto}>
+                            <span>{product.nome_produto}</span>
                             <button onClick={() => onEdit(product)}>Edit</button>
-                            <button onClick={() => onDelete(product.id)}>Delete</button>
+                            <button onClick={() => onDelete(product.id_produto)}>Delete</button>
                         </li>
                     ))
                 ) : (
