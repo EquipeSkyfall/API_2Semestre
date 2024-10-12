@@ -6,7 +6,7 @@ import { productSchema, ProductSchema } from './ProductSchema/productSchema';
 import CreateProductMutation from '../../Hooks/Products/postProductCreationHook';
 
 interface ProductFormProps {
-    refetch: () => void; // Add refetch function as a prop
+    refetch: () => void;
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
@@ -20,8 +20,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     console.log('FORM')
     const onSuccess = () => {
         reset();
-        setSuccessMessage('Product Created successfully!');
-        refetch(); // Call refetch after product creation
+        setSuccessMessage('Produto cadastrado com sucesso');
+        refetch();
     };
 
     const mutation = CreateProductMutation(onSuccess, setError, setServerError);
@@ -44,7 +44,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
             {successMessage && <p className="text-green-500 font-bold">{successMessage}</p>}
             {serverError && <p className="text-red-500">{serverError}</p>}
             
-            <h2>Registro de Produtos</h2>
+            <h2 className='text-center'>Cadastrar Produtos</h2>
 
             {/* Form Fields */}
             <div className="grid grid-cols-2 gap-x-4 gap-y-4">
@@ -53,7 +53,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     <input
                         {...register("product_name")}
                         type='text'
-                        placeholder="Product Name"
+                        placeholder="Nome do Produto"
                         className="px-4 py-2 rounded w-full"
                     />
                     {errors.product_name && <p className="text-red-500 text-sm mt-1">{errors.product_name.message}</p>}
@@ -64,7 +64,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     <input
                         {...register("description")}
                         type='text'
-                        placeholder="Description"
+                        placeholder="Descrição"
                         className="px-4 py-2 rounded w-full"
                     />
                     {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
@@ -75,7 +75,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     <input
                         {...register("batch")}
                         type='text'
-                        placeholder="Batch"
+                        placeholder="Lote"
                         className="px-4 py-2 rounded w-full"
                     />
                     {errors.batch && <p className="text-red-500 text-sm mt-1">{errors.batch.message}</p>}
@@ -86,7 +86,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     <input
                         {...register("brand")}
                         type='text'
-                        placeholder="Brand"
+                        placeholder="Marca"
                         className="px-4 py-2 rounded w-full"
                     />
                     {errors.brand && <p className="text-red-500 text-sm mt-1">{errors.brand.message}</p>}
@@ -97,7 +97,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     <input
                         {...register("quantity", { valueAsNumber: true })}
                         type='number'
-                        placeholder="Quantity"
+                        placeholder="Quantidade"
                         className="px-4 py-2 rounded w-full"
                         min='0'
                     />
@@ -109,7 +109,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     <input
                         {...register("price", { valueAsNumber: true })}
                         type='number'
-                        placeholder="Price"
+                        placeholder="Preço"
                         className="px-4 py-2 rounded w-full"
                         min='0'
                     />
@@ -121,7 +121,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     <input
                         {...register("retail_price", { valueAsNumber: true })}
                         type='number'
-                        placeholder="Retail Price"
+                        placeholder="Preço de Venda"
                         className="px-4 py-2 rounded w-full"
                         min='0'
                     />
@@ -133,7 +133,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     <input
                         {...register("stock_location")}
                         type='text'
-                        placeholder="Stock Location"
+                        placeholder="Localização do Estoque"
                         className="px-4 py-2 rounded w-full"
                     />
                     {errors.stock_location && <p className="text-red-500 text-sm mt-1">{errors.stock_location.message}</p>}
@@ -203,7 +203,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                 className="bg-slate-400 border-black disabled:bg-gray-500 py-2 mt-4 rounded w-full"
                 disabled={isSubmitting}
             >
-                {isSubmitting ? 'Loading...' : 'Submit'}
+                {isSubmitting ? 'Loading...' : 'Cadastrar'}
             </button>
         </form>
     );
