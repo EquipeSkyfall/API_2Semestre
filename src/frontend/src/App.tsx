@@ -4,8 +4,6 @@ import Teste from "./Pages/teste";
 import NavBar from "./components/NavBar";
 import Home from "./Pages/Home";
 
-import Header from "./components/Header";
-
 import ProductsPage from "./Pages/Products";
 import SignUpPage from "./Pages/UserSignUp";
 import PageNotFound from "./Pages/NotFound";
