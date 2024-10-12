@@ -6,7 +6,7 @@ import { productSchema, ProductSchema } from './ProductSchema/productSchema';
 import CreateProductMutation from '../../Hooks/Products/postProductCreationHook';
 
 interface ProductFormProps {
-    refetch: () => void; // Add refetch function as a prop
+    refetch: () => void; 
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
@@ -20,8 +20,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     console.log('FORM')
     const onSuccess = () => {
         reset();
-        setSuccessMessage('Product Created successfully!');
-        refetch(); // Call refetch after product creation
+        setSuccessMessage('Produto Cadastrado com Sucesso!');
+        refetch(); 
     };
 
     const mutation = CreateProductMutation(onSuccess, setError, setServerError);
@@ -215,7 +215,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                 className="bg-slate-400 border-black disabled:bg-gray-500 py-2 mt-4 rounded w-full"
                 disabled={isSubmitting}
             >
-                {isSubmitting ? 'Loading...' : 'Submit'}
+                {isSubmitting ? 'Carregando...' : 'Cadastrar'}
             </button>
         </form>
     );
