@@ -32,7 +32,7 @@ const useSearchProducts = (page: number, limit: number, searchTerm: string) => {
         queryFn: async () => {
             const response = searchTerm.trim() === ''
                 ? await axios.get(`http://127.0.0.1:3000/products?page=${page}&limit=${limit}`)
-                : await axios.get(`http://127.0.0.1:3000/products?search=${searchTerm}&page=${page}&limit=${limit}`);
+                : await axios.get(`http://127.0.0.1:3000/products/search?product_name=${searchTerm}&page=${page}&limit=${limit}`);
             return response.data || { products: [], totalPages: 1, totalProducts: 0 };
         },
         retry: false,
