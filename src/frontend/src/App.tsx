@@ -15,7 +15,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-       <Header/>
+       {/* <Header/> */}
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
