@@ -5,80 +5,95 @@ import prisma  from '../dbConnector'; // Make sure your prisma import is correct
 
 class ProductControllers {
 
-  public getAllProducts = async (request: Request, response: Response) => {
-    const { page = '1', limit = '10', search = '' } = request.query;
-
-    const pageNumber = Number(page);
-    const pageSize = Number(limit);
-    const skip = (pageNumber - 1) * pageSize;
+  public getProducts = async (request: Request, response: Response) => {
+    const { search='', id_setor, id_categoria, page = '1', limit = '10' } = request.query; 
+    const pageNumber = parseInt(page as string);
+    const limitNumber = parseInt(limit as string);
+    const skip = (pageNumber - 1) * limitNumber;
 
     try {
-        const products = await prisma.products.findMany({
-            where: {
-                product_name: {
-                    contains: String(search), // Ensure search is treated as a string
-                  
-                },
-            },
-            skip,
-            take: pageSize,
+        const whereCondition: any = { produto_deletedAt: null }; // Exclude soft-deleted products
+
+        // Apply filters based on query parameters
+        if (search) {
+            whereCondition.nome_produto = {
+                contains: search,
+            };
+        }
+        if (id_setor) {
+            whereCondition.id_setor = parseInt(id_setor as string);
+        }
+        if (id_categoria) {
+            whereCondition.id_categoria = parseInt(id_categoria as string);
+        }
+
+        const totalProducts = await prisma.produto.count({
+            where: whereCondition,
         });
 
-        const totalProducts = await prisma.products.count({
-            where: {
-                product_name: {
-                    contains: String(search),
-                    
-                },
-            },
+        const products = await prisma.produto.findMany({
+            where: whereCondition,
+            skip,
+            take: limitNumber,
         });
 
         response.status(200).json({
-            totalProducts,
             products,
+            totalProducts,
+            totalPages: Math.ceil(totalProducts / limitNumber),
             currentPage: pageNumber,
-            totalPages: Math.ceil(totalProducts / pageSize),
         });
     } catch (error) {
+        console.error('Error fetching products:', error);
         response.status(500).json({ message: 'Error fetching products', error });
     }
-};
-
-
-
+  };
 
   public createProduct = async (request: Request, response: Response) => {
     try {
-    // console.log(request.body)
-     
-    
-      // Fetch data from the database using Prisma
+      // Extract supplier information from the request body
+      console.log('Full Request Body:', request.body)
 
-      const product = await prisma.products.create({
-        data:{
-          ...request.body
-        }
+      const { id_fornecedor, preco_custo, ...productData } = request.body;
 
+      console.log('Product Data:', productData);
+
+      const product = await prisma.produto.create({
+        data: productData,
       });
-      
+
+      // If a supplier is provided, create the association in ProdutosFornecedor
+      if (id_fornecedor) {
+        await prisma.produtosFornecedor.create({
+          data: {
+            id_fornecedor,
+            id_produto: product.id_produto,
+            preco_custo: preco_custo
+          },
+        });
+      }
+
       // Send the result as a JSON response
       response.status(201).json(product);
     } catch (error) {
       // Handle any errors that occur during the database query
-      response.status(500).json({ message: 'Error creating products', error });
+      response.status(500).json({ message: 'Error creating product', error });
     }
-  }
+  };
 
+
+
+  // FUNÇÕES DE ATUALIZAÇÃO \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
   public updateProduct = async (request: Request, response: Response) => {
-    const { id } = request.query; // Get the products ID from the URL
-    console.log('update query:'+ request.query)
+    const { id } = request.params; // Get the products ID from the URL
+    console.log('update query:'+ request.params)
     // Data to update
     console.log(request.body)
     console.log(request.params)
     const {createdAt,updatedAT, ...dataToUpdate} =request.body
     try {
-      const updatedProduct = await prisma.products.update({
-        where: { id: Number(id) }, // Update based on ID
+      const updatedProduct = await prisma.produto.update({
+        where: { id_produto: Number(id) }, // Update based on ID
         data: {
           ...dataToUpdate
         }
@@ -87,29 +102,123 @@ class ProductControllers {
     } catch (error) {
       response.status(500).json({ message: 'Error updating products', error });
     }
-  };
+  }
 
-  // Delete a products by ID
-  public deleteProduct = async (request: Request, response: Response) => {
-    const { id } = request.query; // Get the products ID from the URL
-    console.log(request.query)
+  public addSupplierToProduct = async (request: Request, response: Response) => {
+    const { id } = request.params
+    const { id_fornecedor, preco_custo } = request.body;
+  
     try {
-      await prisma.products.delete({
-        where: { id: Number(id) } // Delete based on ID
+      // Check if the association already exists
+      const existingRelation = await prisma.produtosFornecedor.findFirst({
+        where: {
+          id_produto: Number(id),
+          id_fornecedor: Number(id_fornecedor),
+        },
       });
-      response.status(200).json({ message: 'Product deleted successfully' });
+  
+      if (existingRelation) {
+        return response.status(400).json({ message: 'Supplier is already associated with this product.' });
+      }
+  
+      // Create the association
+      const newAssociation = await prisma.produtosFornecedor.create({
+        data: {
+          id_produto: Number(id),
+          id_fornecedor: Number(id_fornecedor),
+          preco_custo: preco_custo
+        },
+      });
+  
+      response.status(201).json(newAssociation);
     } catch (error) {
-      response.status(500).json({ message: 'Error deleting product', error });
+      response.status(500).json({ message: 'Error adding supplier to product', error });
     }
   };
+
+  public removeSupplierFromProduct = async (request: Request, response: Response) => {
+    const { id } = request.params
+    const { id_fornecedor } = request.body;
+  
+    try {
+      // Check if the association exists
+      const existingRelation = await prisma.produtosFornecedor.findFirst({
+        where: {
+          id_produto: Number(id),
+          id_fornecedor: Number(id_fornecedor),
+        },
+      });
+  
+      if (!existingRelation) {
+        return response.status(404).json({ message: 'Supplier association not found for this product.' });
+      }
+  
+      // Remove the association
+      await prisma.produtosFornecedor.delete({
+        where: {
+          id_fornecedor_id_produto: {
+            id_fornecedor: Number(id_fornecedor),
+            id_produto: Number(id),
+          },
+        },
+      });
+  
+      response.status(200).json({ message: 'Supplier removed from product successfully.' });
+    } catch (error) {
+      response.status(500).json({ message: 'Error removing supplier from product', error });
+    }
+  };
+  // FUNÇÕES DE ATUALIZAÇÃO /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+  
   
 
-  public getProductById = async (request: Request, response: Response) => {
-    const { id } = request.query; // Get the products ID from the URL
-    console.log(request.query)
+  // Delete a product by ID
+  public deleteProduct = async (request: Request, response: Response) => {
+    const { id } = request.params; // Get the products ID from the URL
+    console.log(request.params)
     try {
-      const products = await prisma.products.findUnique({
-        where: { id: Number(id) }, // Find based on ID
+      const hasLoteRelationships = await prisma.loteProdutos.count({
+        where: { id_produto: Number(id) },
+      });
+      const hasSaidaRelationships = await prisma.saidaProduto.count({
+        where: { id_produto: Number(id) },
+      });
+      const hasRelationships = hasLoteRelationships > 0 || hasSaidaRelationships > 0;
+
+      if (hasRelationships) {
+        await prisma.produtosFornecedor.deleteMany({
+          where: { id_produto: Number(id) }, // Delete all supplier relationships for this product
+        });
+        // If there are existing relationships, perform a soft delete
+        await prisma.produto.update({
+            where: { id_produto: Number(id) },
+            data: { produto_deletedAt: new Date() },
+        });
+        return response.status(200).json({ message: 'Product soft deleted successfully' });
+
+      } else {
+        await prisma.produtosFornecedor.deleteMany({
+          where: { id_produto: Number(id) }, // Delete all supplier relationships for this product
+        });
+        // If no relationships exist, perform a hard delete
+        await prisma.produto.delete({
+            where: { id_produto: Number(id) },
+        });
+        return response.status(200).json({ message: 'Product deleted successfully' });
+      }
+
+    } catch (error) {
+        response.status(500).json({ message: 'Error deleting product', error });
+    }
+  };
+
+
+  public getProductById = async (request: Request, response: Response) => {
+    const { id } = request.params; // Get the products ID from the URL
+    console.log(request.params)
+    try {
+      const products = await prisma.produto.findUnique({
+        where: { produto_deletedAt: null, id_produto: Number(id) }, // Find based on ID
       });
 
       if (!products) {
@@ -122,57 +231,53 @@ class ProductControllers {
     }
   };
 
-  public searchProductName = async (request: Request, response: Response) => {
-    const { product_name, page = '1', limit = '10' } = request.query; // Pagination parameters
-    const pageNumber = parseInt(page as string);
-    const limitNumber = parseInt(limit as string);
-    const skip = (pageNumber - 1) * limitNumber; // Calculate the skip for pagination
+  public getProductBatches = async (request: Request, response: Response) => {
+    const { id } = request.params
 
     try {
-        let products, totalProducts;
-
-        if (!product_name) {
-            // Fetch all products with pagination if no search term is provided
-            totalProducts = await prisma.products.count(); // Total count for pagination
-            products = await prisma.products.findMany({
-                skip,
-                take: limitNumber,
-            });
-        } else {
-            // Fetch filtered products based on search term with pagination
-            totalProducts = await prisma.products.count({
-                where: {
-                    product_name: {
-                        contains: product_name as string,
-                    },
-                },
-            });
-            products = await prisma.products.findMany({
-                where: {
-                    product_name: {
-                        contains: product_name as string,
-                    },
-                },
-                skip,
-                take: limitNumber,
-            });
+      const productBatch = await prisma.loteProdutos.findMany({
+        where: { id_produto: Number(id) },
+        include: {
+          saidas: true
         }
+      })
 
-        // Return products even if the list is empty (avoid 404)
-        response.status(200).json({
-            products,
-            totalProducts, // Add total products for pagination metadata
-            totalPages: Math.ceil(totalProducts / limitNumber),
-            currentPage: pageNumber,
-        });
+      const result = productBatch.map(batch => {
+        const totalSaida = batch.saidas.reduce((sum: any, saida: any) => {
+          return sum + saida.quantidade_retirada
+        }, 0)
+
+        return {
+          id_lote: batch.id_lote,
+          id_produto: batch.id_produto,
+          quantidadeDisponivel: batch.quantidade - totalSaida,
+          validade_produto: batch.validade_produto
+        }
+      })
+      response.status(200).json(result)
     } catch (error) {
-        console.error('Error fetching products:', error);
+      response.status(500).json({ message: 'Error fetching batches for product:', error })
+    }
+  };
+
+  public getProductsWithMissingData = async (request: Request, response: Response) => {
+    try {
+        const productsWithMissingData = await prisma.produto.findMany({
+            where: {
+                produto_deletedAt: null,
+                OR: [
+                    { id_categoria: null },
+                    { id_setor: null }
+                ]
+            }
+        });
+
+        response.status(200).json(productsWithMissingData);
+    } catch (error) {
+        console.error('Error fetching products with missing category or sector:', error);
         response.status(500).json({ message: 'Error fetching products', error });
     }
-};
-
-
-
+  };
 
 }
 

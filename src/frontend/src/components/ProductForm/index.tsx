@@ -6,7 +6,7 @@ import { productSchema, ProductSchema } from './ProductSchema/productSchema';
 import CreateProductMutation from '../../Hooks/Products/postProductCreationHook';
 
 interface ProductFormProps {
-    refetch: () => void;
+    refetch: () => void; 
 }
 
 const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
@@ -20,8 +20,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     console.log('FORM')
     const onSuccess = () => {
         reset();
-        setSuccessMessage('Produto cadastrado com sucesso');
-        refetch();
+        setSuccessMessage('Produto Cadastrado com Sucesso!');
+        refetch(); 
     };
 
     const mutation = CreateProductMutation(onSuccess, setError, setServerError);
@@ -43,84 +43,109 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
         >
             {successMessage && <p className="text-green-500 font-bold">{successMessage}</p>}
             {serverError && <p className="text-red-500">{serverError}</p>}
-            
-            <h2 className='text-center'>Cadastrar Produtos</h2>
+
+            <h2>Registro de Produtos</h2>
+    
 
             {/* Form Fields */}
             <div className="grid grid-cols-2 gap-x-4 gap-y-4">
                 {/* Product Name */}
                 <div className="flex flex-col">
+                    <label htmlFor="nome_produto">Nome do Produto</label>
                     <input
-                        {...register("product_name")}
+                        {...register("nome_produto")}
                         type='text'
+                        id="nome_produto"
                         placeholder="Nome do Produto"
                         className="px-4 py-2 rounded w-full"
                     />
-                    {errors.product_name && <p className="text-red-500 text-sm mt-1">{errors.product_name.message}</p>}
+                    {errors.nome_produto && <p className="text-red-500 text-sm mt-1">{errors.nome_produto.message}</p>}
                 </div>
-
-                {/* Description */}
+    
+                {/* Descricao Produto */}
                 <div className="flex flex-col">
+                    <label htmlFor="descricao_produto">Descrição do Produto</label>
                     <input
-                        {...register("description")}
+                        {...register("descricao_produto")}
                         type='text'
+                        id="descricao_produto"
+                        placeholder="Descrição do Produto"
                         placeholder="Descrição"
                         className="px-4 py-2 rounded w-full"
                     />
-                    {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
+                    {errors.descricao_produto && <p className="text-red-500 text-sm mt-1">{errors.descricao_produto.message}</p>}
                 </div>
-
-                {/* Batch */}
+    
+                {/* Marca Produto */}
                 <div className="flex flex-col">
+                    <label htmlFor="marca_produto">Marca do Produto</label>
                     <input
-                        {...register("batch")}
+                        {...register("marca_produto")}
                         type='text'
+                        id="marca_produto"
+                        placeholder="Marca do Produto"
                         placeholder="Lote"
                         className="px-4 py-2 rounded w-full"
                     />
-                    {errors.batch && <p className="text-red-500 text-sm mt-1">{errors.batch.message}</p>}
+                    {errors.marca_produto && <p className="text-red-500 text-sm mt-1">{errors.marca_produto.message}</p>}
                 </div>
-
-                {/* Brand */}
+    
+                {/* Modelo Produto */}
                 <div className="flex flex-col">
+                    <label htmlFor="modelo_produto">Modelo do Produto</label>
                     <input
-                        {...register("brand")}
+                        {...register("modelo_produto")}
                         type='text'
+                        id="modelo_produto"
+                        placeholder="Modelo do Produto"
                         placeholder="Marca"
                         className="px-4 py-2 rounded w-full"
                     />
-                    {errors.brand && <p className="text-red-500 text-sm mt-1">{errors.brand.message}</p>}
+                    {errors.modelo_produto && <p className="text-red-500 text-sm mt-1">{errors.modelo_produto.message}</p>}
                 </div>
-
-                {/* Quantity */}
+    
+                {/* Preco Venda */}
                 <div className="flex flex-col">
+                    <label htmlFor="preco_venda">Preço de Venda</label>
                     <input
-                        {...register("quantity", { valueAsNumber: true })}
+                        {...register("preco_venda", { valueAsNumber: true })}
                         type='number'
+                        id="preco_venda"
+                        placeholder="Preço de Venda"
                         placeholder="Quantidade"
                         className="px-4 py-2 rounded w-full"
                         min='0'
                     />
-                    {errors.quantity && <p className="text-red-500 text-sm mt-1">{errors.quantity.message}</p>}
+                    {errors.preco_venda && <p className="text-red-500 text-sm mt-1">{errors.preco_venda.message}</p>}
                 </div>
-
-                {/* Price */}
+    
+                {/* Altura Produto */}
                 <div className="flex flex-col">
+                    <label htmlFor="altura_produto">Altura</label>
                     <input
-                        {...register("price", { valueAsNumber: true })}
+                        {...register("altura_produto", { valueAsNumber: true })}
                         type='number'
+                        id="altura_produto"
+                        placeholder="Altura do Produto"
                         placeholder="Preço"
                         className="px-4 py-2 rounded w-full"
                         min='0'
                     />
-                    {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>}
+                    {errors.altura_produto && <p className="text-red-500 text-sm mt-1">{errors.altura_produto.message}</p>}
                 </div>
-
-                {/* Retail Price */}
+    
+                {/* Largura Produto */}
                 <div className="flex flex-col">
+                    <label htmlFor="largura_produto">Largura</label>
                     <input
-                        {...register("retail_price", { valueAsNumber: true })}
+                        {...register("largura_produto", { valueAsNumber: true })}
                         type='number'
+                        id="largura_produto"
+                        placeholder="Largura do Produto"
+                        className="px-4 py-2 rounded w-full"
+                        min='0'
+                    />
+                    {errors.largura_produto && <p className="text-red-500 text-sm mt-1">{errors.largura_produto.message}</p>}
                         placeholder="Preço de Venda"
                         className="px-4 py-2 rounded w-full"
                         min='0'
@@ -138,63 +163,72 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     />
                     {errors.stock_location && <p className="text-red-500 text-sm mt-1">{errors.stock_location.message}</p>}
                 </div>
-
-                {/* Category ID */}
+    
+                {/* Comprimento Produto */}
                 <div className="flex flex-col">
+                    <label htmlFor="comprimento_produto">Comprimento</label>
                     <input
-                        {...register("id_category")}
+                        {...register("comprimento_produto", { valueAsNumber: true })}
+                        type='number'
+                        id="comprimento_produto"
+                        placeholder="Comprimento do Produto"
+                        className="px-4 py-2 rounded w-full"
+                        min='0'
+                    />
+                    {errors.comprimento_produto && <p className="text-red-500 text-sm mt-1">{errors.comprimento_produto.message}</p>}
+                </div>
+    
+                {/* Localização Estoque */}
+                <div className="flex flex-col">
+                    <label htmlFor="localizacao_estoque">Localização no Estoque</label>
+                    <input
+                        {...register("localizacao_estoque")}
                         type='text'
-                        placeholder="Id da categoria"
+                        id="localizacao_estoque"
+                        placeholder="Localização no Estoque"
                         className="px-4 py-2 rounded w-full"
                     />
-                    {errors.id_category && <p className="text-red-500 text-sm mt-1">{errors.id_category.message}</p>}
+                    {errors.localizacao_estoque && <p className="text-red-500 text-sm mt-1">{errors.localizacao_estoque.message}</p>}
                 </div>
-
-                {/* Sector ID */}
+    
+                {/* Peso Produto */}
                 <div className="flex flex-col">
+                    <label htmlFor="peso_produto">Peso</label>
                     <input
-                        {...register("id_sector")}
+                        {...register("peso_produto", { valueAsNumber: true })}
+                        type='number'
+                        id="peso_produto"
+                        placeholder="Peso do Produto"
+                        className="px-4 py-2 rounded w-full"
+                        min='0'
+                    />
+                    {errors.peso_produto && <p className="text-red-500 text-sm mt-1">{errors.peso_produto.message}</p>}
+                </div>
+    
+                {/* ID Categoria */}
+                <div className="flex flex-col">
+                    <label htmlFor="id_categoria">ID da Categoria</label>
+                    <input
+                        {...register("id_categoria")}
                         type='text'
-                        placeholder="Id do setor"
+                        id="id_categoria"
+                        placeholder="ID da Categoria"
                         className="px-4 py-2 rounded w-full"
                     />
-                    {errors.id_sector && <p className="text-red-500 text-sm mt-1">{errors.id_sector.message}</p>}
+                    {errors.id_categoria && <p className="text-red-500 text-sm mt-1">{errors.id_categoria.message}</p>}
                 </div>
-
-                {/* Weight */}
+    
+                {/* ID Setor */}
                 <div className="flex flex-col">
+                    <label htmlFor="id_setor">ID do Setor</label>
                     <input
-                        {...register("weight", { valueAsNumber: true })}
-                        type='number'
-                        placeholder="Peso"
+                        {...register("id_setor")}
+                        type='text'
+                        id="id_setor"
+                        placeholder="ID do Setor"
                         className="px-4 py-2 rounded w-full"
-                        min='0'
                     />
-                    {errors.weight && <p className="text-red-500 text-sm mt-1">{errors.weight.message}</p>}
-                </div>
-
-                {/* Height */}
-                <div className="flex flex-col">
-                    <input
-                        {...register("height", { valueAsNumber: true })}
-                        type='number'
-                        placeholder="Altura"
-                        className="px-4 py-2 rounded w-full"
-                        min='0'
-                    />
-                    {errors.height && <p className="text-red-500 text-sm mt-1">{errors.height.message}</p>}
-                </div>
-
-                {/* Width */}
-                <div className="flex flex-col">
-                    <input
-                        {...register("width", { valueAsNumber: true })}
-                        type='number'
-                        placeholder="Largura"
-                        className="px-4 py-2 rounded w-full"
-                        min='0'
-                    />
-                    {errors.width && <p className="text-red-500 text-sm mt-1">{errors.width.message}</p>}
+                    {errors.id_setor && <p className="text-red-500 text-sm mt-1">{errors.id_setor.message}</p>}
                 </div>
             </div>
             
@@ -203,6 +237,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                 className="bg-slate-400 border-black disabled:bg-gray-500 py-2 mt-4 rounded w-full"
                 disabled={isSubmitting}
             >
+                {isSubmitting ? 'Carregando...' : 'Cadastrar'}
                 {isSubmitting ? 'Loading...' : 'Cadastrar'}
             </button>
         </form>

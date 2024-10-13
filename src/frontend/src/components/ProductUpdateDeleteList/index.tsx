@@ -8,8 +8,7 @@ import useUpdateProduct from '../../Hooks/Products/patchByIdProductHook';
 import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
 
 interface Product extends ProductSchema {
-    id: number;
-    url_image?: string | null | undefined;
+    id_produto: number;
 }
 
 interface ProductsUpdateAndDeleteProps {
@@ -51,10 +50,11 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
         }
     };
     
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id_produto: number) => {
         if (window.confirm('Are you sure you want to delete this product?')) {
             try {
-                await deleteProductMutation.mutateAsync(id);
+                console.log(id_produto)
+                await deleteProductMutation.mutateAsync(id_produto);
                 refetch(); // Refetch only after deletion
             } catch (error) {
                 console.error('Error deleting product:', error);

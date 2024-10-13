@@ -2,35 +2,26 @@
 import { z } from 'zod';
 
 export const productSchema = z.object({
-    product_name: z.string().min(1, "O nome do Produto é obrigatório"),
-    batch: z.string().min(1, "O lote é obrigatório"),
-    description: z.string().optional(),
-    brand: z.string(),
-    quantity: z.number().min(1, "Quantidade deve ter pelo menos 1").positive(),
-    price: z.number().min(1, "Preço deve ter pelo menos 1").positive(),
-    retail_price: z.number().min(1, "Preço de Venda deve ter pelo menos 1").positive(),
-    stock_location: z.string().optional().nullable(),
-    id_category: z.preprocess(
-        (value) => (value === undefined ? undefined : Number(value)),
-        z.number().optional()
+
+    nome_produto: z.string().min(1, "Nome do Produto é obrigatório"),
+    descricao_produto: z.string().optional(),
+    marca_produto: z.string().optional(),
+    modelo_produto: z.string().optional(),
+    preco_venda: z.number().min("Preço Invalido.").positive(),
+    altura_produto: z.number().min("Largura Invalida.").positive(),
+    largura_produto: z.number().min("Altura Invalida.").positive(),
+    comprimento_produto: z.number().min("Profundidade Invalida.").positive(),
+    localizacao_estoque: z.string().optional(),
+    permalink_imagem: z.string().optional(),
+    peso_produto: z.number().min("Peso Invalido.").positive(),
+    id_categoria: z.preprocess(
+        (value) => (value === '' ? null : Number(value)),
+        z.number().optional().nullable()
     ),
-    id_sector: z.preprocess(
-        (value) => (value === undefined ? undefined : Number(value)),
-        z.number().optional()
-    ),
-    url_image: z.string().optional().nullable(),
-    weight: z.preprocess(
-        (value) => (value === undefined ? undefined : Number(value)),
-        z.number().optional()
-    ),
-    height: z.preprocess(
-        (value) => (value === undefined ? undefined : Number(value)),
-        z.number().positive().optional()
-    ),
-    width: z.preprocess(
-        (value) => (value === undefined? undefined : Number(value)),
-        z.number().positive().optional()
-    ),
+    id_setor: z.preprocess(
+        (value) => (value === '' ? null : Number(value)),
+        z.number().optional().nullable()
+    )
 });
 
 // Type inferred from the schema

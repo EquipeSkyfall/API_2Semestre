@@ -7,6 +7,7 @@ import Home from "./Pages/Home";
 import ProductsPage from "./Pages/Products";
 import SignUpPage from "./Pages/UserSignUp";
 import PageNotFound from "./Pages/NotFound";
+import Relatorio from "./Pages/Relatorio";
 
 function App() {
   const queryClient = new QueryClient();
@@ -21,7 +22,7 @@ function App() {
           <Route path="teste" element={<Teste />} />
           <Route path="signUpPage" element={<SignUpPage />} />
           <Route path="*" element={<PageNotFound />} />
-
+          <Route path="Relatorio" element={<Relatorio />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
