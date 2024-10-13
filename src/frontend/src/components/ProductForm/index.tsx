@@ -43,9 +43,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
         >
             {successMessage && <p className="text-green-500 font-bold">{successMessage}</p>}
             {serverError && <p className="text-red-500">{serverError}</p>}
-            
+
             <h2>Registro de Produtos</h2>
     
+
             {/* Form Fields */}
             <div className="grid grid-cols-2 gap-x-4 gap-y-4">
                 {/* Product Name */}
@@ -69,6 +70,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         type='text'
                         id="descricao_produto"
                         placeholder="Descrição do Produto"
+                        placeholder="Descrição"
                         className="px-4 py-2 rounded w-full"
                     />
                     {errors.descricao_produto && <p className="text-red-500 text-sm mt-1">{errors.descricao_produto.message}</p>}
@@ -82,6 +84,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         type='text'
                         id="marca_produto"
                         placeholder="Marca do Produto"
+                        placeholder="Lote"
                         className="px-4 py-2 rounded w-full"
                     />
                     {errors.marca_produto && <p className="text-red-500 text-sm mt-1">{errors.marca_produto.message}</p>}
@@ -95,6 +98,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         type='text'
                         id="modelo_produto"
                         placeholder="Modelo do Produto"
+                        placeholder="Marca"
                         className="px-4 py-2 rounded w-full"
                     />
                     {errors.modelo_produto && <p className="text-red-500 text-sm mt-1">{errors.modelo_produto.message}</p>}
@@ -108,6 +112,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         type='number'
                         id="preco_venda"
                         placeholder="Preço de Venda"
+                        placeholder="Quantidade"
                         className="px-4 py-2 rounded w-full"
                         min='0'
                     />
@@ -122,6 +127,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         type='number'
                         id="altura_produto"
                         placeholder="Altura do Produto"
+                        placeholder="Preço"
                         className="px-4 py-2 rounded w-full"
                         min='0'
                     />
@@ -140,6 +146,22 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         min='0'
                     />
                     {errors.largura_produto && <p className="text-red-500 text-sm mt-1">{errors.largura_produto.message}</p>}
+                        placeholder="Preço de Venda"
+                        className="px-4 py-2 rounded w-full"
+                        min='0'
+                    />
+                    {errors.retail_price && <p className="text-red-500 text-sm mt-1">{errors.retail_price.message}</p>}
+                </div>
+
+                {/* Stock Location */}
+                <div className="flex flex-col">
+                    <input
+                        {...register("stock_location")}
+                        type='text'
+                        placeholder="Localização do Estoque"
+                        className="px-4 py-2 rounded w-full"
+                    />
+                    {errors.stock_location && <p className="text-red-500 text-sm mt-1">{errors.stock_location.message}</p>}
                 </div>
     
                 {/* Comprimento Produto */}
@@ -216,6 +238,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                 disabled={isSubmitting}
             >
                 {isSubmitting ? 'Carregando...' : 'Cadastrar'}
+                {isSubmitting ? 'Loading...' : 'Cadastrar'}
             </button>
         </form>
     );

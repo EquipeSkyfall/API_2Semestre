@@ -15,11 +15,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-       <Header/>
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="products" element={<ProductsPage />} /> {/* Ensure to provide an element */}
+          <Route path="products" element={<ProductsPage />} /> 
           <Route path="teste" element={<Teste />} />
           <Route path="signUpPage" element={<SignUpPage />} />
           <Route path="*" element={<PageNotFound />} />
