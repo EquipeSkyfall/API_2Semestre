@@ -7,7 +7,7 @@ export default function NavBar() {
       <Link to='/products'>
         <button className="hover:border-b-4 hover:border-b-cyan-400 pb-2 bordernav">Produtos</button>
       </Link>
-      <Link to='/teste'>
+      <Link to='/Historico'>
         <button className="hover:border-b-4 hover:border-b-cyan-400 pb-2 bordernav">Histórico</button>
       </Link>
       <Link to='/teste'>
