@@ -4,18 +4,25 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7); /* Aumentei a opacidade da sobreposição para ver melhor o modal */
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9999;
+    overflow: auto;
 }
 
 .modal-content {
     background: white;
     padding: 20px;
     border-radius: 8px;
-    width: 400px; /* Adjust width as needed */
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
     position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    min-height: 300px; /* Altura mínima do modal */
 }
 
 .close-button {
@@ -24,6 +31,7 @@
     right: 10px;
     border: none;
     background: transparent;
-    font-size: 16px;
+    font-size: 18px;
+    color: #333;
     cursor: pointer;
 }

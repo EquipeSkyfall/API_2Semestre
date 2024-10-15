@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import ProductForm from '../ProductForm';
 import ProductsUpdateAndDelete from '../ProductUpdateDeleteList';
 import useSearchProducts from '../../Hooks/Products/getSearchProductbyNameHook';
+import './styles.css';  // Importe o CSS aqui
 
 // Memoize ProductForm to avoid unnecessary re-renders
 const MemoizedProductForm = React.memo(ProductForm);
@@ -21,23 +22,24 @@ const ProductsContainer: React.FC = () => {
     }, []);
 
     return (
-        <div className='flex gap-x-80 justify-around'>
+        <div className='product-container'>
             {/* Memoized ProductForm to prevent re-render during search */}
-            <MemoizedProductForm refetch={refetch} />
+            <div className='product-form-container'>
+                <MemoizedProductForm refetch={refetch} />
+            </div>
 
             {/* Product List and Search */}
-          <span className='max-w-200'>
-
-            <ProductsUpdateAndDelete
-                products={products}
-                searchTerm={searchTerm}
-                onSearchTermChange={handleSearchTermChange}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                totalPages={totalPages}
-                refetch={refetch} // For refreshing list after CUD
+            <div className='product-list-container'>
+                <ProductsUpdateAndDelete
+                    products={products}
+                    searchTerm={searchTerm}
+                    onSearchTermChange={handleSearchTermChange}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={totalPages}
+                    refetch={refetch} // For refreshing list after CUD
                 />
-                </span>
+            </div>
 
             {/* Loading and Error Handling */}
             {/* {isLoading && <div>Loading...</div>} */}

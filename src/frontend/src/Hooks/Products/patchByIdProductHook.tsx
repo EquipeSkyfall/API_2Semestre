@@ -2,28 +2,28 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
 interface Product {
-    id: number;
-    product_name: string;
-    description?: string;
-    batch: string;
-    brand: string;
-    quantity: number;
-    price: number;
-    retail_price: number;
-    stock_location?: string;
-    id_category?: number;
-    id_sector?: number;
-    url_image?: string;
-    weight?: number;
-    height?: number;
-    width?: number;
+    id_produto: number;   
+    nome_produto: string;  
+    descricao_produto?: string;
+    marca_produto: string; 
+    modelo_produto?: string; 
+    preco_venda: number; 
+    altura_produto?: number; 
+    largura_produto?: number;   
+    comprimento_produto?: number;
+    localizacao_estoque?: string;
+    permalink_imagem?: string; 
+    peso_produto?: number;  
+    id_categoria?: number;    
+    id_setor?: number;       
 }
 
-// Hook for updating product
+// Hook para atualizar o produto
 const useUpdateProduct = () => {
     return useMutation<Product, Error, Product>({
         mutationFn: async (product: Product) => {
-            const { data } = await axios.patch<Product>(`http://127.0.0.1:3000/products/id?id=${product.id}`, product);
+            // Alterando o endpoint para refletir o campo id_produto
+            const { data } = await axios.patch<Product>(`http://127.0.0.1:3000/products/${product.id_produto}`, product);
             return data;
         },
     });

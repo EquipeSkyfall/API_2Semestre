@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.css';  // Importando o arquivo de estilos
 import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
 
 interface Product extends ProductSchema {
@@ -29,10 +30,10 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
             <ul>
                 {products.length > 0 ? (
                     products.map((product: Product) => (
-                        <li key={product.id_produto}>
-                            <span>{product.nome_produto}</span>
-                            <button onClick={() => onEdit(product)}>Edit</button>
-                            <button onClick={() => onDelete(product.id_produto)}>Delete</button>
+                        <li key={product.id_produto} className="product-item">
+                            <span className="product-name">{product.nome_produto}</span>
+                            <button onClick={() => onEdit(product)} className="edit-btn">Edit</button>
+                            <button onClick={() => onDelete(product.id_produto)} className="delete-btn">Delete</button>
                         </li>
                     ))
                 ) : (
@@ -45,6 +46,7 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                 <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
+                    className="pagination-btn"
                 >
                     Previous
                 </button>
@@ -52,6 +54,7 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
                     disabled={currentPage === totalPages}
+                    className="pagination-btn"
                 >
                     Next
                 </button>
