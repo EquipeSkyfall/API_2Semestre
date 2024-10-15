@@ -1,0 +1,53 @@
+  
+  .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Times New Roman', sans-serif;
+      /* height: 100vh; Faz com que o container ocupe toda a altura da tela */
+    }
+    
+  
+  
+    .rectangle {
+      background-color: #28178F;
+      width: 900px; 
+      height: 300px; 
+      display: flex;
+      font-size: 30px;
+      flex-direction: column; 
+    }
+    
+    .section {
+      flex: 1;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid white;
+    }
+    
+    /* Estilos para a Parte 2, que agora contém sub-seções */
+    .sub-section {
+      flex: 1; 
+      color: white; 
+      display: flex;
+      align-items: center;
+      padding: 0 10px; 
+    }
+    
+    
+    .generate-report-button {
+  
+      background-color: white; 
+      color: black; 
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 30px;
+    }
+    
+    .generate-report-button:hover {
+      background-color: #f0f0f0;
+    }
+    
