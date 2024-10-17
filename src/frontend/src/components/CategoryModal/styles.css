@@ -1,0 +1,67 @@
+/* Modal overlay to cover the entire screen with a semi-transparent background */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensures the modal is above other content */
+}
+
+/* Modal content styling */
+.modal-content {
+    background-color: #fff; /* Solid white background for the modal content */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    width: 50%;
+    max-width: 600px;
+    position: relative; /* Required for close button positioning */
+    text-align: center; /* Center text inside the modal */
+    overflow-y: auto; /* Adds scrolling if the content exceeds the modal height */
+}
+
+/* Close button styling */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff4d4d; /* Red background for the close button */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-button:hover {
+    background-color: #ff1a1a; /* Darker red on hover */
+}
+
+/* Modal title */
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Add margin to CategoryForm and CategoryList to prevent overlap */
+.CategoryForm,
+.CategoryList {
+    margin-bottom: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 80%; /* Smaller width on smaller screens */
+    }
+}
