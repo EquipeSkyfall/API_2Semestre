@@ -9,7 +9,7 @@ interface SectorSelectProps {
 
 const SectorSelect: React.FC<SectorSelectProps> = ({ setIsSectorModalOpen, refetch }) => {
     const { register, formState: { errors } } = useFormContext();
-    const { sectors, isLoading, isError, refetch: refetchSectors } = FetchAllSectors(1, 10);
+    const { sectors, isLoading, isError, refetch: refetchSectors } = FetchAllSectors(1);
 
     useEffect(() => {
         refetchSectors();

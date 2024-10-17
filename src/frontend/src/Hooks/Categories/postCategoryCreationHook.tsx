@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 import { categorySchema } from '../../components/CategoryForm/CategorySchema/categorySchema'
 import { z } from 'zod'
@@ -18,10 +18,13 @@ const MutationCreateCategory = (
     setError: UseFormSetError<createCategorySchema>,
     setServerError: ( message: string ) => void
 ) => {
+    const queryClient = useQueryClient();
+    
     return useMutation<createCategorySchema, AxiosError, createCategorySchema>({
         mutationFn: postCategoryData,
         onSuccess: ( data ) => {
             console.log('Data submitted successfully:', data)
+            queryClient.invalidateQueries(['CategoriesData'])
             onSuccessCallback(data)
         },
         onError: (error) => {

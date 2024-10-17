@@ -8,9 +8,9 @@ interface SectorsResponse {
     totalSectors: number;
 }
 
-const FetchAllSectors = (page: number, limit: number) => {
+const FetchAllSectors = (page: number = 1, limit: number | string = 'all') => {
     const { data = { sectors: [], totalPages: 1, totalSectors: 0 }, isLoading, isError, refetch } = useQuery<SectorsResponse>({
-        queryKey: ['searchSectors', page, limit],
+        queryKey: ['SectorsData', page, limit],
         queryFn: async () => {
             const response = await axios.get(`http://127.0.0.1:3000/sectors?page=${page}&limit=${limit}`)
             return response.data || {sectors: [], totalPages: 1, totalSectors: 0 }

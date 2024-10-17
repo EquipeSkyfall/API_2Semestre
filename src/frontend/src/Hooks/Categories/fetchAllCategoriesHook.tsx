@@ -8,9 +8,9 @@ interface CategoriesResponse {
     totalCategories: number;
 }
 
-const FetchAllCategories = (page: number, limit: number) => {
+const FetchAllCategories = (page: number, limit: number | string = 'all') => {
     const { data = { categories: [], totalPages: 1, totalCategories: 0 }, isLoading, isError, refetch } = useQuery<CategoriesResponse>({
-        queryKey: ['searchCategories', page, limit],
+        queryKey: ['CategoriesData', page, limit],
         queryFn: async () => {
             const response = await axios.get(`http://127.0.0.1:3000/categories?page=${page}&limit=${limit}`)
             return response.data || { categories: [], totalPages: 1, totalCategories: 0 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { sectorSchema } from "../../components/SectorForm/SectorSchema/sectorSchema";
 import { z } from "zod";
@@ -18,11 +18,14 @@ const MutationCreateSector = (
     setError: UseFormSetError<createSectorSchema>,
     setServerError: ( message: string ) => void
 ) => {
+    const queryClient = useQueryClient();
+
     return useMutation<createSectorSchema, AxiosError, createSectorSchema>({
         mutationFn: postSectorData,
         onSuccess: ( data ) => {
             console.log('Data submitted successfully:', data)
             onSuccessCallback(data)
+            queryClient.invalidateQueries(['SectorsData']);
         },
         onError: (error) => {
             if (error.response) {

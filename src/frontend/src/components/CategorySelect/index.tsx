@@ -9,7 +9,7 @@ interface CategorySelectProps {
 
 const CategorySelect: React.FC<CategorySelectProps> = ({ setIsCategoryModalOpen, refetch }) => {
     const { register, formState: { errors } } = useFormContext();
-    const { categories, isLoading, isError, refetch: refetchCategories } = FetchAllCategories(1, 10);
+    const { categories, isLoading, isError, refetch: refetchCategories } = FetchAllCategories(1);
 
     useEffect(() => {
         refetchCategories(); // Sync with changes from the modal or other components

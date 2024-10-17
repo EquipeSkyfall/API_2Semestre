@@ -4,10 +4,10 @@ import { request } from 'http';
 
 class SectorControllers {
     public getSectors = async (request: Request, response: Response) => {
-        const { search = '', page = '1', limit = '10' } = request.query
+        const { search = '', page = '1', limit = 'all' } = request.query
         const pageNumber = parseInt(page as string)
-        const limitNumber = parseInt(limit as string)
-        const skip = (pageNumber - 1) * limitNumber
+        const limitNumber = limit === 'all' ? undefined : parseInt(limit as string)
+        const skip = limitNumber ? (pageNumber - 1) * limitNumber : undefined
 
         try{
             const whereCondition: any = {}
@@ -31,8 +31,8 @@ class SectorControllers {
             response.status(200).json({
                 sectors,
                 totalSectors,
-                totalPages: Math.ceil(totalSectors / limitNumber),
-                currentPage: pageNumber
+                totalPages: limitNumber ? Math.ceil(totalSectors / limitNumber) : 1,
+                currentPage: limitNumber ? pageNumber : 1
             })
         } catch (error) {
             console.error('Error fetching sectors:', error)

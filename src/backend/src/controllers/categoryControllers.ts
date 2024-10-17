@@ -3,10 +3,10 @@ import prisma from '../dbConnector';
 
 class CategoryControllers {
     public getCategories = async (request: Request, response: Response) => {
-        const { search = '', page = '1', limit = '10' } = request.query
+        const { search = '', page = '1', limit = 'all' } = request.query
         const pageNumber = parseInt(page as string)
-        const limitNumber = parseInt(limit as string)
-        const skip = (pageNumber - 1) * limitNumber
+        const limitNumber = limit === 'all' ? undefined : parseInt(limit as string)
+        const skip = limitNumber ? (pageNumber - 1) * limitNumber : undefined
 
         try {
             const whereCondition: any = {}
@@ -30,8 +30,8 @@ class CategoryControllers {
             response.status(200).json({
                 categories,
                 totalCategories,
-                totalPages: Math.ceil(totalCategories / limitNumber),
-                currentPage: pageNumber
+                totalPages: limitNumber ? Math.ceil(totalCategories / limitNumber) : 1,
+                currentPage: limitNumber ? pageNumber : 1
             })
         } catch (error) {
             console.error('Error fetching categories:', error)
