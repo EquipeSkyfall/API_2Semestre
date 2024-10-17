@@ -3,13 +3,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Teste from "./Pages/teste";
 import NavBar from "./components/NavBar";
 import Home from "./Pages/Home";
-
 import ProductsPage from "./Pages/Products";
-import SignUpPage from "./Pages/UserSignUp";
 import PageNotFound from "./Pages/NotFound";
 import Relatorio from "./Pages/Relatorio";
 import Historico from "./Pages/Historico";
-
+import Login from "./Pages/login";
 
 function App() {
   const queryClient = new QueryClient();
@@ -17,16 +15,27 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-       {/* <Header/> */}
-        <NavBar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="products" element={<ProductsPage />} /> {/* Ensure to provide an element */}
-          <Route path="teste" element={<Teste />} />
-          <Route path="signUpPage" element={<SignUpPage />} />
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="Relatorio" element={<Relatorio />} />
-          <Route path="Historico" element={<Historico />} />
+          {/* Página inicial sem NavBar */}
+          <Route path="/" element={<Login />} /> {/* Use Login com maiúscula */}
+          <Route path="/cadastrar" element={<Home />} />
+          
+          {/* Rotas com NavBar */}
+          <Route
+            path="*"
+            element={
+              <>
+                <NavBar />
+                <Routes>
+                  <Route path="products" element={<ProductsPage />} />
+                  <Route path="teste" element={<Teste />} />
+                  <Route path="Relatorio" element={<Relatorio />} />
+                  <Route path="Historico" element={<Historico />} />
+                  <Route path="*" element={<PageNotFound />} />
+                </Routes>
+              </>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
