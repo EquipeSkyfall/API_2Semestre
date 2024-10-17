@@ -1,14 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
-
-interface CategorySchema {
-    id_categoria: number;
-    nome_categoria: string;
-    descricao_categoria: string;
-}
+import { Category } from "../../components/CategoryTypes/types";
 
 interface CategoriesResponse {
-    categories: CategorySchema[];
+    categories: Category[];
     totalPages: number;
     totalCategories: number;
 }
@@ -31,6 +26,6 @@ const FetchAllCategories = (page: number, limit: number) => {
         isError,
         refetch
     }
-}
+};
 
-export default FetchAllCategories
+export default FetchAllCategories;

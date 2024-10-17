@@ -1,22 +1,18 @@
 import React from "react";
-import { Category } from "../CategoryTypes/types";
+import { Sector } from "../SectorTypes/types";
 
-// interface Category extends CategorySchema {
-//     id_categoria: number;
-// }
-
-interface CategoryListProps {
-    categories: Category[];
+interface SectorListProps {
+    sectors: Sector[];
     currentPage: number;
     totalPages: number;
     itemsPerPage: number;
     handlePageChange: (newPage: number) => void;
-    onDelete: (id_categoria: number) => void;
-    onEdit: (category: Category) => void;
+    onDelete: (id_setor: number) => void;
+    onEdit: (sector: Sector) => void;
 }
 
-const CategoryList: React.FC<CategoryListProps> = React.memo(({
-    categories,
+const SectorList: React.FC<SectorListProps> = React.memo(({
+    sectors,
     currentPage,
     totalPages,
     itemsPerPage,
@@ -25,18 +21,18 @@ const CategoryList: React.FC<CategoryListProps> = React.memo(({
     onEdit,
 }) => {
     return (
-        <div className="category-list">
+        <div className="sector-list">
             <ul>
-                {categories.length > 0 ? (
-                    categories.map((category: Category) => (
-                        <li key={category.id_categoria} className="category-item">
-                            <span className="category-name">{category.nome_categoria} | {category.descricao_categoria}</span>
-                            <button onClick={() => onEdit(category)} className="edit-btn">Editar</button>
-                            <button onClick={() => onDelete(category.id_categoria)} className="delete-btn">Deletar</button>
+                {sectors.length > 0 ? (
+                    sectors.map((sector: Sector) => (
+                        <li key={sector.id_setor} className="sector-item">
+                            <span className="sector-name">{sector.nome_setor}</span>
+                            <button onClick={() => onEdit(sector)} className="edit-btn">Editar</button>
+                            <button onClick={() => onDelete(sector.id_setor)} className="delete-btn">Deletar</button>
                         </li>
                     ))
                 ) : (
-                    <li>Não há categorias registradas.</li>
+                    <li>Não há setores registrados.</li>
                 )}
             </ul>
 
@@ -58,4 +54,4 @@ const CategoryList: React.FC<CategoryListProps> = React.memo(({
     )
 });
 
-export default CategoryList;
+export default SectorList;

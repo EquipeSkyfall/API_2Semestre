@@ -18,7 +18,6 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
 }) => {
     const [editingCategory, setEditingCategory] = useState<Category | null>(null)
     const [isEditing, setIsEditing] = useState(false)
-    const updateCategoryMutation = useUpdateCategory()
     const deleteCategoryMutation = useDeleteCategory()
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 10;
@@ -37,17 +36,6 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
     const handleEdit = (category: Category) => {
         setEditingCategory(category);
         setIsEditing(true);
-    };
-
-    const handleUpdate = async (updatedCategory: Category) => {
-        try{
-            await updateCategoryMutation.mutateAsync(updatedCategory);
-            setIsEditing(false);
-            refetch();
-            refetchCategories();
-        } catch (error) {
-            console.error('Erro deletando categoria:', error)
-        }
     };
 
     const handleDelete = async (id_categoria: number) => {
@@ -80,10 +68,10 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                     onEdit={handleEdit}
                 />
 
-                {/* Cadastro */}
+                {/* Cadastro | Edição */}
                 <CategoryForm refetch={() => {
-                    refetch();
-                    refetchCategories(); // Ensure the list is up-to-date after adding a category
+                        refetch();
+                        refetchCategories(); // Ensure the list is up-to-date after adding a category
                     }}
                     editingCategory={editingCategory}  // Pass the editing category to the form
                     setIsEditing={setIsEditing}
@@ -95,6 +83,6 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
             </div>
         </div>
     )
-}
+};
 
 export default CategoryModal;

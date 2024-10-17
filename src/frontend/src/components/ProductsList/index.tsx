@@ -50,10 +50,10 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                 >
                     Previous
                 </button>
-                <span>Page {currentPage} of {totalPages}</span>
+                {totalPages > 0 ? `Página ${currentPage} de ${totalPages}` : ''}
                 <button
                     onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
+                    disabled={currentPage >= totalPages}
                     className="pagination-btn"
                 >
                     Next

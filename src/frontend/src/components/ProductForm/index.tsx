@@ -5,6 +5,8 @@ import { productSchema, ProductSchema } from './ProductSchema/productSchema';
 import CreateProductMutation from '../../Hooks/Products/postProductCreationHook';
 import CategorySelect from '../CategorySelect';
 import CategoryModal from '../CategoryModal';
+import SectorSelect from '../SectorSelect';
+import SectorModal from '../SectorModal';
 import './styles.css';  // Referência ao CSS
 
 interface ProductFormProps {
@@ -14,7 +16,8 @@ interface ProductFormProps {
 const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     const [serverError, setServerError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
-    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // Modal state
+    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+    const [isSectorModalOpen, setIsSectorModalOpen] = useState(false);
     const methods = useForm<ProductSchema>({
         resolver: zodResolver(productSchema),
     });
@@ -171,18 +174,13 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
                     <CategorySelect
                         setIsCategoryModalOpen={setIsCategoryModalOpen}
+                        refetch={refetch}
                     />
 
-                    <div className="form-field optional">
-                        <label htmlFor="id_setor">Setor</label>
-                        <input
-                            {...register("id_setor")}
-                            type='text'
-                            id="id_setor"
-                            placeholder="Opcional"
-                        />
-                        {errors.id_setor && <p className="error-message">{errors.id_setor.message}</p>}
-                    </div>
+                    <SectorSelect
+                        setIsSectorModalOpen={setIsSectorModalOpen}
+                        refetch={refetch}
+                    />
                 </div>
 
                 <button
@@ -194,10 +192,16 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                 </button>
             </form>
         </FormProvider>
-        {/* Render Category Modal outside the form */}
+        {/* Render Modals outside the form */}
         {isCategoryModalOpen && (
             <CategoryModal
                 setIsCategoryModalOpen={setIsCategoryModalOpen}
+                refetch={refetch}
+            />
+        )}
+        {isSectorModalOpen && (
+            <SectorModal
+                setIsSectorModalOpen={setIsSectorModalOpen}
                 refetch={refetch}
             />
         )}
