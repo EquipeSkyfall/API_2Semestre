@@ -34,7 +34,7 @@ function UserForm() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen pl-96 ml-40 ">
+        <div className="flex items-center justify-center h-screen w-screen ">
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-2 border-2 bg-slate-50 shadow-md p-10 place-items-center rounded">
                 {successMessage && <p className="text-green-500 font-bold">{successMessage}</p>}
                 {serverError && <p className="text-red-500">{serverError}</p>}
@@ -42,7 +42,7 @@ function UserForm() {
                     {...register("name")}
                     type='text'
                     placeholder="Nome"
-                    className="px-16 py-2 rounded-full shadow-md text-center"
+                    className="px-16 py-2 rounded-full shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
 
@@ -50,7 +50,7 @@ function UserForm() {
                     {...register("email")}
                     type='email'
                     placeholder="Email"
-                    className="px-16 py-2 rounded-full shadow-md text-center"
+                    className="px-16 py-2 rounded-full shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
@@ -58,7 +58,7 @@ function UserForm() {
                     {...register("password")}
                     type='password'
                     placeholder="Senha"
-                    className="px-16 py-2 rounded-full  shadow-md text-center"
+                    className="px-16 py-2 rounded-full  shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
@@ -66,7 +66,7 @@ function UserForm() {
                     {...register("confirmPassword")}
                     type="password"
                     placeholder="Repita a senha"
-                    className="px-16 py-2 rounded-full shadow-md text-center"
+                    className="px-16 py-2 rounded-full shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
                 <div className="flex flex-col text-black mb-4">
@@ -96,7 +96,7 @@ function UserForm() {
                     {isSubmitting ? 'Carregando...' : 'Registrar'} {/* Exibe texto de carregamento ao enviar */}
                 </button>
                 <Link to='/'>
-                    <button className="text-black mt-1 hover:text-cyan-500 transition duration-300 ease-in-out">Já possui uma conta?</button>
+                    <button className="text-cyan-700 mt-1 hover:text-cyan-500 transition duration-300 ease-in-out">Já possui uma conta?</button>
                 </Link>
         </form>
         </div >
