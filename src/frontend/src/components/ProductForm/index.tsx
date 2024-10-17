@@ -15,14 +15,11 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     const [serverError, setServerError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false); // Modal state
-    const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
     const methods = useForm<ProductSchema>({
         resolver: zodResolver(productSchema),
     });
 
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset } = useForm<ProductSchema>({
-        resolver: zodResolver(productSchema),
-    });
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset } = methods
 
     const onSuccess = () => {
         reset();
@@ -35,7 +32,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     const onSubmit = (data: ProductSchema) => {
         setServerError(null);
         setSuccessMessage(null);
-        data.id_categoria = selectedCategoryId;
         mutation.mutate(data);
     };
 
@@ -175,7 +171,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
                     <CategorySelect
                         setIsCategoryModalOpen={setIsCategoryModalOpen}
-                        setSelectedCategoryId={setSelectedCategoryId}
                     />
 
                     <div className="form-field optional">

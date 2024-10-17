@@ -14,7 +14,12 @@ export const productSchema = z.object({
     permalink_imagem: z.string().optional().nullable(), // Permite valores nulos
     peso_produto: z.number().min(0, "Peso Invalido.").positive(),
     id_categoria: z.preprocess(
-        (value) => (value === '' ? null : Number(value)),
+        (value) => {
+            console.log("id_categoria value before preprocess:", value); // Log value before processing
+            if (typeof value === 'string' && value === '') return null;
+            if (typeof value === 'string') return parseInt(value, 10);
+            return value;
+        },
         z.number().optional().nullable()
     ),
     id_setor: z.preprocess(

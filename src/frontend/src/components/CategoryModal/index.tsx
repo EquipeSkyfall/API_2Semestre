@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import CategoryList from '../CategoryList'
 import useDeleteCategory from '../../Hooks/Categories/deleteCategoryByIdHook'
 import useUpdateCategory from '../../Hooks/Categories/patchCategoryByIdHook'
@@ -23,10 +23,15 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 10;
 
-    const { categories, totalPages, isLoading, isError } = FetchAllCategories(currentPage, itemsPerPage)
+    const { categories, totalPages, isLoading, isError, refetch: refetchCategories } = FetchAllCategories(currentPage, itemsPerPage)
+
+    useEffect(() => {
+        refetchCategories(); // Ensure categories are re-fetched on modal open
+    }, [currentPage, isEditing]);
 
     const closeModal = () => {
         setIsCategoryModalOpen(false);
+        refetch();
     };
 
     const handleEdit = (category: Category) => {
@@ -39,6 +44,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
             await updateCategoryMutation.mutateAsync(updatedCategory);
             setIsEditing(false);
             refetch();
+            refetchCategories();
         } catch (error) {
             console.error('Erro deletando categoria:', error)
         }
@@ -50,6 +56,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                 console.log(id_categoria)
                 await deleteCategoryMutation.mutateAsync(id_categoria)
                 refetch()
+                refetchCategories()
             } catch (error) {
                 console.error('Erro tentando deletar categoria:', error)
             }
@@ -74,7 +81,17 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                 />
 
                 {/* Cadastro */}
-                <CategoryForm refetch={refetch} />
+                <CategoryForm refetch={() => {
+                    refetch();
+                    refetchCategories(); // Ensure the list is up-to-date after adding a category
+                    }}
+                    editingCategory={editingCategory}  // Pass the editing category to the form
+                    setIsEditing={setIsEditing}
+                    onCancelEdit={() => {
+                        setEditingCategory(null);
+                        setIsEditing(false);
+                    }}
+                />
             </div>
         </div>
     )

@@ -1,34 +1,69 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { categorySchema, CategorySchema } from "./CategorySchema/categorySchema";
+import { Category } from "../CategoryTypes/types";
 import MutationCreateCategory from "../../Hooks/Categories/postCategoryCreationHook";
 import './styles.css'
+import useUpdateCategory from "../../Hooks/Categories/patchCategoryByIdHook";
 
 interface CategoryFormProps {
     refetch: () => void;
+    editingCategory?: Category | null;
+    setIsEditing?: (isEditing: boolean) => void;
+    onCancelEdit: () => void;
 }
 
-const CategoryForm: React.FC<CategoryFormProps> = ({ refetch }) => {
+const CategoryForm: React.FC<CategoryFormProps> = ({ refetch, editingCategory, setIsEditing, onCancelEdit }) => {
     const [serverError, setServerError] = useState<string | null>(null)
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset } = useForm<CategorySchema>({
-        resolver: zodResolver(categorySchema)
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset, setValue } = useForm<CategorySchema>({
+        resolver: zodResolver(categorySchema),
+        defaultValues: {
+            nome_categoria: editingCategory?.nome_categoria || '',
+            descricao_categoria: editingCategory?.descricao_categoria || '',
+        }
     });
 
     const onSuccess = () => {
         reset();
         setSuccessMessage('Categoria cadastrada com sucesso!');
         refetch();
+        if (setIsEditing) setIsEditing(false)
     };
 
     const mutation = MutationCreateCategory(onSuccess, setError, setServerError);
+    const updateMutation = useUpdateCategory();
+
+    useEffect(() => {
+        if (editingCategory) {
+            setValue("nome_categoria", editingCategory.nome_categoria)
+            setValue("descricao_categoria", editingCategory.descricao_categoria)
+        } else {
+            reset()
+        }
+    }, [editingCategory, setValue, reset]);
 
     const onSubmit = (data: CategorySchema) => {
         setServerError(null);
         setSuccessMessage(null);
-        mutation.mutate(data);
+        if (editingCategory) {
+            updateMutation.mutate({
+                ...data,
+                id_categoria: editingCategory.id_categoria,
+                descricao_categoria: data.descricao_categoria || '',
+            }, {
+                onSuccess: () => {
+                    onSuccess();
+                },
+                onError: (error: any) => {
+                    setServerError('Erro ao atualizar categoria.')
+                }
+            })
+        } else {
+            mutation.mutate(data);
+        }
     };
 
     const onError = (errors: any) => {
@@ -43,7 +78,7 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ refetch }) => {
             {successMessage && <p className="success-message">{successMessage}</p>}
             {serverError && <p className="error-message">{serverError}</p>}
 
-            <h2>Cadastrar Categoria</h2>
+            <h2>{editingCategory ? 'Editar Categoria' : 'Cadastrar Categoria'}</h2>
 
             <div className="form-fields-grid">
                 <div className="form-field required">
@@ -71,8 +106,21 @@ const CategoryForm: React.FC<CategoryFormProps> = ({ refetch }) => {
                     className="submit-button"
                     disabled={isSubmitting}
                 >
-                    {isSubmitting ? 'Carregando...' : 'Cadastrar'}
+                    {isSubmitting ? 'Carregando...' : (editingCategory ? 'Salvar Alterações' : 'Cadastrar')}
                 </button>
+
+                {editingCategory && (
+                    <button
+                        type="button"
+                        className="cancel-button"
+                        onClick={() => {
+                            reset();  // Reset the form
+                            onCancelEdit();  // Exit editing mode
+                        }}
+                    >
+                        Cancelar
+                    </button>
+                )}
             </div>
         </form>
     )
