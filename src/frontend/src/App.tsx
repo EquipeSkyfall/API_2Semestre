@@ -9,6 +9,7 @@ import Relatorio from "./Pages/Relatorio";
 import Historico from "./Pages/Historico";
 import Login from "./Pages/login";
 import Fornecedor from "./Pages/Fornecedores";
+import Movimentacao from "./Pages/Movimentacao";
 
 function App() {
   const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ function App() {
                 <Routes>
                   <Route path="products" element={<ProductsPage />} />
                   <Route path="teste" element={<Teste />} />
+                  <Route path="Movimentacao" element={<Movimentacao />} />
                   <Route path="Relatorio" element={<Relatorio />} />
                   <Route path="Historico" element={<Historico />} />
                   <Route path="fornecedor" element={<Fornecedor />} />

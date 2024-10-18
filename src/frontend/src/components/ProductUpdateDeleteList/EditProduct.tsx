@@ -66,7 +66,7 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
                     <h2>Edit Product</h2>
 
                     {Object.keys(productSchema.shape)
-                    .filter(key => key !== 'id_categoria' && key !== 'id_setor')  // Exclude category and sector fields
+                    .filter(key => key !== 'id_categoria' && key !== 'id_setor' && key !== 'unidade_medida')  // Exclude category and sector fields
                     .map((key) => {
                         const keyAsType = key as keyof Product;
                         const isNumericField = ['preco_venda', 'altura_produto', 'largura_produto', 'comprimento_produto', 'peso_produto'].includes(key);
@@ -83,11 +83,29 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
                                 setValueAs: (value) => value === '' ? null : value,
                             })}
                             type={isNumericField ? 'number' : 'text'}
+                            step="0.01"
                             />
                             {errors[keyAsType] && <p className="error-message">{errors[keyAsType]?.message}</p>}
                         </div>
                         );
                     })}
+                    {/* Unit Measure Radio Buttons */}
+                    <div className="form-group">
+                        <label>Unidade de Medida:</label>
+                        <div>
+                            {['kg', 'g', 'L', 'ml'].map(unit => (
+                                <label key={unit}>
+                                    <input
+                                        type="radio"
+                                        {...register("unidade_medida")}
+                                        value={unit}
+                                        defaultChecked={product.unidade_medida === unit} // Set the default checked state
+                                    />
+                                    {unit}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
 
                     {/* Add the Category and Sector dropdowns */}
                     <CategorySelect refetch={refetch} defaultValue={product.id_categoria} />

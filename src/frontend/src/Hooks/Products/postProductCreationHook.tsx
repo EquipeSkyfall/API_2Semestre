@@ -7,9 +7,9 @@ import { UseFormSetError } from 'react-hook-form';
 type createProductSchema = z.infer<typeof productSchema>;
 
 const postProductData = async (data: createProductSchema): Promise<createProductSchema> => {
-    const response = await axios.post('http://127.0.0.1:3000/products', data);
-    return response.data;
-  };
+  const response = await axios.post('http://127.0.0.1:3000/products', data);
+  return response.data;
+};
   
 
 const MutationCreateProduct = (

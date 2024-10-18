@@ -5,6 +5,35 @@ body, html {
 }
 
 
+.peso-container {
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+.peso-container input {
+    flex: 1; /* Take up remaining space */
+    margin-right: 8px; /* Add some space between input and buttons */
+}
+
+.unit-toggle {
+    display: flex;
+}
+
+.unit-button {
+    padding: 8px 12px; /* Adjust padding for better click area */
+    border: 1px solid #007bff; /* Border color */
+    background-color: white; /* Default background */
+    color: #007bff; /* Text color */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.unit-button.active {
+    background-color: #007bff; /* Active background color */
+    color: white; /* Active text color */
+}
+
+
 .product-container {
     display: flex;
     justify-content: space-between;

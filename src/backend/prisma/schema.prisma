@@ -39,6 +39,7 @@ model Produto {
   localizacao_estoque  String?             @db.VarChar(255)
   permalink_imagem     String?             @db.VarChar(255)
   peso_produto         Decimal             @db.Decimal(10, 2)
+  unidade_medida       String              @db.VarChar(2)
   produto_deletedAt    DateTime?           @db.Date
   id_categoria         Int?
   id_setor             Int?

@@ -57,7 +57,7 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                                     <p><strong>Localização:</strong> {product.localizacao_estoque}</p>
                                     <p><strong>Marca:</strong> {product.marca_produto}</p>
                                     <p><strong>Modelo:</strong> {product.modelo_produto}</p>
-                                    <p><strong>Peso:</strong> {product.peso_produto}</p>
+                                    <p><strong>Peso:</strong> {product.peso_produto}{product.unidade_medida}</p>
                                     <p><strong>Preço Venda:</strong> {product.preco_venda}</p>
                                     <p><strong>Available Stock:</strong> {product.quantidade_estoque}</p>
                                     {/* Add more detailed fields as needed */}

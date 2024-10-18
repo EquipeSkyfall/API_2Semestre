@@ -10,7 +10,7 @@ export default function NavBar() {
       <Link to='/Historico'>
         <button className="hover:border-b-4 hover:border-b-cyan-400 pb-2 bordernav">Histórico</button>
       </Link>
-      <Link to='/teste'>
+      <Link to='/Movimentacao'>
         <button className="hover:border-b-4 hover:border-b-cyan-400 pb-2 bordernav">Movimentações</button>
       </Link>
       <Link to='/Relatorio'>

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { productSchema, ProductSchema } from './ProductSchema/productSchema';
 import CreateProductMutation from '../../Hooks/Products/postProductCreationHook';
 import CategorySelect from '../CategorySelect';
@@ -22,7 +22,29 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
         resolver: zodResolver(productSchema),
     });
 
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset } = methods
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset, setValue } = methods
+
+    const [unidadeMedida, setUnidadeMedida] = useState<'kg' | 'g' | 'L' | 'ml'>('kg'); // Default unit is kg
+
+    useEffect(() => {
+        console.log("Current unidadeMedida:", unidadeMedida);
+    }, [unidadeMedida]);
+
+    const toggleWeightUnit = () => {
+        setUnidadeMedida((prev) => {
+            const newUnit = prev === 'kg' ? 'g' : 'kg';
+            setValue("unidade_medida", newUnit); // Update form value
+            return newUnit;
+        });
+    };
+
+    const toggleVolumeUnit = () => {
+        setUnidadeMedida((prev) => {
+            const newUnit = prev === 'L' ? 'ml' : 'L';
+            setValue("unidade_medida", newUnit); // Update form value
+            return newUnit;
+        });
+    };
 
     const onSuccess = () => {
         reset();
@@ -35,6 +57,33 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     const onSubmit = (data: ProductSchema) => {
         setServerError(null);
         setSuccessMessage(null);
+
+        switch (data.unidade_medida) {
+            case "g":
+                if (data.peso_produto > 999) {
+                    data.unidade_medida = "kg"
+                    data.peso_produto /= 1000
+                }
+                break;
+            case "kg":
+                if (data.peso_produto < 1) {
+                    data.unidade_medida = "g"
+                    data.peso_produto *= 1000
+                }
+                break;
+            case "ml":
+                if (data.peso_produto > 999) {
+                    data.unidade_medida = "L"
+                    data.peso_produto /= 1000
+                }
+                break;
+            case "L":
+                if (data.peso_produto < 1) {
+                    data.unidade_medida = "ml"
+                    data.peso_produto *= 1000
+                }
+        }
+
         mutation.mutate(data);
     };
 
@@ -117,13 +166,32 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
                     <div className="form-field required">
                         <label htmlFor="peso_produto">Peso</label>
-                        <input
-                            {...register("peso_produto", { valueAsNumber: true })}
-                            type='number'
-                            id="peso_produto"
-                            placeholder="Obrigatório"
-                            min='0'
-                        />
+                        <div className="peso-container">
+                            <input
+                                {...register("peso_produto", { valueAsNumber: true })}
+                                type='number'
+                                id="peso_produto"
+                                placeholder="Obrigatório"
+                                min='0'
+                            />
+                            {/* Unit Measure Toggle */}
+                            <div className="unit-toggle">
+                                <button 
+                                    type="button" 
+                                    className={`unit-button ${unidadeMedida === 'kg' || unidadeMedida === 'g' ? 'active' : ''}`} 
+                                    onClick={toggleWeightUnit}
+                                >
+                                    {unidadeMedida === 'kg' ? 'kg' : 'g'}
+                                </button>
+                                <button 
+                                    type="button" 
+                                    className={`unit-button ${unidadeMedida === 'L' || unidadeMedida === 'ml' ? 'active' : ''}`} 
+                                    onClick={toggleVolumeUnit}
+                                >
+                                    {unidadeMedida === 'L' ? 'L' : 'ml'}
+                                </button>
+                            </div>
+                        </div>
                         {errors.peso_produto && <p className="error-message">{errors.peso_produto.message}</p>}
                     </div>
 
