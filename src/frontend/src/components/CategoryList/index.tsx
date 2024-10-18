@@ -1,9 +1,9 @@
 import React from "react";
 import { Category } from "../CategoryTypes/types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
-// interface Category extends CategorySchema {
-//     id_categoria: number;
-// }
+import './styles.css';
 
 interface CategoryListProps {
     categories: Category[];
@@ -25,37 +25,57 @@ const CategoryList: React.FC<CategoryListProps> = React.memo(({
     onEdit,
 }) => {
     return (
-        <div className="category-list">
-            <ul>
-                {categories.length > 0 ? (
-                    categories.map((category: Category) => (
-                        <li key={category.id_categoria} className="category-item">
-                            <span className="category-name">{category.nome_categoria} | {category.descricao_categoria}</span>
-                            <button onClick={() => onEdit(category)} className="edit-btn">Editar</button>
-                            <button onClick={() => onDelete(category.id_categoria)} className="delete-btn">Deletar</button>
-                        </li>
-                    ))
-                ) : (
-                    <li>Não há categorias registradas.</li>
-                )}
-            </ul>
-
-            {/* Paginação */}
-            <div className="pagination-controls">
-                <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="pagination-btn"
-                >Voltar</button>
-                <span>{totalPages > 0 ? `Página ${currentPage} de ${totalPages}` : ''}</span>
-                <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage >= totalPages}
-                    className="pagination-btn"
-                >Avançar</button>
+        <>
+            <div>
+                <h1 className="text-center mb-4">Lista de Categorias</h1>
             </div>
-        </div>
-    )
+            <div className="category-list">
+                <ul>
+                    {categories.length > 0 ? (
+                        categories.map((category: Category) => (
+                            <li key={category.id_categoria} className="category-item">
+                                <span className="category-name truncate" title={category.nome_categoria}>
+                                    {category.nome_categoria} |{" "}
+                                    <span className="truncate" title={category.descricao_categoria}>
+                                        {category.descricao_categoria}
+                                    </span>
+                                </span>
+                                <div className="category-actions">
+                                    <button onClick={() => onEdit(category)} className="edit-btn">
+                                        <FontAwesomeIcon icon={faPencilAlt} className="edit-icon" />
+                                    </button>
+                                    <button onClick={() => onDelete(category.id_categoria)} className="delete-btn">
+                                        <FontAwesomeIcon icon={faTrashAlt} className="delete-icon" />
+                                    </button>
+                                </div>
+                            </li>
+                        ))
+                    ) : (
+                        <li>Não há categorias registradas.</li>
+                    )}
+                </ul>
+
+                {/* Paginação */}
+                <div className="pagination-controls">
+                    <button
+                        onClick={() => handlePageChange(currentPage - 1)}
+                        disabled={currentPage === 1}
+                        className="pagination-btn"
+                    >
+                        Voltar
+                    </button>
+                    <span>{totalPages > 0 ? `Página ${currentPage} de ${totalPages}` : ''}</span>
+                    <button
+                        onClick={() => handlePageChange(currentPage + 1)}
+                        disabled={currentPage >= totalPages}
+                        className="pagination-btn"
+                    >
+                        Avançar
+                    </button>
+                </div>
+            </div>
+        </>
+    );
 });
 
 export default CategoryList;

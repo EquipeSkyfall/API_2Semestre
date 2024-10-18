@@ -1,67 +1,93 @@
-/* Modal overlay to cover the entire screen with a semi-transparent background */
+/* styles.css */
+
+/* Estilos do Modal */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000; /* Ensures the modal is above other content */
+    z-index: 1000;
 }
 
-/* Modal content styling */
 .modal-content {
-    background-color: #fff; /* Solid white background for the modal content */
-    padding: 20px;
+    background: white;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-    width: 50%;
-    max-width: 600px;
-    position: relative; /* Required for close button positioning */
-    text-align: center; /* Center text inside the modal */
-    overflow-y: auto; /* Adds scrolling if the content exceeds the modal height */
+    width: 80%;
+    max-width: 1200px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    gap: 20px;
+    position: relative; /* Garantindo que o botão de fechar seja posicionado dentro desse contêiner */
 }
 
-/* Close button styling */
+/* Botão de Fechar */
 .close-button {
+    margin-top: -20px; /* Reduzido de -20px */
+    margin-right: -30px; /* Reduzido de -30px */
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: #ff4d4d; /* Red background for the close button */
-    color: #fff; /* White text */
     border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
+    background: none;
+    font-size: 1.8rem;
     cursor: pointer;
-    font-size: 18px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    color: #aaa;
+    padding: 5px; /* Adiciona padding menor */
+    transition: color 0.3s ease, transform 0.3s ease;
+    z-index: 1060;
+}
+
+
+.close-button i {
+    font-size: 1.6rem;
 }
 
 .close-button:hover {
-    background-color: #ff1a1a; /* Darker red on hover */
+    color: #ff0000;
+    background-color: transparent;
+    transform: rotate(45deg) scale(1.1);
 }
 
-/* Modal title */
-h1 {
-    font-size: 24px;
+/* Formulário de Categoria */
+.form-container {
+    flex: 1;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+/* Lista de Categorias */
+.list-container {
+    flex: 2;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+h1, h2 {
+    text-align: center;
     margin-bottom: 20px;
 }
 
-/* Add margin to CategoryForm and CategoryList to prevent overlap */
-.CategoryForm,
-.CategoryList {
-    margin-bottom: 20px;
+.category-actions {
+    display: flex;
+    gap: 10px;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .modal-content {
-        width: 80%; /* Smaller width on smaller screens */
-    }
+.category-actions button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #007BFF;
+}
+
+.category-actions button:hover {
+    color: #0056b3;
 }

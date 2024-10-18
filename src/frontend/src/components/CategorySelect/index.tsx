@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import FetchAllCategories from '../../Hooks/Categories/fetchAllCategoriesHook'; // Adjust the path as needed
+import './styles.css';
 
 interface CategorySelectProps {
     refetch: () => void;
@@ -38,6 +39,7 @@ const CategorySelect: React.FC<CategorySelectProps> = ({ defaultValue, refetch, 
                 id="id_categoria"
                 defaultValue={ defaultValue || '' }
                 onChange={handleCategoryChange}
+                className='category-select'
             >
                 <option value="">Selecione uma categoria</option>
                 {isLoading ? (

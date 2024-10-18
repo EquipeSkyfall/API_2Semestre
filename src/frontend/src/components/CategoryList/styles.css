@@ -1,0 +1,106 @@
+/* Lista de categorias */
+.category-list {
+    margin: 20px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Itens da lista */
+.category-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.category-item:last-child {
+    border-bottom: none;
+}
+
+.category-name {
+    font-size: 1.125rem;
+    color: #333;
+}
+
+/* Ações (Editar e Deletar) */
+.category-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn, .delete-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    transition: color 0.3s ease;
+}
+
+/* Estilo para o ícone do lápis (editar) */
+.edit-icon {
+    color: #22d3ee; /* Cor azul claro para o lápis */
+    transition: color 0.3s ease;
+}
+
+.edit-icon:hover {
+    color: #1e9dff; /* Cor mais escura ao passar o mouse */
+}
+
+/* Estilo para o ícone da lixeira (deletar) */
+.delete-icon {
+    color: #f44336; /* Cor vermelha para a lixeira */
+    transition: color 0.3s ease;
+}
+
+.delete-icon:hover {
+    color: #d32f2f; /* Cor mais escura ao passar o mouse */
+}
+
+/* Estilos adicionais para os botões (se necessário) */
+.edit-btn, .delete-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+
+.delete-btn {
+    color: #dc3545;
+}
+
+.delete-btn:hover {
+    color: #c82333;
+}
+
+/* Paginação */
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination-btn {
+    padding: 5px 10px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-btn:hover {
+    background-color: #0056b3;
+}
+
+.pagination-btn:disabled {
+    background-color: #d6d6d6;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
