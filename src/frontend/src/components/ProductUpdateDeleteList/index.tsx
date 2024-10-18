@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ProductList from '../ProductsList';
-import SearchBar from '../SearchBar';
+import SearchBar from '../ProdutosSearchBar';
 import Modal from '../Modal';
 import EditProduct from './EditProduct';
 import useDeleteProduct from '../../Hooks/Products/deleteProductByIdHook';
@@ -9,12 +9,12 @@ import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
 
 interface Product extends ProductSchema {
     id_produto: number;
+    quantidade_estoque: number;
 }
 
 interface ProductsUpdateAndDeleteProps {
     products: Product[];
-    searchTerm: string;
-    onSearchTermChange: (term: string) => void;
+    onSearchTermChange: (term: string, categoryId: number | null, sectorId: number | null) => void;
     currentPage: number;
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
     totalPages: number;
@@ -23,7 +23,6 @@ interface ProductsUpdateAndDeleteProps {
 
 const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
     products,
-    searchTerm,
     onSearchTermChange,
     currentPage,
     setCurrentPage,
@@ -67,7 +66,9 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
             <h1 className='border'>Products</h1>
 
             {/* Search Bar */}
-            <SearchBar searchTerm={searchTerm} setSearchTerm={onSearchTermChange} />
+            <SearchBar
+                onSearchTermChange={onSearchTermChange}
+            />
 
             {/* Product List */}
             <ProductList

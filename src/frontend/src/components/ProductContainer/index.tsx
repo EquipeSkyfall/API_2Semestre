@@ -10,16 +10,26 @@ const MemoizedProductForm = React.memo(ProductForm);
 const ProductsContainer: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [searchTerm, setSearchTerm] = useState<string>('');
+    const [categoryId, setCategoryId] = useState<number | null>(null);
+    const [sectorId, setSectorId] = useState<number | null>(null);
     const itemsPerPage = 10;
 
     // Fetch products based on search and pagination
-    const { products, totalPages, refetch, isLoading, isError } = useSearchProducts(currentPage, itemsPerPage, searchTerm);
+    const { products, totalPages, refetch, isLoading, isError } = useSearchProducts(currentPage, itemsPerPage, searchTerm, categoryId, sectorId);
 
     // Handle search term change without reloading form
-    const handleSearchTermChange = useCallback((term: string) => {
-        setSearchTerm(term);
-        setCurrentPage(1); // Reset to the first page on new search
-    }, []);
+    const handleSearchTermChange = useCallback(
+        (term: string, categoryId: number | null, sectorId: number | null) => {
+            setSearchTerm(term);
+            console.log(term)
+            setCategoryId(categoryId); // Update the category ID
+            console.log(categoryId)
+            setSectorId(sectorId); // Update the sector ID
+            console.log(sectorId)
+            setCurrentPage(1); // Reset to the first page on new search
+        },
+        [setSearchTerm, setCategoryId, setSectorId]
+    );
 
     return (
         <div className='product-container'>
@@ -32,7 +42,6 @@ const ProductsContainer: React.FC = () => {
             <div className='product-list-container'>
                 <ProductsUpdateAndDelete
                     products={products}
-                    searchTerm={searchTerm}
                     onSearchTermChange={handleSearchTermChange}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}

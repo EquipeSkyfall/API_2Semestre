@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ProductSchema, productSchema } from '../ProductForm/ProductSchema/productSchema';
+import SectorSelect from '../SectorSelect';
+import CategorySelect from '../CategorySelect';
 
 interface Product extends ProductSchema {
     id_produto: number;
-    // url_image?: string | null | undefined | '';
 }
 
 interface EditProductProps {
@@ -16,15 +17,16 @@ interface EditProductProps {
 }
 
 const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, refetch }) => {
+    const methods = useForm<Product>({
+                        resolver: zodResolver(productSchema),
+                        defaultValues: product, // Set initial form values
+                    });
     const {
         register,
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm<Product>({
-        resolver: zodResolver(productSchema),
-        defaultValues: product, // Set initial form values
-    });
+    } = methods
 
     const onSubmit = async (formData: Product) => {
         console.log("Form data on submit:", formData); // Verifique os dados do formulário aqui
@@ -59,39 +61,44 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
 
     return (
         <div className="modal-container">
-            <form className="edit-product-form" onSubmit={handleSubmit(onSubmit)}>
-                <h2>Edit Product</h2>
-                {Object.keys(productSchema.shape).map((key) => {
-                    const keyAsType = key as keyof Product;
-                    const isNumericField = ['preco_venda', 'altura_produto', 'largura_produto', 'comprimento_produto', 'peso_produto'].includes(key);
+            <FormProvider {...methods}>
+                <form className="edit-product-form" onSubmit={handleSubmit(onSubmit)}>
+                    <h2>Edit Product</h2>
 
-                    return (
+                    {Object.keys(productSchema.shape)
+                    .filter(key => key !== 'id_categoria' && key !== 'id_setor')  // Exclude category and sector fields
+                    .map((key) => {
+                        const keyAsType = key as keyof Product;
+                        const isNumericField = ['preco_venda', 'altura_produto', 'largura_produto', 'comprimento_produto', 'peso_produto'].includes(key);
+
+                        return (
                         <div key={key} className="form-group">
                             <label htmlFor={keyAsType}>
-                                {key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, (a) => a.toUpperCase())}:
+                            {key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, (a) => a.toUpperCase())}:
                             </label>
                             <input
-                                id={keyAsType}
-                                {...register(keyAsType, {
-                                    valueAsNumber: isNumericField, // Parse para número
-                                    setValueAs: (value) => {
-                                        if (key === 'id_categoria' || key === 'id_setor') {
-                                            return value === '' ? null : value; // Force null for id_categoria and id_setor if empty
-                                        }
-                                        return value; // Default behavior for other fields
-                                    },
-                                })}
-                                type={isNumericField ? 'number' : 'text'}
+                            id={keyAsType}
+                            {...register(keyAsType, {
+                                valueAsNumber: isNumericField,
+                                setValueAs: (value) => value === '' ? null : value,
+                            })}
+                            type={isNumericField ? 'number' : 'text'}
                             />
                             {errors[keyAsType] && <p className="error-message">{errors[keyAsType]?.message}</p>}
                         </div>
-                    );
-                })}
-                <div className="form-actions">
-                    <button type="submit" className="btn-primary">Update</button>
-                    <button type="button" className="btn-secondary" onClick={onClose}>Cancel</button>
-                </div>
-            </form>
+                        );
+                    })}
+
+                    {/* Add the Category and Sector dropdowns */}
+                    <CategorySelect refetch={refetch} defaultValue={product.id_categoria} />
+                    <SectorSelect refetch={refetch} defaultValue={product.id_setor} />
+
+                    <div className="form-actions">
+                        <button type="submit" className="btn-primary">Update</button>
+                        <button type="button" className="btn-secondary" onClick={onClose}>Cancel</button>
+                    </div>
+                </form>
+            </FormProvider>
         </div>
     );
 };

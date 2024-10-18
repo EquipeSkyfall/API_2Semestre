@@ -173,12 +173,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     </div>
 
                     <CategorySelect
-                        setIsCategoryModalOpen={setIsCategoryModalOpen}
                         refetch={refetch}
                     />
 
                     <SectorSelect
-                        setIsSectorModalOpen={setIsSectorModalOpen}
                         refetch={refetch}
                     />
                 </div>
@@ -191,6 +189,12 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     {isSubmitting ? 'Carregando...' : 'Cadastrar'}
                 </button>
             </form>
+        <button type="button" onClick={() => setIsCategoryModalOpen(true)}>
+            Gerenciar Categorias
+        </button>
+        <button type="button" onClick={() => setIsSectorModalOpen(true)}>
+            Gerenciar Setores
+        </button>
         </FormProvider>
         {/* Render Modals outside the form */}
         {isCategoryModalOpen && (

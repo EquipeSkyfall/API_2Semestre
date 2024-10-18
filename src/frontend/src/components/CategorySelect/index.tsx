@@ -3,17 +3,32 @@ import { useFormContext } from 'react-hook-form';
 import FetchAllCategories from '../../Hooks/Categories/fetchAllCategoriesHook'; // Adjust the path as needed
 
 interface CategorySelectProps {
-    setIsCategoryModalOpen: (isOpen: boolean) => void; // Function to open the category modal
     refetch: () => void;
+    onChange?: (categoryId: number | null) => void;
+    defaultValue?: number | null;
 }
 
-const CategorySelect: React.FC<CategorySelectProps> = ({ setIsCategoryModalOpen, refetch }) => {
-    const { register, formState: { errors } } = useFormContext();
+const CategorySelect: React.FC<CategorySelectProps> = ({ defaultValue, refetch, onChange }) => {
+    const { register, formState: { errors }, setValue } = useFormContext();
     const { categories, isLoading, isError, refetch: refetchCategories } = FetchAllCategories(1);
+    const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedId: number | null = event.target.value ? Number(event.target.value) : null;
+
+        setValue('id_categoria', selectedId)
+
+        if (onChange) {
+            onChange(selectedId)
+        }
+
+        refetch()
+    };
 
     useEffect(() => {
         refetchCategories(); // Sync with changes from the modal or other components
-    }, [refetch]);
+        if (defaultValue) {
+            setValue('id_categoria', defaultValue)
+        }
+    }, [defaultValue, setValue, refetch]);
 
     return (
         <div className="form-field optional">
@@ -21,6 +36,8 @@ const CategorySelect: React.FC<CategorySelectProps> = ({ setIsCategoryModalOpen,
             <select
                 {...register('id_categoria')}
                 id="id_categoria"
+                defaultValue={ defaultValue || '' }
+                onChange={handleCategoryChange}
             >
                 <option value="">Selecione uma categoria</option>
                 {isLoading ? (
@@ -37,9 +54,6 @@ const CategorySelect: React.FC<CategorySelectProps> = ({ setIsCategoryModalOpen,
                     <option disabled>Não há categorias disponíveis</option>
                 )}
             </select>
-            <button type="button" onClick={() => setIsCategoryModalOpen(true)}>
-                Gerenciar Categorias
-            </button>
         </div>
     );
 };

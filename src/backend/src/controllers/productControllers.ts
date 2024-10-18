@@ -38,10 +38,64 @@ class ProductControllers {
             where: whereCondition,
             skip,
             take: limitNumber,
+            include: {
+              categoria: {
+                select: {
+                  nome_categoria: true,
+                },
+              },
+              setor: {
+                select: {
+                  nome_setor: true,
+                },
+              },
+              lotes: {
+                select: {
+                  quantidade: true,
+                },
+              },
+            },
         });
 
+        const productIds = products.map(product => product.id_produto);
+
+        const saidas = await prisma.saidaProduto.findMany({
+          where: {
+            id_produto: {
+              in: productIds,
+            },
+          },
+          select: {
+            id_produto: true,
+            quantidade_retirada: true,
+          },
+        });
+
+        // Group saidas by product ID for quick lookup
+        const saidasByProduct = saidas.reduce((acc: Record<number, number>, saida) => {
+          if (!acc[saida.id_produto]) {
+            acc[saida.id_produto] = 0;
+          }
+          acc[saida.id_produto] += saida.quantidade_retirada;
+          return acc;
+        }, {});
+
+        // Calculate available stock for each product
+        const productsWithStock = products.map(product => {
+          const totalQuantity = product.lotes.reduce((sum, lote) => sum + lote.quantidade, 0);
+          const totalRetirada = saidasByProduct[product.id_produto] || 0;
+          const quantidade_estoque = totalQuantity - totalRetirada;
+
+          return {
+            ...product,
+            quantidade_estoque,
+            nome_categoria: product.categoria?.nome_categoria || 'Sem categoria',
+            nome_setor: product.setor?.nome_setor || 'Sem setor',
+          };
+        });
+        
         response.status(200).json({
-            products,
+            products: productsWithStock,
             totalProducts,
             totalPages: Math.ceil(totalProducts / limitNumber),
             currentPage: pageNumber,

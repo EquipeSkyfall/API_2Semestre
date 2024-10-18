@@ -3,17 +3,32 @@ import { useFormContext } from "react-hook-form";
 import FetchAllSectors from "../../Hooks/Sectors/fetchAllSectorsHook";
 
 interface SectorSelectProps {
-    setIsSectorModalOpen: (isOpen: boolean) => void;
     refetch: () => void;
+    onChange?: (sectorId: number | null) => void;
+    defaultValue?: number | null;
 }
 
-const SectorSelect: React.FC<SectorSelectProps> = ({ setIsSectorModalOpen, refetch }) => {
-    const { register, formState: { errors } } = useFormContext();
+const SectorSelect: React.FC<SectorSelectProps> = ({ defaultValue, refetch, onChange }) => {
+    const { register, formState: { errors }, setValue } = useFormContext();
     const { sectors, isLoading, isError, refetch: refetchSectors } = FetchAllSectors(1);
+    const handleSectorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedId: number | null = event.target.value ? Number(event.target.value) : null;
+
+        setValue('id_setor', selectedId);
+
+        if (onChange) {
+            onChange(selectedId); 
+        }
+
+        refetch()
+    };
 
     useEffect(() => {
         refetchSectors();
-    }, [refetch]);
+        if (defaultValue) {
+            setValue('id_setor', defaultValue);
+        }
+    }, [defaultValue, setValue, refetch]);
 
     return (
         <div className="form-field optional">
@@ -21,6 +36,8 @@ const SectorSelect: React.FC<SectorSelectProps> = ({ setIsSectorModalOpen, refet
             <select
                 {...register('id_setor')}
                 id="id_setor"
+                defaultValue={ defaultValue || '' }
+                onChange={handleSectorChange}
             >
                 <option value="">Selecione um setor</option>
                 {isLoading ? (
@@ -37,9 +54,7 @@ const SectorSelect: React.FC<SectorSelectProps> = ({ setIsSectorModalOpen, refet
                     <option disabled>Não há setores disponíveis</option>
                 )}
             </select>
-            <button type="button" onClick={() => setIsSectorModalOpen(true)}>
-                Gerenciar Setores
-            </button>
+            
         </div>
     )
 };
