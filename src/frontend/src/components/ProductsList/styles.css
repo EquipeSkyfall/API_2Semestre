@@ -1,10 +1,113 @@
-.product-list-container {
-    flex: 1; /* Menor que o formulário */
-    padding: 20px;
-    background-color: #f9f9f9;
+/* Lista de itens */
+.list-container {
+    padding: 16px;
+    background-color: rgba(248, 250, 252);
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 80vh; /* Define um limite para a altura */
-    overflow-y: auto; /* Permite rolar somente a lista */
-    box-sizing: border-box;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.list-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: white;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    width: 400px;
+    transition: background-color 0.3s ease;
+}
+
+.item-summary {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #b8c0cc;
+}
+
+.item-name {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.item-details {
+    display: flex;
+    gap: 8px;
+}
+
+.item-category,
+.item-sector {
+    color: #6b7280;
+}
+
+.item-quantity {
+    color: #9ca3af;
+}
+
+.item-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Estilos para os botões */
+.edit-button, .delete-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1.25rem;
+    transition: color 0.3s ease;
+    border-radius: 4px;
+}
+
+/* Estilo para o ícone do lápis (editar) */
+.edit-button {
+    color: #22d3ee; /* Cor azul claro */
+}
+
+.edit-button:hover {
+    color: #1e9dff; /* Cor mais escura */
+}
+
+/* Estilo para o ícone da lixeira (deletar) */
+.delete-button {
+    color: #ef4444; /* Cor vermelha */
+}
+
+.delete-button:hover {
+    color: #dc2626; /* Cor mais escura */
+}
+
+/* Paginação */
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.pagination-button {
+    padding: 8px 16px;
+    background-color: #22d3ee;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-button:hover:not(:disabled) {
+    background-color: #38bdf8;
 }

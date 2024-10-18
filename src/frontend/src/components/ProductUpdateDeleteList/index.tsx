@@ -6,6 +6,7 @@ import EditProduct from './EditProduct';
 import useDeleteProduct from '../../Hooks/Products/deleteProductByIdHook';
 import useUpdateProduct from '../../Hooks/Products/patchByIdProductHook';
 import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
+import './styles.css'
 
 interface Product extends ProductSchema {
     id_produto: number;
@@ -18,7 +19,7 @@ interface ProductsUpdateAndDeleteProps {
     currentPage: number;
     setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
     totalPages: number;
-    refetch: () => void; // Pass refetch function
+    refetch: () => void; // Passar a função de refazer consulta
 }
 
 const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
@@ -43,45 +44,45 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
         try {
             await updateProductMutation.mutateAsync(updatedProduct);
             setIsModalOpen(false);
-            refetch(); // Refetch only after updating
+            refetch(); // Refazer consulta após atualização
         } catch (error) {
-            console.error('Error updating product:', error);
+            console.error('Erro ao atualizar produto:', error);
         }
     };
     
     const handleDelete = async (id_produto: number) => {
-        if (window.confirm('Are you sure you want to delete this product?')) {
+        if (window.confirm('Você tem certeza que deseja excluir este produto?')) {
             try {
                 console.log(id_produto)
                 await deleteProductMutation.mutateAsync(id_produto);
-                refetch(); // Refetch only after deletion
+                refetch(); // Refazer consulta após exclusão
             } catch (error) {
-                console.error('Error deleting product:', error);
+                console.error('Erro ao excluir produto:', error);
             }
         }
     };
 
     return (
         <div className='flex flex-col items-center border'>
-            <h1 className='border'>Products</h1>
+            <h2>Produtos</h2>
 
-            {/* Search Bar */}
+            {/* Barra de Pesquisa */}
             <SearchBar
                 onSearchTermChange={onSearchTermChange}
             />
 
-            {/* Product List */}
+            {/* Lista de Produtos */}
             <ProductList
                 products={products}
                 onEdit={handleEdit}
                 currentPage={currentPage}
                 handlePageChange={setCurrentPage}
-                totalPages={totalPages} // Pass totalPages for pagination logic
+                totalPages={totalPages} // Passando totalPages para lógica de paginação
                 onDelete={handleDelete}
-                itemsPerPage={10}
+                itemsPerPage={5}
             />
 
-            {/* Modal for Editing Product */}
+            {/* Modal para Edição do Produto */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 {editingProduct && (
                     <EditProduct

@@ -4,34 +4,189 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7); /* Aumentei a opacidade da sobreposição para ver melhor o modal */
+    background: rgba(0, 0, 0, 0.7); /* Fundo mais escuro para maior contraste */
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
-    overflow: auto;
+    z-index: 1000;
+    overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+h1{
+    font-size: 40px;
+    font-style: bold;
+    margin-bottom: 10px;
 }
 
 .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
+    background-color: rgba(248, 250, 252); 
+    padding: 30px;
+    border-radius: 12px; /* Borda suavemente arredondada */
     width: 90%;
     max-width: 600px;
-    max-height: 80vh;
+    max-height: 85vh;
     overflow-y: auto;
     position: relative;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    min-height: 300px; /* Altura mínima do modal */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(0);
+    opacity: 1;
+    animation: modalFadeIn 0.3s ease;
 }
 
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: transparent;
-    font-size: 18px;
-    color: #333;
-    cursor: pointer;
+
+@keyframes modalFadeIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
+
+.form-actions {
+    display: flex;
+    justify-content: center; /* Alinha os botões no centro */
+    gap: 12px; /* Adiciona espaço entre os botões */
+    margin-top: 20px; /* Adiciona um espaço acima dos botões, se necessário */
+}
+
+.form-actions button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.modal-header {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #333; /* Cor de texto mais escura */
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center; /* Alinha os botões no centro */
+    margin-top: 20px;
+    gap: 12px; /* Adiciona espaço entre os botões */
+}
+
+.modal-footer button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    margin-left: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #226524;
+    transform: scale(1.05); /* Leve aumento ao passar o mouse */
+}
+
+/* Botão "Cancel" (btn-secondary) */
+.btn-secondary {
+    background-color: #cf1010;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #a01414;
+    transform: scale(1.05);
+}
+
+.modal-footer .btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 6px;
+}
+
+.modal-footer .btn-primary:hover {
+    background-color: #45a049;
+    transform: scale(1.05); /* Leve aumento ao passar o mouse */
+}
+
+.modal-footer .btn-secondary {
+    background-color: rgba(248, 250, 252); 
+    color: #333;
+    margin-left: 12px;
+    border-radius: 6px;
+}
+
+.modal-footer .btn-secondary:hover {
+    background-color: rgba(248, 250, 252); 
+    transform: scale(1.05); /* Leve aumento ao passar o mouse */
+}
+
+/* Estilo para todos os inputs */
+.modal-content input[type="text"],
+.modal-content input[type="email"],
+.modal-content input[type="password"],
+.modal-content input[type="number"],
+.modal-content input[type="date"],
+.modal-content input[type="url"],
+.modal-content input[type="tel"],
+.modal-content textarea,
+.modal-content select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0 20px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: rgba(248, 250, 252); 
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="email"]:focus,
+.modal-content input[type="password"]:focus,
+.modal-content input[type="number"]:focus,
+.modal-content input[type="date"]:focus,
+.modal-content input[type="url"]:focus,
+.modal-content input[type="tel"]:focus,
+.modal-content textarea:focus,
+.modal-content select:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3); /* Efeito de brilho ao focar */
+}
+
+.modal-content textarea {
+    resize: vertical;
+    min-height: 120px; /* Altura mínima para textarea */
+}
+
+/* Estilo para labels */
+.modal-content label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Estilo para placeholders */
+.modal-content input::placeholder,
+.modal-content textarea::placeholder {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.flex.flex-col.items-center.border {
+    border: none; /* Remove a borda da classe */
+}
+

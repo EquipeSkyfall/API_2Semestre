@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import CategorySelect from '../CategorySelect';
 import SectorSelect from '../SectorSelect';
+import './styles.css';
 
 interface SearchBarProps {
     onSearchTermChange: (term: string, categoryId: number | null, sectorId: number | null) => void;
@@ -17,49 +18,59 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange }) => {
     const methods = useForm();
 
     useEffect(() => {
-        setInputValue(searchTerm); // Update input value when searchTerm changes
-    }, [searchTerm]);
-    useEffect(() => {
-        setCategoryValue(categoryValue); // Update input value when searchTerm changes
-    }, [searchTerm]);
-    useEffect(() => {
-        setSectorValue(sectorValue); // Update input value when searchTerm changes
+        setInputValue(searchTerm);
     }, [searchTerm]);
 
-    // Handler for changes in input and selects
+    useEffect(() => {
+        setCategoryValue(categoryValue);
+    }, [categoryValue]);
+
+    useEffect(() => {
+        setSectorValue(sectorValue);
+    }, [sectorValue]);
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(event.target.value); // Update input value
+        setInputValue(event.target.value);
     };
 
     const handleCategoryChange = (id: number | null) => {
-        setCategoryValue(id); // Call the parent handler with new categoryId
+        setCategoryValue(id);
     };
 
     const handleSectorChange = (id: number | null) => {
-        setSectorValue(id); // Call the parent handler with new sectorId
+        setSectorValue(id);
     };
 
     useEffect(() => {
         const handler = setTimeout(() => {
-            onSearchTermChange(inputValue, categoryValue, sectorValue); // Call the parent handler
+            onSearchTermChange(inputValue, categoryValue, sectorValue);
         }, 300);
 
         return () => {
-            clearTimeout(handler); // Cleanup timeout
+            clearTimeout(handler);
         };
     }, [inputValue, categoryValue, sectorValue, onSearchTermChange]);
 
     return (
         <FormProvider {...methods}>
-            <div>
+            <div className='flex flex-col items-center space-y-4'>
                 <input
                     type="text"
                     value={inputValue}
-                    onChange={handleChange} // Handle input change
-                    placeholder="Search for products..."
+                    onChange={handleChange}
+                    placeholder="Pesquisar"
+                    className="p-2 border rounded-md mx-auto w-2/3"
                 />
-                <CategorySelect refetch={() => {}} onChange={handleCategoryChange} />
-                <SectorSelect refetch={() => {}} onChange={handleSectorChange} />
+
+                {/* Adicionando flex-row para colocar Categoria e Setor lado a lado */}
+                <div className="flex space-x-4 ">
+                    <div className="text-center flex-1">
+                        <CategorySelect refetch={() => { }} onChange={handleCategoryChange} />
+                    </div>
+                    <div className="text-center flex-1">
+                        <SectorSelect refetch={() => { }} onChange={handleSectorChange} />
+                    </div>
+                </div>
             </div>
         </FormProvider>
     );

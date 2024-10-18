@@ -42,7 +42,7 @@ const SectorForm: React.FC<SectorFormProps> = ({ refetch, editingSector, setIsEd
             reset()
         }
     }, [editingSector, setValue, reset]);
-    
+
     const onSubmit = (data: SectorSchema) => {
         setServerError(null);
         setSuccessMessage(null);
@@ -77,8 +77,8 @@ const SectorForm: React.FC<SectorFormProps> = ({ refetch, editingSector, setIsEd
 
             <h2>{editingSector ? 'Editar Setor' : 'Cadastrar Setor'}</h2>
 
-            <div className="form-fields-grid">
-                <div className="form-field required">
+            <div className="sector-form forms-grid">
+                <div className="sector-form forms-field">
                     <label htmlFor="nome_setor">Nome do Setor</label>
                     <input
                         {...register("nome_setor")}
@@ -90,7 +90,7 @@ const SectorForm: React.FC<SectorFormProps> = ({ refetch, editingSector, setIsEd
 
                 <button
                     type="submit"
-                    className="submit-button"
+                    className="sector-form submit-button"
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? 'Carregando...' : (editingSector ? 'Salvar Alterações' : 'Cadastrar')}
@@ -99,7 +99,7 @@ const SectorForm: React.FC<SectorFormProps> = ({ refetch, editingSector, setIsEd
                 {editingSector && (
                     <button
                         type="button"
-                        className="cancel-button"
+                        className="sector-form cancel-button"
                         onClick={() => {
                             reset();
                             onCancelEdit();
@@ -110,6 +110,7 @@ const SectorForm: React.FC<SectorFormProps> = ({ refetch, editingSector, setIsEd
                 )}
             </div>
         </form>
+
     )
 };
 

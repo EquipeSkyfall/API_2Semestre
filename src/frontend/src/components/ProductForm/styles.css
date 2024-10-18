@@ -5,35 +5,6 @@ body, html {
 }
 
 
-.peso-container {
-    display: flex;
-    align-items: center; /* Align items vertically */
-}
-
-.peso-container input {
-    flex: 1; /* Take up remaining space */
-    margin-right: 8px; /* Add some space between input and buttons */
-}
-
-.unit-toggle {
-    display: flex;
-}
-
-.unit-button {
-    padding: 8px 12px; /* Adjust padding for better click area */
-    border: 1px solid #007bff; /* Border color */
-    background-color: white; /* Default background */
-    color: #007bff; /* Text color */
-    cursor: pointer; /* Change cursor on hover */
-    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
-}
-
-.unit-button.active {
-    background-color: #007bff; /* Active background color */
-    color: white; /* Active text color */
-}
-
-
 .product-container {
     display: flex;
     justify-content: space-between;
@@ -51,8 +22,8 @@ body, html {
     height: auto; /* Diminuindo a altura do formulário */
     padding: 15px;
     border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(248, 250, 252);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     gap: 15px; /* Espaçamento entre os elementos */
@@ -70,10 +41,9 @@ body, html {
 
 /* Ajustando o formulário */
 .product-form {
-    background-color: #fff;
+    background-color: rgba(248, 250, 252); 
     padding: 10px; /* Padding ajustado */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     gap: 10px; /* Espaço ajustado */
@@ -106,12 +76,100 @@ body, html {
     resize: none; /* Impede redimensionar o campo */
 }
 
+
 .submit-button {
-    padding: 8px 12px;
-    background-color: #28a745;
+    margin-top: 20px;
+    background-color: #22d3ee;
     color: white;
+    padding: 12px 24px;
     border: none;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #38bdf8;
+}
+
+.manage-button {
+    margin-top: 10px;
+    background-color: #22d3ee;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.manage-button:hover {
+    background-color: #38bdf8;
+}
+
+/* Estilizando o contêiner do peso e da unidade de medida */
+.peso-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Espaço entre o campo de input e os botões de unidade */
+}
+
+/* Botões de unidade de medida */
+.unit-toggle {
+    display: flex;
+    gap: 5px; /* Espaçamento entre os botões */
+}
+
+.unit-button {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #f0f0f0; /* Cor de fundo leve */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.unit-button.active {
+    background-color: #007bff; /* Cor azul quando ativo */
+    color: white;
+}
+
+.unit-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.peso-container {
+    display: flex;
+    align-items: center;
+}
+
+.unit-select {
+    margin-left: 10px;
+    padding: 5px;
     font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.unit-select:focus {
+    outline: none;
+    border-color: #22c55e; /* Cor verde de foco */
+    box-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
+}
+
+.unit-select:hover {
+    border-color: #22c55e;
+}
+
+/* No styles.css */
+.custom-select {
+    font-size: 0.75rem; /* Ajuste para diminuir ainda mais o tamanho da fonte */
+}
+
+.custom-select option {
+    font-size: 0.8rem; /* Aplicando o mesmo ajuste para as opções */
 }

@@ -13,8 +13,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
     return (
         <div className="modal-overlay">
             <div className="modal-content">
-                <button className="close-button" onClick={onClose}>X</button>
-                {children}
+                <button className="close-button" onClick={onClose}>
+                    <i className="fas fa-times"></i> {/* FontAwesome icon */}
+                </button>
+                <div className="modal-body">
+                    <div className="scrollable-area">
+                        {children}
+                    </div>
+                </div>
             </div>
         </div>
     );

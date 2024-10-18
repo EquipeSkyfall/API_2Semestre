@@ -12,7 +12,7 @@ const ProductsContainer: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [categoryId, setCategoryId] = useState<number | null>(null);
     const [sectorId, setSectorId] = useState<number | null>(null);
-    const itemsPerPage = 10;
+    const itemsPerPage = 5;
 
     // Fetch products based on search and pagination
     const { products, totalPages, refetch, isLoading, isError } = useSearchProducts(currentPage, itemsPerPage, searchTerm, categoryId, sectorId);

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import FetchAllSectors from "../../Hooks/Sectors/fetchAllSectorsHook";
+import "./styles.css";
 
 interface SectorSelectProps {
     refetch: () => void;
@@ -38,6 +39,7 @@ const SectorSelect: React.FC<SectorSelectProps> = ({ defaultValue, refetch, onCh
                 id="id_setor"
                 defaultValue={ defaultValue || '' }
                 onChange={handleSectorChange}
+                className="select-field"
             >
                 <option value="">Selecione um setor</option>
                 {isLoading ? (
