@@ -16,6 +16,9 @@ export default function NavBar() {
       <Link to='/Relatorio'>
         <button className="hover:border-b-4 hover:border-b-cyan-400 pb-2 bordernav">Relatórios</button>
       </Link>
+      <Link to='/Fornecedor'>
+        <button className="hover:border-b-4 hover:border-b-cyan-400 pb-2 bordernav">Fornecedores</button>
+      </Link>
     </nav>
   );
 }

@@ -8,6 +8,7 @@ import PageNotFound from "./Pages/NotFound";
 import Relatorio from "./Pages/Relatorio";
 import Historico from "./Pages/Historico";
 import Login from "./Pages/login";
+import Fornecedor from "./Pages/Fornecedores";
 
 function App() {
   const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ function App() {
                   <Route path="teste" element={<Teste />} />
                   <Route path="Relatorio" element={<Relatorio />} />
                   <Route path="Historico" element={<Historico />} />
+                  <Route path="fornecedor" element={<Fornecedor />} />
                   <Route path="*" element={<PageNotFound />} />
                 </Routes>
               </>

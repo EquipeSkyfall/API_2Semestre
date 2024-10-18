@@ -83,7 +83,7 @@ router
 router
   .route('/suppliers/:id/products')
   .get(supplierController.getProductsFromSupplier)
-  .post(supplierController.addProductToSupplier)
+  .post(supplierController.addProductsToSupplier)
   .delete(supplierController.removeProductFromSupplier)
 
 
