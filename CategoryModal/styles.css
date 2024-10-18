@@ -1,0 +1,93 @@
+/* styles.css */
+
+/* Estilos do Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 1200px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    gap: 20px;
+    position: relative; /* Garantindo que o botão de fechar seja posicionado dentro desse contêiner */
+}
+
+/* Botão de Fechar */
+.close-button {
+    margin-top: -20px; /* Reduzido de -20px */
+    margin-right: -30px; /* Reduzido de -30px */
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #aaa;
+    padding: 5px; /* Adiciona padding menor */
+    transition: color 0.3s ease, transform 0.3s ease;
+    z-index: 1060;
+}
+
+
+.close-button i {
+    font-size: 1.6rem;
+}
+
+.close-button:hover {
+    color: #ff0000;
+    background-color: transparent;
+    transform: rotate(45deg) scale(1.1);
+}
+
+/* Formulário de Categoria */
+.form-container {
+    flex: 1;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+/* Lista de Categorias */
+.list-container {
+    flex: 2;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.category-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.category-actions button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #007BFF;
+}
+
+.category-actions button:hover {
+    color: #0056b3;
+}
