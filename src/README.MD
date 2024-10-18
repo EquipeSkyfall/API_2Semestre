@@ -65,7 +65,6 @@ npx prisma migrate dev
 npx nodemon server.ts  
 ```
 
-  
   </details>
   <br>
 
@@ -84,6 +83,8 @@ npx nodemon server.ts
   2. Por fim, digite o seguinte comando no novo terminal:
   ```
   npm i
+  npm install --save @fortawesome/fontawesome-free
+  npm install --save @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons
   npm run dev
   ```
   Após dar esse comando no novo terminal, basta entrar nesse link: <a href="http://localhost:5173">http://localhost:5173</a>
