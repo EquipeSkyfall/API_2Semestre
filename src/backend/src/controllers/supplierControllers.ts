@@ -79,7 +79,7 @@ class SupplierControllers {
         }
     };
 
-    public addProductsToSupplier = async (request: Request, response: Response) => {
+    public addProductToSupplier = async (request: Request, response: Response) => {
         const { id } = request.params; // Supplier ID from the URL parameters
         const { products } = request.body; // Expecting an array of products in the request body
     
@@ -101,9 +101,12 @@ class SupplierControllers {
     
             // Wait for all associations to be created
             const results = await Promise.all(createPromises);
+
+            const createdAssociations = results.filter(result => !(typeof result === 'object' && 'message' in result));
     
             response.status(201).json({
                 message: 'Products associated with supplier successfully.',
+                createdAssociations
             });
         } catch (error) {
             response.status(500).json({ message: 'Error adding supplier to products', error });
@@ -111,7 +114,7 @@ class SupplierControllers {
     };
     
     public removeProductFromSupplier = async (request: Request, response: Response) => {
-        const { id } = request.params
+        const { id } = request.params;
         const { products } = request.body;
       
         try {
