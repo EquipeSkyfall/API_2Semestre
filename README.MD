@@ -21,21 +21,21 @@
 
 ## 💻 Tecnologias utilizadas <a name="tecnologias"></a>
 <div align="center">
-<img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/Jira-217346?style=for-the-badge&logo=Jira&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/Microsoft_Teams-6264A7?style=for-the-badge&logo=microsoft-teams&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/Photoshop-239120?style=for-the-badge&logo=adobe-photoshop&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/Canva-239120?&style=for-the-badge&logo=canva&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/html5-000000?style=for-the-badge&logo=html5&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/css3-000000?style=for-the-badge&logo=css3&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/prisma-000000?style=for-the-badge&logo=prisma&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/typescript-000000?style=for-the-badge&logo=typescript&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/javascript-000000?style=for-the-badge&logo=javascript&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/node.js-000000?style=for-the-badge&logo=node.js&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/react-000000?style=for-the-badge&logo=react&logoColor=black&color=40E0D0">
-<img src="https://img.shields.io/badge/tailwind-000000?style=for-the-badge&logo=tailwindcss&logoColor=black&color=40E0D0">
+<img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Jira-217346?style=for-the-badge&logo=Jira&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Microsoft_Teams-6264A7?style=for-the-badge&logo=microsoft-teams&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Photoshop-239120?style=for-the-badge&logo=adobe-photoshop&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Canva-239120?&style=for-the-badge&logo=canva&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/html5-000000?style=for-the-badge&logo=html5&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/css3-000000?style=for-the-badge&logo=css3&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/prisma-000000?style=for-the-badge&logo=prisma&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/typescript-000000?style=for-the-badge&logo=typescript&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/javascript-000000?style=for-the-badge&logo=javascript&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/node.js-000000?style=for-the-badge&logo=node.js&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/react-000000?style=for-the-badge&logo=react&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/tailwind-000000?style=for-the-badge&logo=tailwindcss&logoColor=black&color=06b6d4">
 
 
 
