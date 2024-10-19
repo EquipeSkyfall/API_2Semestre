@@ -18,6 +18,8 @@ const FetchAllSectors = (page: number = 1, limit: number | string = 'all') => {
         retry: false,
     });
 
+    console.log('Oi')
+
     return {
         sectors: data.sectors,
         totalPages: data.totalPages,

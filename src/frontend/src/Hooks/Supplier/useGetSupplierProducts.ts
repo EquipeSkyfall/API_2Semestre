@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
-interface SupplierProduct {
+export interface SupplierProduct {
   id_produto: number;
   preco_custo: number;
   produto: {
@@ -12,18 +12,38 @@ interface SupplierProduct {
     categoria: {
       nome_categoria: string;
     };
+    setor: {
+      nome_setor: string;
+    }
   };
+  quantidade_estoque: number;
 }
 
-const getSupplierProducts = async (supplierId: number) => {
-  const response = await axios.get(`http://127.0.0.1:3000/suppliers/${supplierId}/products`);
+interface Response {
+  products: SupplierProduct[];
+  totalProducts: number;
+  totalPages: number;
+  currentPage: number;
+}
+
+interface QueryParams {
+  search?: string;
+  id_setor?: number | null;
+  id_categoria?: number | null;
+  page?: number;
+  limit?: number;
+}
+
+const getSupplierProducts = async (supplierId: number | null, params: QueryParams) => {
+  const response = await axios.get<Response>(`http://127.0.0.1:3000/suppliers/${supplierId}/products`, {params});
+  console.log('fala')
   return response.data;
 };
 
-const useGetSupplierProducts = (supplierId: number) => {
-  return useQuery<SupplierProduct[]>({
-    queryKey: ['supplierProducts', supplierId],
-    queryFn: () => getSupplierProducts(supplierId),
+const useGetSupplierProducts = (supplierId: number, params: QueryParams) => {
+  return useQuery({
+    queryKey: ['supplierProducts', supplierId, params],
+    queryFn: () => getSupplierProducts(supplierId, params),
   });
 };
 

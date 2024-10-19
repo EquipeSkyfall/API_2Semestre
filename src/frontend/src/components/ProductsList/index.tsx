@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css';  // Importando o arquivo de estilos
 import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,6 +31,11 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
     itemsPerPage,
     onDelete,
 }) => {
+    const [expandedProductId, setExpandedProductId] = useState<number | null>(null);
+    const toggleExpand = (productId: number) => {
+        setExpandedProductId(prev => (prev === productId ? null : productId));
+    };
+
     return (
         <div className="list-container">
             <ul className="list-items">
@@ -38,7 +43,7 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                     products.map((product) => (
                         <li key={product.id_produto} className="list-item">
                             <div className="item-summary">
-                                <span className="item-name">{product.nome_produto}</span>
+                                <span className="item-name" onClick={() => toggleExpand(product.id_produto)}>{product.nome_produto}</span>
                                 <div className="item-details">
                                     <span className="item-category">{product.nome_categoria || 'Sem categoria'}</span>
                                     <span className="item-sector">{product.nome_setor || 'Sem setor'}</span>
@@ -53,6 +58,23 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                                     <FontAwesomeIcon icon={faTrashAlt} />
                                 </button>
                             </div>
+                            {expandedProductId === product.id_produto && (
+                                <div className="product-details">
+                                    <p><strong>Category:</strong> {product.nome_categoria || 'Sem categoria'}</p>
+                                    <p><strong>Sector:</strong> {product.nome_setor || 'Sem setor'}</p>
+                                    <p><strong>Altura:</strong> {product.altura_produto}</p>
+                                    <p><strong>Comprimento:</strong> {product.comprimento_produto}</p>
+                                    <p><strong>Largura:</strong> {product.largura_produto}</p>
+                                    <p><strong>Descrição:</strong> {product.descricao_produto}</p>
+                                    <p><strong>Localização:</strong> {product.localizacao_estoque}</p>
+                                    <p><strong>Marca:</strong> {product.marca_produto}</p>
+                                    <p><strong>Modelo:</strong> {product.modelo_produto}</p>
+                                    <p><strong>Peso:</strong> {product.peso_produto}{product.unidade_medida}</p>
+                                    <p><strong>Preço Venda:</strong> {product.preco_venda}</p>
+                                    <p><strong>Available Stock:</strong> {product.quantidade_estoque}</p>
+                                    {/* Add more detailed fields as needed */}
+                                </div>
+                            )}
                         </li>
                     ))
                 ) : (

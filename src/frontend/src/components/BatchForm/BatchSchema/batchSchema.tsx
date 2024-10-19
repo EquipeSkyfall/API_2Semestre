@@ -3,7 +3,7 @@ import { z } from "zod";
 export const batchProductSchema = z.object({
     id_produto: z.number(),
     quantidade: z.number(),
-    validade_produto: z.date().optional(), // Since it's optional in your model
+    validade_produto: z.date().optional().nullable(), // Since it's optional in your model
 });
 
 export const batchSchema = z.object({
@@ -13,3 +13,4 @@ export const batchSchema = z.object({
 });
 
 export type BatchSchema = z.infer<typeof batchSchema>;
+export type BatchProductSchema = z.infer<typeof batchProductSchema>;

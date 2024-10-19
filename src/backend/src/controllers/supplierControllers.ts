@@ -4,7 +4,7 @@ import prisma  from '../dbConnector';
 class SupplierControllers {
 
     public getSuppliers = async (request: Request, response: Response) => {
-        const { search = '', cidade, estado, page = '1', limit = '10' } = request.query
+        const { search = '', cidade='', estado='', page = '1', limit = '10' } = request.query
         const pageNumber = parseInt(page as string)
         const limitNumber = parseInt(limit as string)
         const skip = (pageNumber-1) * limitNumber
@@ -195,24 +195,101 @@ class SupplierControllers {
     };
 
     public getProductsFromSupplier = async (request: Request, response: Response) => {
-        const { id } = request.params
+        const { id } = request.params;
+        const { search='', id_setor, id_categoria, page='1', limit='10' } = request.query;
+        const pageNumber = parseInt(page as string);
+        const limitNumber = parseInt(limit as string);
+        const skip = (pageNumber - 1) * limitNumber;
 
         try {
+            const whereCondition: any = { id_fornecedor: Number(id) };
+
+            if (search) {
+                whereCondition.produto = {
+                    ...whereCondition.produto,
+                    nome_produto: {
+                        contains: search,
+                    }
+                };
+            };
+            if (id_setor) {
+                whereCondition.produto = {
+                    ...whereCondition.produto,
+                    id_setor: parseInt(id_setor as string),
+                };
+            };
+            if (id_categoria) {
+                whereCondition.produto = {
+                    ...whereCondition.produto,
+                    id_categoria: parseInt(id_categoria as string),
+                };
+            };
+
+            const totalProducts = await prisma.produtosFornecedor.count({
+                where: whereCondition
+            });
+
             const products = await prisma.produtosFornecedor.findMany({
-                where: { id_fornecedor: Number(id) },
+                where: whereCondition,
                 include: {
                     produto: {
                         select: {
                             nome_produto: true,
                             id_categoria: true,
+                            id_setor: true,
                             permalink_imagem: true,
                             categoria: {
                                 select: {
                                     nome_categoria: true
                                 }
+                            },
+                            setor: {
+                                select: {
+                                    nome_setor: true
+                                }
+                            },
+                            lotes: {
+                                select: {
+                                    quantidade: true
+                                },
                             }
                         }
                     }
+                },
+                skip, // Skip the results based on the current page
+                take: limitNumber, // Limit the number of results to the specified limit
+            })
+
+            const productIds = products.map(product => product.id_produto);
+
+            const saidas = await prisma.saidaProduto.findMany({
+                where: {
+                    id_produto: {
+                        in: productIds,
+                    }
+                },
+                select: {
+                    id_produto: true,
+                    quantidade_retirada: true,
+                }
+            });
+
+            const saidasByProduct = saidas.reduce((acc: Record<number, number>, saida) => {
+                if (!acc[saida.id_produto]) {
+                    acc[saida.id_produto] = 0
+                }
+                acc[saida.id_produto] += saida.quantidade_retirada
+                return acc
+            }, {});
+
+            const countedProducts = products.map(product => {
+                const totalQuantity = product.produto.lotes.reduce((sum, lote) => sum + lote.quantidade, 0)
+                const totalRetirada = saidasByProduct[product.id_produto] || 0
+                const quantidade_estoque = totalQuantity - totalRetirada
+
+                return {
+                    ...product,
+                    quantidade_estoque,
                 }
             })
 
@@ -220,7 +297,12 @@ class SupplierControllers {
                 return response.status(404).json({ message: 'Nenhum produto encontrado.' })
             }
 
-            response.status(200).json(products)
+            response.status(200).json({
+                products: countedProducts,
+                totalProducts,
+                totalPages: Math.ceil(totalProducts / limitNumber),
+                currentPage: pageNumber,
+            });
         } catch (error) {
             response.status(500).json({ message: 'Error fetching products:', error })
         }
