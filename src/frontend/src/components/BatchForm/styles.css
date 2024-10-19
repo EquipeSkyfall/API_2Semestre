@@ -1,0 +1,19 @@
+.batch-form {
+    padding: 45px;
+    background-color: rgba(248, 250, 252);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+input.form-field {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px;
+    margin-top: 4px;
+}
+
+
+
+

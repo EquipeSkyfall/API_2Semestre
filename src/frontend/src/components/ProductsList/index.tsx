@@ -43,20 +43,17 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                     products.map((product) => (
                         <li key={product.id_produto} className="list-item">
                             <div className="item-summary">
-                                <span className="item-name" onClick={() => toggleExpand(product.id_produto)}>{product.nome_produto}</span>
-                                <div className="item-details">
-                                    <span className="item-category">{product.nome_categoria || 'Sem categoria'}</span>
-                                    <span className="item-sector">{product.nome_setor || 'Sem setor'}</span>
-                                    <span className="item-quantity">Qtd: {product.quantidade_estoque}</span>
+                                <span className="item-name" onClick={() => toggleExpand(product.id_produto)}>
+                                    {product.nome_produto}
+                                </span>
+                                <div className="item-actions">
+                                    <button onClick={() => onEdit(product)} className="edit-button">
+                                        <FontAwesomeIcon icon={faPencilAlt} />
+                                    </button>
+                                    <button onClick={() => onDelete(product.id_produto)} className="delete-button">
+                                        <FontAwesomeIcon icon={faTrashAlt} />
+                                    </button>
                                 </div>
-                            </div>
-                            <div className="item-actions">
-                                <button onClick={() => onEdit(product)} className="edit-button">
-                                    <FontAwesomeIcon icon={faPencilAlt} />
-                                </button>
-                                <button onClick={() => onDelete(product.id_produto)} className="delete-button">
-                                    <FontAwesomeIcon icon={faTrashAlt} />
-                                </button>
                             </div>
                             {expandedProductId === product.id_produto && (
                                 <div className="product-details">

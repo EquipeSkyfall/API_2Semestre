@@ -1,0 +1,42 @@
+.supplier-list {
+    border: 1px solid #ccc; /* Bordas para a lista de fornecedores */
+    border-radius: 4px; /* Bordas arredondadas */
+    margin-top: 8px; /* Espaçamento superior */
+    padding: 10px; /* Espaçamento interno */
+    background-color: white; /* Fundo branco */
+    max-height: 200px; /* Altura máxima para a lista */
+    overflow-y: auto; /* Rolagem vertical */
+}
+
+/*.supplier-list ul {
+    list-style: none;  Remove marcadores da lista
+    padding: 0; Remove padding da lista
+    margin: 0; Remove margem da lista 
+}
+
+.supplier-list li {
+    padding: 8px; Espaçamento interno dos itens
+    border: 1px solid transparent; Borda transparente
+    cursor: pointer; Cursor de ponteiro 
+}*/
+
+.supplier-list li:hover {
+    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+    border-color: #ccc; /* Borda ao passar o mouse */
+}
+
+.pagination {
+    display: flex; /* Flexbox para alinhar os botões */
+    justify-content: space-between; /* Espaço entre os botões */
+    margin-top: 10px; /* Espaçamento superior */
+}
+
+.pagination button {
+    padding: 5px 10px; /* Espaçamento interno dos botões */
+    border: 1px solid #ccc; /* Borda para os botões */
+    border-radius: 4px; /* Bordas arredondadas */
+    background-color: white; /* Fundo branco para os botões */
+    cursor: pointer; /* Cursor de ponteiro */
+}
+
+

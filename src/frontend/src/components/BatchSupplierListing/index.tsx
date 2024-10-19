@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import useSuppliers from "../../Hooks/Supplier/useSuppliers";
 import SupplierSearchBar from "../SupplierSearchBar";
+import './styles.css'
 
 interface BatchSupplierListProps {
     refetch: () => void;
