@@ -5,4 +5,4 @@
 
 */
 -- AlterTable
-ALTER TABLE `produto` ADD COLUMN `unidade_medida` VARCHAR(2) NOT NULL;
+ALTER TABLE `Produto` ADD COLUMN `unidade_medida` VARCHAR(2) NOT NULL;

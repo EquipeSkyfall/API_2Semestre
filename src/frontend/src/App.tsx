@@ -5,7 +5,7 @@ import NavBar from "./components/NavBar";
 import Home from "./Pages/Home";
 import ProductsPage from "./Pages/Products";
 import PageNotFound from "./Pages/NotFound";
-import Relatorio from "./Pages/Relatorio";
+import Report from "./components/ReportContainer";
 import Historico from "./Pages/Historico";
 import Login from "./Pages/login";
 import Fornecedor from "./Pages/Fornecedores";
@@ -32,7 +32,7 @@ function App() {
                   <Route path="products" element={<ProductsPage />} />
                   <Route path="teste" element={<Teste />} />
                   <Route path="Movimentacao" element={<Movimentacao />} />
-                  <Route path="Relatorio" element={<Relatorio />} />
+                  <Route path="Report" element={<Report />} />
                   <Route path="Historico" element={<Historico />} />
                   <Route path="fornecedor" element={<Fornecedor />} />
                   <Route path="*" element={<PageNotFound />} />

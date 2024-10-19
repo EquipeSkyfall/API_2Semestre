@@ -1,9 +1,7 @@
-// Pages/Relatorios.tsx
-import React from 'react';
-import './Relatorio.css'; // Importando o CSS
+import './styles.css'; // Importando o CSS
 
+function Report() {
 
-const Relatorios = () => {
   return (
     <div className="container">
       <div className="rectangle">
@@ -31,4 +29,4 @@ const Relatorios = () => {
   );
 };
 
-export default Relatorios;
+export default Report;
