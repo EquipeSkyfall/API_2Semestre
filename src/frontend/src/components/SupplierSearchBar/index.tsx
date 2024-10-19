@@ -3,13 +3,22 @@ import { FormProvider, useForm } from "react-hook-form";
 
 interface SearchBarProps {
     onSearchTermChange: (search: string, cidade: string, estado: string) => void;
+    resetKey: number;
 }
 
-const SupplierSearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange }) => {
+const SupplierSearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange, resetKey }) => {
     const [razaoValue, setRazaoValue] = useState<string>('');
     const [cidadeValue, setCidadeValue] = useState<string>('');
     const [estadoValue, setEstadoValue] = useState<string>('');
     const methods = useForm();
+    const { reset } = methods
+
+    useEffect(() => {
+        setRazaoValue('');
+        setCidadeValue('');
+        setEstadoValue('');
+        reset();
+    }, [resetKey])
 
     useEffect(() => {
         const handler = setTimeout(() => {

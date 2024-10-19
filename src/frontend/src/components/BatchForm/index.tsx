@@ -3,8 +3,8 @@ import { FormProvider, useForm } from "react-hook-form";
 import { batchSchema, BatchSchema } from "./BatchSchema/batchSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import MutationCreateBatch from "../../Hooks/Batches/postBatchCreationHook";
-import BatchSupplierList from "./BatchSupplierListing";
-import BatchSupplierProductList from "./BatchSupplierProductListing";
+import BatchSupplierList from "../BatchSupplierListing";
+import BatchSupplierProductList from "../BatchSupplierProductListing";
 
 interface BatchFormProps {
     refetch: () => void;
@@ -14,6 +14,8 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
     const [serverError, setServerError] = useState<string | null>(null);
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [supplierId, setSupplierId] = useState<number | null>(null);
+    const [resetKey, setResetKey] = useState<number>(0);
+    const [checkSupplierMissing, setCheckSupplierMissing] = useState<boolean>(false);
     
     const methods = useForm<BatchSchema>({
         resolver: zodResolver(batchSchema),
@@ -30,6 +32,7 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
 
     const onSuccess = () => {
         reset()
+        setResetKey(prev => prev + 1)
         setSuccessMessage('Lote cadastrado com sucesso!');
         refetch()
     };
@@ -37,9 +40,16 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
     const mutation = MutationCreateBatch(onSuccess, setError, setServerError);
 
     const onSubmit = (data: BatchSchema) => {
+        if (data.id_fornecedor === null) {
+            setError("id_fornecedor", {
+                type: "manual",
+                message: "O fornecedor deve ser selecionado."
+            });
+            return; // Prevent submission
+        }
+
         setServerError(null);
         setSuccessMessage(null);
-
         mutation.mutate(data);
     };
 
@@ -52,7 +62,6 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
     }, [supplierId]);
 
     return (
-        <FormProvider {...methods}>
             <form
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className="batch-form"
@@ -71,11 +80,11 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                         defaultValue={new Date().toISOString().slice(0, 10)}
                     />
                 </label>
+                <FormProvider {...methods}>
+                    <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
 
-                <BatchSupplierList refetch={refetch} onChange={handleSupplierChange} />
-
-                <BatchSupplierProductList refetch={refetch} supplierId={supplierId} />
-
+                    <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>
+                </FormProvider>
                 <button
                     type="submit"
                     className="submit-button"
@@ -84,7 +93,6 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                     {isSubmitting ? 'Carregando...' : 'Cadastrar'}
                 </button>
             </form>
-        </FormProvider>
     )
 };
 

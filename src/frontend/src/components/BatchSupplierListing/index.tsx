@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import useSuppliers from "../../../Hooks/Supplier/useSuppliers";
-import SupplierSearchBar from "../../SupplierSearchBar";
+import useSuppliers from "../../Hooks/Supplier/useSuppliers";
+import SupplierSearchBar from "../SupplierSearchBar";
 
 interface BatchSupplierListProps {
     refetch: () => void;
     onChange: (supplierId: number | null) => void;
+    resetKey: number;
 }
 
 interface FilterValues {
@@ -14,18 +15,25 @@ interface FilterValues {
     estado: string;
 }
 
-const BatchSupplierList: React.FC<BatchSupplierListProps> = ({ refetch, onChange }) => {
-    const { formState: { errors }, setValue, reset } = useFormContext();
+const BatchSupplierList: React.FC<BatchSupplierListProps> = ({ refetch, onChange, resetKey }) => {
+    const { clearErrors, formState: { errors }, setValue } = useFormContext();
     const [currentPage, setPage] = useState(1);
     const [filters, setFilters] = useState<FilterValues>({ search: '', cidade: '', estado: '' });
     const { data, isLoading, isError } = useSuppliers({...filters, page: currentPage, limit: 10});
-    const [selectedSupplier, setSelectedSupplier] = useState<{ id: number; name: string } | null>(null);
+    const [selectedSupplier, setSelectedSupplier] = useState<{ id: number | null; name: string | null } | null>(null);
 
     const [isExpanded, setIsExpanded] = useState(false); // For controlling list visibility
 
+    useEffect(() => {
+        handleSupplierSelect(null,null)
+    }, [resetKey])
+
     // When supplier is selected, show its name and store the supplier ID in the form
-    const handleSupplierSelect = (supplierId: number, supplierName: string) => {
-        setValue('id_fornecedor', supplierId); // Store id_fornecedor in the form
+    const handleSupplierSelect = (supplierId: number | null, supplierName: string | null) => {
+        if (supplierId !== null) {
+            clearErrors("id_fornecedor"); // Clear the error when a valid supplier is selected
+        }
+        setValue('id_fornecedor', supplierId);
         setSelectedSupplier({ id: supplierId, name: supplierName });
         toggleList();
 
@@ -50,19 +58,17 @@ const BatchSupplierList: React.FC<BatchSupplierListProps> = ({ refetch, onChange
     return (
         <div className="form-field required">
             <label htmlFor="id_fornecedor">Fornecedor</label>
-            <SupplierSearchBar onSearchTermChange={handleSearchTermChange} />
+            <SupplierSearchBar onSearchTermChange={handleSearchTermChange} resetKey={resetKey} />
 
-            {selectedSupplier && (
-                <div>
-                    <strong>Fornecedor Selecionado: </strong>
-                    {selectedSupplier.name}
-                </div>
-            )}
-            
-            {/* Toggle button for expanding/collapsing supplier list */}
-            <button type="button" onClick={toggleList}>
-                {isExpanded ? 'Esconder Fornecedores' : 'Mostrar Fornecedores'}
-            </button>
+            <input
+                id="nome_fornecedor"
+                type="text"
+                value={selectedSupplier?.name || ''} // ID as value
+                placeholder="Selecione um fornecedor"
+                readOnly // Make the input read-only since it will be filled by selection
+                onClick={toggleList}
+            />
+            {errors.id_fornecedor && <span className="error-message">{errors.id_fornecedor.message}</span>}
             
             {/* Supplier list, collapsible */}
             {isExpanded && (

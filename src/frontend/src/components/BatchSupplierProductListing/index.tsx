@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import useGetSupplierProducts, { SupplierProduct } from "../../../Hooks/Supplier/useGetSupplierProducts";
-import SearchBar from "../../ProdutosSearchBar";
-import { BatchProductSchema } from "../BatchSchema/batchSchema";
+import useGetSupplierProducts, { SupplierProduct } from "../../Hooks/Supplier/useGetSupplierProducts";
+import SearchBar from "../ProdutosSearchBar";
+import { BatchProductSchema } from "../BatchForm/BatchSchema/batchSchema";
 
 interface FilterValues {
     search: string;
@@ -16,7 +16,7 @@ interface BatchSupplierProductListProps {
 }
 
 const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ refetch, supplierId }) => {
-    const { formState: {errors}, setValue } = useFormContext();
+    const { clearErrors, formState: {errors}, setValue } = useFormContext();
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState<FilterValues>({ search: '', id_setor: null, id_categoria: null })
     const [selectedProducts, setSelectedProducts] = useState<SupplierProduct[]>([]);
@@ -30,6 +30,8 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
 
     useEffect(() => {
         setAddedProducts([])
+        setSelectedProducts([])
+        availableProducts=[]
     }, [supplierId]);
     useEffect(() => {
         setValue('produtos', addedProducts)
@@ -68,6 +70,8 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
             ...prevAddedProducts,
             ...newProducts,
         ]);
+
+        clearErrors("produtos");
     
         toggleVisibility();
         setSelectedProducts([]);
@@ -79,7 +83,11 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                 if (product.id_produto === id_produto) {
                     return {
                         ...product,
-                        [field]: field === 'quantidade' ? parseInt(value) : value, // Ensure quantity is parsed as an integer
+                        [field]: field === 'quantidade'
+                            ? parseInt(value)
+                            : field === 'validade_produto'
+                            ? new Date(value) // Convert 'validade_produto' to a Date object
+                            : value,
                     };
                 }
                 return product;
@@ -101,7 +109,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
         []
     );
 
-    const availableProducts = data?.products.filter(product => 
+    var availableProducts = data?.products.filter(product => 
         !addedProducts.some(added => added.id_produto === product.id_produto)
     ) || [];
     
@@ -160,7 +168,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
             )}
 
             <div>
-                <h3>Produtos no lote:</h3>
+                <h3>Produtos no lote: {errors.produtos && <span className="error-message">{errors.produtos.message}</span>}</h3>
                 {addedProducts.length > 0 && (
                     <ul>
                         {addedProducts.map(product => {
@@ -176,7 +184,10 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                                 className="form-field"
                                                 type="date"
                                                 id={`validade_${product.id_produto}`} // Use product ID for uniqueness
-                                                value={product.validade_produto ? product.validade_produto.toISOString().slice(0, 10) : ''} // Format date
+                                                value={product.validade_produto 
+                                                    ? new Date(product.validade_produto).toISOString().slice(0, 10) 
+                                                    : ''}
+                                                min={new Date(Date.now() + 86400000).toISOString().slice(0, 10)}
                                                 onChange={(e) => handleInputChange(product.id_produto, 'validade_produto', e.target.value)} // Call input change handler
                                             />
                                         </label>
