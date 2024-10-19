@@ -1,11 +1,14 @@
-/* Lista de itens */
 .list-container {
-    padding: 16px;
-    background-color: rgba(248, 250, 252);
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    max-height: auto;
+    overflow-y: auto;
+    max-height: 55vh;
     border-radius: 8px;
     max-width: 100%;
     margin: 0 auto;
-}
+} 
 
 .list-items {
     list-style: none;
@@ -14,32 +17,41 @@
 }
 
 .list-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px;
-    background-color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
     border-radius: 8px;
-    margin-bottom: 12px;
-    width: 400px;
-    transition: background-color 0.3s ease;
+    max-width: 100%;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.list-item:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .item-summary {
     display: flex;
-    flex-direction: column;
-    font-size: 14px;
-    color: #b8c0cc;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .item-name {
-    font-weight: 600;
-    color: #1f2937;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.item-name:hover {
+    color: #22d3ee;
 }
 
 .item-details {
-    display: flex;
-    gap: 8px;
+    font-size: 0.9rem;
+    color: #666;
 }
 
 .item-category,
@@ -56,8 +68,8 @@
     gap: 10px;
 }
 
-/* Estilos para os botões */
-.edit-button, .delete-button {
+.edit-button,
+.delete-button {
     border: none;
     background: none;
     cursor: pointer;
@@ -67,25 +79,22 @@
     border-radius: 4px;
 }
 
-/* Estilo para o ícone do lápis (editar) */
 .edit-button {
-    color: #22d3ee; /* Cor azul claro */
+    color: #22d3ee;
 }
 
 .edit-button:hover {
-    color: #1e9dff; /* Cor mais escura */
+    color: #1e9dff;
 }
 
-/* Estilo para o ícone da lixeira (deletar) */
 .delete-button {
-    color: #ef4444; /* Cor vermelha */
+    color: #ef4444;
 }
 
 .delete-button:hover {
-    color: #dc2626; /* Cor mais escura */
+    color: #dc2626;
 }
 
-/* Paginação */
 .pagination-controls {
     display: flex;
     justify-content: space-between;
@@ -110,4 +119,43 @@
 
 .pagination-button:hover:not(:disabled) {
     background-color: #38bdf8;
+}
+
+.product-details {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-left: 4px solid #22d3ee;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: #444;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        max-height: 0;
+        opacity: 0;
+    }
+    to {
+        max-height: 500px; 
+        opacity: 1;
+    }
+}
+
+.product-details p {
+    margin: 0;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-details p:last-child {
+    border-bottom: none;
+}
+
+.list-container::-webkit-scrollbar {
+    width: 8px;
 }
