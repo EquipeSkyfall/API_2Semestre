@@ -9,7 +9,7 @@ class ProductControllers {
   private nearExpirationCache: { id_produto: number, nome_produto: string, lote_id: number, expirationDate: Date }[] = [];
 
   public getProducts = async (request: Request, response: Response) => {
-    const { search='', id_setor, id_categoria, page = '1', limit = '10' } = request.query; 
+    const { search='', id_setor, id_categoria, forshipping, page = '1', limit = '10' } = request.query; 
     const pageNumber = parseInt(page as string);
     const limitNumber = parseInt(limit as string);
     const skip = (pageNumber - 1) * limitNumber;
@@ -52,38 +52,25 @@ class ProductControllers {
               lotes: {
                 select: {
                   quantidade: true,
+                  saidas: {
+                    select: {
+                      quantidade_retirada: true,
+                    },
+                  }
                 },
               },
             },
         });
 
-        const productIds = products.map(product => product.id_produto);
-
-        const saidas = await prisma.saidaProduto.findMany({
-          where: {
-            id_produto: {
-              in: productIds,
-            },
-          },
-          select: {
-            id_produto: true,
-            quantidade_retirada: true,
-          },
-        });
-
-        // Group saidas by product ID for quick lookup
-        const saidasByProduct = saidas.reduce((acc: Record<number, number>, saida) => {
-          if (!acc[saida.id_produto]) {
-            acc[saida.id_produto] = 0;
-          }
-          acc[saida.id_produto] += saida.quantidade_retirada;
-          return acc;
-        }, {});
-
         // Calculate available stock for each product
         const productsWithStock = products.map(product => {
           const totalQuantity = product.lotes.reduce((sum, lote) => sum + lote.quantidade, 0);
-          const totalRetirada = saidasByProduct[product.id_produto] || 0;
+          const totalRetirada = product.lotes.reduce((sum, lote) => {
+            const totalLoteRetirada = lote.saidas.reduce((saidaSum, saida) => {
+              return saidaSum + saida.quantidade_retirada;
+            }, 0);
+            return sum + totalLoteRetirada;
+          }, 0);
           const quantidade_estoque = totalQuantity - totalRetirada;
 
           return {
@@ -93,11 +80,19 @@ class ProductControllers {
             nome_setor: product.setor?.nome_setor || 'Sem setor',
           };
         });
+
+        const filteredProducts = forshipping 
+        ? productsWithStock.filter(product => product.quantidade_estoque > 0) 
+        : productsWithStock;
+
+        const totalFilteredProducts = forshipping 
+            ? filteredProducts.length 
+            : totalProducts;
         
         response.status(200).json({
-            products: productsWithStock,
-            totalProducts,
-            totalPages: Math.ceil(totalProducts / limitNumber),
+            products: filteredProducts,
+            totalFilteredProducts,
+            totalPages: Math.ceil(totalFilteredProducts / limitNumber),
             currentPage: pageNumber,
         });
     } catch (error) {
@@ -310,7 +305,7 @@ class ProductControllers {
           quantidadeDisponivel: batch.quantidade - totalSaida,
           validade_produto: batch.validade_produto
         }
-      })
+      }).filter(batch => batch.quantidadeDisponivel > 0);
       response.status(200).json(result)
     } catch (error) {
       response.status(500).json({ message: 'Error fetching batches for product:', error })

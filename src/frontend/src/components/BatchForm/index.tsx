@@ -15,7 +15,6 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [supplierId, setSupplierId] = useState<number | null>(null);
     const [resetKey, setResetKey] = useState<number>(0);
-    const [checkSupplierMissing, setCheckSupplierMissing] = useState<boolean>(false);
     
     const methods = useForm<BatchSchema>({
         resolver: zodResolver(batchSchema),
@@ -62,6 +61,7 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
     }, [supplierId]);
 
     return (
+        <FormProvider {...methods}>
             <form
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className="batch-form"
@@ -80,11 +80,11 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                         defaultValue={new Date().toISOString().slice(0, 10)}
                     />
                 </label>
-                <FormProvider {...methods}>
+
                     <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
 
                     <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>
-                </FormProvider>
+                
                 <button
                     type="submit"
                     className="submit-button"
@@ -93,6 +93,7 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                     {isSubmitting ? 'Carregando...' : 'Cadastrar'}
                 </button>
             </form>
+        </FormProvider>
     )
 };
 

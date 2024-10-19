@@ -1,4 +1,5 @@
 import React from 'react';
+import ShipmentsList from '../components/Shippments/ListShippments/ShipmentsList';
 
 const Historico = () => {
   const style = {
@@ -6,9 +7,7 @@ const Historico = () => {
   };
 
   return (
-    <div className="section">
-      <h1 style={style}>Olá pessoal, estamos editando a página Histórico</h1>
-    </div>
+    <ShipmentsList />
   );
 };
 

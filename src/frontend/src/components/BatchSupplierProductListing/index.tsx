@@ -21,9 +21,18 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
     const [filters, setFilters] = useState<FilterValues>({ search: '', id_setor: null, id_categoria: null })
     const [selectedProducts, setSelectedProducts] = useState<SupplierProduct[]>([]);
     const [addedProducts, setAddedProducts] = useState<BatchProductSchema[]>([]);
+    const [availableProducts, setAvailableProducts] = useState<SupplierProduct[]>([])
     const [isVisible, setIsVisible] = useState(true);
     
     const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { ...filters, page: page, limit: 10 });
+    
+    useEffect(() => {
+        if (data && data.products) {
+            setAvailableProducts(data.products);
+        } else {
+            setAvailableProducts([]); // Ensure it is an empty array if no products
+        }
+    }, [data]);
 
     const handleNextPage = () => setPage((prev) => prev + 1);
     const handlePrevPage = () => setPage((prev) => Math.max(prev - 1, 1));
@@ -31,14 +40,13 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
     useEffect(() => {
         setAddedProducts([])
         setSelectedProducts([])
-        availableProducts=[]
     }, [supplierId]);
     useEffect(() => {
         setValue('produtos', addedProducts)
     }, [addedProducts]);
 
     const toggleVisibility = () => {
-        setIsVisible(!isVisible);
+        setIsVisible(prev => !prev);
     };
     
     const toggleProductSelection = (product: SupplierProduct) => {
@@ -108,16 +116,12 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
         },
         []
     );
-
-    var availableProducts = data?.products.filter(product => 
-        !addedProducts.some(added => added.id_produto === product.id_produto)
-    ) || [];
     
     return (
         <div>
             <h2>Produtos do Fornecedor</h2>
 
-            <button onClick={toggleVisibility}>
+            <button type="button" onClick={toggleVisibility}>
                 {isVisible ? 'Esconder Produtos' : 'Mostrar Produtos'}
             </button>
 
@@ -136,6 +140,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                         type="checkbox"
                                         checked={selectedProducts.some(p => p.id_produto === product.id_produto)}
                                         onChange={() => toggleProductSelection(product)}
+                                        disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
                                     />
                                     {product.produto.nome_produto} Preço Custo: R${Number(product.preco_custo).toFixed(2)}
                                 </div>

@@ -29,22 +29,21 @@ interface ProductsResponse {
     totalProducts: number;
 }
 
-const useSearchProducts = (
-    page: number,
-    limit: number,
-    searchTerm: string,
-    categoryId: number | null,
-    sectorId: number | null
-) => {
-    const { data = { products: [], totalPages: 1, totalProducts: 0 }, isLoading, isError, refetch } = useQuery<ProductsResponse>({
-        queryKey: ['searchProducts', searchTerm, categoryId, sectorId, page, limit],
-        queryFn: async () => {
-            let url = `http://127.0.0.1:3000/products?page=${page}&limit=${limit}`;
-            if (searchTerm.trim()) url += `&search=${searchTerm}`;
-            if (categoryId) url += `&id_categoria=${categoryId}`;
-            if (sectorId) url += `&id_setor=${sectorId}`;
+interface QueryParams {
+    search?: string;
+    id_setor?: number | null;
+    id_categoria?: number | null;
+    page?: number;
+    limit?: number;
+    forshipping?: number;
+}
 
-            const response = await axios.get(url);
+const useSearchProducts = (params: QueryParams) => {
+    const { data = { products: [], totalPages: 1, totalProducts: 0 }, isLoading, isError, refetch } = useQuery<ProductsResponse>({
+        queryKey: ['shipments','searchProducts', params],
+        queryFn: async () => {
+            const response = await axios.get(`http://127.0.0.1:3000/products`, {params});
+
             return response.data || { products: [], totalPages: 1, totalProducts: 0 };
         },
         retry: false,

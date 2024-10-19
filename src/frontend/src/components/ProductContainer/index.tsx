@@ -4,31 +4,34 @@ import ProductsUpdateAndDelete from '../ProductUpdateDeleteList';
 import useSearchProducts from '../../Hooks/Products/getSearchProductbyNameHook';
 import './styles.css';  // Importe o CSS aqui
 
+interface FilterValues {
+    search: string;
+    id_setor: number | null;
+    id_categoria: number | null;
+}
+
 // Memoize ProductForm to avoid unnecessary re-renders
 const MemoizedProductForm = React.memo(ProductForm);
 
 const ProductsContainer: React.FC = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [searchTerm, setSearchTerm] = useState<string>('');
-    const [categoryId, setCategoryId] = useState<number | null>(null);
-    const [sectorId, setSectorId] = useState<number | null>(null);
+    const [filters, setFilters] = useState<FilterValues>({ search: '', id_setor: null, id_categoria: null })
     const itemsPerPage = 5;
 
     // Fetch products based on search and pagination
-    const { products, totalPages, refetch, isLoading, isError } = useSearchProducts(currentPage, itemsPerPage, searchTerm, categoryId, sectorId);
+    const { products, totalPages, refetch, isLoading, isError } = useSearchProducts({...filters, page: currentPage, limit: itemsPerPage});
 
     // Handle search term change without reloading form
     const handleSearchTermChange = useCallback(
         (term: string, categoryId: number | null, sectorId: number | null) => {
-            setSearchTerm(term);
-            console.log(term)
-            setCategoryId(categoryId); // Update the category ID
-            console.log(categoryId)
-            setSectorId(sectorId); // Update the sector ID
-            console.log(sectorId)
+            setFilters({
+                search: term,
+                id_setor: sectorId,
+                id_categoria: categoryId,
+            })
             setCurrentPage(1); // Reset to the first page on new search
         },
-        [setSearchTerm, setCategoryId, setSectorId]
+        []
     );
 
     return (
