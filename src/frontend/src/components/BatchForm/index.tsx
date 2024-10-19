@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import MutationCreateBatch from "../../Hooks/Batches/postBatchCreationHook";
 import BatchSupplierList from "../BatchSupplierListing";
 import BatchSupplierProductList from "../BatchSupplierProductListing";
+import './styles.css'
 
 interface BatchFormProps {
     refetch: () => void;
