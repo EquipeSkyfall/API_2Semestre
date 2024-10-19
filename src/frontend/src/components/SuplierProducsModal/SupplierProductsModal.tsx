@@ -17,7 +17,7 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
   onClose,
 }) => {
   const [page, setPage] = useState(1);
-  const { data, isLoading, isError } = useGetSupplierProducts(supplierId, {search: '', page,limit: 10});
+  const { data, isLoading, isError } = useGetSupplierProducts(supplierId, {search: '', page: page, limit: 10});
   const { mutate: deleteProduct } = useDeleteProductFromSupplier();
   const [searchTerm, setSearchTerm] = useState('');
 

@@ -33,6 +33,7 @@ interface QueryParams {
     search?: string;
     id_setor?: number | null;
     id_categoria?: number | null;
+    id_fornecedor?: number | null;
     page?: number;
     limit?: number;
     forshipping?: number;

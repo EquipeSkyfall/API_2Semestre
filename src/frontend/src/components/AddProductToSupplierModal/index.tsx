@@ -23,7 +23,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
   const [page, setPage] = useState(1);
   const [limit] = useState(10); // Set your desired limit for products per page
 
-  const { products, isLoading } = useSearchProducts(page, limit, watch('search') || '');
+  const { products, isLoading } = useSearchProducts({search: watch('search') || '', id_fornecedor: supplierId, page: page, limit: limit});
   const { mutate: addProductsToSupplier } = useAddProductsToSupplier();
 
   const handleCheckboxChange = (productId: number) => {
@@ -99,7 +99,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
 
                   {selectedProducts.includes(product.id_produto) && (
                     <div className="mt-4 md:mt-0 space-y-2">
-                      <h3 className='text-sm font-medium text-gray-700'>preço de venda</h3>
+                      <h3 className='text-sm font-medium text-gray-700'>preço de custo</h3>
                     <Controller
                       name={`preco_custo.${product.id_produto}`}
                       control={control}

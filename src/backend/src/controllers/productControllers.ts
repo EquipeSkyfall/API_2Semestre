@@ -9,10 +9,11 @@ class ProductControllers {
   private nearExpirationCache: { id_produto: number, nome_produto: string, lote_id: number, expirationDate: Date }[] = [];
 
   public getProducts = async (request: Request, response: Response) => {
-    const { search='', id_setor, id_categoria, forshipping, page = '1', limit = '10' } = request.query; 
+    const { search='', id_setor, id_categoria, id_fornecedor, forshipping, page = '1', limit = '10' } = request.query; 
     const pageNumber = parseInt(page as string);
     const limitNumber = parseInt(limit as string);
     const skip = (pageNumber - 1) * limitNumber;
+    console.log('Received query:', request.query);
 
     try {
         const whereCondition: any = { produto_deletedAt: null }; // Exclude soft-deleted products
@@ -28,6 +29,13 @@ class ProductControllers {
         }
         if (id_categoria) {
             whereCondition.id_categoria = parseInt(id_categoria as string);
+        }
+        if (id_fornecedor) {
+          whereCondition.fornecedores = {
+              none: {
+                  id_fornecedor: parseInt(id_fornecedor as string),
+              },
+          };
         }
 
         const totalProducts = await prisma.produto.count({
