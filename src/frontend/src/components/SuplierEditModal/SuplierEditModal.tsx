@@ -38,42 +38,45 @@ const EditSupplierModal: React.FC<EditSupplierModalProps> = ({
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Edit Supplier</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <label>
-            CNPJ
-            <input {...register('cnpj_fornecedor')}  />
-          </label>
-		{errors.cnpj_fornecedor && <p>{errors.cnpj_fornecedor.message}</p>}
-          <label>
-            Nome Fantasia
-            <input {...register('nome_fantasia')}  />
-          </label>
-          {errors.nome_fantasia && <p>{errors.nome_fantasia.message}</p>}
-          <label>
-            Razão Social
-            <input {...register('razao_social')} />
-          </label>
-          {errors.razao_social && <p>{errors.razao_social.message}</p>}
-          <label>
-            Cidade
-            <input {...register('cidade')} />
-          </label>
-          {errors.cidade && <p>{errors.cidade.message}</p>}
-          <label>
-            Estado
-            <input {...register('estado')} />
-          </label>
-          {errors.estado && <p>{errors.estado.message}</p>}
-          <label>
-            CEP
-            <input {...register('cep')} />
-          </label>
-          {errors.cep && <p>{errors.cep.message}</p>}
-          <button type="submit">
+        <h2 className='mb-5'>Editar Fornecedor</h2>
+        <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
+          <div className='mb-4'>
+            <label className='block text-gray-700 font-medium mb-2'>CNPJ</label>
+            <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('cnpj_fornecedor')}  />
+            {errors.cnpj_fornecedor && <p className='text-red-500 text-sm mt-1'>{errors.cnpj_fornecedor.message}</p>}
+          </div>
+          <div className='mb-4'>
+            <label className='block text-gray-700 font-medium mb-2'>Nome Fantasia</label>
+            <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('nome_fantasia')}  />
+            {errors.nome_fantasia && <p className='text-red-500 text-sm mt-1'>{errors.nome_fantasia.message}</p>}
+          </div>
+          <div className='mb-4'>
+            <label className='block text-gray-700 font-medium mb-2'>Razão Social</label>
+            <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('razao_social')} />
+            {errors.razao_social && <p className='text-red-500 text-sm mt-1'>{errors.razao_social.message}</p>}
+          </div>
+          <div className='mb-4'>
+            <label className='block text-gray-700 font-medium mb-2'>Cidade</label>
+            <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('cidade')} />
+            {errors.cidade && <p className='text-red-500 text-sm mt-1'>{errors.cidade.message}</p>}
+          </div>
+          <div className='mb-4'>
+          <label className='block text-gray-700 font-medium mb-2'>Estado</label>
+          <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('estado')} />
+          {errors.estado && <p className='text-red-500 text-sm mt-1'>{errors.estado.message}</p>}
+          </div>
+          <div className='mb-4'>
+          <label className='block text-gray-700 font-medium mb-2'>CEP</label>
+          <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('cep')} />
+          {errors.cep && <p className='text-red-500 text-sm mt-1'>{errors.cep.message}</p>}
+          </div>
+          
+          <button className='px-3 py-2 bg-green-400 hover:bg-green-700 text-white 
+          border-none rounded-md cursor-pointer text-base justify mt-5' type="submit">
             Salvar
           </button>
-          <button type="button" onClick={onClose}>
+          <button className='px-3 py-2 bg-red-400 hover:bg-red-700 text-white border-none rounded-md 
+          cursor-pointer text-base justify mt-2' type="button" onClick={onClose}>
             Cancelar
           </button>
         </form>
