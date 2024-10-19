@@ -68,31 +68,38 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Add Products to Supplier</h2>
+        <h2>Adicionar Produtos ao Fornecedor</h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
             type="text"
-            placeholder="Search for products..."
+            placeholder="Procurando Produtos..."
             {...register('search')}
+            className='text-center mt-2 mb-2'
           />
 
           {isLoading ? (
-            <p>Loading products...</p>
+            <p>Procurando Produtos...</p>
           ) : (
-            <ul>
+            <ul className="space-y-4">
               {products.map((product) => (
-                <li key={product.id_produto}>
-                  <label>
+                <li className="flex items-center justify-between bg-gray-100 p-4 rounded-md shadow-md" 
+                key={product.id_produto}>
+                  <label className="flex items-center space-x-3 text-gray-800">
                     <input
                       type="checkbox"
                       checked={selectedProducts.includes(product.id_produto)}
                       onChange={() => handleCheckboxChange(product.id_produto)}
+                      className="form-checkbox h-5 w-5 text-blue-600"
                     />
+                    <span className="text-lg font-medium">
                     {product.nome_produto} - ${product.preco_venda}
+                    </span>
                   </label>
 
                   {selectedProducts.includes(product.id_produto) && (
+                    <div className="mt-4 md:mt-0 space-y-2">
+                      <h3 className='text-sm font-medium text-gray-700'>preço de venda</h3>
                     <Controller
                       name={`preco_custo.${product.id_produto}`}
                       control={control}
@@ -103,27 +110,35 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
                           type="number"
                           step="0.01"
                           placeholder="Enter cost price"
+                          className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 
+                          focus:ring-blue-500 focus:border-transparent"
                         />
                       )}
                     />
+                    </div>
                   )}
                 </li>
               ))}
             </ul>
           )}
 
-          <div className="pagination-controls">
-            <button type="button" onClick={handlePreviousPage} disabled={page === 1}>
-              Previous
+          <div className="pagination-controls mt-5">
+            <button className='px-2 py-1 bg-cyan-400 hover:bg-sky-400 text-white border-none 
+            rounded-md cursor-pointer text-base justify ml-2' type="button" onClick={handlePreviousPage} disabled={page === 1}>
+              Anterior
             </button>
-            <button type="button" onClick={handleNextPage}>
-              Next
+            <button className='px-2 py-1 bg-cyan-400 hover:bg-sky-400 text-white border-none 
+            rounded-md cursor-pointer text-base justify ml-2' type="button" onClick={handleNextPage}>
+              Próximo
             </button>
           </div>
 
-          <button type="submit">Add Products</button>
-          <button type="button" onClick={onClose}>
-            Cancel
+          <button className='px-3 py-2 bg-green-400 hover:bg-green-700 text-white border-none rounded-md cursor-pointer text-base justify mt-5' type="submit">
+            Adicionar
+          </button>
+          <button className='px-3 py-2 bg-red-400 hover:bg-red-700 text-white border-none rounded-md cursor-pointer text-base justify mt-2 ml-5'
+          type="button" onClick={onClose}>
+            Cancelar
           </button>
         </form>
       </div>
