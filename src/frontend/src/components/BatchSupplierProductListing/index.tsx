@@ -166,7 +166,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                             </div>
                         </div>
                     ) : (
-                        <p>Não há produtos para adicionar.</p>
+                        <p className="error-message" >Não há produtos para adicionar.</p>
                     )}
                     <div className="add-products" >
                         <button className="button-add-products" onClick={handleAddProducts} disabled={selectedProducts.length === 0}>
