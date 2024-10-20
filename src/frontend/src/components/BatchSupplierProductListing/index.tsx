@@ -213,7 +213,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                             />
                                         </label>
                                         {/* Remove Product Button */}
-                                        <button onClick={() => handleRemoveProduct(product)}>
+                                        <button className="button-remove-products" onClick={() => handleRemoveProduct(product)}>
                                             Remover
                                         </button>
                                     </div>
