@@ -144,9 +144,10 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
             return (
               <li key={product.id_produto}>
-                <strong>{product.nome_produto}</strong> (ID: {product.id_produto}) - Quantidade disp: {product.quantidade_estoque}
-                <button type="button" onClick={() => handleRemoveProduct(product.id_produto)}>
-                  Remove
+                <strong>{product.nome_produto}</strong> (ID: {product.id_produto}) - Quantidade disponível: {product.quantidade_estoque}
+                <button style={{ marginTop: '15px', backgroundColor: '#dc3545'}}     onMouseOver={e => e.currentTarget.style.backgroundColor = '#c82333'}
+                onMouseOut={e => e.currentTarget.style.backgroundColor = '#dc3545'} type="button" onClick={() => handleRemoveProduct(product.id_produto)}>
+                  Remover
                 </button>
                 <ul>
                   {isLoading ? (
@@ -168,7 +169,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
                               handleBatchSelection(product.id_produto, batch.id_lote, quantity, isChecked);
                             }}
                           />
-                          Batch ID: {batch.id_lote} - Available: {batch.quantidadeDisponivel} units
+                          ID do Lote: {batch.id_lote} - Disnonível: {batch.quantidadeDisponivel} unidade
                           <input
                             type="number"
                             min="1"
@@ -195,7 +196,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
         </ul>
       )}
 
-      <button type="submit">Enviar Remessas</button>
+      <button style={{ marginTop: '20px' }} type="submit">Enviar Remessas</button>
     </form>
   );
 };

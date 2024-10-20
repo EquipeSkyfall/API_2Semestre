@@ -17,6 +17,12 @@
     color: white;
 }
 
+.button-add-products:disabled {
+    background-color: #d6d6d6;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
+
 .error-message {
     color: red;
     font-weight: bold;

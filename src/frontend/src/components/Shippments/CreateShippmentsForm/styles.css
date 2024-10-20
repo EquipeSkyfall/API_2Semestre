@@ -33,6 +33,21 @@
     transition: background-color 0.3s;
 }
 
+.button-remove-shipment {
+    background-color: #dc3545; 
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 10px;
+}
+
+.button-remove-shipment:hover {
+    background-color: #c82333;
+}
+
 
 .shipping-form button:hover {
     background-color: #38bdf8;
