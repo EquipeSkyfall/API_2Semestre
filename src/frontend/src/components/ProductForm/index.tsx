@@ -22,29 +22,13 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
         resolver: zodResolver(productSchema),
     });
 
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset, setValue } = methods
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset } = methods
 
     const [unidadeMedida, setUnidadeMedida] = useState<'kg' | 'g' | 'L' | 'ml'>('kg'); // Default unit is kg
 
     useEffect(() => {
         console.log("Current unidadeMedida:", unidadeMedida);
     }, [unidadeMedida]);
-
-    const toggleWeightUnit = () => {
-        setUnidadeMedida((prev) => {
-            const newUnit = prev === 'kg' ? 'g' : 'kg';
-            setValue("unidade_medida", newUnit); // Update form value
-            return newUnit;
-        });
-    };
-
-    const toggleVolumeUnit = () => {
-        setUnidadeMedida((prev) => {
-            const newUnit = prev === 'L' ? 'ml' : 'L';
-            setValue("unidade_medida", newUnit); // Update form value
-            return newUnit;
-        });
-    };
 
     const onSuccess = () => {
         reset();

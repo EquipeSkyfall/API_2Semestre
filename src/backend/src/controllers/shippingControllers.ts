@@ -31,7 +31,22 @@ class ShipmentControllers {
             const shipments = await prisma.saida.findMany({
                 where: whereCondition,
                 skip,
-                take: limitNumber
+                take: limitNumber,
+                include: {
+                    saidaProdutos: {
+                        include: {
+                            loteProduto: {
+                                include: {
+                                    produto: {
+                                        select: {
+                                            nome_produto: true,
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             })
 
             response.status(200).json({
