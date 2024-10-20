@@ -31,7 +31,10 @@ class SupplierControllers {
             const suppliers = await prisma.fornecedor.findMany({
                 where: whereCondition,
                 skip,
-                take: limitNumber
+                take: limitNumber,
+                orderBy: {
+                    razao_social: 'asc',
+                },
             })
 
             response.status(200).json({
@@ -231,6 +234,11 @@ class SupplierControllers {
 
             const products = await prisma.produtosFornecedor.findMany({
                 where: whereCondition,
+                orderBy: {
+                    produto: {
+                        nome_produto: 'asc',
+                    },
+                },
                 include: {
                     produto: {
                         select: {
@@ -258,7 +266,7 @@ class SupplierControllers {
                 },
                 skip, // Skip the results based on the current page
                 take: limitNumber, // Limit the number of results to the specified limit
-            })
+            });
 
             const productIds = products.map(product => product.id_produto);
 

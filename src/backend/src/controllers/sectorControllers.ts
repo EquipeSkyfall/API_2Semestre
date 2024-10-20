@@ -25,7 +25,10 @@ class SectorControllers {
             const sectors = await prisma.setor.findMany({
                 where: whereCondition,
                 skip,
-                take: limitNumber
+                take: limitNumber,
+                orderBy: {
+                    nome_setor: 'asc',
+                },
             })
 
             response.status(200).json({

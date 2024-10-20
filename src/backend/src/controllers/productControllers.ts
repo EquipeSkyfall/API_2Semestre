@@ -46,6 +46,9 @@ class ProductControllers {
             where: whereCondition,
             skip,
             take: limitNumber,
+            orderBy: {
+              nome_produto: 'asc',
+            },
             include: {
               categoria: {
                 select: {

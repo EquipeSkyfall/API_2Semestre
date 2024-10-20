@@ -33,6 +33,9 @@ class BatchControllers {
                 where: whereCondition,
                 skip,
                 take: limitNumber,
+                orderBy: {
+                    data_compra: 'desc',
+                },
                 include: {
                     fornecedor: {
                         select: {

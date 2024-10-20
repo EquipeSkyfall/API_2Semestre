@@ -24,7 +24,10 @@ class CategoryControllers {
             const categories = await prisma.categoria.findMany({
                 where: whereCondition,
                 skip,
-                take: limitNumber
+                take: limitNumber,
+                orderBy: {
+                    nome_categoria: 'asc',
+                },
             })
 
             response.status(200).json({

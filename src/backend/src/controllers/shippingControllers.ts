@@ -32,6 +32,9 @@ class ShipmentControllers {
                 where: whereCondition,
                 skip,
                 take: limitNumber,
+                orderBy: {
+                    data_venda: 'desc',
+                },
                 include: {
                     saidaProdutos: {
                         include: {
