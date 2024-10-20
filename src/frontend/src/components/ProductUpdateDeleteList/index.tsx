@@ -6,7 +6,7 @@ import EditProduct from './EditProduct';
 import useDeleteProduct from '../../Hooks/Products/deleteProductByIdHook';
 import useUpdateProduct from '../../Hooks/Products/patchByIdProductHook';
 import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
-import './styles.css'
+import './styles.css';
 
 interface Product extends ProductSchema {
     id_produto: number;
@@ -32,6 +32,8 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
 }) => {
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [productToDelete, setProductToDelete] = useState<number | null>(null); // Estado para armazenar o ID do produto a ser excluído
     const updateProductMutation = useUpdateProduct();
     const deleteProductMutation = useDeleteProduct();
 
@@ -49,17 +51,29 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
             console.error('Erro ao atualizar produto:', error);
         }
     };
-    
-    const handleDelete = async (id_produto: number) => {
-        if (window.confirm('Você tem certeza que deseja excluir este produto?')) {
+
+    const handleDelete = (id_produto: number) => {
+        setProductToDelete(id_produto); // Armazenar o ID do produto a ser excluído
+        setShowConfirmModal(true); // Mostrar o modal de confirmação
+    };
+
+    const confirmDelete = async () => {
+        if (productToDelete) {
             try {
-                console.log(id_produto)
-                await deleteProductMutation.mutateAsync(id_produto);
+                await deleteProductMutation.mutateAsync(productToDelete);
                 refetch(); // Refazer consulta após exclusão
             } catch (error) {
                 console.error('Erro ao excluir produto:', error);
+            } finally {
+                setShowConfirmModal(false); // Fechar o modal de confirmação
+                setProductToDelete(null); // Limpar o ID do produto
             }
         }
+    };
+
+    const cancelDelete = () => {
+        setShowConfirmModal(false); // Fechar o modal de confirmação
+        setProductToDelete(null); // Limpar o ID do produto
     };
 
     return (
@@ -81,6 +95,30 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
                 onDelete={handleDelete}
                 itemsPerPage={5}
             />
+
+            {/* Modal de Confirmação de Exclusão */}
+            {showConfirmModal && (
+                <div className="fixed inset-0 flex justify-center items-center z-60">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                        <h2 className="text-center text-xl mb-4">Confirmação de Exclusão</h2>
+                        <p className="text-center mb-4">Tem certeza que deseja excluir este produto?</p>
+                        <div className="flex justify-center space-x-4">
+                            <button
+                                onClick={confirmDelete}
+                                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                            >
+                                Sim
+                            </button>
+                            <button
+                                onClick={cancelDelete}
+                                className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+                            >
+                                Não
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Modal para Edição do Produto */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>

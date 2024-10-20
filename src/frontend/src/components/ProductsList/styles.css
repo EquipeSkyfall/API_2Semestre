@@ -1,10 +1,10 @@
 .list-container {
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: rgba(248, 250, 252);
     margin-bottom: 10px;
     max-height: auto;
     overflow-y: auto;
-    max-height: 55vh;
+    max-height: 50vh;
     border-radius: 8px;
     max-width: 100%;
     margin: 0 auto;

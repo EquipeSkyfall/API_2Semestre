@@ -17,12 +17,6 @@
     color: white;
 }
 
-.button-add-products:disabled {
-    background-color: #d6d6d6;
-    border-color: #ccc;
-    cursor: not-allowed;
-}
-
 .error-message {
     color: red;
     font-weight: bold;
@@ -110,5 +104,9 @@
     background-color: #c82333;
 }
 
-
+.button-add-products:disabled {
+    background-color: #d6d6d6;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
 

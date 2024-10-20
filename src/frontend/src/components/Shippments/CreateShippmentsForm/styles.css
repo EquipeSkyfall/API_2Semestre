@@ -33,6 +33,11 @@
     transition: background-color 0.3s;
 }
 
+
+.shipping-form button:hover {
+    background-color: #38bdf8;
+}
+
 .button-remove-shipment {
     background-color: #dc3545; 
     color: white;
@@ -43,20 +48,14 @@
     transition: background-color 0.3s;
     margin-top: 10px;
 }
-
 .button-remove-shipment:hover {
     background-color: #c82333;
 }
 
-
-.shipping-form button:hover {
-    background-color: #38bdf8;
-}
-
-input[type="number"] {
+/* input[type="number"] {
     width: 100px;
     margin: 2px 0px 0px 10px;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
+} */

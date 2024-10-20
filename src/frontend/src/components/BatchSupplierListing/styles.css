@@ -1,4 +1,4 @@
-.supplier-list {
+.lista-fornecedores {
     border: 1px solid #ccc; 
     border-radius: 4px; 
     margin-top: 8px;
@@ -8,7 +8,7 @@
     overflow-y: auto; 
 }
 
-.form-field {
+.campo-formulario {
     margin-top: 10px;
     padding: 10px;
     background-color: rgba(248, 250, 252);
@@ -16,16 +16,16 @@
     border-radius: 8px;
 }
 
-.supplier-list li {
+.lista-fornecedores li {
     background-color: #22d3ee;
     color: white;
 }
 
-.supplier-list li:hover {
+.lista-fornecedores li:hover {
     background-color: #38bdf8;
 }
 
-/*placehoder selecione fornecedor*/
+/* Placeholder para 'Selecione um fornecedor' */
 #nome_fornecedor {
     cursor: pointer;
     margin-top: 20px;
@@ -44,7 +44,7 @@
     opacity: 1;
 }
 
-/*botao de paginacao da escolha do fornecedor*/
+/* Estilos da paginação */
 .pagination {
     display: flex;
     justify-content: space-between;
@@ -58,8 +58,18 @@
     background-color: #22d3ee; 
     cursor: pointer; 
     color: white;
+    transition: background-color 0.3s ease;
 }
 
 .pagination button:hover {
+    background-color: #38bdf8;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
     background-color: #38bdf8;
 }

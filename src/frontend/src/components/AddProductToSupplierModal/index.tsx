@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import useAddProductsToSupplier from '../../Hooks/Supplier/useAddProductsToSupplier';
 import useSearchProducts from '../../Hooks/Products/getSearchProductbyNameHook';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 interface AddProductToSupplierModalProps {
   supplierId: number;
@@ -68,6 +70,9 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
   return (
     <div className="modal-overlay">
       <div className="modal-content">
+      <button className="close-button" onClick={onClose}>
+          <FontAwesomeIcon icon={faTimes} />
+        </button>  
         <h2>Adicionar Produtos ao Fornecedor</h2>
 
         <form onSubmit={handleSubmit(onSubmit)}>

@@ -1,0 +1,28 @@
+
+
+.list-items1 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-left: -100px;
+    width: 100%; /* A lista ocupa a largura total do container */
+}
+
+.list-item1 {
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    width: 100%; /* Faz com que cada item ocupe toda a largura disponível */
+    margin-left: 0; /* Remover margem à esquerda */
+    margin-right: 0; /* Remover margem à direita, se necessário */
+}
+
+.list-item:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Outros estilos permanecem inalterados */

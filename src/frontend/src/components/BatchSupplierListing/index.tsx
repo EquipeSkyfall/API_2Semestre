@@ -4,38 +4,37 @@ import useSuppliers from "../../Hooks/Supplier/useSuppliers";
 import SupplierSearchBar from "../SupplierSearchBar";
 import './styles.css'
 
-interface BatchSupplierListProps {
+interface ListaFornecedoresProps {
     refetch: () => void;
     onChange: (supplierId: number | null) => void;
     resetKey: number;
 }
 
-interface FilterValues {
+interface ValoresFiltro {
     search: string;
     cidade: string;
     estado: string;
 }
 
-const BatchSupplierList: React.FC<BatchSupplierListProps> = ({ refetch, onChange, resetKey }) => {
+const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange, resetKey }) => {
     const { clearErrors, formState: { errors }, setValue } = useFormContext();
-    const [currentPage, setPage] = useState(1);
-    const [filters, setFilters] = useState<FilterValues>({ search: '', cidade: '', estado: '' });
-    const { data, isLoading, isError } = useSuppliers({...filters, page: currentPage, limit: 10});
-    const [selectedSupplier, setSelectedSupplier] = useState<{ id: number | null; name: string | null } | null>(null);
+    const [paginaAtual, setPagina] = useState(1);
+    const [filtros, setFiltros] = useState<ValoresFiltro>({ search: '', cidade: '', estado: '' });
+    const { data, isLoading, isError } = useSuppliers({...filtros, page: paginaAtual, limit: 10});
+    const [fornecedorSelecionado, setFornecedorSelecionado] = useState<{ id: number | null; name: string | null } | null>(null);
 
-    const [isExpanded, setIsExpanded] = useState(false); // For controlling list visibility
+    const [listaExpandida, setListaExpandida] = useState(false); // Para controlar a visibilidade da lista
 
     useEffect(() => {
-        handleSupplierSelect(null,null)
+        handleFornecedorSelect(null,null)
     }, [resetKey])
 
-    // When supplier is selected, show its name and store the supplier ID in the form
-    const handleSupplierSelect = (supplierId: number | null, supplierName: string | null) => {
+    const handleFornecedorSelect = (supplierId: number | null, supplierName: string | null) => {
         if (supplierId !== null) {
-            clearErrors("id_fornecedor"); // Clear the error when a valid supplier is selected
+            clearErrors("id_fornecedor"); // Limpa o erro ao selecionar um fornecedor válido
         }
         setValue('id_fornecedor', supplierId);
-        setSelectedSupplier({ id: supplierId, name: supplierName });
+        setFornecedorSelecionado({ id: supplierId, name: supplierName });
         toggleList();
 
         if (onChange) {
@@ -45,35 +44,35 @@ const BatchSupplierList: React.FC<BatchSupplierListProps> = ({ refetch, onChange
         refetch();
     }
 
-    const handleNextPage = () => setPage((prev) => prev + 1);
-    const handlePrevPage = () => setPage((prev) => Math.max(prev - 1, 1));
+    const handleProximaPagina = () => setPagina((prev) => prev + 1);
+    const handlePaginaAnterior = () => setPagina((prev) => Math.max(prev - 1, 1));
 
     const toggleList = () => {
-        setIsExpanded(!isExpanded);
+        setListaExpandida(!listaExpandida);
     }
 
     const handleSearchTermChange = (search: string, cidade: string, estado: string) => {
-        setFilters({ search, cidade, estado });
+        setFiltros({ search, cidade, estado });
     };
 
     return (
-        <div className="form-field required">
+        <div className="campo-formulario required">
             <label htmlFor="id_fornecedor">Fornecedor</label>
             <SupplierSearchBar onSearchTermChange={handleSearchTermChange} resetKey={resetKey} />
 
             <input
                 id="nome_fornecedor"
                 type="text"
-                value={selectedSupplier?.name || ''} // ID as value
+                value={fornecedorSelecionado?.name || ''} 
                 placeholder="Selecione um fornecedor"
-                readOnly // Make the input read-only since it will be filled by selection
+                readOnly 
                 onClick={toggleList}
             />
             {errors.id_fornecedor && <span className="error-message">{errors.id_fornecedor.message}</span>}
             
-            {/* Supplier list, collapsible */}
-            {isExpanded && (
-                <div className="supplier-list">
+            {/* Lista de fornecedores, colapsável */}
+            {listaExpandida && (
+                <div className="lista-fornecedores">
                     {isLoading ? (
                         <p>Carregando fornecedores...</p>
                     ) : isError ? (
@@ -84,7 +83,7 @@ const BatchSupplierList: React.FC<BatchSupplierListProps> = ({ refetch, onChange
                                 {data.suppliers.map(supplier => (
                                     <li
                                         key={supplier.id_fornecedor}
-                                        onClick={() => handleSupplierSelect(supplier.id_fornecedor, supplier.razao_social)}
+                                        onClick={() => handleFornecedorSelect(supplier.id_fornecedor, supplier.razao_social)}
                                         style={{ cursor: 'pointer', padding: '5px', border: '1px solid white', margin: '5px 0' }}
                                     >
                                         {supplier.razao_social}
@@ -92,14 +91,14 @@ const BatchSupplierList: React.FC<BatchSupplierListProps> = ({ refetch, onChange
                                 ))}
                             </ul>
                             <div className="pagination">
-                                <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                                    Previous
+                                <button onClick={handlePaginaAnterior} disabled={paginaAtual === 1}>
+                                    Anterior
                                 </button>
                                 <span>
-                                    Page {currentPage} of {data.totalPages}
+                                    Página {paginaAtual} de {data.totalPages}
                                 </span>
-                                <button onClick={handleNextPage} disabled={currentPage === data.totalPages}>
-                                    Next
+                                <button onClick={handleProximaPagina} disabled={paginaAtual === data.totalPages}>
+                                    Próxima
                                 </button>
                             </div>
                         </>
@@ -112,4 +111,4 @@ const BatchSupplierList: React.FC<BatchSupplierListProps> = ({ refetch, onChange
     )
 };
 
-export default BatchSupplierList;
+export default ListaFornecedores;

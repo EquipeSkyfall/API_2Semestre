@@ -34,8 +34,8 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
   const handleRemoveProduct = (productId: number) => {
     setRemovedProductId(productId);
-    setShipmentProducts((prevProducts) => 
-        prevProducts.filter((product) => product.id_produto !== productId)
+    setShipmentProducts((prevProducts) =>
+      prevProducts.filter((product) => product.id_produto !== productId)
     );
   };
 
@@ -71,7 +71,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
       } else {
         setCheckedBatches((prev) => prev.filter((id) => id !== id_lote)); //CARALHO MANO QUE MERDA QUE NADA FUNCIONA NESSA BOSTA THE REACT DO CARALHO AÍ TEM Q FAZER ESSAS BOSTA
       }                                                                   //OLHA ISSO MANO IF > IF > IF > IF TUDO ISSO PRA MANDAR A PORRA DE UM FORMULARIO PQP MANO SE MATA QUEM
-                                                                          //CRIOU ESSA PORRA. Se alguém souber como arrumar esse formulario seja bem vindo!
+      //CRIOU ESSA PORRA. Se alguém souber como arrumar esse formulario seja bem vindo!
       return prevSelections; // No changes made
     });
   };
@@ -87,7 +87,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
     // Limpar a mensagem após 2 segundos
     setTimeout(() => {
       setSuccessMessage('');
-  }, 2000);
+    }, 2000);
 
     refetch();
   };
@@ -95,10 +95,10 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
   const mutation = useCreateShipment(onSuccess);
 
   const onSubmit = (data: ShipmentSchema) => {
-    const allProductsValid = shipmentProducts.every(product => 
+    const allProductsValid = shipmentProducts.every(product =>
       batchSelections.some(selection => selection.id_produto === product.id_produto && selection.quantidade_retirada > 0)
     );
-  
+
     if (!allProductsValid) {
       setServerError('Há produtos sendo enviados sem lote!');
       return; // Prevent form submission
@@ -132,7 +132,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
         <option value="venda">Venda</option>
       </select>
 
-      <ShipmentProducts onProductsSelected={handleProductsSelected} removedProductId={removedProductId} resetKey={resetKey}/>
+      <ShipmentProducts onProductsSelected={handleProductsSelected} removedProductId={removedProductId} resetKey={resetKey} />
 
       <h3>Produtos selecionados:</h3>
       {shipmentProducts.length === 0 ? (
@@ -145,8 +145,8 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
             return (
               <li key={product.id_produto}>
                 <strong>{product.nome_produto}</strong> (ID: {product.id_produto}) - Quantidade disponível: {product.quantidade_estoque}
-                <button style={{ marginTop: '15px', backgroundColor: '#dc3545'}}     onMouseOver={e => e.currentTarget.style.backgroundColor = '#c82333'}
-                onMouseOut={e => e.currentTarget.style.backgroundColor = '#dc3545'} type="button" onClick={() => handleRemoveProduct(product.id_produto)}>
+                <button style={{ marginTop: '15px', backgroundColor: '#dc3545' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#c82333'}
+                  onMouseOut={e => e.currentTarget.style.backgroundColor = '#dc3545'} type="button" onClick={() => handleRemoveProduct(product.id_produto)}>
                   Remover
                 </button>
                 <ul>
@@ -169,8 +169,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
                               handleBatchSelection(product.id_produto, batch.id_lote, quantity, isChecked);
                             }}
                           />
-                          ID do Lote: {batch.id_lote} - Disnonível: {batch.quantidadeDisponivel} unidade
-                          <input
+                          ID do Lote: {batch.id_lote} - Disnonível: {batch.quantidadeDisponivel} unidade                          <input
                             type="number"
                             min="1"
                             max={batch.quantidadeDisponivel}

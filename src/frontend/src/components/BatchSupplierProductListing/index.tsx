@@ -4,6 +4,7 @@ import useGetSupplierProducts, { SupplierProduct } from "../../Hooks/Supplier/us
 import SearchBar from "../ProdutosSearchBar";
 import { BatchProductSchema } from "../BatchForm/BatchSchema/batchSchema";
 import './styles.css'
+
 interface FilterValues {
     search: string;
     id_setor: number | null;
@@ -16,16 +17,16 @@ interface BatchSupplierProductListProps {
 }
 
 const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ refetch, supplierId }) => {
-    const { clearErrors, formState: {errors}, setValue } = useFormContext();
+    const { clearErrors, formState: { errors }, setValue } = useFormContext();
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState<FilterValues>({ search: '', id_setor: null, id_categoria: null })
     const [selectedProducts, setSelectedProducts] = useState<SupplierProduct[]>([]);
     const [addedProducts, setAddedProducts] = useState<BatchProductSchema[]>([]);
     const [availableProducts, setAvailableProducts] = useState<SupplierProduct[]>([])
     const [isVisible, setIsVisible] = useState(true);
-    
+
     const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { ...filters, page: page, limit: 10 });
-    
+
     useEffect(() => {
         if (data && data.products) {
             setAvailableProducts(data.products);
@@ -48,7 +49,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
     const toggleVisibility = () => {
         setIsVisible(prev => !prev);
     };
-    
+
     const toggleProductSelection = (product: SupplierProduct) => {
         setSelectedProducts(prevSelected => {
             if (prevSelected.find(p => p.id_produto === product.id_produto)) {
@@ -61,12 +62,12 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
     const handleRemoveProduct = (product: BatchProductSchema) => {
         setAddedProducts(prev => prev.filter(p => p.id_produto !== product.id_produto));
     };
-        
+
     const handleAddProducts = () => {
         const newProducts: BatchProductSchema[] = selectedProducts.map(product => {
             const quantidadeInput = document.getElementById(`quantidade_${product.id_produto}`) as HTMLInputElement;
             const validadeInput = document.getElementById(`validade_${product.id_produto}`) as HTMLInputElement;
-    
+
             return {
                 id_produto: product.id_produto,
                 quantidade: parseInt(quantidadeInput?.value || '1'), // Capture quantity
@@ -80,7 +81,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
         ]);
 
         clearErrors("produtos");
-    
+
         toggleVisibility();
         setSelectedProducts([]);
     };
@@ -94,17 +95,17 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                         [field]: field === 'quantidade'
                             ? parseInt(value)
                             : field === 'validade_produto'
-                            ? new Date(value) // Convert 'validade_produto' to a Date object
-                            : value,
+                                ? new Date(value) // Convert 'validade_produto' to a Date object
+                                : value,
                     };
                 }
                 return product;
             });
-    
+
             return updatedProducts; // Return the updated state
         });
     };
-    
+
     const handleSearchTermChange = useCallback(
         (term: string, categoryId: number | null, sectorId: number | null) => {
             setFilters({
@@ -116,7 +117,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
         },
         []
     );
-    
+
     return (
         <div className="Supplier-Products">
             <h2>Produtos do Fornecedor</h2>
@@ -148,20 +149,20 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                     {product.produto.nome_produto} Preço Custo: R${Number(product.preco_custo).toFixed(2)}
                                 </div>
                             ))}
-                            
+
                             {/* Pagination Controls */}
                             <div className="pagination">
                                 <button onClick={handlePrevPage} disabled={page === 1}>
-                                    Previous
+                                    Anterior
                                 </button>
                                 <span>
-                                    Page {data?.currentPage} of {data?.totalPages}
+                                    Página {data?.currentPage} de {data?.totalPages}
                                 </span>
                                 <button
                                     onClick={handleNextPage}
                                     disabled={page === data?.totalPages}
                                 >
-                                    Next
+                                    Próximo
                                 </button>
                             </div>
                         </div>
@@ -193,8 +194,8 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                                 className="form-field"
                                                 type="date"
                                                 id={`validade_${product.id_produto}`} // Use product ID for uniqueness
-                                                value={product.validade_produto 
-                                                    ? new Date(product.validade_produto).toISOString().slice(0, 10) 
+                                                value={product.validade_produto
+                                                    ? new Date(product.validade_produto).toISOString().slice(0, 10)
                                                     : ''}
                                                 min={new Date(Date.now() + 86400000).toISOString().slice(0, 10)}
                                                 onChange={(e) => handleInputChange(product.id_produto, 'validade_produto', e.target.value)} // Call input change handler
