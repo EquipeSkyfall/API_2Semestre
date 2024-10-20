@@ -8,10 +8,11 @@ const Historico = () => {
   };
 
   return (
-    <>
-      <ShipmentsList />
+    
+    <div className='flex justify-center items-center h-screen -mt-20 space-x-4 p-4'>
       <BatchesList />
-    </>
+      <ShipmentsList />
+    </div>
   );
 };
 

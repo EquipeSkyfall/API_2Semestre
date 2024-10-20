@@ -21,8 +21,8 @@ const BatchesList: React.FC = () => {
         };
     }, [selectedDate]);
 
-    const handleOpenModal = (id_batch) => {
-        setSelectedBatch(id_batch);
+    const handleOpenModal = (batch) => {
+        setSelectedBatch(batch);
         setIsModalOpen(true);
     };
 
@@ -37,65 +37,94 @@ const BatchesList: React.FC = () => {
     };
 
     const handlePageChange = (newPage: number) => {
-        setPage(newPage)
+        setPage(newPage);
     };
 
-    if (isLoading) return <p>Loading batches...</p>
-    if (isError) return <p>Error loading batches.</p>
+    if (isLoading) return <p className="text-center text-blue-600">Loading batches...</p>;
+    if (isError) return <p className="text-center text-red-600">Error loading batches.</p>;
 
     return (
-        <div>
-            <h2>Batches List</h2>
-            <label htmlFor="datePicker">Select a date:</label>
-            <input
-                type="date"
-                id="datePicker"
-                value={selectedDate}
-                onChange={handleDateChange}
-            />
-            <ul>
-                {data?.batchListWithChecks.map((batch) => (
-                    <li key={batch.id_batch} onClick={() => handleOpenModal(batch)}>
-                        <p>Data de Compra: {new Date(batch.data_compra).toLocaleDateString()}</p>
-                        <p>Fornecedor: {batch.fornecedor.razao_social}</p>
-                    </li>
-                ))}
-            </ul>
+        <div className="bg-white w-1/2 h-[30rem] rounded-lg shadow-lg text-center">
+            <h2 className="text-cyan-600 font-['Afacad_Flux']">Entradas</h2>
+
+            <div className="flex justify-center mt-4">
+                <label htmlFor="datePicker" className="mr-2 text-gray-600 mt-2">Selecione um data:</label>
+                <input
+                    type="date"
+                    id="datePicker"
+                    className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                    value={selectedDate}
+                    onChange={handleDateChange}
+                />
+            </div>
+
+            <table className="ws-table-all w-full border-collapse mt-4">
+                <thead>
+                    <tr className="bg-gray-100">
+                        <th className="border-b border-gray-300 px-4 py-2">ID Compra</th>
+                        <th className="border-b border-gray-300 px-4 py-2">Data de Compra</th>
+                        <th className="border-b border-gray-300 px-4 py-2">Fornecedor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data?.batchListWithChecks.map((batch, index) => (
+                        <tr
+                            key={batch.id_lote}
+                            className={`${index % 2 === 0 ? 'bg-[#E7E9EB]' : ''} cursor-pointer hover:bg-gray-200 p-4 rounded-lg shadow-sm transition-colors`}
+                            onClick={() => handleOpenModal(batch)}
+                        >
+                            <td className="border-b border-gray-300 px-4 py-2">{batch.id_lote}</td>
+                            <td className="border-b border-gray-300 px-4 py-2">{new Date(batch.data_compra).toLocaleDateString()}</td>
+                            <td className="border-b border-gray-300 px-4 py-2">{batch.fornecedor.razao_social}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+
+
             {selectedBatch && (
                 <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-                    <div>
-                        <h3>Batch Details</h3>
-                        <p>Data de Compra: {new Date(selectedBatch.data_compra).toLocaleDateString()}</p>
-                        <p>Fornecedor: {selectedBatch.fornecedor.razao_social}</p>
+                    <div className="bg-white p-6 rounded-lg shadow-lg">
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">Detalhes de Entrada</h3>
+                        <p className="text-gray-700">
+                            Data de Compra: {new Date(selectedBatch.data_compra).toLocaleDateString()}
+                        </p>
+                        <p className="text-gray-600">Fornecedor: {selectedBatch.fornecedor.razao_social}</p>
 
                         {selectedBatch.produtos.map((loteProduto) => (
-                            <li key={loteProduto.produto.id_produto}>
-                                <p>Nome do Produto: {loteProduto.produto.nome_produto}
-                                     - Validade do Produto: {loteProduto.validade_produto ? new Date(loteProduto.validade_produto).toLocaleDateString() : 'N/A'}
-                                     - Quantidade: {loteProduto.quantidade}</p>
+                            <li key={loteProduto.produto.id_produto} className="mt-2">
+                                <p className="text-gray-600">
+                                    Nome do Produto: {loteProduto.produto.nome_produto} - Validade do Produto: {loteProduto.validade_produto ? new Date(loteProduto.validade_produto).toLocaleDateString() : 'N/A'} - Quantidade: {loteProduto.quantidade}
+                                </p>
                             </li>
                         ))}
                     </div>
                 </Modal>
             )}
+
             {data && (
-                <div>
-                    <button disabled={page === 1} onClick={() => handlePageChange(page - 1)}>
-                        Previous
+                <div className="pagination-controls">
+                    <button
+                        className="pagination-button"
+                        disabled={page === 1}
+                        onClick={() => handlePageChange(page - 1)}
+                    >
+                        Anterior
                     </button>
-                    <span>
-                        Page {page} of {data.totalPages}
+                    <span className="text-gray-600">
+                        Página {page} of {data.totalPages}
                     </span>
                     <button
+                        className="pagination-button"
                         disabled={page === data.totalPages}
                         onClick={() => handlePageChange(page + 1)}
                     >
-                        Next
+                        Próxima
                     </button>
                 </div>
             )}
         </div>
-    )
+    );
 };
 
 export default BatchesList;
