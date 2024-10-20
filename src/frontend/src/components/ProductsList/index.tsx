@@ -7,9 +7,13 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 interface ProductListing extends ProductSchema {
     id_produto: number;
-    nome_categoria: string;
-    nome_setor: string;
-    quantidade_estoque: number;
+    categoria: {
+        nome_categoria: string;
+    };
+    setor: {
+        nome_setor: string;
+    };
+    total_estoque: number;
 }
 
 interface ProductListProps {
@@ -57,8 +61,8 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                             </div>
                             {expandedProductId === product.id_produto && (
                                 <div className="product-details">
-                                    <p><strong>Category:</strong> {product.nome_categoria || 'Sem categoria'}</p>
-                                    <p><strong>Sector:</strong> {product.nome_setor || 'Sem setor'}</p>
+                                    <p><strong>Category:</strong> {product.categoria.nome_categoria || 'Sem categoria'}</p>
+                                    <p><strong>Sector:</strong> {product.setor.nome_setor || 'Sem setor'}</p>
                                     <p><strong>Altura:</strong> {product.altura_produto}</p>
                                     <p><strong>Comprimento:</strong> {product.comprimento_produto}</p>
                                     <p><strong>Largura:</strong> {product.largura_produto}</p>
@@ -68,7 +72,7 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                                     <p><strong>Modelo:</strong> {product.modelo_produto}</p>
                                     <p><strong>Peso:</strong> {product.peso_produto}{product.unidade_medida}</p>
                                     <p><strong>Preço Venda:</strong> {product.preco_venda}</p>
-                                    <p><strong>Available Stock:</strong> {product.quantidade_estoque}</p>
+                                    <p><strong>Available Stock:</strong> {product.total_estoque}</p>
                                     {/* Add more detailed fields as needed */}
                                 </div>
                             )}

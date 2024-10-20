@@ -11,7 +11,7 @@ interface ProductFormProps {
 }
 
 const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
-  const [shipmentProducts, setShipmentProducts] = useState<{ id_produto: number, nome_produto: string, quantidade_estoque: number }[]>([]);
+  const [shipmentProducts, setShipmentProducts] = useState<{ id_produto: number, nome_produto: string, total_estoque: number }[]>([]);
   const [batchSelections, setBatchSelections] = useState<ShipmentProductSchema[]>([]);
   const [serverError, setServerError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
@@ -28,7 +28,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
   const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset, setValue } = methods
 
   // Handle the selected products from the child component
-  const handleProductsSelected = (products: { id_produto: number; nome_produto: string; quantidade_estoque: number }[]) => {
+  const handleProductsSelected = (products: { id_produto: number; nome_produto: string; total_estoque: number }[]) => {
     setShipmentProducts(products);
   };
 
@@ -144,7 +144,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
             return (
               <li key={product.id_produto}>
-                <strong>{product.nome_produto}</strong> (ID: {product.id_produto}) - Quantidade disponível: {product.quantidade_estoque}
+                <strong>{product.nome_produto}</strong> (ID: {product.id_produto}) - Quantidade disponível: {product.total_estoque}
                 <button style={{ marginTop: '15px', backgroundColor: '#dc3545' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#c82333'}
                   onMouseOut={e => e.currentTarget.style.backgroundColor = '#dc3545'} type="button" onClick={() => handleRemoveProduct(product.id_produto)}>
                   Remover

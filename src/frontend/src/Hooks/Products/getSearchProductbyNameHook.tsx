@@ -44,6 +44,7 @@ const useSearchProducts = (params: QueryParams) => {
         queryKey: ['shipments','searchProducts', params],
         queryFn: async () => {
             const response = await axios.get(`http://127.0.0.1:3000/products`, {params});
+            console.log(response.data.products)
 
             return response.data || { products: [], totalPages: 1, totalProducts: 0 };
         },
@@ -52,7 +53,6 @@ const useSearchProducts = (params: QueryParams) => {
 
     const productsWithAdditionalFields = data.products.map(product => ({
         ...product,
-        quantidade_estoque: product.quantidade_estoque || 0,
         nome_categoria: product.nome_categoria,
         nome_setor: product.nome_setor,
     }));

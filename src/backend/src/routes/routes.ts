@@ -59,14 +59,6 @@ router
   .route('/products/:id/batches')
   .get(productController.getProductBatches)
 
-router
-  .route('/products/low-stock')
-  .get(productController.getLowStockProducts)
-
-router
-  .route('/products/check-expiration')
-  .get(productController.getNearExpirationProducts)
-
 
 // Supplier routes
 router

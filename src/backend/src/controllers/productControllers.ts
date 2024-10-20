@@ -1,12 +1,10 @@
 import express, { Response, Request } from 'express';
 import prisma  from '../dbConnector'; // Make sure your prisma import is correct
+import { fetchProductsWithStock } from '../helpers/getProductsHelper';
 
 
 
 class ProductControllers {
-
-  private lowStockCache: { id_produto: number, nome_produto: string, totalStock: number }[] = [];
-  private nearExpirationCache: { id_produto: number, nome_produto: string, lote_id: number, expirationDate: Date }[] = [];
 
   public getProducts = async (request: Request, response: Response) => {
     const { search='', id_setor, id_categoria, id_fornecedor, forshipping, page = '1', limit = '10' } = request.query; 
@@ -37,12 +35,17 @@ class ProductControllers {
               },
           };
         }
+        if (forshipping) {
+          whereCondition.total_estoque = {
+            gt: 0,
+          };
+        }
 
         const totalProducts = await prisma.produto.count({
             where: whereCondition,
         });
 
-        const products = await prisma.produto.findMany({
+        const productsWithCount = await (await prisma.produto.findMany({
             where: whereCondition,
             skip,
             take: limitNumber,
@@ -60,56 +63,20 @@ class ProductControllers {
                   nome_setor: true,
                 },
               },
-              lotes: {
-                select: {
-                  quantidade: true,
-                  saidas: {
-                    select: {
-                      quantidade_retirada: true,
-                    },
-                  }
-                },
-              },
             },
-        });
+          }))
 
-        // Calculate available stock for each product
-        const productsWithStock = products.map(product => {
-          const totalQuantity = product.lotes.reduce((sum, lote) => sum + lote.quantidade, 0);
-          const totalRetirada = product.lotes.reduce((sum, lote) => {
-            const totalLoteRetirada = lote.saidas.reduce((saidaSum, saida) => {
-              return saidaSum + saida.quantidade_retirada;
-            }, 0);
-            return sum + totalLoteRetirada;
-          }, 0);
-          const quantidade_estoque = totalQuantity - totalRetirada;
-
-          return {
-            ...product,
-            quantidade_estoque,
-            nome_categoria: product.categoria?.nome_categoria || 'Sem categoria',
-            nome_setor: product.setor?.nome_setor || 'Sem setor',
-          };
-        });
-
-        const filteredProducts = forshipping 
-        ? productsWithStock.filter(product => product.quantidade_estoque > 0) 
-        : productsWithStock;
-
-        const totalFilteredProducts = forshipping 
-            ? filteredProducts.length 
-            : totalProducts;
-        
+        console.log(productsWithCount)
         response.status(200).json({
-            products: filteredProducts,
-            totalFilteredProducts,
-            totalPages: Math.ceil(totalFilteredProducts / limitNumber),
-            currentPage: pageNumber,
+          products: productsWithCount,
+          totalProducts,
+          totalPages: Math.ceil(totalProducts / limitNumber),
+          currentPage: pageNumber,
         });
-    } catch (error) {
+      } catch (error) {
         console.error('Error fetching products:', error);
         response.status(500).json({ message: 'Error fetching products', error });
-    }
+      }
   };
 
   public createProduct = async (request: Request, response: Response) => {
@@ -342,117 +309,8 @@ class ProductControllers {
     }
   };
 
-  // Fetching Products with Low Stock and storing them. \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-  public checkLowStock = async () => {
-    try {
-      const products = await prisma.produto.findMany({
-        where: { produto_deletedAt: null }, // Fetch all active products
-        include: {
-          lotes: {
-            include: {
-              saidas: true
-            }
-          }
-        }
-      });
-
-      const lowStockThreshold = 10; // Example threshold for low stock
-
-      // Clear the previous cache
-      this.lowStockCache = [];
-
-      // Iterate through all products and calculate stock
-      products.forEach(product => {
-        const totalBatches = product.lotes.reduce((sum: number, batch: any) => sum + batch.quantidade, 0);
-        const totalShipments = product.lotes.reduce((sum: number, batch: any) => {
-          return sum + batch.saidas.reduce((batchSum: number, saida: any) => batchSum + saida.quantidade_retirada, 0);
-        }, 0);
-        
-        const totalStock = totalBatches - totalShipments;
-
-        // If stock is below the threshold, add it to the cache
-        if (totalStock <= lowStockThreshold) {
-          this.lowStockCache.push({
-            id_produto: product.id_produto,
-            nome_produto: product.nome_produto,
-            totalStock
-          });
-        }
-      });
-
-      console.log("Low stock products cached:", this.lowStockCache);
-    } catch (error) {
-      console.error('Error checking low stock:', error);
-    }
-  };
-
-  public getLowStockProducts = (request: Request, response: Response) => {
-    try {
-      response.status(200).json(this.lowStockCache);
-    } catch (error) {
-      console.error('Error fetching low stock products:', error);
-      response.status(500).json({ message: 'Error fetching low stock products' });
-    }
-  };
-  // Fetching Products with Low Stock and storing them. /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-
-  // Fetching Products near Expiration Date and storing them. \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-  public checkNearExpiration = async () => {
-    try {
-      const products = await prisma.produto.findMany({
-        where: { produto_deletedAt: null }, // Fetch all active products
-        include: {
-          lotes: true // Include product batches with expiration dates
-        }
-      });
-
-      const expirationThresholdDays = 10;
-      const today = new Date();
-
-      // Clear the previous cache
-      this.nearExpirationCache = [];
-
-      // Iterate through all products and check for expiration dates
-      products.forEach(product => {
-        product.lotes.forEach(batch => {
-          const expirationDate = batch.validade_produto ? new Date(batch.validade_produto) : null;
-          if (expirationDate) {
-            const timeDifference = expirationDate.getTime() - today.getTime();
-            const daysUntilExpiration = Math.ceil(timeDifference / (1000 * 3600 * 24));
-          
-            if (daysUntilExpiration <= expirationThresholdDays) {
-              this.nearExpirationCache.push({
-                id_produto: product.id_produto,
-                nome_produto: product.nome_produto,
-                lote_id: batch.id_lote,
-                expirationDate
-              });
-            }
-          }
-        });
-      });
-
-      console.log("Near expiration products cached:", this.nearExpirationCache);
-    } catch (error) {
-      console.error('Error checking near expiration products:', error);
-    }
-  };
-
-  public getNearExpirationProducts = (request: Request, response: Response) => {
-    try {
-      response.status(200).json(this.nearExpirationCache);
-    } catch (error) {
-      console.error('Error fetching near expiration products:', error);
-      response.status(500).json({ message: 'Error fetching near expiration products' });
-    }
-  };
-  // Fetching Products near Expiration Date and storing them. /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-
 }
 
 const productController = new ProductControllers();
-
-productController.checkLowStock()
-productController.checkNearExpiration()
 
 export { productController };

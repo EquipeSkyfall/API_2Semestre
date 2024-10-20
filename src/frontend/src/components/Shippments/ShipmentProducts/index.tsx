@@ -5,7 +5,7 @@ import { ProductSchema } from "../../ProductForm/ProductSchema/productSchema";
 import './styles.css'
 interface Product extends ProductSchema {
     id_produto: number;
-    quantidade_estoque: number;
+    total_estoque: number;
 }
 
 interface FilterValues {
@@ -15,7 +15,7 @@ interface FilterValues {
 }
 
 interface ShipmentProductsProps {
-    onProductsSelected: (selectedProducts: { id_produto: number, nome_produto: string, quantidade_estoque: number }[]) => void;
+    onProductsSelected: (selectedProducts: { id_produto: number, nome_produto: string, total_estoque: number }[]) => void;
     removedProductId: number | null;
     resetKey: number;
 }
@@ -25,7 +25,7 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
     const [filters, setFilters] = useState<FilterValues>({ search: '', id_setor: null, id_categoria: null })
     const { products, totalPages, isLoading, isError } = useSearchProducts({...filters, page:page, limit: 10, forshipping: 1})
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
-    const [sentProducts, setSentProducts] = useState<{ id_produto: number, nome_produto: string, quantidade_estoque: number }[]>([]);
+    const [sentProducts, setSentProducts] = useState<{ id_produto: number, nome_produto: string, total_estoque: number }[]>([]);
 
     useEffect(() => {
         setSelectedProducts([])
@@ -70,7 +70,7 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
     };
 
     const handleSendSelectedProducts = () => {
-        const selected = selectedProducts.map((product) => ({ id_produto: product.id_produto, nome_produto: product.nome_produto, quantidade_estoque: product.quantidade_estoque }));
+        const selected = selectedProducts.map((product) => ({ id_produto: product.id_produto, nome_produto: product.nome_produto, total_estoque: product.total_estoque }));
         setSentProducts(selected)
         onProductsSelected(selected); // Send selected products to the parent component
     };
@@ -99,7 +99,7 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
                                     onChange={() => handleCheckboxChange(product)}
                                     disabled={sentProducts.some((p) => p.id_produto === product.id_produto)}
                                 />
-                                {product.nome_produto} - {product.quantidade_estoque} disponíveis.
+                                {product.nome_produto} - {product.total_estoque} disponíveis.
                             </label>
                         </li>
                     ))}

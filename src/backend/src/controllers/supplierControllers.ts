@@ -246,6 +246,7 @@ class SupplierControllers {
                             id_categoria: true,
                             id_setor: true,
                             permalink_imagem: true,
+                            total_estoque: true,
                             categoria: {
                                 select: {
                                     nome_categoria: true
@@ -256,57 +257,19 @@ class SupplierControllers {
                                     nome_setor: true
                                 }
                             },
-                            lotes: {
-                                select: {
-                                    quantidade: true
-                                },
-                            }
                         }
                     }
                 },
-                skip, // Skip the results based on the current page
-                take: limitNumber, // Limit the number of results to the specified limit
+                skip, 
+                take: limitNumber, 
             });
-
-            const productIds = products.map(product => product.id_produto);
-
-            const saidas = await prisma.saidaProduto.findMany({
-                where: {
-                    id_produto: {
-                        in: productIds,
-                    }
-                },
-                select: {
-                    id_produto: true,
-                    quantidade_retirada: true,
-                }
-            });
-
-            const saidasByProduct = saidas.reduce((acc: Record<number, number>, saida) => {
-                if (!acc[saida.id_produto]) {
-                    acc[saida.id_produto] = 0
-                }
-                acc[saida.id_produto] += saida.quantidade_retirada
-                return acc
-            }, {});
-
-            const countedProducts = products.map(product => {
-                const totalQuantity = product.produto.lotes.reduce((sum, lote) => sum + lote.quantidade, 0)
-                const totalRetirada = saidasByProduct[product.id_produto] || 0
-                const quantidade_estoque = totalQuantity - totalRetirada
-
-                return {
-                    ...product,
-                    quantidade_estoque,
-                }
-            })
 
             if (!products) {
                 return response.status(404).json({ message: 'Nenhum produto encontrado.' })
             }
 
             response.status(200).json({
-                products: countedProducts,
+                products,
                 totalProducts,
                 totalPages: Math.ceil(totalProducts / limitNumber),
                 currentPage: pageNumber,

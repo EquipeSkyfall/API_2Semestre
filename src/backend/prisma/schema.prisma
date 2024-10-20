@@ -40,6 +40,7 @@ model Produto {
   permalink_imagem     String?             @db.VarChar(255)
   peso_produto         Decimal             @db.Decimal(10, 2)
   unidade_medida       String              @db.VarChar(2)
+  total_estoque        Int                 @db.Int @default(0)
   produto_deletedAt    DateTime?           @db.Date
   id_categoria         Int?
   id_setor             Int?

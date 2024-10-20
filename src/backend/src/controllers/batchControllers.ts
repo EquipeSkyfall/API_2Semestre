@@ -1,6 +1,7 @@
 import express, { Response, Request } from 'express';
 import prisma from '../dbConnector';
 import { request } from 'http';
+import { productController } from './productControllers';
 
 class BatchControllers {
 
@@ -95,9 +96,24 @@ class BatchControllers {
                 validade_produto: produto.validade_produto ? new Date(produto.validade_produto) : null
             }))
 
+            const updatePromises = produtos.map(async (produto: any) => {
+                return prisma.produto.update({
+                    where: {
+                        id_produto: produto.id_produto
+                    },
+                    data: {
+                        total_estoque: {
+                            increment: produto.quantidade
+                        }
+                    }
+                });
+            });
+
+            await Promise.all(updatePromises);
+
             await prisma.loteProdutos.createMany({
                 data: loteProdutosData
-            })
+            });
 
             response.status(201).json({
                 message: 'Batch registered successfully.',

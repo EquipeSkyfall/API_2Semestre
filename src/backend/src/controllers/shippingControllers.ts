@@ -65,7 +65,7 @@ class ShipmentControllers {
     };
 
     public createShipment = async (request: Request, response: Response) => {
-        const { motivo_saida, produtos } = request.body
+        const { motivo_saida, produtos } = request.body;
 
         try {
             const shipment = await prisma.saida.create({
@@ -73,23 +73,38 @@ class ShipmentControllers {
                     data_venda: new Date(),
                     motivo_saida: motivo_saida
                 }
-            })
+            });
 
             const saidaProdutosData = produtos.map((produto: any) => ({
                 id_saida: shipment.id_saida,
                 id_produto: produto.id_produto,
                 id_lote: produto.id_lote,
                 quantidade_retirada: produto.quantidade_retirada
-            })) 
+            }));
+
+            const updatePromises = produtos.map(async (produto: any) => {
+                return prisma.produto.update({
+                    where: {
+                        id_produto: produto.id_produto
+                    },
+                    data: {
+                        total_estoque: {
+                            decrement: produto.quantidade_retirada
+                        }
+                    }
+                })
+            });
+    
+            await Promise.all(updatePromises);
 
             await prisma.saidaProduto.createMany({
                 data: saidaProdutosData
-            })
+            });
 
             response.status(201).json({
                 message: 'Shipment registered successfully.',
                 shipment
-            })
+            });
         } catch (error) {
             console.error('Error registering shipment:', error)
             response.status(500).json({ message: 'Error registering shipment:', error })
