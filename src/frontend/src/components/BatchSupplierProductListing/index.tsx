@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import useGetSupplierProducts, { SupplierProduct } from "../../Hooks/Supplier/useGetSupplierProducts";
 import SearchBar from "../ProdutosSearchBar";
 import { BatchProductSchema } from "../BatchForm/BatchSchema/batchSchema";
-
+import './styles.css'
 interface FilterValues {
     search: string;
     id_setor: number | null;
@@ -118,26 +118,29 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
     );
     
     return (
-        <div>
+        <div className="Supplier-Products">
             <h2>Produtos do Fornecedor</h2>
 
-            <button type="button" onClick={toggleVisibility}>
+            <button className="button-show-products" type="button" onClick={toggleVisibility}>
                 {isVisible ? 'Esconder Produtos' : 'Mostrar Produtos'}
             </button>
 
             {isVisible && (
                 <>
                     {isLoading && <p>Carregando...</p>}
-                    {isError && <p>Erro ao carregar produtos.</p>}
+                    {isError && <p className="error-message" >Erro ao carregar produtos.</p>}
 
-                    <SearchBar onSearchTermChange={handleSearchTermChange} />
+                    <div style={{ margin: '20px' }}>
+                        <SearchBar onSearchTermChange={handleSearchTermChange} />
+                    </div>
 
                     {availableProducts.length > 0 ? (
-                        <div>
+                        <div className="supplier-checkbox" >
                             {availableProducts.map(product => (
                                 <div key={product.id_produto}>
                                     <input
                                         type="checkbox"
+                                        className="checkbox"
                                         checked={selectedProducts.some(p => p.id_produto === product.id_produto)}
                                         onChange={() => toggleProductSelection(product)}
                                         disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
@@ -165,14 +168,15 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                     ) : (
                         <p>Não há produtos para adicionar.</p>
                     )}
-
-                    <button onClick={handleAddProducts} disabled={selectedProducts.length === 0}>
-                        Adicionar Produto(s)
-                    </button>
+                    <div className="add-products" >
+                        <button className="button-add-products" onClick={handleAddProducts} disabled={selectedProducts.length === 0}>
+                            Adicionar Produto(s)
+                        </button>
+                    </div>
                 </>
             )}
 
-            <div>
+            <div className="Batch-Products">
                 <h3>Produtos no lote: {errors.produtos && <span className="error-message">{errors.produtos.message}</span>}</h3>
                 {addedProducts.length > 0 && (
                     <ul>

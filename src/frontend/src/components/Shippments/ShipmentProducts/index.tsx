@@ -2,7 +2,7 @@ import SearchBar from "../../ProdutosSearchBar";
 import useSearchProducts from "../../../Hooks/Products/getSearchProductbyNameHook";
 import { useCallback, useEffect, useState } from "react";
 import { ProductSchema } from "../../ProductForm/ProductSchema/productSchema";
-
+import './styles.css'
 interface Product extends ProductSchema {
     id_produto: number;
     quantidade_estoque: number;
@@ -88,12 +88,13 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
 
             {/* Display products if not loading or error */}
             {!isLoading && !isError && products.length > 0 ? (
-                <ul>
+                <ul className="check-shipping-products" >
                     {products.map((product) => (
                         <li key={product.id_produto}>
                             <label>
                                 <input
                                     type="checkbox"
+                                    className="checkbox"
                                     checked={selectedProducts.some((p) => p.id_produto === product.id_produto)}
                                     onChange={() => handleCheckboxChange(product)}
                                     disabled={sentProducts.some((p) => p.id_produto === product.id_produto)}

@@ -1,8 +1,8 @@
 .batch-form {
-    padding: 45px;
-    background-color: rgba(248, 250, 252);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 45px;
     border-radius: 8px;
+    background-color: rgba(248, 250, 252);
 }
 
 input.form-field {
@@ -11,9 +11,17 @@ input.form-field {
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 8px;
-    margin-top: 4px;
+    margin-top: 4px;  
 }
 
+.success-message {
+    color: green;
+    background-color: #e0ffe0;
+    padding: 10px;
+    border: 1px solid green;
+    border-radius: 5px;
+    margin: 50px;
+}
 
 
 

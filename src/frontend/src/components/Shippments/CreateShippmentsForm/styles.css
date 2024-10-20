@@ -1,0 +1,47 @@
+.shipping-form {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 35px;
+    border-radius: 8px;
+    background-color: rgba(248, 250, 252);
+}
+
+
+.shipping-form h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.shipping-form select,
+.shipping-form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.shipping-form select {
+    background-color: white;
+}
+
+.shipping-form button {
+    background-color: #22d3ee;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+.shipping-form button:hover {
+    background-color: #38bdf8;
+}
+
+input[type="number"] {
+    width: 100px;
+    margin: 2px 0px 0px 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

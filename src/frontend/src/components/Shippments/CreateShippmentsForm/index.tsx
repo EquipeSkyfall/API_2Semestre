@@ -5,7 +5,7 @@ import { ShipmentProductSchema, shipmentSchema, ShipmentSchema } from './CreateS
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateShipment from '../../../Hooks/Shippments/useCreateShipment ';
-
+import './styles.css'
 interface ProductFormProps {
   refetch: () => void;
 }
@@ -83,6 +83,12 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
     setBatchSelections([])
     setShipmentProducts([])
     setValue('produtos', [])
+
+    // Limpar a mensagem após 2 segundos
+    setTimeout(() => {
+      setSuccessMessage('');
+  }, 2000);
+
     refetch();
   };
 
@@ -118,9 +124,9 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
       {serverError && <p className="error-message">{serverError}</p>}
 
       {/* Reason for Outgoing Product */}
-      <h3>Reason for Outgoing Product</h3>
+      <h3>Motivo para a saída do produto</h3>
       <select {...register('motivo_saida')} defaultValue="" required>
-        <option value="" disabled>Select a reason</option>
+        <option value="" disabled>Selecione um motivo</option>
         <option value="produto fora da validade">Produto fora da validade</option>
         <option value="produto com defeito">Produto com defeito</option>
         <option value="venda">Venda</option>
@@ -128,9 +134,9 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
       <ShipmentProducts onProductsSelected={handleProductsSelected} removedProductId={removedProductId} resetKey={resetKey}/>
 
-      <h3>Selected Products</h3>
+      <h3>Produtos selecionados:</h3>
       {shipmentProducts.length === 0 ? (
-        <p>No products selected.</p>
+        <p>Nenhum produto selecionado.</p>
       ) : (
         <ul>
           {shipmentProducts.map((product, index) => {
@@ -138,7 +144,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
             return (
               <li key={product.id_produto}>
-                <strong>{product.nome_produto}</strong> (ID: {product.id_produto}) - Available Quantity: {product.quantidade_estoque}
+                <strong>{product.nome_produto}</strong> (ID: {product.id_produto}) - Quantidade disp: {product.quantidade_estoque}
                 <button type="button" onClick={() => handleRemoveProduct(product.id_produto)}>
                   Remove
                 </button>
@@ -155,6 +161,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         <label>
                           <input
                             type="checkbox"
+                            className="checkbox"
                             onChange={(e) => {
                               const isChecked = e.target.checked
                               const quantity = e.target.checked ? 0 : 0; // Default to 1 when checked
@@ -188,7 +195,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
         </ul>
       )}
 
-      <button type="submit">Submit Shipment</button>
+      <button type="submit">Enviar Remessas</button>
     </form>
   );
 };

@@ -1,42 +1,65 @@
 .supplier-list {
-    border: 1px solid #ccc; /* Bordas para a lista de fornecedores */
-    border-radius: 4px; /* Bordas arredondadas */
-    margin-top: 8px; /* Espaçamento superior */
-    padding: 10px; /* Espaçamento interno */
-    background-color: white; /* Fundo branco */
-    max-height: 200px; /* Altura máxima para a lista */
-    overflow-y: auto; /* Rolagem vertical */
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    margin-top: 8px;
+    padding: 10px; 
+    background-color: white; 
+    max-height: 200px; 
+    overflow-y: auto; 
 }
 
-/*.supplier-list ul {
-    list-style: none;  Remove marcadores da lista
-    padding: 0; Remove padding da lista
-    margin: 0; Remove margem da lista 
+.form-field {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(248, 250, 252);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
 }
 
 .supplier-list li {
-    padding: 8px; Espaçamento interno dos itens
-    border: 1px solid transparent; Borda transparente
-    cursor: pointer; Cursor de ponteiro 
-}*/
-
-.supplier-list li:hover {
-    background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
-    border-color: #ccc; /* Borda ao passar o mouse */
+    background-color: #22d3ee;
+    color: white;
 }
 
+.supplier-list li:hover {
+    background-color: #38bdf8;
+}
+
+/*placehoder selecione fornecedor*/
+#nome_fornecedor {
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #22d3ee; 
+}
+
+#nome_fornecedor:hover {
+    background-color: #38bdf8;
+}
+
+#nome_fornecedor::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+/*botao de paginacao da escolha do fornecedor*/
 .pagination {
-    display: flex; /* Flexbox para alinhar os botões */
-    justify-content: space-between; /* Espaço entre os botões */
-    margin-top: 10px; /* Espaçamento superior */
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px; 
 }
 
 .pagination button {
-    padding: 5px 10px; /* Espaçamento interno dos botões */
-    border: 1px solid #ccc; /* Borda para os botões */
-    border-radius: 4px; /* Bordas arredondadas */
-    background-color: white; /* Fundo branco para os botões */
-    cursor: pointer; /* Cursor de ponteiro */
+    padding: 5px 10px;
+    border: 1px solid white; 
+    border-radius: 4px; 
+    background-color: #22d3ee; 
+    cursor: pointer; 
+    color: white;
 }
 
-
+.pagination button:hover {
+    background-color: #38bdf8;
+}

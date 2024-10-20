@@ -85,7 +85,7 @@ const BatchSupplierList: React.FC<BatchSupplierListProps> = ({ refetch, onChange
                                     <li
                                         key={supplier.id_fornecedor}
                                         onClick={() => handleSupplierSelect(supplier.id_fornecedor, supplier.razao_social)}
-                                        style={{ cursor: 'pointer', padding: '5px', border: '1px solid black', margin: '5px 0' }}
+                                        style={{ cursor: 'pointer', padding: '5px', border: '1px solid white', margin: '5px 0' }}
                                     >
                                         {supplier.razao_social}
                                     </li>

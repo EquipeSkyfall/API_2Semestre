@@ -34,7 +34,12 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
         reset()
         setResetKey(prev => prev + 1)
         setSuccessMessage('Lote cadastrado com sucesso!');
-        refetch()
+        
+        // Limpar a mensagem após 3 segundos
+        setTimeout(() => {
+            setSuccessMessage('');
+        }, 2000);
+        refetch();        
     };
 
     const mutation = MutationCreateBatch(onSuccess, setError, setServerError);

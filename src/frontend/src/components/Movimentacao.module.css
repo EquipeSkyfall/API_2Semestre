@@ -1,0 +1,13 @@
+/* Movimentacao.module.css */
+.formContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.insertProducts,
+.dropProducts {
+    flex: 1;
+    min-width: 300px;
+}
