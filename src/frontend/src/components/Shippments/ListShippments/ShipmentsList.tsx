@@ -6,7 +6,7 @@ const ShipmentsList: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [debouncedDate, setDebouncedDate] = useState<string>('');
   const [page, setPage] = useState(1);
-  const limit = 10;
+  const limit = 5;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedShipment, setSelectedShipment] = useState(null);
   const [collapsedBatches, setCollapsedBatches] = useState<{ [key: number]: boolean }>({});
