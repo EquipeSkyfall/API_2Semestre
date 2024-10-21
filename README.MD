@@ -57,7 +57,7 @@ https://github.com/user-attachments/assets/b51e998a-a811-425a-9317-c16eb2ccfd24
 | 6    |   2    |   Média    |  6   | Registro de Locais de Armazenamento, Fornecedores e Setores | ✅     |
 | 7    |   3    |   Média    |  7   | Notificação Automática de Estoque Mínimo                    |        |
 | 8    |   3    |   Média    |  8   | Notificação de Produtos Próximos à Data de Validade         |        |
-| 9    |   3    |   Média    |  9   | Registro de Compras e Log de Alterações para Auditorias     |        |
+| 9    |   3    |   Média    |  9   | Log de Alterações para Auditorias                           |        |
 | 10   |   3    |   Média    | 10   | Diferentes Níveis de Acesso no Sistema                      |        |
 | 11   |   4    |   Baixa    | 11   | Geração de Relatórios Detalhados sobre Estoque e Compras    |        |
 | 12   |   4    |   Baixa    | 12   | Previsão de Demandas e Planejamento de Compras              |        |
