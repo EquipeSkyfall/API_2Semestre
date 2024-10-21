@@ -9,7 +9,7 @@ const BatchesList: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBatch, setSelectedBatch] = useState(null);
 
-    const { data, isLoading, isError } = useGetBatches(debouncedDate, page, 10);
+    const { data, isLoading, isError } = useGetBatches(debouncedDate, page, 5);
 
     useEffect(() => {
         const handler = setTimeout(() => {
