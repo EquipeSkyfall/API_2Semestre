@@ -2,5 +2,5 @@
 |:---:|:-----------------------------------------:|:----------------:|:------------------------------------------------------------------:|:-----------------------------------------:|:------------------:|
 | 1   | Acesso aos Itens                         | Funcionário      | Ter acesso aos itens presentes no estoque                         | Verificar a disponibilidade dos produtos  | 5                  |
 | 2   | Organização de Produtos                   | Administrador    | Organizar os produtos em uma estrutura hierárquica de categorias  | Melhorar a navegação e gerenciamento       | 15                 |
-| 3   | Registro de Entradas e Saídas            | Funcionário      | Registrar entradas e saídas de produtos no estoque                 | Controlar o fluxo de produtos             | 8                  |
+| 3   | Registro de Entradas e Saídas            | Funcionário      | Registrar entradas e saídas de produtos no estoque                 | Controlar o fluxo de produtos             | 4                  |
 | 4   | Registro de Locais de Armazenamento      | Gerente          | Registrar locais de armazenamento, fornecedores e setores          | Otimizar a gestão de recursos              | 15                 |
