@@ -42,7 +42,7 @@
 </div>
 
 ## 📌 MVP <a name="mvp"><a>
-<img src="https://github.com/EquipeSkyfall/API_2Semestre/blob/main/docs/sprint/sprint1_mvp.gif">
+<img src="https://github.com/EquipeSkyfall/API_2Semestre/blob/sprint2/docs/sprint/sprint2/sprint2-mvp.mp4">
 
 ## 📜 Product Backlog <a name="backlog"><a>
 
