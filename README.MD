@@ -46,20 +46,21 @@
 
 ## 📜 Product Backlog <a name="backlog"><a>
 
-| RANK | SPRINT | PRIORIDADE | ITEM | USER STORY (NOME) | STATUS |
-| :---: | :----: | :--------: | :--: | :----------------------------: | :----: |
-| 1   |   1    |   Alta      |   1   | Cadastro de Usuários                    | ✅     |
-| 2   |   1    |   Alta      |   2   | Cadastro Detalhado de Produtos no Estoque | ✅     |
-| 3   |   2    |   Alta      |   3   | Criação do Banco de Dados               |        |
-| 4   |   2    |   Alta      |   4   | Acesso aos Itens Disponíveis no Estoque |        |
-| 5   |   2    |   Alta      |   5   | Organização de Produtos em Estrutura Hierárquica de Categorias |        |
-| 6   |   2    |   Baixa     |   6   | Registro de Entradas e Saídas de Produtos no Estoque |        |
-| 7  |   2    |   Média     |   7   | Notificação Automática de Estoque Mínimo |        |
-| 8  |   2    |   Média     |   8   | Notificação de Produtos Próximos à Validade |        |
-| 9   |   3    |   Baixa     |   9   | Registro de Locais de Armazenamento, Fornecedores e Setores |        |
-| 10  |   3    |   Média     |   10   | Registro de Compras e Log de Alterações para Auditorias |        |
-| 11   |   4    |   Baixa     |   11   | Geração de Relatórios Detalhados sobre Estoque e Compras |        |
-| 12  |   4    |   Média     |   12   | Previsão de Demandas e Planejamento de Compras |        |
+| RANK | SPRINT | PRIORIDADE | ITEM | USER STORY (NOME)                                           | STATUS |
+|:----:|:------:|:----------:|:----:|:-----------------------------------------------------------:|:------:|
+| 1    |   1    |   Alta     |  1   | Cadastro de Usuários                                        | ✅     |
+| 2    |   1    |   Alta     |  2   | Registro de Produtos no Estoque                             | ✅     |
+| 3    |   2    |   Alta     |  3   | Acesso aos Itens Disponíveis no Estoque                     | ✅     |
+| 4    |   2    |   Média    |  4   | Organização de Produtos em Estrutura Hierárquica de Categorias | ✅     |
+| 5    |   2    |   Média    |  5   | Registro de Entradas e Saídas de Produtos no Estoque        | ✅     |
+| 6    |   2    |   Média    |  6   | Registro de Locais de Armazenamento, Fornecedores e Setores | ✅     |
+| 7    |   3    |   Média    |  7   | Notificação Automática de Estoque Mínimo                    |        |
+| 8    |   3    |   Média    |  8   | Notificação de Produtos Próximos à Data de Validade         |        |
+| 9    |   3    |   Média    |  9   | Registro de Compras e Log de Alterações para Auditorias     |        |
+| 10   |   3    |   Média    | 10   | Diferentes Níveis de Acesso no Sistema                      |        |
+| 11   |   4    |   Baixa    | 11   | Geração de Relatórios Detalhados sobre Estoque e Compras    |        |
+| 12   |   4    |   Baixa    | 12   | Previsão de Demandas e Planejamento de Compras              |        |
+
 
 
 ## 👥 Equipe <a name="equipe"><a>
