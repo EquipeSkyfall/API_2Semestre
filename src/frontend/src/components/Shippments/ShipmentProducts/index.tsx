@@ -111,18 +111,18 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
             {/* Pagination controls */}
             {totalPages > 1 && (
                 <div>
-                    <button disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
+                    <button type="button" disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
                         Anterior
                     </button>
                     <span>Página {page} de {totalPages}</span>
-                    <button disabled={page === totalPages} onClick={() => setPage((prev) => prev + 1)}>
+                    <button type="button" disabled={page === totalPages} onClick={() => setPage((prev) => prev + 1)}>
                         Próxima
                     </button>
                 </div>
             )}
 
             {/* Send selected products button */}
-            <button onClick={handleSendSelectedProducts} disabled={selectedProducts.length === 0}>
+            <button type="button" onClick={handleSendSelectedProducts} disabled={selectedProducts.length === 0}>
                 Adicionar Produtos Selecionados
             </button>
         </div>

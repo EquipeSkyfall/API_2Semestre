@@ -41,7 +41,7 @@ interface QueryParams {
 
 const useSearchProducts = (params: QueryParams) => {
     const { data = { products: [], totalPages: 1, totalProducts: 0 }, isLoading, isError, refetch } = useQuery<ProductsResponse>({
-        queryKey: ['shipments','searchProducts', params],
+        queryKey: ['products', params],
         queryFn: async () => {
             const response = await axios.get(`http://127.0.0.1:3000/products`, {params});
             console.log(response.data.products)

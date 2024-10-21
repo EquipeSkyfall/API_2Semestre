@@ -41,7 +41,7 @@ model Produto {
   peso_produto         Decimal             @db.Decimal(10, 2)
   unidade_medida       String              @db.VarChar(2)
   total_estoque        Int                 @db.Int @default(0)
-  produto_deletedAt    DateTime?           @db.Date
+  produto_deletedAt    DateTime?           
   id_categoria         Int?
   id_setor             Int?
   categoria            Categoria?           @relation(fields: [id_categoria], references: [id_categoria])
@@ -64,7 +64,7 @@ model Fornecedor {
   cidade                String            @db.VarChar(100)
   estado                String            @db.Char(2)
   cep                   String            @db.VarChar(9)
-  fornecedor_deletedAt  DateTime?         @db.Date
+  fornecedor_deletedAt  DateTime?         
   produtos              ProdutosFornecedor[]
   lotes                 Lote[]
 
@@ -86,7 +86,7 @@ model ProdutosFornecedor {
 model Lote {
   id_lote              Int               @id @default(autoincrement())
   id_fornecedor        Int
-  data_compra          DateTime          @db.Date
+  data_compra          DateTime          
   fornecedor           Fornecedor        @relation(fields: [id_fornecedor], references: [id_fornecedor])
   produtos             LoteProdutos[]
 }
@@ -105,7 +105,7 @@ model LoteProdutos {
 
 model Saida {
   id_saida             Int               @id @default(autoincrement())
-  data_venda           DateTime          @db.Date
+  data_venda           DateTime          
   motivo_saida         String            @db.VarChar(100)
   saidaProdutos        SaidaProduto[]
 }

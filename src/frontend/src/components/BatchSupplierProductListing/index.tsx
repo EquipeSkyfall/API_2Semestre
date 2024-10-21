@@ -41,6 +41,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
     useEffect(() => {
         setAddedProducts([])
         setSelectedProducts([])
+        setIsVisible(true)
     }, [supplierId]);
     useEffect(() => {
         setValue('produtos', addedProducts)

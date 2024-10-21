@@ -44,6 +44,7 @@ const useGetSupplierProducts = (supplierId: number, params: QueryParams) => {
   return useQuery({
     queryKey: ['supplierProducts', supplierId, params],
     queryFn: () => getSupplierProducts(supplierId, params),
+    enabled: !!supplierId
   });
 };
 

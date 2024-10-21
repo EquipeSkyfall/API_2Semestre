@@ -8,7 +8,6 @@ export const batchProductSchema = z.object({
 
 export const batchSchema = z.object({
     id_fornecedor: z.number().nullable().refine(value => value !== null, { message: "Lotes devem conter um fornecedor." }),
-    data_compra: z.date(),
     produtos: z.array(batchProductSchema).min(1, "Insira pelo menos um produto."),
 });
 

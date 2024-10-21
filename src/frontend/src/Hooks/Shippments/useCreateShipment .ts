@@ -27,7 +27,7 @@ const useCreateShipment = (onSuccessCallback: (data: ShipmentSchema) => void) =>
   return useMutation(
     {mutationFn:createShipment, 
         onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['shipments'] }); 
+      queryClient.invalidateQueries({ queryKey: ['products'] }); 
       console.log('Shipment registered successfully.');
       onSuccessCallback(data);
     },

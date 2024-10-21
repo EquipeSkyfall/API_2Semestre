@@ -19,7 +19,7 @@ class BatchControllers {
     
                 if (datePattern.test(search as string)) {
                     // Exact date search (e.g., '2024-10-02')
-                    whereCondition.data_venda = new Date(search as string);
+                    whereCondition.data_compra = new Date(search as string);
                 } else {
                     // Handle other formats or provide an error response
                     return response.status(400).json({ message: 'Invalid date format. Please use YYYY-MM-DD.' });
@@ -79,13 +79,13 @@ class BatchControllers {
     };
 
     public createBatch = async (request: Request, response: Response) => {
-        const { id_fornecedor, data_compra, produtos } = request.body
+        const { id_fornecedor, produtos } = request.body
 
         try {
             const lote = await prisma.lote.create({
                 data: {
                     id_fornecedor: id_fornecedor,
-                    data_compra: new Date(data_compra)
+                    data_compra: new Date()
                 }
             })
 

@@ -77,16 +77,6 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
 
                 <h2>Entrada de Produtos</h2>
 
-                <label>
-                    Data de Compra:
-                    <input className="form-field required"
-                        {...register("data_compra", { valueAsDate: true })}
-                        type="date"
-                        id="data_compra"
-                        defaultValue={new Date().toISOString().slice(0, 10)}
-                    />
-                </label>
-
                     <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
 
                     <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>

@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import { z } from "zod";
 import { batchSchema } from "../../components/BatchForm/BatchSchema/batchSchema";
 import { UseFormSetError } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type createBatchSchema = z.infer<typeof batchSchema>;
 
@@ -16,9 +16,12 @@ const MutationCreateBatch = (
     setError: UseFormSetError<createBatchSchema>,
     setServerError: (message: string) => void,
 ) => {
+    const queryClient = useQueryClient();
+
     return useMutation<createBatchSchema, AxiosError, createBatchSchema>({
         mutationFn: postBatchData,
         onSuccess: (data) => {
+            queryClient.invalidateQueries({ queryKey: ['products'] });
             console.log('Data submitted successfully:', data);
             onSuccessCallback(data);
         },
