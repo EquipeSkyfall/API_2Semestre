@@ -44,6 +44,9 @@
 ## 📌 MVP <a name="mvp"><a>
 <img src="https://github.com/EquipeSkyfall/API_2Semestre/blob/sprint2/docs/sprint/sprint2/sprint2-mvp.mp4">
 
+https://github.com/user-attachments/assets/b51e998a-a811-425a-9317-c16eb2ccfd24
+
+
 ## 📜 Product Backlog <a name="backlog"><a>
 
 | RANK | SPRINT | PRIORIDADE | ITEM | USER STORY (NOME)                                           | STATUS |
