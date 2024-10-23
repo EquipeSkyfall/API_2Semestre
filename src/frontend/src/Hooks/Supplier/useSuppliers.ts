@@ -20,8 +20,6 @@ interface SuppliersResponse {
 
 interface QueryParams {
   search?: string;
-  cidade?: string;
-  estado?: string;
   page?: number;
   limit?: number;
 }

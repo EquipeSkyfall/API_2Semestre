@@ -8,6 +8,7 @@ import SupplierProductsModal from '../SuplierProducsModal/SupplierProductsModal'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import './styles.css';
+import SupplierSearchBar from '../SupplierSearchBar';
 
 interface FilterValues {
   search: string;
@@ -17,21 +18,21 @@ interface FilterValues {
 
 const SupplierList: React.FC = () => {
   const { register, handleSubmit } = useForm<FilterValues>();
-  const [filters, setFilters] = useState<FilterValues>({ search: '' });
+  const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState(1);
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isViewProductsModalOpen, setIsViewProductsModalOpen] = useState(false);
-  const { data, isLoading, isError } = useSuppliers({ ...filters, page, limit: 10 });
+  const { data, isLoading, isError } = useSuppliers({ search, page, limit: 10 });
   const { mutate: deleteSupplier } = useDeleteSupplier();
 
   // Estado para o modal de confirmação
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [supplierIdToDelete, setSupplierIdToDelete] = useState<number | null>(null);
 
-  const onSubmit = (values: FilterValues) => {
-    setFilters(values);
+  const handleSearchTermChange = (search: string) => {
+    setSearch(search);
     setPage(1);
   };
 
@@ -83,28 +84,7 @@ const SupplierList: React.FC = () => {
     <div className='flex-1 p-5 bg-gray-100 rounded-lg shadow-md max-h-[80vh] overflow-y-auto box-border ml-10 mr-10 mt-8 mb-10'>
       <h1 className='text-center'>Lista de Fornecedores</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="search-form flex justify-center mb-5">
-        <input
-          {...register('search')}
-          type="text"
-          placeholder="Razão Social"
-          className='px-3 py-2'
-        />
-        <input
-          {...register('cidade')}
-          type="text"
-          placeholder="Cidade"
-          className='px-3 py-2 ml-5'
-        />
-        <input
-          {...register('estado')}
-          type="text"
-          placeholder="Estado"
-          className='px-3 py-2 ml-5'
-        />
-        <button type="submit" className='px-3 py-2 bg-cyan-400 hover:bg-sky-400 text-white border-none 
-        rounded-md cursor-pointer text-base justify ml-5 '>Procurar</button>
-      </form>
+      <SupplierSearchBar onSearchTermChange={handleSearchTermChange} />
 
       <div className='ml-[14%]'>
         {suppliers.length === 0 ? (

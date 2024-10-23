@@ -269,6 +269,9 @@ class ProductControllers {
         where: { id_produto: Number(id) },
         include: {
           saidas: true
+        },
+        orderBy: {
+          validade_produto: 'asc', // Sort by validade_produto in ascending order
         }
       })
 
@@ -283,7 +286,17 @@ class ProductControllers {
           quantidadeDisponivel: batch.quantidade - totalSaida,
           validade_produto: batch.validade_produto
         }
-      }).filter(batch => batch.quantidadeDisponivel > 0);
+      }).filter(batch => batch.quantidadeDisponivel > 0)
+        .sort((a, b) => {
+          // Handle null validade_produto values: Place batches with null expiration at the end
+          if (a.validade_produto === null) return 1;
+          if (b.validade_produto === null) return -1;
+          // Compare Date objects
+          return new Date(a.validade_produto).getTime() - new Date(b.validade_produto).getTime();
+        });
+
+      console.log(result)
+
       response.status(200).json(result)
     } catch (error) {
       response.status(500).json({ message: 'Error fetching batches for product:', error })

@@ -61,8 +61,8 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                             </div>
                             {expandedProductId === product.id_produto && (
                                 <div className="product-details">
-                                    <p><strong>Category:</strong> {product.categoria.nome_categoria || 'Sem categoria'}</p>
-                                    <p><strong>Sector:</strong> {product.setor.nome_setor || 'Sem setor'}</p>
+                                    <p><strong>Category:</strong> {product.categoria?.nome_categoria || 'Sem categoria'}</p>
+                                    <p><strong>Sector:</strong> {product.setor?.nome_setor || 'Sem setor'}</p>
                                     <p><strong>Altura:</strong> {product.altura_produto}</p>
                                     <p><strong>Comprimento:</strong> {product.comprimento_produto}</p>
                                     <p><strong>Largura:</strong> {product.largura_produto}</p>

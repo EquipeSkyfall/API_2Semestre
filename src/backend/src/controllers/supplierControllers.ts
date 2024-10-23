@@ -4,7 +4,7 @@ import prisma  from '../dbConnector';
 class SupplierControllers {
 
     public getSuppliers = async (request: Request, response: Response) => {
-        const { search = '', cidade='', estado='', page = '1', limit = '10' } = request.query
+        const { search = '', page = '1', limit = '10' } = request.query
         const pageNumber = parseInt(page as string)
         const limitNumber = parseInt(limit as string)
         const skip = (pageNumber-1) * limitNumber
@@ -13,15 +13,12 @@ class SupplierControllers {
             const whereCondition: any = { fornecedor_deletedAt: null }
 
             if (search) {
-                whereCondition.razao_social = {
-                    contains: search
-                }
-            }
-            if (cidade) {
-                whereCondition.cidade = cidade as string
-            }
-            if (estado) {
-                whereCondition.estado = estado as string
+                whereCondition.OR = [
+                    { razao_social: { contains: search } },
+                    { nome_fantasia: { contains: search } },
+                    { cidade: { contains: search } },
+                    { estado: { contains: search } }
+                ];
             }
 
             const totalSuppliers = await prisma.fornecedor.count({
@@ -36,6 +33,8 @@ class SupplierControllers {
                     razao_social: 'asc',
                 },
             })
+
+            console.log(suppliers)
 
             response.status(200).json({
                 suppliers,

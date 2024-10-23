@@ -10,17 +10,11 @@ interface ListaFornecedoresProps {
     resetKey: number;
 }
 
-interface ValoresFiltro {
-    search: string;
-    cidade: string;
-    estado: string;
-}
-
 const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange, resetKey }) => {
     const { clearErrors, formState: { errors }, setValue } = useFormContext();
     const [paginaAtual, setPagina] = useState(1);
-    const [filtros, setFiltros] = useState<ValoresFiltro>({ search: '', cidade: '', estado: '' });
-    const { data, isLoading, isError } = useSuppliers({...filtros, page: paginaAtual, limit: 10});
+    const [search, setSearch] = useState<string>('');
+    const { data, isLoading, isError } = useSuppliers({search, page: paginaAtual, limit: 10});
     const [fornecedorSelecionado, setFornecedorSelecionado] = useState<{ id: number | null; name: string | null } | null>(null);
 
     const [listaExpandida, setListaExpandida] = useState(false); // Para controlar a visibilidade da lista
@@ -51,8 +45,9 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
         setListaExpandida(!listaExpandida);
     }
 
-    const handleSearchTermChange = (search: string, cidade: string, estado: string) => {
-        setFiltros({ search, cidade, estado });
+    const handleSearchTermChange = (search: string) => {
+        setSearch(search);
+        setPagina(1);
     };
 
     return (

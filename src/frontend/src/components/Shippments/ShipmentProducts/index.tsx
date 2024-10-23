@@ -30,6 +30,7 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
     useEffect(() => {
         setSelectedProducts([])
         setSentProducts([])
+        setPage(1)
     }, [resetKey])
 
     useEffect(() => {
