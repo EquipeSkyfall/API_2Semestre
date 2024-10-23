@@ -32,12 +32,14 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
 
     useEffect(() => {
         if (product) {
-            // Initialize the state with the product's preco_venda
-            setPrecoVenda(new Intl.NumberFormat('pt-BR', {
+            // Initialize the state with the product's preco_venda formatted for display
+            const formattedPrice = new Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
-            }).format(product.preco_venda));
-            // Set the value in the form
+            }).format(product.preco_venda);
+            
+            setPrecoVenda(formattedPrice);
+            // Set the value in the form as a number (not formatted)
             setValue('preco_venda', product.preco_venda);
         }
     }, [product, setValue]);

@@ -31,7 +31,7 @@ export const productSchema = z.object({
     id_fornecedor: z.preprocess(
         (value) => (value === '' ? null : Number(value)),
         z.number().optional().nullable()
-    )
+    ).optional()
 });
 
 
