@@ -40,6 +40,7 @@ const SupplierSearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange, reset
                         value={search}
                         onChange={handleSearchChange}
                         placeholder="Pesquisar por nome, cidade ou estado..."
+                        className="mb-5"
                     />
                 </div>
             </div>

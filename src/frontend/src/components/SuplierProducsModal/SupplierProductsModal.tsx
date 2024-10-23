@@ -1,9 +1,9 @@
-// Components/Supplier/SupplierProductsModal.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useGetSupplierProducts from '../../Hooks/Supplier/useGetSupplierProducts';
 import useDeleteProductFromSupplier from '../../Hooks/Supplier/useDeleteProductFromSupplier';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+
 
 interface SupplierProductsModalProps {
     supplierId: number;
@@ -17,7 +17,7 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
     onClose,
 }) => {
     const [page, setPage] = useState(1);
-    const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { search: '', page: page, limit: 10 });
+    const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { search: '', page: page, limit: 7 });
     const { mutate: deleteProduct } = useDeleteProductFromSupplier();
     const [searchTerm, setSearchTerm] = useState('');
     const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -74,24 +74,36 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                     <p className='mt-2 mb-2'>Produtos não encontrados.</p>
                 ) : (
                     <>
-                        <ul>
+                        <ul className="overflow-hidden">
                             {filteredProducts.map((product) => (
                                 <li key={product.id_produto}>
-                                    <div className='flex flex-row items-center justify-between p-4 bg-gray-100 rounded-md shadow-md mb-2'>
-                                        <strong className="text-lg font-semibold text-gray-800">{product.produto.nome_produto}</strong>
-                                        <p className="text-sm text-gray-600">ID: {product.id_produto}</p>
-                                        <p className="text-sm text-gray-600">Preço de custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}</p>
-                                        <button className='px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium transition-colors duration-300'
-                                            onClick={() => handleDelete(product.id_produto)}>
-                                            Remover
-                                        </button>
+                                    <div className="grid grid-cols-4 items-center p-2 bg-gray-100 rounded-md shadow-md mb-2">
+                                        <div className='text-left'>
+                                            <strong className="text-lg font-semibold text-gray-800">
+                                                {product.produto.nome_produto}
+                                            </strong>
+                                        </div>
+                                        <div className="text-center">
+                                            <p className="text-sm text-gray-600 mr-10">ID: {product.id_produto}</p>
+                                        </div>
+                                        <div className="text-sm text-gray-600 -ml-10">
+                                            Preço de custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
+                                        </div>
+                                        <div>
+                                            <button
+                                                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium transition-colors duration-300"
+                                                onClick={() => handleDelete(product.id_produto)}
+                                            >
+                                                Remover
+                                            </button>
+                                        </div>
                                     </div>
                                 </li>
                             ))}
                         </ul>
 
                         {/* Controles de paginação */}
-                        <div className="pagination flex justify-between mt-4">
+                        <div className="pagination flex justify-between mt-4 text-xl">
                             <button onClick={handlePrevPage} disabled={page === 1} className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md">
                                 Anterior
                             </button>
@@ -111,19 +123,19 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                 {/* Modal de Confirmação de Exclusão */}
                 {showConfirmModal && (
                     <div className="fixed inset-0 flex justify-center items-center z-60">
-                        <div className="bg-white p-6 rounded-lg shadow-lg"> {/* Ajuste na largura */}
+                        <div className="bg-white p-10 rounded-lg shadow-lg">
                             <h2 className="text-center text-xl mb-4">Confirmação de Exclusão</h2>
                             <p className="text-center mb-4">Tem certeza que deseja excluir este produto?</p>
                             <div className="flex justify-center space-x-4">
                                 <button
                                     onClick={confirmDelete}
-                                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300 ease-in-out"
                                 >
                                     Sim
                                 </button>
                                 <button
                                     onClick={cancelDelete}
-                                    className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+                                    className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition duration-300 ease-in-out"
                                 >
                                     Não
                                 </button>

@@ -29,7 +29,9 @@ CREATE TABLE `Produto` (
     `localizacao_estoque` VARCHAR(255) NULL,
     `permalink_imagem` VARCHAR(255) NULL,
     `peso_produto` DECIMAL(10, 2) NOT NULL,
-    `produto_deletedAt` DATE NULL,
+    `unidade_medida` VARCHAR(2) NOT NULL,
+    `total_estoque` INTEGER NOT NULL DEFAULT 0,
+    `produto_deletedAt` DATETIME(3) NULL,
     `id_categoria` INTEGER NULL,
     `id_setor` INTEGER NULL,
 
@@ -43,14 +45,14 @@ CREATE TABLE `Produto` (
 -- CreateTable
 CREATE TABLE `Fornecedor` (
     `id_fornecedor` INTEGER NOT NULL AUTO_INCREMENT,
-    `cnpj_fornecedor` VARCHAR(14) NOT NULL,
+    `cnpj_fornecedor` VARCHAR(18) NOT NULL,
     `razao_social` VARCHAR(255) NOT NULL,
     `nome_fantasia` VARCHAR(255) NULL,
     `endereco_fornecedor` VARCHAR(255) NULL,
     `cidade` VARCHAR(100) NOT NULL,
     `estado` CHAR(2) NOT NULL,
     `cep` VARCHAR(9) NOT NULL,
-    `fornecedor_deletedAt` DATE NULL,
+    `fornecedor_deletedAt` DATETIME(3) NULL,
 
     UNIQUE INDEX `Fornecedor_cnpj_fornecedor_key`(`cnpj_fornecedor`),
     INDEX `idx_razao_social`(`razao_social`),
@@ -73,7 +75,7 @@ CREATE TABLE `ProdutosFornecedor` (
 CREATE TABLE `Lote` (
     `id_lote` INTEGER NOT NULL AUTO_INCREMENT,
     `id_fornecedor` INTEGER NOT NULL,
-    `data_compra` DATE NOT NULL,
+    `data_compra` DATETIME(3) NOT NULL,
 
     PRIMARY KEY (`id_lote`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -91,7 +93,7 @@ CREATE TABLE `LoteProdutos` (
 -- CreateTable
 CREATE TABLE `Saida` (
     `id_saida` INTEGER NOT NULL AUTO_INCREMENT,
-    `data_venda` DATE NOT NULL,
+    `data_venda` DATETIME(3) NOT NULL,
     `motivo_saida` VARCHAR(100) NOT NULL,
 
     PRIMARY KEY (`id_saida`)
