@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import useSuppliers from "../../Hooks/Supplier/useSuppliers";
 import SupplierSearchBar from "../SupplierSearchBar";
@@ -45,10 +45,11 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
         setListaExpandida(!listaExpandida);
     }
 
-    const handleSearchTermChange = (search: string) => {
-        setSearch(search);
-        setPagina(1);
-    };
+    const handleSearchTermChange = useCallback((search: string) => {
+            setSearch(search);
+            setPagina(1);
+        },[]
+    );
 
     return (
         <div className="campo-formulario required">

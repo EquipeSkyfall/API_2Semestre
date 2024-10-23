@@ -63,15 +63,15 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                                 <div className="product-details">
                                     <p><strong>Category:</strong> {product.categoria?.nome_categoria || 'Sem categoria'}</p>
                                     <p><strong>Sector:</strong> {product.setor?.nome_setor || 'Sem setor'}</p>
-                                    <p><strong>Altura:</strong> {product.altura_produto}</p>
-                                    <p><strong>Comprimento:</strong> {product.comprimento_produto}</p>
-                                    <p><strong>Largura:</strong> {product.largura_produto}</p>
+                                    <p><strong>Altura:</strong> {product.altura_produto} cm</p>
+                                    <p><strong>Comprimento:</strong> {product.comprimento_produto} cm</p>
+                                    <p><strong>Largura:</strong> {product.largura_produto} cm</p>
                                     <p><strong>Descrição:</strong> {product.descricao_produto}</p>
                                     <p><strong>Localização:</strong> {product.localizacao_estoque}</p>
                                     <p><strong>Marca:</strong> {product.marca_produto}</p>
                                     <p><strong>Modelo:</strong> {product.modelo_produto}</p>
                                     <p><strong>Peso:</strong> {product.peso_produto}{product.unidade_medida}</p>
-                                    <p><strong>Preço Venda:</strong> {product.preco_venda}</p>
+                                    <p><strong>Preço Venda:</strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}</p>
                                     <p><strong>Available Stock:</strong> {product.total_estoque}</p>
                                     {/* Add more detailed fields as needed */}
                                 </div>

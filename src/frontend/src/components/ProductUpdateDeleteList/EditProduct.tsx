@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ProductSchema, productSchema } from '../ProductForm/ProductSchema/productSchema';
@@ -17,6 +17,7 @@ interface EditProductProps {
 }
 
 const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, refetch }) => {
+    const [precoVenda, setPrecoVenda] = useState<string>('');
     const methods = useForm<Product>({
         resolver: zodResolver(productSchema),
         defaultValues: product, // Definindo valores iniciais do formulário
@@ -25,10 +26,76 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
     const {
         register,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = methods;
 
+    useEffect(() => {
+        if (product) {
+            // Initialize the state with the product's preco_venda
+            setPrecoVenda(new Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+            }).format(product.preco_venda));
+            // Set the value in the form
+            setValue('preco_venda', product.preco_venda);
+        }
+    }, [product, setValue]);
+
+    const handlePrecoVendaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+    
+        // Replace invalid characters and prepare for formatting
+        const numericValue = value.replace(/\D/g, '');
+    
+        // Format as BRL currency
+        const formattedValue = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        }).format(parseFloat(numericValue) / 100);
+    
+        // Set the formatted currency string to state
+        setPrecoVenda(formattedValue);
+    
+        // Calculate precoNumber from the numericValue directly
+        const precoNumber = parseFloat(numericValue) / 100; // Convert to number
+    
+        // Check if precoNumber is valid and set the Zod error if not
+        if (isNaN(precoNumber) || precoNumber <= 0) {
+            return;
+        }
+        
+        // Use setValue to set the parsed value in react-hook-form
+        setValue('preco_venda', precoNumber);
+    };
+
     const onSubmit = async (formData: Product) => {
+        switch (formData.unidade_medida) {
+            case "g":
+                if (formData.peso_produto > 999) {
+                    formData.unidade_medida = "kg";
+                    formData.peso_produto /= 1000;
+                }
+                break;
+            case "kg":
+                if (formData.peso_produto < 1) {
+                    formData.unidade_medida = "g";
+                    formData.peso_produto *= 1000;
+                }
+                break;
+            case "ml":
+                if (formData.peso_produto > 999) {
+                    formData.unidade_medida = "L";
+                    formData.peso_produto /= 1000;
+                }
+                break;
+            case "L":
+                if (formData.peso_produto < 1) {
+                    formData.unidade_medida = "ml";
+                    formData.peso_produto *= 1000;
+                }
+        }
+
         console.log("Dados do formulário ao enviar:", formData);
 
         if (!formData.id_categoria) formData.id_categoria = null;
@@ -60,7 +127,7 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
 
                     {/* Itera pelos campos principais, excluindo 'id_categoria', 'id_setor' e 'unidade_medida' */}
                     {Object.keys(productSchema.shape)
-                        .filter(key => key !== 'id_categoria' && key !== 'id_setor' && key !== 'unidade_medida')
+                        .filter(key => key !== 'id_categoria' && key !== 'id_setor' && key !== 'unidade_medida' && key !== 'peso_produto')
                         .map((key) => {
                             const keyAsType = key as keyof Product;
                             const isNumericField = ['preco_venda', 'altura_produto', 'largura_produto', 'comprimento_produto', 'peso_produto'].includes(key);
@@ -70,7 +137,16 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
                                     <label htmlFor={keyAsType} className="form-label">
                                         {key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, (a) => a.toUpperCase())}:
                                     </label>
-                                    {key === 'descricao_produto' ? (
+                                    {key === 'preco_venda' ? (
+                                        <input
+                                            id={keyAsType}
+                                            value={precoVenda} // Use the state variable for formatted value
+                                            onChange={handlePrecoVendaChange} // Use the custom change handler
+                                            type="text"
+                                            placeholder="Formato: R$ 0,00"
+                                            className="form-input"
+                                        />
+                                    ) : key === 'descricao_produto' ? (
                                         <textarea
                                             id={keyAsType}
                                             {...register(keyAsType)}
@@ -91,24 +167,34 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
                                     {errors[keyAsType] && <p className="error-message">{errors[keyAsType]?.message}</p>}
                                 </div>
                             );
-                        })}
+                        })
+                    }
                     {/* Botões de Unidade de Medida */}
-                    <div className="custom-form-group">
-                        <label className="form-label">Unidade de Medida:</label>
-                        <div className="unit-radio-buttons">
-                            {['kg', 'g', 'L', 'ml'].map(unit => (
-                                <label key={unit} className="unit-radio-label">
-                                    <input
-                                        type="radio"
-                                        {...register("unidade_medida")}
-                                        value={unit}
-                                        defaultChecked={product.unidade_medida === unit} // Definindo estado inicial
-                                        className="unit-radio-input"
-                                    />
-                                    {unit}
-                                </label>
-                            ))}
-                        </div>
+                    <div key={'peso_produto'} className="custom-form-group">
+                        <label htmlFor="peso_produto" className="form-label">
+                            Peso Produto:
+                            <input
+                                id="peso_produto"
+                                {...register("peso_produto", {
+                                    valueAsNumber: true,
+                                    setValueAs: product.peso_produto ? product.peso_produto : ''
+                                })}
+                                type='number'
+                                step="0.01"
+                                className='form-input'
+                            />
+                            <select
+                                {...register("unidade_medida")}
+                                defaultValue={product.unidade_medida}
+                                className="unit-select"
+                            >
+                                <option value="kg">KG</option>
+                                <option value="g">G</option>
+                                <option value="L">L</option>
+                                <option value="ml">ML</option>
+                            </select>
+                            {errors['peso_produto'] && <p className="error-message">{errors['peso_produto']?.message}</p>}
+                        </label>
                     </div>
 
                     <CategorySelect refetch={refetch} defaultValue={product.id_categoria} />

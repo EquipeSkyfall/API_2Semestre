@@ -147,7 +147,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                         onChange={() => toggleProductSelection(product)}
                                         disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
                                     />
-                                    {product.produto.nome_produto} Preço Custo: R${Number(product.preco_custo).toFixed(2)}
+                                    {product.produto.nome_produto} Preço Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
                                 </div>
                             ))}
 

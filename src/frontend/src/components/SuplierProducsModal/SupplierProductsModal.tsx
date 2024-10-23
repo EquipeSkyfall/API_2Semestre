@@ -80,7 +80,7 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                                     <div className='flex flex-row items-center justify-between p-4 bg-gray-100 rounded-md shadow-md mb-2'>
                                         <strong className="text-lg font-semibold text-gray-800">{product.produto.nome_produto}</strong>
                                         <p className="text-sm text-gray-600">ID: {product.id_produto}</p>
-                                        <p className="text-sm text-gray-600">Preço de custo: {product.preco_custo}</p>
+                                        <p className="text-sm text-gray-600">Preço de custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}</p>
                                         <button className='px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium transition-colors duration-300'
                                             onClick={() => handleDelete(product.id_produto)}>
                                             Deletar

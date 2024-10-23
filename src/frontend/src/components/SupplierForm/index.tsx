@@ -10,12 +10,56 @@ const FornecedorForm: React.FC = () => {
 
   const { 
     register, 
-    handleSubmit, 
+    handleSubmit,
+    setValue, 
     formState: { errors, isSubmitting }, 
     reset 
   } = useForm<FornecedorFormValues>({
     resolver: zodResolver(fornecedorSchema),
   });
+
+  const formatCNPJ = (value: string) => {
+    // Remove all non-numeric characters
+    const onlyNumbers = value.replace(/\D/g, '');
+    
+    // Format the CNPJ as XX.XXX.XXX/0001-XX
+    if (onlyNumbers.length <= 14) {
+      const formattedCNPJ = onlyNumbers
+        .replace(/^(\d{2})(\d)/, '$1.$2') // XX. 
+        .replace(/(\d{3})(\d)/, '$1.$2') // XXX.
+        .replace(/(\d{3})(\d)/, '$1/$2') // XXX/
+        .replace(/(\d{4})(\d)/, '$1-$2'); // 0001-XX
+
+      return formattedCNPJ;
+    }
+
+    return onlyNumbers; // Return unformatted if too long
+  };
+
+  const formatCEP = (value: string) => {
+    // Remove all non-numeric characters
+    const onlyNumbers = value.replace(/\D/g, '');
+
+    // Format the CEP as XXXXX-XXX
+    if (onlyNumbers.length <= 8) {
+      const formattedCEP = onlyNumbers
+        .replace(/^(\d{5})(\d)/, '$1-$2'); // XXXXX-XXX
+
+      return formattedCEP;
+    }
+
+    return onlyNumbers; // Return unformatted if too long
+  };
+
+  const handleCNPJChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedCNPJ = formatCNPJ(e.target.value);
+    setValue('cnpj_fornecedor', formattedCNPJ); // Update the form state
+  };
+
+  const handleCEPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedCEP = formatCEP(e.target.value);
+    setValue('cep', formattedCEP); // Update the form state
+  };
 
   const onSuccess = () => {
     setSuccessMessage('Fornecedor cadastrado com sucesso!');
@@ -38,14 +82,16 @@ const FornecedorForm: React.FC = () => {
       <h2 className='text-center mb-2 '>Cadastrar Fornecedores</h2>
 
       <div className="grid grid-cols-3 gap-3">
-        <div className="required">
+      <div className="required">
           <label htmlFor="cnpj_fornecedor">CNPJ</label>
           <input 
             {...register("cnpj_fornecedor")} 
             type="text" 
             id="cnpj_fornecedor" 
             placeholder="Digite o CNPJ"
+            maxLength={18}
             className='p-2 rounded-md border border-gray-300 text-base box-border h-10 w-full overflow-hidden break-words resize-none'
+            onChange={handleCNPJChange} // Add the change handler
           />
           {errors.cnpj_fornecedor && <p className="error-message">{errors.cnpj_fornecedor.message}</p>}
         </div>
@@ -105,6 +151,7 @@ const FornecedorForm: React.FC = () => {
             type="text" 
             id="estado" 
             placeholder="Ex: SP"
+            maxLength={2}
             className='p-2 rounded-md border border-gray-300 text-base box-border h-10 w-full overflow-hidden break-words resize-none'
           />
           {errors.estado && <p className="error-message">{errors.estado.message}</p>}
@@ -117,7 +164,9 @@ const FornecedorForm: React.FC = () => {
             type="text" 
             id="cep" 
             placeholder="Digite o CEP"
+            maxLength={9} // Maximum length of the formatted CEP
             className='p-2 rounded-md border border-gray-300 text-base box-border h-10 w-full overflow-hidden break-words resize-none'
+            onChange={handleCEPChange} // Add the change handler
           />
           {errors.cep && <p className="error-message">{errors.cep.message}</p>}
         </div>

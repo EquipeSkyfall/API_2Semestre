@@ -18,13 +18,42 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
     const [isSectorModalOpen, setIsSectorModalOpen] = useState(false);
+    const [precoVenda, setPrecoVenda] = useState<string>('');
     const methods = useForm<ProductSchema>({
         resolver: zodResolver(productSchema),
     });
 
-    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset } = methods
+    const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset, setValue } = methods
 
     const [unidadeMedida, setUnidadeMedida] = useState<'kg' | 'g' | 'L' | 'ml'>('kg'); // Default unit is kg
+
+    const handlePrecoVendaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+    
+        // Replace invalid characters and prepare for formatting
+        const numericValue = value.replace(/\D/g, '');
+    
+        // Format as BRL currency
+        const formattedValue = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        }).format(parseFloat(numericValue) / 100);
+    
+        // Set the formatted currency string to state
+        setPrecoVenda(formattedValue);
+    
+        // Calculate precoNumber from the numericValue directly
+        const precoNumber = parseFloat(numericValue) / 100; // Convert to number
+    
+        // Check if precoNumber is valid and set the Zod error if not
+        if (isNaN(precoNumber) || precoNumber <= 0) {
+            setError('preco_venda', { type: 'manual', message: 'Preço de Venda é obrigatório.' });
+            return;
+        }
+        
+        // Use setValue to set the parsed value in react-hook-form
+        setValue('preco_venda', precoNumber);
+    };
 
     useEffect(() => {
         console.log("Current unidadeMedida:", unidadeMedida);
@@ -32,6 +61,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
     const onSuccess = () => {
         reset();
+        setPrecoVenda('')
         setSuccessMessage('Produto Cadastrado com Sucesso!');
         refetch();
     };
@@ -103,17 +133,17 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         <div className="form-field required">
                             <label htmlFor="preco_venda">Preço de Venda</label>
                             <input
-                                {...register("preco_venda", { valueAsNumber: true })}
-                                type='number'
+                                type="text" // Change type to text
                                 id="preco_venda"
+                                value={precoVenda}
+                                onChange={handlePrecoVendaChange}
                                 placeholder="Obrigatório"
-                                min='0'
                             />
                             {errors.preco_venda && <p className="error-message">{errors.preco_venda.message}</p>}
                         </div>
 
                         <div className="form-field required">
-                            <label htmlFor="altura_produto">Altura</label>
+                            <label htmlFor="altura_produto">Altura (cm)</label>
                             <input
                                 {...register("altura_produto", { valueAsNumber: true })}
                                 type='number'
@@ -125,7 +155,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         </div>
 
                         <div className="form-field required">
-                            <label htmlFor="largura_produto">Largura</label>
+                            <label htmlFor="largura_produto">Largura (cm)</label>
                             <input
                                 {...register("largura_produto", { valueAsNumber: true })}
                                 type='number'
@@ -137,7 +167,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         </div>
 
                         <div className="form-field required">
-                            <label htmlFor="comprimento_produto">Comprimento</label>
+                            <label htmlFor="comprimento_produto">Comprimento (cm)</label>
                             <input
                                 {...register("comprimento_produto", { valueAsNumber: true })}
                                 type='number'

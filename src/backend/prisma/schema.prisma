@@ -57,7 +57,7 @@ model Produto {
 
 model Fornecedor {
   id_fornecedor         Int               @id @default(autoincrement())
-  cnpj_fornecedor       String            @unique @db.VarChar(14)
+  cnpj_fornecedor       String            @unique @db.VarChar(18)
   razao_social          String            @db.VarChar(255)
   nome_fantasia         String?           @db.VarChar(255)
   endereco_fornecedor   String?           @db.VarChar(255)

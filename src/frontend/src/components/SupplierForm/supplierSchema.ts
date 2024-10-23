@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export const fornecedorSchema = z.object({
-  cnpj_fornecedor: z.string().min(14, 'CNPJ deve ter 14 Dígitos').max(14, 'CNPJ deve ter 14 digitos'),
+  cnpj_fornecedor: z.string().min(18, 'CNPJ deve ter 14 Dígitos').max(18, 'CNPJ deve ter 14 digitos'),
   razao_social: z.string().min(1, 'É necessário informar a Razão Social').max(255),
   nome_fantasia: z.string().max(255).optional(),
   endereco_fornecedor: z.string().max(255).optional(),

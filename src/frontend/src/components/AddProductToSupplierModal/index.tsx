@@ -98,7 +98,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
                       className="form-checkbox h-5 w-5 text-blue-600"
                     />
                     <span className="text-lg font-medium">
-                    {product.nome_produto} - ${product.preco_venda}
+                    {product.nome_produto} - {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}
                     </span>
                   </label>
 

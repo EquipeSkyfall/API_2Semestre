@@ -17,10 +17,53 @@ const EditSupplierModal: React.FC<EditSupplierModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FornecedorFormValues>({
+  const { register, setValue, handleSubmit, reset, formState: { errors } } = useForm<FornecedorFormValues>({
     resolver: zodResolver(fornecedorSchema),
     defaultValues: supplier || {},
   });
+
+  const formatCNPJ = (value: string) => {
+    // Remove all non-numeric characters
+    const onlyNumbers = value.replace(/\D/g, '');
+    
+    // Format the CNPJ as XX.XXX.XXX/0001-XX
+    if (onlyNumbers.length <= 14) {
+      const formattedCNPJ = onlyNumbers
+        .replace(/^(\d{2})(\d)/, '$1.$2') // XX. 
+        .replace(/(\d{3})(\d)/, '$1.$2') // XXX.
+        .replace(/(\d{3})(\d)/, '$1/$2') // XXX/
+        .replace(/(\d{4})(\d)/, '$1-$2'); // 0001-XX
+
+      return formattedCNPJ;
+    }
+
+    return onlyNumbers; // Return unformatted if too long
+  };
+
+  const formatCEP = (value: string) => {
+    // Remove all non-numeric characters
+    const onlyNumbers = value.replace(/\D/g, '');
+
+    // Format the CEP as XXXXX-XXX
+    if (onlyNumbers.length <= 8) {
+      const formattedCEP = onlyNumbers
+        .replace(/^(\d{5})(\d)/, '$1-$2'); // XXXXX-XXX
+
+      return formattedCEP;
+    }
+
+    return onlyNumbers; // Return unformatted if too long
+  };
+
+  const handleCNPJChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedCNPJ = formatCNPJ(e.target.value);
+    setValue('cnpj_fornecedor', formattedCNPJ); // Update the form state
+  };
+
+  const handleCEPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedCEP = formatCEP(e.target.value);
+    setValue('cep', formattedCEP); // Update the form state
+  };
 
   const { mutate: updateSupplier } = useUpdateSupplier();
 
@@ -47,7 +90,14 @@ const EditSupplierModal: React.FC<EditSupplierModalProps> = ({
         <form className='flex flex-col' onSubmit={handleSubmit(onSubmit)}>
           <div className='mb-4'>
             <label className='block text-gray-700 font-medium mb-2'>CNPJ</label>
-            <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('cnpj_fornecedor')} />
+            <input 
+              className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              {...register('cnpj_fornecedor')}
+              type="text" 
+              id="cnpj_fornecedor"
+              maxLength={18}
+              onChange={handleCNPJChange}
+            />
             {errors.cnpj_fornecedor && <p className='text-red-500 text-sm mt-1'>{errors.cnpj_fornecedor.message}</p>}
           </div>
           <div className='mb-4'>
@@ -61,6 +111,11 @@ const EditSupplierModal: React.FC<EditSupplierModalProps> = ({
             {errors.razao_social && <p className='text-red-500 text-sm mt-1'>{errors.razao_social.message}</p>}
           </div>
           <div className='mb-4'>
+            <label className='block text-gray-700 font-medium mb-2'>Endereço</label>
+            <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('endereco_fornecedor')} />
+            {errors.endereco_fornecedor && <p className='text-red-500 text-sm mt-1'>{errors.endereco_fornecedor.message}</p>}
+          </div>
+          <div className='mb-4'>
             <label className='block text-gray-700 font-medium mb-2'>Cidade</label>
             <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('cidade')} />
             {errors.cidade && <p className='text-red-500 text-sm mt-1'>{errors.cidade.message}</p>}
@@ -72,7 +127,15 @@ const EditSupplierModal: React.FC<EditSupplierModalProps> = ({
           </div>
           <div className='mb-4'>
             <label className='block text-gray-700 font-medium mb-2'>CEP</label>
-            <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' {...register('cep')} />
+            <input
+              className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              {...register('cep')}
+              type="text" 
+              id="cep" 
+              placeholder="Digite o CEP"
+              maxLength={9}
+              onChange={handleCEPChange}
+            />
             {errors.cep && <p className='text-red-500 text-sm mt-1'>{errors.cep.message}</p>}
           </div>
 

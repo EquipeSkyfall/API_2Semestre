@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useSuppliers, { Supplier } from '../../Hooks/Supplier/useSuppliers';
 import EditSupplierModal from '../SuplierEditModal/SuplierEditModal';
@@ -10,14 +10,8 @@ import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import './styles.css';
 import SupplierSearchBar from '../SupplierSearchBar';
 
-interface FilterValues {
-  search: string;
-  cidade?: string;
-  estado?: string;
-}
-
 const SupplierList: React.FC = () => {
-  const { register, handleSubmit } = useForm<FilterValues>();
+  const { handleSubmit } = useForm();
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState(1);
   const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
@@ -31,10 +25,11 @@ const SupplierList: React.FC = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [supplierIdToDelete, setSupplierIdToDelete] = useState<number | null>(null);
 
-  const handleSearchTermChange = (search: string) => {
-    setSearch(search);
-    setPage(1);
-  };
+  const handleSearchTermChange = useCallback((search: string) => {
+      setSearch(search);
+      setPage(1);
+    },[]
+  );
 
   const handleNextPage = () => setPage((prev) => prev + 1);
   const handlePrevPage = () => setPage((prev) => Math.max(prev - 1, 1));
@@ -98,6 +93,7 @@ const SupplierList: React.FC = () => {
                     <p className="item-name">{supplier.razao_social}</p>
                     <p className="item-details">Nome Fantasia: {supplier.nome_fantasia || 'Não Informado'}</p>
                     <p className="item-details">CNPJ: {supplier.cnpj_fornecedor}</p>
+                    <p className="item-details">Endereço: {supplier.endereco_fornecedor || 'Não Informado'}</p>
                     <p className="item-details">Cidade: {supplier.cidade}</p>
                     <p className="item-details">Estado: {supplier.estado}</p>
                     <p className="item-details">CEP: {supplier.cep}</p>

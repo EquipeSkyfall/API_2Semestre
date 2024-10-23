@@ -6,6 +6,7 @@ export interface Supplier {
   cnpj_fornecedor: string;
   razao_social: string;
   nome_fantasia?: string | null;
+  endereco_fornecedor?: string | null;
   cidade: string;
   estado: string;
   cep: string;

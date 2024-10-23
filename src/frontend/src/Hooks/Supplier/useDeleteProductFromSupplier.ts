@@ -20,7 +20,7 @@ const useDeleteProductFromSupplier = () => {
   return useMutation({
     mutationFn:deleteProductFromSupplier,
     onSuccess: (_, { supplierId }) => {
-        queryClient.invalidateQueries({queryKey:['supplierProducts', supplierId]}); // Refresh products list
+        queryClient.invalidateQueries({queryKey:['suppliers', supplierId]}); // Refresh products list
       },
       onError: (error) => {
         console.error('Error deleting product from supplier:', error);

@@ -42,7 +42,7 @@ const getSupplierProducts = async (supplierId: number | null, params: QueryParam
 
 const useGetSupplierProducts = (supplierId: number, params: QueryParams) => {
   return useQuery({
-    queryKey: ['supplierProducts', supplierId, params],
+    queryKey: ['suppliers', supplierId, params],
     queryFn: () => getSupplierProducts(supplierId, params),
     enabled: !!supplierId
   });
