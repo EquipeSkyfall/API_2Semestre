@@ -40,7 +40,7 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
             
             setPrecoVenda(formattedPrice);
             // Set the value in the form as a number (not formatted)
-            setValue('preco_venda', product.preco_venda);
+            setValue('preco_venda', Number(product.preco_venda));
         }
     }, [product, setValue]);
 
