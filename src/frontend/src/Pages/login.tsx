@@ -1,5 +1,15 @@
 import LoginForm from "../components/UserLogin";
+import { useEffect } from "react";
 export default function Login() {
+    useEffect(() => {
+        // Adiciona a classe 'overflow-hidden' ao body ao carregar a página
+        document.body.classList.add("overflow-hidden");
+
+        // Remove a classe ao desmontar o componente
+        return () => {
+            document.body.classList.remove("overflow-hidden");
+        };
+    }, []);
     return (
         <>
             <div className="text-center">

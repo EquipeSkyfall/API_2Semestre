@@ -1,8 +1,16 @@
 import UserForm from "../components/UserForm";
-
+import { useEffect } from "react";
 
 
 export default function Home() {
+
+    useEffect(() => {
+        document.body.classList.add("overflow-hidden");
+
+        return () => {
+            document.body.classList.remove("overflow-hidden");
+        };
+    }, []);
     return (
         <>
             <div className="text-center">
