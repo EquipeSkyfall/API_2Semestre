@@ -44,7 +44,7 @@ h1 {
     padding: 30px;
     border-radius: 12px;
     width: 90%;
-    max-width: 700px;
+    max-width: 40vw;
     max-height: 85vh;
     overflow-y: auto; /* Permitindo rolagem vertical se o conteúdo ultrapassar */
     position: relative;

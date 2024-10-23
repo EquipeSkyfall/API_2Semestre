@@ -127,8 +127,12 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
 
                     {/* Itera pelos campos principais, excluindo 'id_categoria', 'id_setor' e 'unidade_medida' */}
                     {Object.keys(productSchema.shape)
-                        .filter(key => key !== 'id_categoria' && key !== 'id_setor' && key !== 'unidade_medida' && key !== 'peso_produto')
-                        .map((key) => {
+                        .filter(key => key !== 'id_categoria' &&
+                                key !== 'id_setor' &&
+                                key !== 'unidade_medida' &&
+                                key !== 'peso_produto' &&
+                                key !== 'id_fornecedor' && key !== 'preco_custo'
+                        ).map((key) => {
                             const keyAsType = key as keyof Product;
                             const isNumericField = ['preco_venda', 'altura_produto', 'largura_produto', 'comprimento_produto', 'peso_produto'].includes(key);
 

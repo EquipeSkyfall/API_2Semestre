@@ -8,6 +8,8 @@ import CategoryModal from '../CategoryModal';
 import SectorSelect from '../SectorSelect';
 import SectorModal from '../SectorModal';
 import './styles.css';  // Referência ao CSS
+import SupplierSelect from '../SupplierSelect';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductFormProps {
     refetch: () => void;
@@ -18,7 +20,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
     const [isSectorModalOpen, setIsSectorModalOpen] = useState(false);
+    const [fornecedorValue, setFornecedorValue] = useState<number | null>(null);
     const [precoVenda, setPrecoVenda] = useState<string>('');
+    const [precoCusto, setPrecoCusto] = useState<string>('');
+    const navigate = useNavigate();
     const methods = useForm<ProductSchema>({
         resolver: zodResolver(productSchema),
     });
@@ -26,6 +31,17 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     const { register, handleSubmit, formState: { errors, isSubmitting }, setError, reset, setValue } = methods
 
     const [unidadeMedida, setUnidadeMedida] = useState<'kg' | 'g' | 'L' | 'ml'>('kg'); // Default unit is kg
+
+    useEffect(() => {
+        if (!fornecedorValue) {
+          setPrecoCusto('');
+          setValue('preco_custo', undefined);
+        }
+    }, [fornecedorValue]);
+
+    const handleManageSuppliers = () => {
+        navigate('/Fornecedor'); // Navigate to the /Fornecedores route
+    };
 
     const handlePrecoVendaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -53,6 +69,34 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
         
         // Use setValue to set the parsed value in react-hook-form
         setValue('preco_venda', precoNumber);
+    };
+
+    const handlePrecoCustoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+    
+        // Replace invalid characters and prepare for formatting
+        const numericValue = value.replace(/\D/g, '');
+    
+        // Format as BRL currency
+        const formattedValue = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+        }).format(parseFloat(numericValue) / 100);
+    
+        // Set the formatted currency string to state
+        setPrecoCusto(formattedValue);
+    
+        // Calculate precoNumber from the numericValue directly
+        const precoNumber = parseFloat(numericValue) / 100; // Convert to number
+    
+        // Check if precoNumber is valid and set the Zod error if not
+        if (isNaN(precoNumber) || precoNumber <= 0) {
+            setError('preco_custo', { type: 'manual', message: 'Preço de custo é obrigatório.' });
+            return;
+        }
+        
+        // Use setValue to set the parsed value in react-hook-form
+        setValue('preco_custo', precoNumber);
     };
 
     useEffect(() => {
@@ -133,13 +177,26 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         <div className="form-field required">
                             <label htmlFor="preco_venda">Preço de Venda</label>
                             <input
-                                type="text" // Change type to text
+                                type="text"
                                 id="preco_venda"
                                 value={precoVenda}
                                 onChange={handlePrecoVendaChange}
                                 placeholder="Obrigatório"
                             />
                             {errors.preco_venda && <p className="error-message">{errors.preco_venda.message}</p>}
+                        </div>
+
+                        <div className="form-field">
+                            <label htmlFor="preco_custo">Preço de Custo</label>
+                            <input
+                                type="text"
+                                id="preco_custo"
+                                value={precoCusto}
+                                onChange={handlePrecoCustoChange}
+                                disabled={!fornecedorValue}
+                                placeholder="Selecione um fornecedor"
+                            />
+                            {errors.preco_custo && <p className="error-message">{errors.preco_custo.message}</p>}
                         </div>
 
                         <div className="form-field required">
@@ -249,7 +306,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             />
                             {errors.localizacao_estoque && <p className="error-message">{errors.localizacao_estoque.message}</p>}
                         </div>
-
+                    </div>
+                    <div className="form-fields-grid">
                         {/* Selecione uma Categoria */}
                         <div className="form-field">
                             <CategorySelect refetch={refetch} />
@@ -271,6 +329,18 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 onClick={() => setIsSectorModalOpen(true)}
                             >
                                 Gerenciar Setores
+                            </button>
+                        </div>
+
+                        {/* Selecione um Fornecedor */}
+                        <div className="form-field">
+                            <SupplierSelect refetch={refetch} onChange={setFornecedorValue}/>
+                            <button
+                                type="button"
+                                className="manage-button"
+                                onClick={handleManageSuppliers}
+                            >
+                                Gerenciar Fornecedores
                             </button>
                         </div>
                     </div>

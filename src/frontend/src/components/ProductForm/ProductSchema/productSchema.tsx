@@ -7,6 +7,7 @@ export const productSchema = z.object({
     marca_produto: z.string().nullable().optional(),
     modelo_produto: z.string().nullable().optional(),
     preco_venda: z.number().min(0, "Preço Invalido.").positive(),
+    preco_custo: z.number().min(0, "Custo inválido.").positive().optional(),
     altura_produto: z.number().min(0, "Largura Invalida.").positive(),
     largura_produto: z.number().min(0, "Altura Invalida.").positive(),
     comprimento_produto: z.number().min(0, "Profundidade Invalida.").positive(),
@@ -24,6 +25,10 @@ export const productSchema = z.object({
         z.number().optional().nullable()
     ),
     id_setor: z.preprocess(
+        (value) => (value === '' ? null : Number(value)),
+        z.number().optional().nullable()
+    ),
+    id_fornecedor: z.preprocess(
         (value) => (value === '' ? null : Number(value)),
         z.number().optional().nullable()
     )

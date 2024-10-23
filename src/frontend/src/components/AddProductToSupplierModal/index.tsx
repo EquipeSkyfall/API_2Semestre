@@ -20,10 +20,11 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const { control, handleSubmit, register, reset,watch } = useForm<ProductFormValues>();
+  const { control, handleSubmit, register, reset, watch, setValue, setError } = useForm<ProductFormValues>();
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(10); // Set your desired limit for products per page
+  const [precoCusto, setPrecoCusto] = useState<Record<number, string>>({});
 
   const { products, isLoading } = useSearchProducts({search: watch('search') || '', id_fornecedor: supplierId, page: page, limit: limit});
   const { mutate: addProductsToSupplier } = useAddProductsToSupplier();
@@ -32,6 +33,37 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
     setSelectedProducts((prev) =>
       prev.includes(productId) ? prev.filter((id) => id !== productId) : [...prev, productId]
     );
+  };
+
+  const handlePrecoCustoChange = (productId: number, event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+
+    // Replace invalid characters and prepare for formatting
+    const numericValue = value.replace(/\D/g, '');
+
+    // Format as BRL currency
+    const formattedValue = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(parseFloat(numericValue) / 100);
+
+    // Set the formatted currency string to state for this product ID
+    setPrecoCusto((prevState) => ({
+      ...prevState,
+      [productId]: formattedValue,
+    }));
+
+    // Calculate precoNumber from the numericValue directly
+    const precoNumber = parseFloat(numericValue) / 100; // Convert to number
+
+    // Check if precoNumber is valid and set the Zod error if not
+    if (isNaN(precoNumber) || precoNumber <= 0) {
+      setError(`preco_custo.${productId}`, { type: 'manual', message: 'Preço de custo é obrigatório.' });
+      return;
+    }
+    
+    // Use setValue to set the parsed value in react-hook-form
+    setValue(`preco_custo.${productId}`, precoNumber);
   };
 
   const onSubmit = (data: ProductFormValues) => {
@@ -49,6 +81,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
           // Reset the form and selected products on success
           reset();
           setSelectedProducts([]);
+          setPrecoCusto({});
           onClose(); // Optionally close the modal
         },
       }
@@ -105,21 +138,22 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
                   {selectedProducts.includes(product.id_produto) && (
                     <div className="mt-4 md:mt-0 space-y-2">
                       <h3 className='text-sm font-medium text-gray-700'>preço de custo</h3>
-                    <Controller
-                      name={`preco_custo.${product.id_produto}`}
-                      control={control}
-                      defaultValue={0}
-                      render={({ field }) => (
-                        <input
-                          {...field}
-                          type="number"
-                          step="0.01"
-                          placeholder="Enter cost price"
-                          className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 
-                          focus:ring-blue-500 focus:border-transparent"
-                        />
-                      )}
-                    />
+                      <Controller
+                        name={`preco_custo.${product.id_produto}`}
+                        control={control}
+                        defaultValue={0}
+                        render={({ field }) => (
+                          <input
+                            {...field}
+                            value={precoCusto[product.id_produto] || ''} // Use formatted value
+                            onChange={(e) => handlePrecoCustoChange(product.id_produto, e)} // Call handler per product
+                            type="text"
+                            placeholder="Formato: R$ 0,00"
+                            className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 
+                            focus:ring-blue-500 focus:border-transparent"
+                          />
+                        )}
+                      />
                     </div>
                   )}
                 </li>

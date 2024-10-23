@@ -73,7 +73,7 @@ const ProductList: React.FC<ProductListProps> = React.memo(({
                                     <p><strong>Peso:</strong> {product.peso_produto}{product.unidade_medida}</p>
                                     <p><strong>Preço Venda:</strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}</p>
                                     <p><strong>Available Stock:</strong> {product.total_estoque}</p>
-                                    {/* Add more detailed fields as needed */}
+                                    <button>Ver Fornecedores</button>
                                 </div>
                             )}
                         </li>

@@ -6,8 +6,8 @@ class SupplierControllers {
     public getSuppliers = async (request: Request, response: Response) => {
         const { search = '', page = '1', limit = '10' } = request.query
         const pageNumber = parseInt(page as string)
-        const limitNumber = parseInt(limit as string)
-        const skip = (pageNumber-1) * limitNumber
+        const limitNumber = limit === 'all' ? undefined : parseInt(limit as string)
+        const skip = limitNumber ? (pageNumber - 1) * limitNumber : undefined
 
         try {
             const whereCondition: any = { fornecedor_deletedAt: null }
@@ -39,8 +39,8 @@ class SupplierControllers {
             response.status(200).json({
                 suppliers,
                 totalSuppliers,
-                totalPages: Math.ceil(totalSuppliers / limitNumber),
-                currentPage: pageNumber
+                totalPages: limitNumber ? Math.ceil(totalSuppliers / limitNumber) : 1,
+                currentPage: limitNumber ? pageNumber : 1
             })
         } catch (error) {
             console.error('Error fetching suppliers:', error)

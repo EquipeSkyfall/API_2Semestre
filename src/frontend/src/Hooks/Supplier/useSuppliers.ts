@@ -22,7 +22,7 @@ interface SuppliersResponse {
 interface QueryParams {
   search?: string;
   page?: number;
-  limit?: number;
+  limit?: number | 'all';
 }
 
 const fetchSuppliers = async (params: QueryParams) => {

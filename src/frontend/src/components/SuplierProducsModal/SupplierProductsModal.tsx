@@ -83,7 +83,7 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                                         <p className="text-sm text-gray-600">Preço de custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}</p>
                                         <button className='px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium transition-colors duration-300'
                                             onClick={() => handleDelete(product.id_produto)}>
-                                            Deletar
+                                            Remover
                                         </button>
                                     </div>
                                 </li>
