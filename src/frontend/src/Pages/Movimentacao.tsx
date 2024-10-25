@@ -1,14 +1,13 @@
 import BatchForm from "../components/BatchForm";
 import ShipmentForm from "../components/Shippments/CreateShippmentsForm";
-import styles from './../components/Movimentacao.module.css'; // Ajuste o caminho conforme necessário
 
 export default function Movimentacao() {
     return (
-        <div className={styles.formContainer}>
-            <div className={styles.insertProducts}>
+        <div>
+            <div>
                 <BatchForm refetch={() => { }} />
             </div>
-            <div className={styles.dropProducts}>
+            <div>
                 <ShipmentForm refetch={() => { }} />
             </div>
         </div>

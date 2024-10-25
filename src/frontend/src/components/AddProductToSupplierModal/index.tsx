@@ -23,11 +23,11 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
   const { control, handleSubmit, register, reset, watch, setValue, setError } = useForm<ProductFormValues>();
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [page, setPage] = useState(1);
-  const [limit] = useState(10); // Set your desired limit for products per page
+  const [limit] = useState(6); // Set your desired limit for products per page
   const [precoCusto, setPrecoCusto] = useState<Record<number, string>>({});
-
-  const { products, isLoading } = useSearchProducts({search: watch('search') || '', id_fornecedor: supplierId, page: page, limit: limit});
+  const { products, isLoading, totalPages } = useSearchProducts({ search: watch('search') || '', id_fornecedor: supplierId, page: page, limit: limit });
   const { mutate: addProductsToSupplier } = useAddProductsToSupplier();
+  const currentPageState = page
 
   const handleCheckboxChange = (productId: number) => {
     setSelectedProducts((prev) =>
@@ -61,7 +61,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
       setError(`preco_custo.${productId}`, { type: 'manual', message: 'Preço de custo é obrigatório.' });
       return;
     }
-    
+
     // Use setValue to set the parsed value in react-hook-form
     setValue(`preco_custo.${productId}`, precoNumber);
   };
@@ -101,43 +101,45 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-      <button className="close-button" onClick={onClose}>
+    <div className="modal-overlay bg-slate-950">
+      <div className="modal-content bg-slate-950">
+        <button className="close-button" onClick={onClose}>
           <FontAwesomeIcon icon={faTimes} />
-        </button>  
-        <h2>Adicionar Produtos ao Fornecedor</h2>
+        </button>
+        <h2 className='font-["Afacad_Flux"] text-cyan-600'>Adicionar Produtos ao Fornecedor</h2>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            type="text"
-            placeholder="Procurando Produtos..."
-            {...register('search')}
-            className='text-center mt-2 mb-2'
-          />
+        <form onSubmit={handleSubmit(onSubmit)} className='overflow-hidden'>
+          <div className='translate-x-7 w-11/12'>
+            <input
+              type="text"
+              placeholder="Procurando Produtos..."
+              {...register('search')}
+              className='text-center'
+            />
+          </div>
 
           {isLoading ? (
-            <p>Procurando Produtos...</p>
+            <p className='border-cyan-600'>Procurando Produtos...</p>
           ) : (
-            <ul className="space-y-4">
+            <ul className="space-y-2">
               {products.map((product) => (
-                <li className="flex items-center justify-between bg-gray-100 p-4 rounded-md shadow-md" 
-                key={product.id_produto}>
+                <li className="flex items-center justify-between bg-gray-100 p-4 rounded-md shadow-md"
+                  key={product.id_produto}>
                   <label className="flex items-center space-x-3 text-gray-800">
                     <input
                       type="checkbox"
                       checked={selectedProducts.includes(product.id_produto)}
                       onChange={() => handleCheckboxChange(product.id_produto)}
-                      className="form-checkbox h-5 w-5 text-blue-600"
+                      className="form-checkbox h-4 w-4 text-cyan-700"
                     />
                     <span className="text-lg font-medium">
-                    {product.nome_produto} - {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}
+                      {product.nome_produto} - {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}
                     </span>
                   </label>
 
                   {selectedProducts.includes(product.id_produto) && (
-                    <div className="mt-4 md:mt-0 space-y-2">
-                      <h3 className='text-sm font-medium text-gray-700'>preço de custo</h3>
+                    <div className="flex w-60 h-12 space-y-2 -mt-4 -mb-2">
+                      <h3 className='text-lg font-["Afacad_Flux"] mt-3 w-60 text-cyan-700 -ml-10'>Preço de Custo:</h3>
                       <Controller
                         name={`preco_custo.${product.id_produto}`}
                         control={control}
@@ -149,8 +151,6 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
                             onChange={(e) => handlePrecoCustoChange(product.id_produto, e)} // Call handler per product
                             type="text"
                             placeholder="Formato: R$ 0,00"
-                            className="w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 
-                            focus:ring-blue-500 focus:border-transparent"
                           />
                         )}
                       />
@@ -162,23 +162,24 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
           )}
 
           <div className="pagination-controls mt-5">
-            <button className='px-2 py-1 bg-cyan-400 hover:bg-sky-400 text-white border-none 
-            rounded-md cursor-pointer text-base justify ml-2' type="button" onClick={handlePreviousPage} disabled={page === 1}>
+            <button className='px-3 py-2 bg-gray-400 hover:bg-gray-500 transition duration-300 ease-in-out text-white border-none 
+            rounded-md cursor-pointer text-base justify' type="button" onClick={handlePreviousPage} disabled={page === 1}>
               Anterior
             </button>
-            <button className='px-2 py-1 bg-cyan-400 hover:bg-sky-400 text-white border-none 
+            <span>Página {currentPageState} de {totalPages}</span>
+            <button className='px-3 py-2 bg-cyan-400 hover:bg-cyan-600 transition duration-300 ease-in-out text-white border-none 
             rounded-md cursor-pointer text-base justify ml-2' type="button" onClick={handleNextPage}>
               Próximo
             </button>
+            <div className='w-1/4'></div>
+            <button className='px-3 py-2 bg-red-400 hover:bg-red-700 transition duration-300 ease-in-out text-white border-none rounded-md cursor-pointer text-base justify mt-2'
+              type="button" onClick={onClose}>
+              Cancelar
+            </button>
+            <button className='px-3 py-2 bg-green-500 text-white hover:bg-green-700 transition duration-300 ease-in-out border-none rounded-md cursor-pointer text-base justify mt-2 ml-2' type="submit">
+              Adicionar
+            </button>
           </div>
-
-          <button className='px-3 py-2 bg-green-400 hover:bg-green-700 text-white border-none rounded-md cursor-pointer text-base justify mt-5' type="submit">
-            Adicionar
-          </button>
-          <button className='px-3 py-2 bg-red-400 hover:bg-red-700 text-white border-none rounded-md cursor-pointer text-base justify mt-2 ml-5'
-          type="button" onClick={onClose}>
-            Cancelar
-          </button>
         </form>
       </div>
     </div>
