@@ -129,15 +129,13 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
 
             {isVisible && (
                 <>
-                    {isLoading && <p>Carregando...</p>}
-                    {isError && <p className="error-message" >Erro ao carregar produtos.</p>}
-
-                    <div style={{ margin: '20px' }}>
-                        <SearchBar onSearchTermChange={handleSearchTermChange} />
-                    </div>
-
                     {availableProducts.length > 0 ? (
                         <div className="supplier-checkbox" >
+                            {isLoading && <p>Carregando...</p>}
+                            {isError && <p className="error-message" >Erro ao carregar produtos.</p>}
+                            <div className="dimension_conf">
+                                <SearchBar onSearchTermChange={handleSearchTermChange} />
+                            </div>
                             {availableProducts.map(product => (
                                 <div key={product.id_produto}>
                                     <input
@@ -147,7 +145,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                         onChange={() => toggleProductSelection(product)}
                                         disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
                                     />
-                                    {product.produto.nome_produto} Preço Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
+                                    {product.produto.nome_produto} - Preço Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
                                 </div>
                             ))}
 
@@ -166,27 +164,27 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                     Próximo
                                 </button>
                             </div>
+                            <div className="add-products" >
+                                <button className="button-add-products" onClick={handleAddProducts} disabled={selectedProducts.length === 0}>
+                                    Adicionar Produto(s)
+                                </button>
+                            </div>
                         </div>
                     ) : (
                         <p className="error-message" >Não há produtos para adicionar.</p>
                     )}
-                    <div className="add-products" >
-                        <button className="button-add-products" onClick={handleAddProducts} disabled={selectedProducts.length === 0}>
-                            Adicionar Produto(s)
-                        </button>
-                    </div>
                 </>
             )}
 
-            <div className="Batch-Products">
-                <h3>Produtos no lote: {errors.produtos && <span className="error-message">{errors.produtos.message}</span>}</h3>
+            <div className="dimension_conf">
+                <h2>Produtos no lote: {errors.produtos && <span className="error-message">{errors.produtos.message}</span>}</h2>
                 {addedProducts.length > 0 && (
                     <ul>
                         {addedProducts.map(product => {
                             const originalProduct = data?.products.find(p => p.id_produto === product.id_produto);
                             return (
                                 <li key={product.id_produto}>
-                                    <div>
+                                    <div className="dimension_conf Batch-Products">
                                         <strong>{originalProduct?.produto.nome_produto || 'Produto Desconhecido'}</strong> {/* Display product name */}
 
                                         <label>

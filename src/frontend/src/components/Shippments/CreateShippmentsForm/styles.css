@@ -59,3 +59,25 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 } */
+
+.color_conf{
+    color: #22d3ee;
+}
+
+.align_conf{
+    text-align: center;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+.dimension_conf{
+    margin-bottom: 2%;
+}
+
+.Batch-Products {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}

@@ -53,8 +53,7 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
 
     return (
         <div className="campo-formulario required">
-            <label htmlFor="id_fornecedor">Fornecedor</label>
-            <SupplierSearchBar onSearchTermChange={handleSearchTermChange} resetKey={resetKey} />
+            <h2 className="text_conf">Fornecedor</h2>
 
             <input
                 id="nome_fornecedor"
@@ -63,12 +62,14 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
                 placeholder="Selecione um fornecedor"
                 readOnly 
                 onClick={toggleList}
+                className="text_conf"
             />
             {errors.id_fornecedor && <span className="error-message">{errors.id_fornecedor.message}</span>}
             
             {/* Lista de fornecedores, colapsável */}
             {listaExpandida && (
                 <div className="lista-fornecedores">
+                    <SupplierSearchBar onSearchTermChange={handleSearchTermChange} resetKey={resetKey} />
                     {isLoading ? (
                         <p>Carregando fornecedores...</p>
                     ) : isError ? (

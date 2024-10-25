@@ -75,7 +75,7 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                 {successMessage && <p className="success-message">{successMessage}</p>}
                 {serverError && <p className="error-message">{serverError}</p>}
 
-                <h2>Entrada de Produtos</h2>
+                <h2 className="color_conf">Entrada de Produtos</h2>
 
                     <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
 

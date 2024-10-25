@@ -1,4 +1,4 @@
-/* Movimentacao.module.css
+/* Movimentacao.module.css*/
 .formContainer {
     display: flex;
     justify-content: space-between;
@@ -10,4 +10,4 @@
 .dropProducts {
     flex: 1;
     min-width: 300px;
-} */
+}

@@ -23,7 +23,7 @@ interface ShipmentProductsProps {
 const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected, removedProductId, resetKey }) => {
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState<FilterValues>({ search: '', id_setor: null, id_categoria: null })
-    const { products, totalPages, isLoading, isError } = useSearchProducts({...filters, page:page, limit: 10, forshipping: 1})
+    const { products, totalPages, isLoading, isError } = useSearchProducts({ ...filters, page: page, limit: 10, forshipping: 1 })
     const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
     const [sentProducts, setSentProducts] = useState<{ id_produto: number, nome_produto: string, total_estoque: number }[]>([]);
 
@@ -78,54 +78,56 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
 
     return (
         <div>
-            Selecione os Produtos:
-            <SearchBar onSearchTermChange={handleSearchTermChange} />
+            <h2 className="align_conf">Selecionar Produtos</h2>
+            <div className="product_list">
+                <SearchBar onSearchTermChange={handleSearchTermChange} />
 
-            {/* Display loading state */}
-            {isLoading && <p>Carregando produtos...</p>}
+                {/* Display loading state */}
+                {isLoading && <p>Carregando produtos...</p>}
 
-            {/* Display error state */}
-            {isError && <p>Erro ao carregar produtos.</p>}
+                {/* Display error state */}
+                {isError && <p>Erro ao carregar produtos.</p>}
 
-            {/* Display products if not loading or error */}
-            {!isLoading && !isError && products.length > 0 ? (
-                <ul className="check-shipping-products" >
-                    {products.map((product) => (
-                        <li key={product.id_produto}>
-                            <label>
-                                <input
-                                    type="checkbox"
-                                    className="checkbox"
-                                    checked={selectedProducts.some((p) => p.id_produto === product.id_produto)}
-                                    onChange={() => handleCheckboxChange(product)}
-                                    disabled={sentProducts.some((p) => p.id_produto === product.id_produto)}
-                                />
-                                {product.nome_produto} - {product.total_estoque} disponíveis.
-                            </label>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                !isLoading && !isError && <p>Nenhum produto encontrado.</p>
-            )}
+                {/* Display products if not loading or error */}
+                {!isLoading && !isError && products.length > 0 ? (
+                    <ul className="check-shipping-products" >
+                        {products.map((product) => (
+                            <li key={product.id_produto}>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        className="checkbox"
+                                        checked={selectedProducts.some((p) => p.id_produto === product.id_produto)}
+                                        onChange={() => handleCheckboxChange(product)}
+                                        disabled={sentProducts.some((p) => p.id_produto === product.id_produto)}
+                                    />
+                                    {product.nome_produto} - {product.total_estoque} disponíveis.
+                                </label>
+                            </li>
+                        ))}
+                    </ul>
+                ) : (
+                    !isLoading && !isError && <p>Nenhum produto encontrado.</p>
+                )}
 
-            {/* Pagination controls */}
-            {totalPages > 1 && (
-                <div>
-                    <button type="button" disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
-                        Anterior
-                    </button>
-                    <span>Página {page} de {totalPages}</span>
-                    <button type="button" disabled={page === totalPages} onClick={() => setPage((prev) => prev + 1)}>
-                        Próxima
-                    </button>
-                </div>
-            )}
+                {/* Pagination controls */}
+                {totalPages > 1 && (
+                    <div>
+                        <button type="button" disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
+                            Anterior
+                        </button>
+                        <span>Página {page} de {totalPages}</span>
+                        <button type="button" disabled={page === totalPages} onClick={() => setPage((prev) => prev + 1)}>
+                            Próxima
+                        </button>
+                    </div>
+                )}
 
-            {/* Send selected products button */}
-            <button type="button" onClick={handleSendSelectedProducts} disabled={selectedProducts.length === 0}>
-                Adicionar Produtos Selecionados
-            </button>
+                {/* Send selected products button */}
+                <button type="button" onClick={handleSendSelectedProducts} disabled={selectedProducts.length === 0}>
+                    Adicionar Produtos Selecionados
+                </button>
+            </div>
         </div>
     )
 };

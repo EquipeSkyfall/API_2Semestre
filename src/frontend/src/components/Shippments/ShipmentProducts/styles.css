@@ -1,3 +1,14 @@
 .check-shipping-products {
     margin: 20px 0px 20px 0px;
 }
+
+.product_list{
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    margin-top: 20px;
+    padding: 20px; 
+}
+
+.align_conf{
+    text-align: center;
+}
