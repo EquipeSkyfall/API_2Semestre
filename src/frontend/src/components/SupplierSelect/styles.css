@@ -1,0 +1,23 @@
+.supplier-select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 0.8rem; /* Tamanho da fonte reduzido para o select */
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.supplier-select option {
+    font-size: 1em; /* Tamanho de fonte para as opções */
+}
+
+.supplier-select option[value=""] {
+    font-size: 0.8rem; /* Tamanho maior para "Selecione uma categoria" */
+}
+
+.title-supplier {
+    font-size: 0.5rem; /* Diminui o tamanho da fonte */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
