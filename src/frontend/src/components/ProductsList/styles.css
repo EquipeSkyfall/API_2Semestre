@@ -103,7 +103,7 @@
 }
 
 .pagination-button {
-    padding: 8px 12px;
+    padding: 6px 18px;
     border-radius: 6px;
     border: none;
     cursor: pointer;
@@ -119,6 +119,7 @@
 
 .pagination-button:disabled {
     background-color: grey;
+    cursor: not-allowed;
 }
 
 /* Animações */

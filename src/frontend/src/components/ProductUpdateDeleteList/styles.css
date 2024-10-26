@@ -1,8 +1,7 @@
 h1 {
-    font-size: 40px;
+    margin-right: auto;
+    max-width: auto;
     font-weight: bold;
-    margin: 0 auto 10px; /* Centraliza verticalmente e ajusta a margem inferior */
-    text-align: center; /* Centraliza o texto horizontalmente */
 }
 
 /* Estilos Gerais do Modal */

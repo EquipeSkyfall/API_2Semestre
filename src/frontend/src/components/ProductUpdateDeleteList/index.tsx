@@ -78,7 +78,7 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
 
     return (
         <div className='flex flex-col items-center border'>
-            <h2>Produtos</h2>
+            <h1>Produtos</h1>
 
             {/* Barra de Pesquisa */}
             <SearchBar

@@ -106,7 +106,7 @@ const ProductList: React.FC<ProductListProps> = ({
                         disabled={currentPage === 1}
                         className="pagination-button"
                     >
-                        Anterior
+                        &lt;
                     </button>
                     {totalPages > 0 ? `Página ${currentPage} de ${totalPages}` : ''}
                     <button
@@ -114,7 +114,7 @@ const ProductList: React.FC<ProductListProps> = ({
                         disabled={currentPage >= totalPages}
                         className="pagination-button"
                     >
-                        Próxima
+                        &gt;
                     </button>
                 </div>
             </div>
