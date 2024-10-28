@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import FetchAllSectors from "../../Hooks/Sectors/fetchAllSectorsHook";
-import "./styles.css";
+import "./styles.css"; 
 
 interface SectorSelectProps {
     refetch: () => void;
@@ -10,18 +10,19 @@ interface SectorSelectProps {
 }
 
 const SectorSelect: React.FC<SectorSelectProps> = ({ defaultValue, refetch, onChange }) => {
-    const { register, formState: { errors }, setValue } = useFormContext();
+    const { register, setValue } = useFormContext();
     const { sectors, isLoading, isError, refetch: refetchSectors } = FetchAllSectors(1);
+
     const handleSectorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedId: number | null = event.target.value ? Number(event.target.value) : null;
 
         setValue('id_setor', selectedId);
 
         if (onChange) {
-            onChange(selectedId); 
+            onChange(selectedId);
         }
 
-        refetch()
+        refetch();
     };
 
     useEffect(() => {
@@ -32,16 +33,16 @@ const SectorSelect: React.FC<SectorSelectProps> = ({ defaultValue, refetch, onCh
     }, [defaultValue, setValue, refetch]);
 
     return (
-        <div className="form-field optional">
-            <label htmlFor="id_setor">Setor</label>
+        <div className="form-field-setor">
+            <label htmlFor="id_setor"></label>
             <select
                 {...register('id_setor')}
                 id="id_setor"
-                defaultValue={ defaultValue || '' }
+                defaultValue={defaultValue || ''}
                 onChange={handleSectorChange}
                 className="select-field"
             >
-                <option value="">Selecione um setor</option>
+                <option value="">Setor</option>
                 {isLoading ? (
                     <option disabled>Carregando setores...</option>
                 ) : isError ? (
@@ -56,9 +57,8 @@ const SectorSelect: React.FC<SectorSelectProps> = ({ defaultValue, refetch, onCh
                     <option disabled>Não há setores disponíveis</option>
                 )}
             </select>
-            
         </div>
-    )
+    );
 };
 
 export default SectorSelect;
