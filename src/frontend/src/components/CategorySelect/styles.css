@@ -1,20 +1,16 @@
-.form-field-categoria{
-    background-color: rgb(255, 255, 255);
-    border-radius: 6px;
-}
-
 .category-select {
     padding: 8px;
     border-radius: 6px;
     border: 1px solid #ddd;
     font-size: 0.8rem; /* Tamanho padrão da fonte do select */
     height: 40px;
-    width: 21vh; /* Garante que o select utilize 100% da largura disponível */
+    width: 100%;
     box-sizing: border-box;
 }
 
+
 .category-select option[value=""] {
-    font-size: 1em; /* Tamanho maior para "Selecione uma categoria" */
+    font-size: 0.8rem; /* Tamanho maior para "Selecione uma categoria" */
 }
 
 .manage-categoria-button {
@@ -25,8 +21,12 @@
     border-radius: 6px;
     cursor: pointer;
     font-size: 1rem;
-    margin-top: 10px; /* Espaço entre o botão e o select */
+    margin-top: 10px;
     transition: background-color 0.5s ease;
+}
+
+.manage-category-button:hover {
+    background-color: #18aec5;
 }
 
 .error-message {
@@ -34,3 +34,4 @@
     font-size: 0.875rem;
     margin-top: 5px;
 }
+

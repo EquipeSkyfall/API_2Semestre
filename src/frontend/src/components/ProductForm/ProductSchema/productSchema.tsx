@@ -2,7 +2,7 @@
 import { z } from 'zod';
 
 export const productSchema = z.object({
-    nome_produto: z.string().min(1, "Nome do Produto é Obrigatório"),
+    nome_produto: z.string().min(1, "Nome do Produto é obrigatório"),
     descricao_produto: z.string().nullable().optional(),
     marca_produto: z.string().nullable().optional(),
     modelo_produto: z.string().nullable().optional(),
@@ -13,7 +13,7 @@ export const productSchema = z.object({
     comprimento_produto: z.number().min(0, "Profundidade Invalida.").positive(),
     localizacao_estoque: z.string().nullable().optional(),
     permalink_imagem: z.string().nullable().optional(), // Permite valores nulos
-    peso_produto: z.number().min(0 , "Peso Invalido.").positive(),
+    peso_produto: z.number().min(0, "Peso Invalido.").positive(),
     unidade_medida: z.string(),
     id_categoria: z.preprocess(
         (value) => {
@@ -31,7 +31,7 @@ export const productSchema = z.object({
     id_fornecedor: z.preprocess(
         (value) => (value === '' ? null : Number(value)),
         z.number().optional().nullable()
-    )
+    ).optional()
 });
 
 

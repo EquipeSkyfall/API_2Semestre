@@ -1,12 +1,7 @@
-// SearchBar.tsx
 import React, { useEffect, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import CategorySelect from '../CategorySelect';
 import SectorSelect from '../SectorSelect';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import ProductForm from '../ProductForm'; // Importando o ProductForm
-import AdicionarProdutoModal from '../AdicionarProdutoModal'; // Importando o novo modal
 import './styles.css';
 
 interface SearchBarProps {
@@ -17,90 +12,66 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange }) => {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [categoryId, setCategoryId] = useState<number | null>(null);
     const [sectorId, setSectorId] = useState<number | null>(null);
-    const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Estado para controlar o modal
+    const [inputValue, setInputValue] = useState(searchTerm);
+    const [categoryValue, setCategoryValue] = useState(categoryId);
+    const [sectorValue, setSectorValue] = useState(sectorId);
     const methods = useForm();
 
+    useEffect(() => {
+        setInputValue(searchTerm);
+    }, [searchTerm]);
+
+    useEffect(() => {
+        setCategoryValue(categoryValue);
+    }, [categoryValue]);
+
+    useEffect(() => {
+        setSectorValue(sectorValue);
+    }, [sectorValue]);
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
+        setInputValue(event.target.value);
     };
 
     const handleCategoryChange = (id: number | null) => {
-        setCategoryId(id);
+        setCategoryValue(id);
     };
 
     const handleSectorChange = (id: number | null) => {
-        setSectorId(id);
+        setSectorValue(id);
     };
 
     useEffect(() => {
         const handler = setTimeout(() => {
-            onSearchTermChange(searchTerm, categoryId, sectorId);
+            onSearchTermChange(inputValue, categoryValue, sectorValue);
         }, 300);
 
         return () => {
             clearTimeout(handler);
         };
-    }, [searchTerm, categoryId, sectorId, onSearchTermChange]);
-
-    const toggleDropdown = () => {
-        setDropdownOpen(prev => !prev);
-    };
-
-    // Para fechar o dropdown ao clicar fora
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            const dropdown = document.querySelector('.dropdown');
-            if (dropdown && !dropdown.contains(event.target as Node)) {
-                setDropdownOpen(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
-
-    // Funções para abrir e fechar o modal
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
+    }, [inputValue, categoryValue, sectorValue, onSearchTermChange]);
 
     return (
         <FormProvider {...methods}>
-            <button className="searchbar-button" onClick={handleOpenModal}>
-                Adicionar Produto
-            </button>
-            <div className="searchbar-wrapper">
+            <div className='flex flex-col items-center space-y-4'>
                 <input
                     type="text"
-                    value={searchTerm}
+                    value={inputValue}
                     onChange={handleChange}
                     placeholder="Pesquisar"
-                    className="searchbar"
+                    className="p-2 border rounded-md mx-auto w-2/3"
                 />
-                <div className="dropdown">
-                    <button onClick={toggleDropdown} className="dropdown-button">
-                        Selecionar <FontAwesomeIcon icon={faChevronDown} />
-                    </button>
-                    {dropdownOpen && (
-                        <div className="dropdown-content">
-                            <CategorySelect refetch={() => { }} onChange={handleCategoryChange} />
-                            <SectorSelect refetch={() => { }} onChange={handleSectorChange} />
-                        </div>
-                    )}
+
+                {/* Adicionando flex-row para colocar Categoria e Setor lado a lado */}
+                <div className="flex space-x-4 ">
+                    <div className="text-center flex-1">
+                        <CategorySelect refetch={() => { }} onChange={handleCategoryChange} />
+                    </div>
+                    <div className="text-center flex-1">
+                        <SectorSelect refetch={() => { }} onChange={handleSectorChange} />
+                    </div>
                 </div>
             </div>
-
-            {/* Modal para Adicionar Produto */}
-            <AdicionarProdutoModal isOpen={isModalOpen} onClose={handleCloseModal}>
-                <ProductForm refetch={() => { /* Função de refetch se necessário */ }} />
-            </AdicionarProdutoModal>
         </FormProvider>
     );
 };

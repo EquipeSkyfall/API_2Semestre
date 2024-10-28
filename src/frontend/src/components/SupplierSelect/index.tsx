@@ -1,7 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import useSuppliers from "../../Hooks/Supplier/useSuppliers";
 import { useEffect } from "react";
-import './styles.css';
 
 interface SupplierSelectProps {
     refetch: () => void;
@@ -25,13 +24,13 @@ const SupplierSelect: React.FC<SupplierSelectProps> = ({ refetch, onChange }) =>
 
     return (
         <div className="form-field optional">
-            <label htmlFor="id_fornecedor"></label>
+            <label htmlFor="id_fornecedor">Fornecedor</label>
             <select
                 {...register('id_fornecedor')}
                 onChange={handleSupplierChange}
                 className="supplier-select"
             >
-                <option className="title-supplier">Fornecedor</option>
+                <option value="">Selecione um fornecedor</option>
                 {isLoading ? (
                     <option disabled> Carregando fornecedores...</option>
                 ) : isError ? (
