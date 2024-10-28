@@ -1,6 +1,7 @@
 // Hooks/Supplier/useGetSupplierProducts.ts
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { token } from '../Token';
 
 export interface SupplierProduct {
   id_produto: number;
@@ -35,8 +36,8 @@ interface QueryParams {
 }
 
 const getSupplierProducts = async (supplierId: number | null, params: QueryParams) => {
-  const response = await axios.get<Response>(`http://127.0.0.1:3000/suppliers/${supplierId}/products`, {params});
-  console.log('fala')
+  const response = await axios.get<Response>(`http://127.0.0.1:3000/suppliers/${supplierId}/products`, {params,withCredentials: true});
+  // console.log('fala')
   return response.data;
 };
 

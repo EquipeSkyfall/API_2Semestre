@@ -2,8 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 const fetchBatches = async (search = '', page = 1, limit = 10) => {
+  
   const response = await axios.get(`http://127.0.0.1:3000/batches`, {
-    params: { search, page, limit },
+    params: { search, page, limit },withCredentials: true
   });
   return response.data;
 };

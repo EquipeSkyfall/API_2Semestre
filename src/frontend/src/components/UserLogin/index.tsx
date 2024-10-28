@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import loginSchema from './LoginSchema/loginSchema';
-import getUserData from './UserFormControllers/getUserData';
+import useUserLogin from '../../Hooks/Login/getLoginUser';
 type LoginSchema = z.infer<typeof loginSchema>;
 
 function LoginForm() {
@@ -15,11 +15,11 @@ function LoginForm() {
     });
 
     const navigate = useNavigate();
-
+    const {mutateAsync} = useUserLogin()
     const onSubmit = async (data: LoginSchema) => {
         setServerError(null);
         try {
-            const user = await getUserData(data);
+            const user = await mutateAsync(data);
             if (user) {
                 reset();
                 setSuccessMessage('Login realizado com sucesso!');

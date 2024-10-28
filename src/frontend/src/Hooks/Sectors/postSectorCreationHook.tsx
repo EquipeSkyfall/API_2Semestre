@@ -9,7 +9,7 @@ type createSectorSchema = z.infer<typeof sectorSchema>
 
 const postSectorData = async ( data: createSectorSchema ): Promise<createSectorSchema> => {
     console.log('Data being sent:', data)
-    const response = await axios.post('http://127.0.0.1:3000/sectors', data)
+    const response = await axios.post('http://127.0.0.1:3000/sectors', data,{withCredentials: true})
     return response.data
 }
 
@@ -25,7 +25,7 @@ const MutationCreateSector = (
         onSuccess: ( data ) => {
             console.log('Data submitted successfully:', data)
             onSuccessCallback(data)
-            queryClient.invalidateQueries(['SectorsData']);
+            queryClient.invalidateQueries({queryKey:['SectorsData']});
         },
         onError: (error) => {
             if (error.response) {

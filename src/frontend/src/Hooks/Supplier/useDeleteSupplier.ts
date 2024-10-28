@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 
 const deleteSupplier = async (id: number) => {
-  await axios.delete(`http://127.0.0.1:3000/suppliers/${id}`);
+  await axios.delete(`http://127.0.0.1:3000/suppliers/${id}`,{withCredentials: true});
 };
 
 const useDeleteSupplier = () => {

@@ -9,7 +9,7 @@ interface UpdateSupplierPayload extends Partial<Supplier> {
 
 const updateSupplier = async (supplier: UpdateSupplierPayload) => {
   const { id_fornecedor, ...data } = supplier;
-  const response = await axios.patch(`http://127.0.0.1:3000/suppliers/${id_fornecedor}`, data);
+  const response = await axios.patch(`http://127.0.0.1:3000/suppliers/${id_fornecedor}`, data,{withCredentials: true});
   return response.data;
 };
 

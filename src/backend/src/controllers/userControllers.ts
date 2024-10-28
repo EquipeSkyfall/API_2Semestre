@@ -1,5 +1,8 @@
 import express, { Response, Request } from 'express';
 import prisma  from '../dbConnector'; // Make sure your prisma import is correct
+import bcrypt from 'bcrypt';
+import { JWT_SECRET } from '../secrets';
+const jwt = require('jsonwebtoken') 
 
 
 
@@ -31,13 +34,13 @@ class UserController {
         return response.status(400).json({ message: 'Email already exists' });
       }
   
-     
+     const hashedPassword = await bcrypt.hash(password,10);
      
       const users = await prisma.users.create({
         data:{
             name,
             email,
-            password,
+            password: hashedPassword,
             role
         }
 
@@ -116,7 +119,44 @@ class UserController {
       response.status(500).json({ message: 'Error fetching users by ID', error });
     }
   };
-
+  public login = async(request:Request,response: Response) =>{
+    const {email,password} = request.body
+    
+    try{
+      const user = await prisma.users.findUnique({
+        where: {email: email},
+      })
+      
+      if(!user){
+        return response.status(404).json({message:'Usuário não encontrado'})
+      }
+      
+      if (!await bcrypt.compare(password, user.password)) {
+        return response.status(401).json({ message: 'Usuário ou Senha incorretos' });  
+      }
+    // console.log(user)
+    //verification token
+    const token = jwt.sign({id : user.id}, JWT_SECRET,{expiresIn:'1d'})
+    const cookieOptions={
+      expires : new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+      secure: true,
+      sameSite :'None' as 'none',
+      path: '/'
+    }
+    response.cookie('jwt',token, cookieOptions)
+    // console.log(token)
+    return response.status(201).json({
+       message: 'Login successful',
+       expiration: Date.now() + 1 * 24 * 60 * 60 * 1000,
+       token,
+        data:{
+          user
+        }}); // send a success response
+    }catch(error){
+      response.status(500).json({message:'Error Login users'})
+    }
+  };
 
 
 

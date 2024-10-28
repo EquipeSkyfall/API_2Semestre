@@ -10,11 +10,18 @@ import Historico from "./Pages/Historico";
 import Login from "./Pages/login";
 import Fornecedor from "./Pages/Fornecedores";
 import Movimentacao from "./Pages/Movimentacao";
+import PrivateRoutes from "./components/PrivateRoute";
+import axios from 'axios';
 
+axios.defaults.withCredentials = true;
+axios.defaults.credentials = "include";
 function App() {
   const queryClient = new QueryClient();
 
   return (
+
+
+   
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
@@ -29,6 +36,7 @@ function App() {
               <>
                 <NavBar />
                 <Routes>
+                  <Route element={<PrivateRoutes/>}>
                   <Route path="products" element={<ProductsPage />} />
                   <Route path="teste" element={<Teste />} />
                   <Route path="Movimentacao" element={<Movimentacao />} />
@@ -36,6 +44,7 @@ function App() {
                   <Route path="Historico" element={<Historico />} />
                   <Route path="fornecedor" element={<Fornecedor />} />
                   <Route path="*" element={<PageNotFound />} />
+                  </Route>
                 </Routes>
               </>
             }
@@ -43,6 +52,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
+
   );
 }
 

@@ -9,7 +9,8 @@ type createCategorySchema = z.infer<typeof categorySchema>
 
 const postCategoryData = async ( data: createCategorySchema ): Promise<createCategorySchema> => {
     console.log('Data being sent:', data);
-    const response = await axios.post('http://127.0.0.1:3000/categories', data)
+    console.log('Data being sent:dasda');
+    const response = await axios.post('http://127.0.0.1:3000/categories', data,{withCredentials: true})
     return response.data
 }
 
@@ -19,12 +20,12 @@ const MutationCreateCategory = (
     setServerError: ( message: string ) => void
 ) => {
     const queryClient = useQueryClient();
-    
+    console.log('dasd')
     return useMutation<createCategorySchema, AxiosError, createCategorySchema>({
         mutationFn: postCategoryData,
         onSuccess: ( data ) => {
             console.log('Data submitted successfully:', data)
-            queryClient.invalidateQueries(['CategoriesData'])
+            queryClient.invalidateQueries({queryKey:['CategoriesData']})
             onSuccessCallback(data)
         },
         onError: (error) => {
