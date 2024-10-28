@@ -154,9 +154,9 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
       <h2 className='align_conf'>Motivo para a saída do produto</h2>
       <select {...register('motivo_saida')} defaultValue="" required>
         <option value="" disabled>Selecione um motivo</option>
-        <option value="produto fora da validade">Produto fora da validade</option>
-        <option value="produto com defeito">Produto com defeito</option>
-        <option value="venda">Venda</option>
+        <option value="Produto Fora da Validade">Produto fora da validade</option>
+        <option value="Produto Com Defeito">Produto com defeito</option>
+        <option value="Venda">Venda</option>
       </select>
 
       <ShipmentProducts onProductsSelected={handleProductsSelected} removedProductId={removedProductId} resetKey={resetKey} />
