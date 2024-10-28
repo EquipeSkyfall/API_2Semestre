@@ -193,7 +193,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                                 className="form-field"
                                                 type="date"
                                                 id={`validade_${product.id_produto}`} // Use product ID for uniqueness
-                                                value={product.validade_produto
+                                                value={product.validade_produto && !isNaN(new Date(product.validade_produto).getTime())
                                                     ? new Date(product.validade_produto).toISOString().slice(0, 10)
                                                     : ''}
                                                 min={new Date(Date.now() + 86400000).toISOString().slice(0, 10)}
