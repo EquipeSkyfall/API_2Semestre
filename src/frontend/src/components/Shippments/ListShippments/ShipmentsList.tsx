@@ -71,7 +71,7 @@ const ShipmentsList: React.FC = () => {
           <thead>
             <tr className="bg-gray-100 border-b border-gray-300 px-4 py-2">
               <th className="px-4 py-2">ID Saída</th>
-              <th className="px-4 py-2">Data de Venda</th>
+              <th className="px-4 py-2">Data da Venda</th>
               <th className="px-4 py-2">Motivo da Saída</th>
             </tr>
           </thead>
@@ -89,36 +89,57 @@ const ShipmentsList: React.FC = () => {
             ))}
           </tbody>
         </table>
+
         {selectedShipment && (
           <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-            <div className="p-6 rounded-lg text-center">
+            <div className="p-6 rounded-lg flex flex-col items-center justify-center text-center">
               <h3 className="text-3xl font-semibold text-gray-800 mb-3">Detalhes de Saída</h3>
               <p className="text-gray-700 mb-1 text-lg">
                 Data da Venda: {new Date(selectedShipment.data_venda).toLocaleDateString()}
               </p>
               <p className="text-gray-600 text-lg mb-4">
-                Motivo da Saída: <span className="text-cyan-600 font-semibold">{selectedShipment.motivo_saida}</span>
+                Motivo da Saída: <span className="text-cyan-600 font-semibold"> {selectedShipment.motivo_saida} </span>
               </p>
 
               {selectedShipment.saidaProdutos && selectedShipment.saidaProdutos.length > 0 && (
-                <div className="mt-4">
-                  {/* Cabeçalho da Tabela */}
-                  <div className="grid grid-cols-3 gap-4 text-lg pb-2 font-semibold text-gray-800">
-                    <span>Produto</span>
-                    <span>Lote</span>
-                    <span>Quantidade Retirada</span>
-                  </div>
+                <div className="flex flex-col w-full items-center">
+                  {Object.entries(
+                    selectedShipment.saidaProdutos.reduce((acc, saidaProduto) => {
+                      const { id_produto, id_lote, quantidade_retirada } = saidaProduto;
+                      const nome_produto = saidaProduto.loteProduto.produto.nome_produto;
 
-                  {/* Conteúdo da Tabela */}
-                  {selectedShipment.saidaProdutos.map((saidaProduto) => {
-                    const { id_produto, id_lote, quantidade_retirada } = saidaProduto;
-                    const nome_produto = saidaProduto.loteProduto.produto.nome_produto;
+                      if (!acc[id_produto]) {
+                        acc[id_produto] = { nome_produto, lotes: [], totalQuantidadeRetirada: 0 };
+                      }
+                      acc[id_produto].lotes.push({ id_lote, quantidade_retirada });
+                      acc[id_produto].totalQuantidadeRetirada += quantidade_retirada;
+                      return acc;
+                    }, {} as Record<number, { nome_produto: string; lotes: { id_lote: number; quantidade_retirada: number }[]; totalQuantidadeRetirada: number }>)
+                  ).map(([id_produto, { nome_produto, lotes, totalQuantidadeRetirada }]) => {
+                    const isCollapsed = collapsedBatches[id_produto] || false;
 
                     return (
-                      <div key={id_produto} className="grid grid-cols-3 gap-4 py-2 text-gray-700 hover:text-cyan-600">
-                        <span className="text-center">{nome_produto}</span>
-                        <span className="text-center">{id_lote}</span>
-                        <span className="text-center">{quantidade_retirada}</span>
+                      <div key={id_produto} className="w-full flex flex-col items-start mb-4 ml">
+                        <div
+                          className="flex justify-between items-center w-full px-4 py-2 text-lg font-medium text-gray-800 cursor-pointer hover:text-cyan-600 transition-colors"
+                          onClick={() => toggleCollapse(id_produto)}
+                        >
+                          <span className='flex-grow text-left'>Produto: {nome_produto}</span>
+                          <span className="text-left ">Quantidade Retirada: {totalQuantidadeRetirada}</span>
+                          <span className="ml-24">{isCollapsed ? '▼' : '▲'}</span>
+                        </div>
+
+                        {isCollapsed && (
+                          <ul className="space-y-2">
+                            {lotes.map(({ id_lote, quantidade_retirada }) => (
+                              <li key={`${id_lote}-${quantidade_retirada}`} className="flex text-gray-600 w-full px-4">
+                                <span className="flex-1">ID Lote: {id_lote}</span>
+                                <span className="flex-2 w-10 text-cyan-600">|</span>
+                                <span className="flex-2">Quantidade Retirada: {quantidade_retirada}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </div>
                     );
                   })}

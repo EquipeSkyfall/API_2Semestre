@@ -1,13 +1,18 @@
 /* Movimentacao.module.css*/
+body{
+    overflow: hidden;
+}
 .formContainer {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
+    overflow: hidden;
 }
 
 .insertProducts,
 .dropProducts {
     flex: 1;
     min-width: 300px;
+    overflow: hidden;
 }
