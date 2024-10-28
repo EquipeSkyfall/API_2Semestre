@@ -1,6 +1,6 @@
 import BatchForm from "../components/BatchForm";
 import ShipmentForm from "../components/Shippments/CreateShippmentsForm";
-import styles from './../components/Movimentacao.module.css'; // Ajuste o caminho conforme necessário
+import styles from './../components/Shippments/Movimentacao.module.css'; // Ajuste o caminho conforme necessário
 
 export default function Movimentacao() {
     return (
