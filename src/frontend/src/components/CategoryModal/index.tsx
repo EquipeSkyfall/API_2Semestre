@@ -77,7 +77,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
         <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
             <div className="bg-white rounded-lg shadow-lg w-4/5 max-w-4xl p-6 relative">
                 {/* Botão de fechar modal (X) no canto superior direito do modal */}
-                <button className="close-button-category" onClick={closeModal}>
+                <button className="close-button" onClick={closeModal}>
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
 

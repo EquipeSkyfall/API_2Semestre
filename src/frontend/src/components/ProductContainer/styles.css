@@ -1,23 +1,48 @@
 .product-container {
-  display: flex; /* Ativa o layout flexível */
-  justify-content: space-between; /* Distribui os itens com espaço entre eles */
-  align-items: flex-start; /* Alinha os itens no início da contêiner */
-  gap: 20px; /* Espaçamento entre os itens */
-  max-width: 97%; /* Largura máxima da contêiner */
-  height: 86vh; /* Altura adaptada */
-  margin: auto; /* Centraliza o contêiner */
-  padding: 20px; /* Adiciona espaço interno ao contêiner */
-  background-color: #f9fafb; /* Cor de fundo */
-  border-radius: 12px; /* Cantos arredondados */
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra do contêiner */
-  box-sizing: border-box; /* Inclui padding e bordas nas dimensões totais */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  height: 80vh; /* Garante que o layout ocupe toda a altura da tela */
+  box-sizing: border-box;
 }
 
-/* Media Query para Responsividade */
-@media (max-width: 768px) {
-  .product-container {
-      height: 100vh; /* Altura total da tela em dispositivos menores */
-      flex-direction: column; /* Alinha os itens na vertical */
-      padding: 10px; /* Ajusta o padding para telas menores */
-  }
+.product-list-container {
+  flex: 1;
+  max-width: 100%; /* Garante que o contêiner ocupe a largura disponível */
+  background-color: rgba(248, 250, 252);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: visible; /* Remove a rolagem interna */
+  height: auto; /* Define altura automática */
+  max-height: 700px; /* Limita a altura máxima para evitar tocar o chão */
+  box-sizing: border-box; /* Inclui padding e borda no cálculo da altura */
+  border: none; /* Remove qualquer borda */
+}
+
+.pagination-controls {
+margin-top: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.image-container {
+display: flex; /* Flexbox para controlar o layout */
+justify-content: left; /* Centraliza a imagem horizontalmente */
+align-items: left; /* Centraliza verticalmente, caso necessário */
+margin-top: 20px; /* Adiciona um espaçamento entre o formulário e a imagem */
+margin-left: -40px; /* Se necessário, ajuste o espaçamento à direita */
+}
+
+.product-image {
+max-width: 700px; /* Limita o tamanho máximo da imagem */
+width: 100%; /* Faz com que a imagem ocupe toda a largura do contêiner */
+height: auto; /* Mantém a proporção da imagem */
+border-radius: 8px; /* Estilo opcional para bordas arredondadas */
+object-fit: cover; /* Faz com que a imagem cubra o espaço sem distorcer */
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './styles.css'; // Importando o arquivo de estilos
+import './styles.css';  // Importando o arquivo de estilos
 import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
@@ -26,7 +26,7 @@ interface ProductListProps {
     onDelete: (id_produto: number) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({
+const ProductList: React.FC<ProductListProps> = React.memo(({
     products,
     onEdit,
     currentPage,
@@ -36,115 +36,73 @@ const ProductList: React.FC<ProductListProps> = ({
     onDelete,
 }) => {
     const [expandedProductId, setExpandedProductId] = useState<number | null>(null);
-    const [closing, setClosing] = useState(false);
-
     const toggleExpand = (productId: number) => {
-        if (expandedProductId === productId) {
-            setClosing(true);
-            setTimeout(() => {
-                setExpandedProductId(null);
-                setClosing(false);
-            }, 500);
-        } else {
-            setExpandedProductId(productId);
-        }
+        setExpandedProductId(prev => (prev === productId ? null : productId));
     };
 
     return (
         <div className="list-container">
-            <div className="product-list">
-                <table className="info-table">
-                    <thead>
-                        <tr>
-                            <th>Nome do Produto</th>
-                            <th>Fabricante</th>
-                            <th>ID</th>
-                            <th>Qtd. Estoque</th>
-                            <th>Data (Entrada)</th>
-                            <th>Data (Saída)</th>
-                            <th>Preço</th>
-                            <th>Atualizado</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.length > 0 ? (
-                            products.map((product) => (
-                                <tr key={product.id_produto}>
-                                    <td onClick={() => toggleExpand(product.id_produto)} className="item-name">
-                                        {product.nome_produto}
-                                    </td>
-                                    <td>{product.marca_produto}</td>
-                                    <td>{product.id_produto}</td>
-                                    <td>{product.total_estoque}</td>
-                                    <td>2024-01-01</td>
-                                    <td>2024-01-10</td>
-                                    <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}</td>
-                                    <td>2024-10-20</td>
-
-                                    <td className="item-actions">
-                                        <button onClick={() => onEdit(product)} className="edit-button">
-                                            <FontAwesomeIcon icon={faPencilAlt} />
-                                        </button>
-                                        <button onClick={() => onDelete(product.id_produto)} className="delete-button">
-                                            <FontAwesomeIcon icon={faTrashAlt} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <tr>
-                                <td colSpan={4} className="no-products">Nenhum produto encontrado</td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
-
-                <div className="pagination-controls">
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="pagination-button"
-                    >
-                        Anterior
-                    </button>
-                    {totalPages > 0 ? `Página ${currentPage} de ${totalPages}` : ''}
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage >= totalPages}
-                        className="pagination-button"
-                    >
-                        Próxima
-                    </button>
-                </div>
-            </div>
-
-            {expandedProductId !== null && (
-                <div className={`product-details-container ${closing ? 'closing' : ''}`} style={{ animation: closing ? 'fadeOutZoom 0.4s ease forwards' : 'fadeInZoom 0.4s ease forwards' }}>
-                    {products
-                        .filter((product) => product.id_produto === expandedProductId)
-                        .map((product) => (
-                            <div key={product.id_produto} className="product-details">
-                                <p className='titulo'>Detalhes</p>
-                                <p><strong>Categoria:</strong> {product.categoria?.nome_categoria || 'Sem categoria'}</p>
-                                <p><strong>Setor:</strong> {product.setor?.nome_setor || 'Sem setor'}</p>
-                                <p><strong>Altura:</strong> {product.altura_produto} cm</p>
-                                <p><strong>Comprimento:</strong> {product.comprimento_produto} cm</p>
-                                <p><strong>Largura:</strong> {product.largura_produto} cm</p>
-                                <p><strong>Descrição:</strong> {product.descricao_produto}</p>
-                                <p><strong>Localização:</strong> {product.localizacao_estoque}</p>
-                                <p><strong>Marca:</strong> {product.marca_produto}</p>
-                                <p><strong>Modelo:</strong> {product.modelo_produto}</p>
-                                <p><strong>Peso:</strong> {product.peso_produto} {product.unidade_medida}</p>
-                                <p><strong>Preço Venda:</strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}</p>
-                                <p><strong>Estoque Disponível:</strong> {product.total_estoque}</p>
-                                <button>Ver Fornecedores</button>
+            <ul className="list-items">
+                {products.length > 0 ? (
+                    products.map((product) => (
+                        <li key={product.id_produto} className="list-item">
+                            <div className="item-summary">
+                                <span className="item-name" onClick={() => toggleExpand(product.id_produto)}>
+                                    {product.nome_produto}
+                                </span>
+                                <div className="item-actions">
+                                    <button onClick={() => onEdit(product)} className="edit-button">
+                                        <FontAwesomeIcon icon={faPencilAlt} />
+                                    </button>
+                                    <button onClick={() => onDelete(product.id_produto)} className="delete-button">
+                                        <FontAwesomeIcon icon={faTrashAlt} />
+                                    </button>
+                                </div>
                             </div>
-                        ))}
-                </div>
-            )}
+                            {expandedProductId === product.id_produto && (
+                                <div className="product-details">
+                                    <p><strong>Category:</strong> {product.categoria?.nome_categoria || 'Sem categoria'}</p>
+                                    <p><strong>Sector:</strong> {product.setor?.nome_setor || 'Sem setor'}</p>
+                                    <p><strong>Altura:</strong> {product.altura_produto} cm</p>
+                                    <p><strong>Comprimento:</strong> {product.comprimento_produto} cm</p>
+                                    <p><strong>Largura:</strong> {product.largura_produto} cm</p>
+                                    <p><strong>Descrição:</strong> {product.descricao_produto}</p>
+                                    <p><strong>Localização:</strong> {product.localizacao_estoque}</p>
+                                    <p><strong>Marca:</strong> {product.marca_produto}</p>
+                                    <p><strong>Modelo:</strong> {product.modelo_produto}</p>
+                                    <p><strong>Peso:</strong> {product.peso_produto}{product.unidade_medida}</p>
+                                    <p><strong>Preço Venda:</strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}</p>
+                                    <p><strong>Available Stock:</strong> {product.total_estoque}</p>
+                                    <button>Ver Fornecedores</button>
+                                </div>
+                            )}
+                        </li>
+                    ))
+                ) : (
+                    <li className="no-products">Nenhum produto encontrado</li>
+                )}
+            </ul>
+
+            <div className="pagination-controls">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="pagination-button"
+                >
+                    Anterior
+                </button>
+                {totalPages > 0 ? `Página ${currentPage} de ${totalPages}` : ''}
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage >= totalPages}
+                    className="pagination-button"
+                >
+                    Próxima
+                </button>
+            </div>
         </div>
     );
-};
+});
+
 
 export default ProductList;

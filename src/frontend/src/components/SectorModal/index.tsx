@@ -63,7 +63,7 @@ const SectorModal: React.FC<SectorModalProps> = ({ setIsSectorModalOpen, refetch
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white rounded-lg shadow-lg w-11/12 max-w-4xl p-6 relative">
                 {/* Botão de fechar modal (X) no canto superior direito do modal */}
-                <button className="close-button-sector" onClick={closeModal}>
+                <button className="close-button" onClick={closeModal}>
                     <i className="fa fa-times" />
                 </button>
 

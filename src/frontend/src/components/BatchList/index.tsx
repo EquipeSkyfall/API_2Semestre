@@ -46,7 +46,7 @@ const BatchesList: React.FC = () => {
 
     return (
         <div className="bg-white w-1/2 h-[45rem] mt-10 rounded-lg shadow-lg text-center flex flex-col">
-            <div className="flex-grow overflow-y-hidden p-4">
+            <div className="flex-grow overflow-y-auto p-4">
                 <h2 className="text-cyan-600 font-['Afacad_Flux']">Entradas</h2>
 
                 <div className="flex justify-center -mt-2">
