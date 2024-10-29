@@ -11,6 +11,7 @@ const deleteProductFromSupplier = async ({
 }) => {
   await axios.delete(`http://127.0.0.1:3000/suppliers/${supplierId}/products`, {
     data: { id_produto },
+    withCredentials: true
   });
 };
 

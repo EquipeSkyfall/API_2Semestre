@@ -20,10 +20,12 @@ interface Product {
 
 // Hook para atualizar o produto
 const useUpdateProduct = () => {
+    console.log('lili')
     return useMutation<Product, Error, Product>({
         mutationFn: async (product: Product) => {
-            // Alterando o endpoint para refletir o campo id_produto
-            const { data } = await axios.patch<Product>(`http://127.0.0.1:3000/products/${product.id_produto}`, product);
+            console.log('lal')
+            const { data } = await axios.patch<Product>(`http://127.0.0.1:3000/products/${product.id_produto}`, product,{withCredentials: true});
+            console.log(data)
             return data;
         },
     });

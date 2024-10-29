@@ -6,7 +6,7 @@ import { categoryController } from '../controllers/categoryControllers';
 import { sectorController } from '../controllers/sectorControllers';
 import { batchController } from '../controllers/batchControllers';
 import { shipmentController } from '../controllers/shippingControllers';
-
+import {auth, restrictedTo} from '../controllers/authControllers'
 const router = express.Router();
 
 
@@ -16,8 +16,12 @@ const router = express.Router();
 // User routes
 router
   .route('/users')
-  .get(userControllers.getAllUsers)
+  .get(auth,userControllers.getAllUsers)
   .post(userControllers.createUser);
+
+router
+  .route('/users/login')
+  .post(userControllers.login)
 
 // router
 // .route('/check-email')
@@ -25,17 +29,17 @@ router
 
 router
   .route('/users/:id')
-  .get(userControllers.getUserById) // GET a user by ID
-  .patch(userControllers.updateUser)     // Update a user by ID
-  .delete(userControllers.deleteUser); // Delete a user by ID
+  .get(auth,userControllers.getUserById) // GET a user by ID
+  .patch(auth,userControllers.updateUser)     // Update a user by ID
+  .delete(auth,userControllers.deleteUser); // Delete a user by ID
 
 
 
 // Product routes
 router
   .route('/products')
-  .get(productController.getProducts) // Generate product list with/without search terms/filters
-  .post(productController.createProduct); //Adds new product to database
+  .get(auth,productController.getProducts) // Generate product list with/without search terms/filters
+  .post(auth,productController.createProduct); //Adds new product to database
 
 // Find Products with missing data
 router
@@ -45,93 +49,93 @@ router
 // Updating, deleting and selecting unique product
 router
   .route('/products/:id')
-  .get(productController.getProductById) // Pulls product info by ID
-  .patch(productController.updateProduct) // Updates product by ID
-  .delete(productController.deleteProduct) // Deletes product by ID
+  .get(auth,productController.getProductById) // Pulls product info by ID
+  .patch(auth,productController.updateProduct) // Updates product by ID
+  .delete(auth,restrictedTo('Gerente'),productController.deleteProduct) // Deletes product by ID
 
 // Editing product/supplier relationships for unique product
 router
   .route('/products/:id/suppliers')
-  .post(productController.addSupplierToProduct) // Adds supplier for product by ID
-  .delete(productController.removeSupplierFromProduct) // Removes supplier from product by ID
+  .post(auth,productController.addSupplierToProduct) // Adds supplier for product by ID
+  .delete(auth,productController.removeSupplierFromProduct) // Removes supplier from product by ID
 
 router
   .route('/products/:id/batches')
-  .get(productController.getProductBatches)
+  .get(auth,productController.getProductBatches)
 
 
 // Supplier routes
 router
   .route('/suppliers')
-  .get(supplierController.getSuppliers)
-  .post(supplierController.createSupplier)
+  .get(auth,supplierController.getSuppliers)
+  .post(auth,supplierController.createSupplier)
 
 router
   .route('/suppliers/:id')
-  .get(supplierController.getSupplierById)
-  .patch(supplierController.updateSupplier)
-  .delete(supplierController.deleteSupplier)
+  .get(auth,supplierController.getSupplierById)
+  .patch(auth,supplierController.updateSupplier)
+  .delete(auth,supplierController.deleteSupplier)
 
 router
   .route('/suppliers/:id/products')
-  .get(supplierController.getProductsFromSupplier)
-  .post(supplierController.addProductsToSupplier)
-  .delete(supplierController.removeProductFromSupplier)
+  .get(auth,supplierController.getProductsFromSupplier)
+  .post(auth,supplierController.addProductsToSupplier)
+  .delete(auth,supplierController.removeProductFromSupplier)
 
 
 
 // Category routes
 router
   .route('/categories')
-  .get(categoryController.getCategories)
-  .post(categoryController.createCategory)
+  .get(auth,categoryController.getCategories)
+  .post(auth,categoryController.createCategory)
 
 router
   .route('/categories/:id')
-  .get(categoryController.getCategoryById)
-  .patch(categoryController.updateCategory)
-  .delete(categoryController.deleteCategory)
+  .get(auth,categoryController.getCategoryById)
+  .patch(auth,categoryController.updateCategory)
+  .delete(auth,categoryController.deleteCategory)
 
 
 
 // Sector routes
 router
   .route('/sectors')
-  .get(sectorController.getSectors)
-  .post(sectorController.createSector)
+  .get(auth,sectorController.getSectors)
+  .post(auth,sectorController.createSector)
 
 router
   .route('/sectors/:id')
-  .get(sectorController.getSectorById)
-  .patch(sectorController.updateSector)
-  .delete(sectorController.deleteSector)
+  .get(auth,sectorController.getSectorById)
+  .patch(auth,sectorController.updateSector)
+  .delete(auth,sectorController.deleteSector)
 
 
 
 // Batch routes
 router
   .route('/batches')
-  .get(batchController.getBatches)
-  .post(batchController.createBatch)
+  .get(auth,batchController.getBatches)
+  .post(auth,batchController.createBatch)
 
 router
   .route('/batches/:id')
-  .get(batchController.getBatchById)
-  .patch(batchController.updateBatch)
-  .delete(batchController.deleteBatch)
+  .get(auth,batchController.getBatchById)
+  .patch(auth,batchController.updateBatch)
+  .delete(auth,batchController.deleteBatch)
 
 
 
 // Shipment routes
 router
   .route('/shipments')
-  .get(shipmentController.getShipments)
-  .post(shipmentController.createShipment)
+  .get(auth,shipmentController.getShipments)
+  .post(auth,shipmentController.createShipment)
 
 router
   .route('/shipments/:id')
-  .get(shipmentController.getShipmentById)
-  .patch(shipmentController.updateShipment)
-  .delete(shipmentController.deleteShipment)
+  .get(auth,shipmentController.getShipmentById)
+  .patch(auth,shipmentController.updateShipment)
+  .delete(auth,shipmentController.deleteShipment)
 
 export default router

@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 type createBatchSchema = z.infer<typeof batchSchema>;
 
 const postBatchData = async (data: createBatchSchema): Promise<createBatchSchema> => {
-    const response = await axios.post('http://127.0.0.1:3000/batches', data);
+    const response = await axios.post('http://127.0.0.1:3000/batches', data,{withCredentials: true});
     return response.data;
 };
 

@@ -9,14 +9,14 @@ const useDeleteCategory = () => {
     return useMutation<void, Error, CategoryId>({
         mutationFn: async (id: CategoryId) => {
             console.log(id)
-            await axios.delete(`http://127.0.0.1:3000/categories/${id}`)
+            await axios.delete(`http://127.0.0.1:3000/categories/${id}`,{withCredentials: true})
         },
         onSuccess: () => {
             // Invalidate and refetch categories after a successful deletion
-            queryClient.invalidateQueries(['CategoriesData']);
+            queryClient.invalidateQueries({queryKey:['CategoriesData']});
         },
         onError: (error) => {
-            console.error('Error deleting category')
+            console.error(error)
         }
     })
 };

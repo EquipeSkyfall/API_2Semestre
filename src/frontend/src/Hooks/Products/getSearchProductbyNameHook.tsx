@@ -1,7 +1,8 @@
 // Hooks/Products/useSearchProducts.ts
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-
+import { redirect } from 'react-router-dom';
+import { useNavigate, useLocation } from "react-router-dom";
 interface ProductSchema {
     id: number;
     product_name: string;
@@ -40,13 +41,39 @@ interface QueryParams {
 }
 
 const useSearchProducts = (params: QueryParams) => {
+    const navigate = useNavigate();
+    const location = useLocation();
     const { data = { products: [], totalPages: 1, totalProducts: 0 }, isLoading, isError, refetch } = useQuery<ProductsResponse>({
         queryKey: ['products', params],
         queryFn: async () => {
-            const response = await axios.get(`http://127.0.0.1:3000/products`, {params});
-            console.log(response.data.products)
+            
+            try {
+                const response = await axios.get(`http://127.0.0.1:3000/products`, { params, withCredentials: true });
+                return response.data || { products: [], totalPages: 1, totalProducts: 0 };
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    // This is an Axios error
+                    const errorResponse = error.response;
 
-            return response.data || { products: [], totalPages: 1, totalProducts: 0 };
+                    // Log the status and any messages
+                    console.error('Error status:', errorResponse?.status);
+                    // console.error('Error message:', errorResponse?.data?.message || 'No message available');
+
+                    // You can handle specific status codes here
+                    if (errorResponse?.status === 401) {
+                        console.log('Unauthorized access - redirecting or handling as necessary');
+                        sessionStorage.clear()
+                        navigate('/', { state: { from: location }, replace: true });
+                         
+                    }
+
+                    // Optionally throw the error to make it accessible in the component
+                    // throw new Error(errorResponse?.data?.message || 'An error occurred');
+                } else {
+                    console.error('An unknown error occurred:', error);
+                    // throw new Error('An unknown error occurred');
+                }
+            }
         },
         retry: false,
     });

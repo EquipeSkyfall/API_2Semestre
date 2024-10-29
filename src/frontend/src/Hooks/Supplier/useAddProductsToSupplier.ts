@@ -12,7 +12,7 @@ const addProductsToSupplier = async (
   products: ProductToAdd[]
 ) => {
     console.log(products)
-    await axios.post(`http://127.0.0.1:3000/suppliers/${supplierId}/products`, {products});
+    await axios.post(`http://127.0.0.1:3000/suppliers/${supplierId}/products`, {products},{withCredentials: true});
 };
 
 const useAddProductsToSupplier = () => {

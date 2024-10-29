@@ -7,12 +7,12 @@ const useUpdateCategory = () => {
 
     return useMutation<Category, Error, Category>({
         mutationFn: async (category: Category) => {
-            const{ data } = await axios.patch<Category>(`http://127.0.0.1:3000/categories/${category.id_categoria}`, category)
+            const{ data } = await axios.patch<Category>(`http://127.0.0.1:3000/categories/${category.id_categoria}`, category,{withCredentials: true})
             return { data }
         },
         onSuccess: () => {
             // Invalidate and refetch categories after a successful deletion
-            queryClient.invalidateQueries(['CategoriesData']);
+            queryClient.invalidateQueries({queryKey:['CategoriesData']});
         },
         onError: (error) => {
             console.error('Error patching category')

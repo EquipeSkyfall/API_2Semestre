@@ -7,7 +7,7 @@ import { FornecedorFormValues } from '../../components/SupplierForm/supplierSche
 
 const postSupplierData = async (data: FornecedorFormValues) => {
     console.log(data)
-    const response = await axios.post('http://127.0.0.1:3000/suppliers', data);
+    const response = await axios.post('http://127.0.0.1:3000/suppliers', data,{withCredentials: true});
     return response.data;
   }
 

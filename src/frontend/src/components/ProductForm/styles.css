@@ -1,174 +1,162 @@
-/* body, html {
-    overflow: hidden;
-    height: 100%;
-    margin: 0;
-} */
-
-.product-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 20px;
-    max-width: 1400px; /* Aumentando o limite da largura */
-    margin: 0 auto;
-    padding: 20px;
-    height: auto; /* Removendo a altura fixa */
+.product-form .manage-categoria-button,
+.product-form .manage-setor-button,
+.product-form .manage-fornecedor-button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    transition: background-color 0.5s ease;
+    margin: 5px 0; /* Ajuste a margem para 5px para trazer os botões para cima */
 }
 
-.product-form-container {
-    flex: 2; /* Aumentando a proporção da largura do formulário */
-    max-width: 700px; /* Aumentando a largura máxima */
-    height: auto; /* Diminuindo a altura do formulário */
-    padding: 15px;
-    border-radius: 8px;
-    background-color: rgba(248, 250, 252);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* Espaçamento entre os elementos */
+.product-form .manage-categoria-button:hover,
+.product-form .manage-setor-button:hover,
+.product-form .manage-fornecedor-button:hover {
+    background-color: #022dbe; /* Cor ao passar o mouse */
 }
 
-.product-list-container {
-    flex: 1; /* Lista de produtos ainda menor */
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-height: 600px; /* Limitando a altura da lista */
-    overflow-y: auto;
+.button-container {
+    display: flex; /* Alinha os botões em linha */
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-top: 10px; /* Espaço acima dos botões */
 }
 
-/* Ajustando o formulário */
 .product-form {
-    background-color: rgba(248, 250, 252); 
-    padding: 10px; /* Padding ajustado */
-    border-radius: 8px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Espaço ajustado */
-    max-width: 700px; /* Largura aumentada */
-    height: auto; /* Reduzindo a altura */
+    padding: 20px;
+
+    background-color: #f9f9f9; /* Fundo mais claro */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333; /* Cor do título */
 }
 
 .form-fields-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Três campos por linha */
-    gap: 12px; /* Espaçamento entre os campos */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-fields-grid-segundo {
+    display: flex; /* Define o contêiner como flex */
+    gap: 15px; /* Espaço entre os itens */
+    margin-bottom: 20px; /* Espaço abaixo do grid */
+    width: 100%; /* Para garantir que ocupe toda a largura disponível */
+}
+
+.form-field-segundo {
+    flex: 1 1 100px; /* Faz com que cada campo ocupe pelo menos 300px de largura, podendo crescer ou encolher */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
 }
 
 .form-field {
     display: flex;
     flex-direction: column;
-    gap: 4px; /* Espaço entre o label e o input */
 }
 
-.form-field input {
-    padding: 8px; /* Tamanho confortável para inputs */
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    font-size: 1rem;
-    box-sizing: border-box; /* Garante que o padding e a largura do input sejam levados em consideração */
-    height: 40px; /* Define uma altura fixa para os campos de input */
-    width: 100%; /* Faz com que o campo ocupe 100% da largura disponível */
-    overflow: hidden; /* Impede que o texto vaze do campo */
-    word-wrap: break-word; /* Garante que o texto dentro do input quebre corretamente */
-    resize: none; /* Impede redimensionar o campo */
+.form-field .descricao_produto {
+    grid-column: 1 / -1; /* Faz o textarea ocupar toda a largura disponível */
 }
 
+.required label {
+    color: #e74c3c; /* Cor para campos obrigatórios */
+}
+
+.optional label {
+    color: #7f8c8d; /* Cor para campos opcionais */
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #022dbe; /* Cor do foco */
+}
+
+.error-message {
+    color: #e74c3c; /* Cor das mensagens de erro */
+    font-size: 1em; /* Menor que o tamanho padrão */
+    position: absolute;
+    left: 54vh;
+    top: 2vh;
+}
 
 .submit-button {
-    margin-top: 20px;
-    background-color: #22d3ee;
+    width: 100%;
+    background-color: #007bff;
     color: white;
-    padding: 12px 24px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    margin-top: -1.6em; /* Ajuste este valor conforme necessário */
 }
 
 .submit-button:hover {
-    background-color: #38bdf8;
+    background-color: #022dbe; /* Cor do botão */
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.success-messages {
+    color: #2ecc71; /* Cor da mensagem de sucesso */
+    font-size: 0.9em; /* Menor que o tamanho padrão */
+    position: absolute;
+    left: 53vh;
+    top: 4vh;
 }
 
 .manage-button {
-    margin-top: 10px;
-    background-color: #22d3ee;
+    background-color: #022dbe; /* Cor do botão */
     color: white;
-    padding: 8px 16px;
     border: none;
     border-radius: 4px;
+    padding: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 .manage-button:hover {
-    background-color: #38bdf8;
+    background-color: #2980b9; /* Cor do botão ao passar o mouse */
 }
 
-/* Estilizando o contêiner do peso e da unidade de medida */
-.peso-container {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Espaço entre o campo de input e os botões de unidade */
-}
-
-/* Botões de unidade de medida */
-.unit-toggle {
-    display: flex;
-    gap: 5px; /* Espaçamento entre os botões */
-}
-
-.unit-button {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background-color: #f0f0f0; /* Cor de fundo leve */
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.unit-button.active {
-    background-color: #007bff; /* Cor azul quando ativo */
-    color: white;
-}
-
-.unit-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
+.descricao_produto_lista {
+    grid-column: span 2; /* Ocupa duas colunas se estiver em um grid */
+    width: 100%; /* Garante que ocupe toda a largura disponível */
+    padding: 14px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+    color: #000;
+    max-height: 150px; 
+    min-height: 150px;
 }
 
 .peso-container {
     display: flex;
-    align-items: center;
+    align-items: center; /* Alinha verticalmente */
+    justify-content: space-between; /* Move o unit-select para a direita */
+    gap: 10px; /* Adiciona um espaçamento entre o input e o select */
 }
 
 .unit-select {
-    margin-left: 10px;
-    padding: 5px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    width: 80px; /* Define uma largura adequada para o select */
+    margin-left: auto; /* Empurra o select para a direita */
 }
 
-.unit-select:focus {
-    outline: none;
-    border-color: #22c55e; /* Cor verde de foco */
-    box-shadow: 0 0 5px rgba(34, 197, 94, 0.5);
-}
-
-.unit-select:hover {
-    border-color: #22c55e;
-}
-
-/* No styles.css */
-.custom-select {
-    font-size: 0.75rem; /* Ajuste para diminuir ainda mais o tamanho da fonte */
-}
-
-.custom-select option {
-    font-size: 0.8rem; /* Aplicando o mesmo ajuste para as opções */
-}
