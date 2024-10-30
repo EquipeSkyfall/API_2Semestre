@@ -8,8 +8,7 @@ const Historico = () => {
   };
 
   return (
-    
-    <div className='flex justify-center items-center h-screen -mt-20 space-x-4 p-4'>
+    <div className='flex justify-center items-center -mt-10 space-x-4 p-4'>
       <BatchesList />
       <ShipmentsList />
     </div>

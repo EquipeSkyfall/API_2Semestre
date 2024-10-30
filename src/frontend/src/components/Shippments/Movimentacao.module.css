@@ -1,7 +1,4 @@
 /* Movimentacao.module.css*/
-body{
-    overflow: hidden;
-}
 .formContainer {
     display: flex;
     justify-content: space-between;
