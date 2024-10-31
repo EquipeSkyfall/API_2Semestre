@@ -1,13 +1,18 @@
-.Supplier-Products {
+/* .Supplier-Products {
     margin-top: 30px;
     padding: 20px;
     background-color: rgba(248, 250, 252);
     border-radius: 8px;
+}*/
+.Supplier-Products {
+    margin: 0px 10px 0px 0px  ;
+    padding: 2% 2% 0 2%;
+    background-color: rgba(248, 250, 252);
 }
 
-.Supplier-Products h2{
+/*.Supplier-Products h2{
     margin-bottom: 7%;
-}
+}*/
 
 .button-show-products,
 .button-add-products,
@@ -24,7 +29,7 @@
     text-align: center;
     color: red;
     font-weight: bold;
-    margin: 15px 0px 15px 0px;
+    /* margin: 15px 0px 15px 0px; */
 }
 
 .checkbox {
@@ -93,7 +98,7 @@
     margin-top: 10px;
     font-size: 14px;
 }
-*/
+
 
 .button-remove-products {
     background-color: #dc3545; 
@@ -109,6 +114,7 @@
 .button-remove-products:hover {
     background-color: #c82333;
 }
+*/
 
 .button-add-products:disabled {
     background-color: #d6d6d6;
@@ -120,6 +126,7 @@
     margin-bottom: 2%;
 }
 
+/*
 .dimension_conf label{
     display: flex;
     flex-direction: column;
@@ -127,5 +134,36 @@
 
 .dimension_conf h2{
     margin-top: 5%;
+}*/
+
+.button-remove-products {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 10px;
 }
 
+.button-remove-products:hover {
+    background-color: #c82333;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 10px;
+}
+
+.row {
+    display: contents;
+}
+
+.row span:last-child{
+    border-right: none;
+}
