@@ -17,10 +17,10 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
     const { data, isLoading, isError } = useSuppliers({search, page: paginaAtual, limit: 10});
     const [fornecedorSelecionado, setFornecedorSelecionado] = useState<{ id: number | null; name: string | null } | null>(null);
 
-    const [listaExpandida, setListaExpandida] = useState(false); // Para controlar a visibilidade da lista
+    const [listaExpandida, setListaExpandida] = useState(true); // Inicializar como true para exibir a lista por padrão
 
     useEffect(() => {
-        handleFornecedorSelect(null,null)
+        handleFornecedorSelect(null, null)
     }, [resetKey])
 
     const handleFornecedorSelect = (supplierId: number | null, supplierName: string | null) => {
@@ -29,7 +29,6 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
         }
         setValue('id_fornecedor', supplierId);
         setFornecedorSelecionado({ id: supplierId, name: supplierName });
-        toggleList();
 
         if (onChange) {
             onChange(supplierId);
@@ -41,10 +40,6 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
     const handleProximaPagina = () => setPagina((prev) => prev + 1);
     const handlePaginaAnterior = () => setPagina((prev) => Math.max(prev - 1, 1));
 
-    const toggleList = () => {
-        setListaExpandida(!listaExpandida);
-    }
-
     const handleSearchTermChange = useCallback((search: string) => {
             setSearch(search);
             setPagina(1);
@@ -55,18 +50,20 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
         <div className="campo-formulario required">
             <h2 className="text_conf">Fornecedor</h2>
 
+            {/* Input para selecionar fornecedor 
             <input
                 id="nome_fornecedor"
                 type="text"
                 value={fornecedorSelecionado?.name || ''} 
-                placeholder="Selecione um fornecedor"
-                readOnly 
-                onClick={toggleList}
+                placeholder="Selecione um fornecedor" 
+                onClick={() => {}} // Remover toggleList aqui
                 className="text_conf"
+                readOnly
             />
+            
             {errors.id_fornecedor && <span className="error-message">{errors.id_fornecedor.message}</span>}
             
-            {/* Lista de fornecedores, colapsável */}
+            {/* Lista de fornecedores, sempre visível */}
             {listaExpandida && (
                 <div className="lista-fornecedores">
                     <SupplierSearchBar onSearchTermChange={handleSearchTermChange} resetKey={resetKey} />

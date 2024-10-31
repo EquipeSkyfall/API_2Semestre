@@ -1,23 +1,16 @@
-.lista-fornecedores {
-    border: 1px solid #ccc;
-    border-radius: 1%; 
-    margin-top: 2%;
-    padding: 2%; 
-    background-color: white; 
-    max-height: 50%; 
-    overflow-y: auto; 
-}
-
 .campo-formulario {
-    margin-top: 2%;
+    margin: 0px 0px 0px 10px  ;
     padding: 2%;
     background-color: rgba(248, 250, 252);
-    box-shadow: 0 2% 4% rgba(0, 0, 0, 0.2);   /*box shadow*/
-    border-radius: 2%;
+}
+
+.lista-fornecedores {
+    padding: 2%;
+    background-color: rgba(248, 250, 252);  
 }
 
 .lista-fornecedores li {
-    background-color: #22d3ee;      /*lista de suppliers*/
+    background-color: #22d3ee;
     color: white;
 }
 
@@ -25,7 +18,7 @@
     background-color: #38bdf8;
 }
 
-/* Placeholder para 'Selecione um fornecedor' */
+/* Placeholder para 'Selecione um fornecedor'
 #nome_fornecedor {
     cursor: pointer;
     margin-top: 2%;
@@ -44,7 +37,7 @@
 #nome_fornecedor::placeholder {
     color: white;
     opacity: 1;
-}
+} */
 
 /* Estilos da paginação */
 .pagination {
@@ -76,6 +69,7 @@
     background-color: #38bdf8;
 }
 
+/*
 .text_conf{
     margin-top: 2%;
     color: black;
@@ -85,3 +79,4 @@
 .text_conf input{
     color: white;
 }
+*/

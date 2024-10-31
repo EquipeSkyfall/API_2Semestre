@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useCreateShipment from '../../../Hooks/Shippments/useCreateShipment ';
 import './styles.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface ProductInputValue {
   id_produto: number;
@@ -145,7 +147,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
       onSubmit={handleSubmit(onSubmit, onError)}
       className='shipping-form'
     >
-      <h2 className='color_conf'>Saída de Produtos</h2>
+      {/* <h2 className='color_conf'>Saída de Produtos</h2> */}
 
       {successMessage && <p className="success-message">{successMessage}</p>}
       {serverError && <p className="error-message">{serverError}</p>}
@@ -159,8 +161,16 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
         <option value="Venda">Venda</option>
       </select>
 
-      <ShipmentProducts onProductsSelected={handleProductsSelected} removedProductId={removedProductId} resetKey={resetKey} />
+      <div
+      
+      className="formContainer"   
 
+      >
+      <div className="insertProducts">
+      <ShipmentProducts onProductsSelected={handleProductsSelected} removedProductId={removedProductId} resetKey={resetKey} />
+      </div>
+
+      <div className="dropProducts" >
       <h2 className='align_conf'>Produtos selecionados:</h2>
       {shipmentProducts.length === 0 ? (
         <p>Nenhum produto selecionado.</p>
@@ -261,15 +271,21 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     )}
                   </ul>
                 )}
-                <button style={{ marginTop: '15px', backgroundColor: '#dc3545' }} onMouseOver={e => e.currentTarget.style.backgroundColor = '#c82333'}
-                  onMouseOut={e => e.currentTarget.style.backgroundColor = '#dc3545'} type="button" onClick={() => handleRemoveProduct(product.id_produto)}>
-                  Remover
+
+                <button
+                  onClick={() => handleRemoveProduct(product)}
+                  className="button-remove-products"
+                >
+                <FontAwesomeIcon icon={faTrash} />
                 </button>
+                
               </li>
             );
           })}
         </ul>
       )}
+      </div>
+      </div>
 
       <button style={{ marginTop: '20px' }} type="submit">Enviar Remessas</button>
     </form>
