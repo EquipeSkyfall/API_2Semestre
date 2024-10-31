@@ -75,19 +75,31 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                 {successMessage && <p className="success-message">{successMessage}</p>}
                 {serverError && <p className="error-message">{serverError}</p>}
 
-                <h2 className="color_conf">Entrada de Produtos</h2>
+                {/*  <h2 className="color_conf">Entrada de Produtos</h2> */}
 
-                    <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
+                <div className="formContainer" >
+                    <div className="insertProducts" >   
+                        <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
+                    </div>    
 
-                    <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>
-                
-                <button
-                    type="submit"
-                    className="submit-button"
-                    disabled={isSubmitting}
-                >
-                    {isSubmitting ? 'Carregando...' : 'Cadastrar'}
-                </button>
+                    <div className="dropProducts">
+                        <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>
+                            
+                        <div style={{
+                            marginLeft: "15px"                                
+                        }}>
+                            
+                            <button
+                            type="submit"
+                            className="submit-button"
+                            disabled={isSubmitting}
+                            >
+
+                            {isSubmitting ? 'Carregando...' : 'Cadastrar'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </form>
         </FormProvider>
     )

@@ -1,10 +1,11 @@
 .batch-form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 45px;
+    padding: 20px 45px 0px 45px;
     border-radius: 8px;
     background-color: rgba(248, 250, 252);
 }
 
+/*
 input.form-field {
     display: block;
     width: 100%;
@@ -12,7 +13,7 @@ input.form-field {
     border-radius: 6px;
     padding: 8px;
     margin-top: 4px;  
-}
+}*/
 
 .success-message {
     color: green;
@@ -27,3 +28,14 @@ input.form-field {
     color: #22d3ee;
 }
 
+.formContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.insertProducts,
+.dropProducts {
+    flex: 1;
+    min-width: 300px;
+}
