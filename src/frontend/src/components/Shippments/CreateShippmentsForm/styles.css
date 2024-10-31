@@ -1,8 +1,10 @@
 .shipping-form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 35px;
+    /*padding: 35px;*/
+    padding: 20px 45px 0px 45px;
     border-radius: 8px;
     background-color: rgba(248, 250, 252);
+    /*background-color: green;*/
 }
 
 
@@ -58,7 +60,7 @@
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-} */
+} 
 
 .color_conf{
     color: #22d3ee;
@@ -72,7 +74,7 @@
 
 .dimension_conf{
     margin-bottom: 2%;
-}
+}*/
 
 .Batch-Products {
     margin: 20px 0;

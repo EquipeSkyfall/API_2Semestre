@@ -72,7 +72,7 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className="batch-form"
             >
-                {successMessage && <p className="success-message">{successMessage}</p>}
+                {/* {successMessage && <p className="success-message">{successMessage}</p>} */}
                 {serverError && <p className="error-message">{serverError}</p>}
 
                 {/*  <h2 className="color_conf">Entrada de Produtos</h2> */}
@@ -97,6 +97,7 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
 
                             {isSubmitting ? 'Carregando...' : 'Cadastrar'}
                             </button>
+                            {successMessage && <p className="success-message">{successMessage}</p>}
                         </div>
                     </div>
                 </div>
