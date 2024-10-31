@@ -34,8 +34,8 @@ function UserForm() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen w-screen ">
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4 sm:gap-y-2 border-2 bg-slate-50 shadow-md p-5 sm:p-11 mt-48 sm:mt-0 place-items-center rounded">
+        <div className="flex items-center justify-center sm:h-screen w-screen ">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4 sm:gap-y-2 border-2 bg-slate-50 shadow-md p-5 sm:p-11 place-items-center rounded">
                 {successMessage && <p className="text-green-500 font-bold">{successMessage}</p>}
                 {serverError && <p className="text-red-500">{serverError}</p>}
                 <input
