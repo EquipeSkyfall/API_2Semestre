@@ -72,12 +72,14 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className="batch-form"
             >
-                {/* {successMessage && <p className="success-message">{successMessage}</p>} */}
+                {/* {successMessage && <p className="success-message">{successMessage}</p>} Removi dessa parte e coloquei no final da pagina */}
                 {serverError && <p className="error-message">{serverError}</p>}
 
                 {/*  <h2 className="color_conf">Entrada de Produtos</h2> */}
 
-                <div className="formContainer" >
+                <div className="formContainer" 
+                style={{paddingBottom: '20px' }}
+                >
                     <div className="insertProducts" >   
                         <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
                     </div>    

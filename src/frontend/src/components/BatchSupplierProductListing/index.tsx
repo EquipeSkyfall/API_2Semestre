@@ -183,7 +183,9 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                 <h2>Produtos no lote: {errors.produtos && <span className="error-message">{errors.produtos.message}</span>}</h2>
                 {addedProducts.length > 0 && (
 
-                    <ul className="container">
+                    <ul className="container"
+                    style={{ border: '1px solid #ccc', padding: '20px' }}
+                    >
 
                         <li className="row"> 
                             <span>Produto</span>
@@ -198,12 +200,12 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                 <li className="row" key={product.id_produto}     
                                 >
                                     
-                                        <strong className="col" >
+                                        <strong>
                                             {originalProduct?.produto.nome_produto || "Produto Desconhecido"}
                                         </strong>
                                 
                                         
-                                            <input className=" col1"
+                                            <input
                                                 type="date"
                                                 id={`validade_${product.id_produto}`}
                                                 value={
