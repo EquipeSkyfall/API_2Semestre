@@ -77,12 +77,12 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
 
                 {/*  <h2 className="color_conf">Entrada de Produtos</h2> */}
 
-                <div className="formContainer">
-                    <div className="insertProducts" >   
+                <div className="formContainer flex flex-col text-xs md:text-base xl:flex-row justify-between gap-5">
+                    <div className="insertProducts flex-1 min-w-[300px]">   
                         <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
                     </div>    
 
-                    <div className="dropProducts">
+                    <div className="dropProducts flex-1 min-w-[300px]">
                         <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>
                             
                         <div style={{
