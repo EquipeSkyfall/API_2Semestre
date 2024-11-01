@@ -139,7 +139,14 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                 <SearchBar onSearchTermChange={handleSearchTermChange} />
                             </div>
                             {availableProducts.map(product => (
-                                <div key={product.id_produto}>
+                                <div key={product.id_produto}
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px",
+                                    border: "1px dotted #ccc",
+                                }}
+                                >
                                     <input
                                         type="checkbox"
                                         className="checkbox"
@@ -147,7 +154,10 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                         onChange={() => toggleProductSelection(product)}
                                         disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
                                     />
-                                    {product.produto.nome_produto} - Preço Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
+                                    <span style={{ flexGrow: 1 }}>{product.produto.nome_produto}</span>
+                                    <span style={{ marginRight: "auto" }}>
+                                        Preço Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
+                                    </span>
                                 </div>
                             ))}
 
