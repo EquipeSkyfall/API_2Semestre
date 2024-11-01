@@ -12,3 +12,14 @@
 .align_conf{
     text-align: center;
 }
+
+.page {
+    display: flex;
+    justify-content: space-between;
+}
+
+.page button {
+    flex: 1;
+    max-width: 100px;
+}
+

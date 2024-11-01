@@ -51,7 +51,7 @@
     border: 0.2% solid white; 
     border-radius: 1%; 
     background-color: #22d3ee; 
-    cursor: pointer; 
+    cursor: pointer;
     color: white;
     transition: background-color 0.3s ease;
 }
@@ -59,7 +59,7 @@
 .pagination button:hover {
     background-color: #38bdf8;
 }
-
+/*
 .pagination button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
@@ -69,7 +69,7 @@
     background-color: #38bdf8;
 }
 
-/*
+
 .text_conf{
     margin-top: 2%;
     color: black;

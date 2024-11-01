@@ -112,7 +112,7 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
 
                 {/* Pagination controls */}
                 {totalPages > 1 && (
-                    <div>
+                    <div className="page" >
                         <button type="button" disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
                             Anterior
                         </button>
