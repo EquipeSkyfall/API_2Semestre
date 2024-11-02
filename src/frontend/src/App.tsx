@@ -12,9 +12,11 @@ import Fornecedor from "./Pages/Fornecedores";
 import Movimentacao from "./Pages/Movimentacao";
 import PrivateRoutes from "./components/PrivateRoute";
 import axios from 'axios';
+import AutoNotifier from "./components/AutoToast/AutoNotifier";
 
 axios.defaults.withCredentials = true;
 axios.defaults.credentials = "include";
+
 function App() {
   const queryClient = new QueryClient();
 
@@ -35,21 +37,22 @@ function App() {
             element={
               <>
                 <NavBar />
-                <Routes>
-                  <Route element={<PrivateRoutes/>}>
-                  <Route path="products" element={<ProductsPage />} />
-                  <Route path="teste" element={<Teste />} />
-                  <Route path="Movimentacao" element={<Movimentacao />} />
-                  <Route path="Report" element={<Report />} />
-                  <Route path="Historico" element={<Historico />} />
-                  <Route path="fornecedor" element={<Fornecedor />} />
-                  <Route path="*" element={<PageNotFound />} />
-                  </Route>
-                </Routes>
+                  <Routes>
+                    <Route element={<PrivateRoutes/>}>
+                    <Route path="products" element={<ProductsPage />} />
+                    <Route path="teste" element={<Teste />} />
+                    <Route path="Movimentacao" element={<Movimentacao />} />
+                    <Route path="Report" element={<Report />} />
+                    <Route path="Historico" element={<Historico />} />
+                    <Route path="fornecedor" element={<Fornecedor />} />
+                    <Route path="*" element={<PageNotFound />} />
+                    </Route>
+                  </Routes>
               </>
             }
           />
         </Routes>
+        <AutoNotifier />
       </BrowserRouter>
     </QueryClientProvider>
 

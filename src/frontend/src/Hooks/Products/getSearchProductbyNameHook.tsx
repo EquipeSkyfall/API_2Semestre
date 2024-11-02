@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { redirect } from 'react-router-dom';
 import { useNavigate, useLocation } from "react-router-dom";
-interface ProductSchema {
+export interface ProductSchema {
     id: number;
     product_name: string;
     description: string;

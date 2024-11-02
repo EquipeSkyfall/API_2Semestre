@@ -25,7 +25,7 @@ const useGetShipments = (search = '', page = 1, limit = 10) => {
   const navigate = useNavigate();
     const location = useLocation();
   return useQuery({
-    queryKey:['shipments', { search, page, limit }],
+    queryKey:['products', { search, page, limit }],
     queryFn: () =>
     fetchShipments(search, page, limit,navigate,location),
     retry: false

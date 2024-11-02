@@ -46,6 +46,14 @@ router
   .route('/products/missingdata') 
   .get(productController.getProductsWithMissingData) // Searches for products missing category/sector data
 
+router
+  .route('/products/expiring')
+  .get(auth,productController.getProductsWithExpiringBatches)
+
+router
+  .route('/products/stock')
+  .get(auth,productController.getProductsWithLowStock)
+
 // Updating, deleting and selecting unique product
 router
   .route('/products/:id')

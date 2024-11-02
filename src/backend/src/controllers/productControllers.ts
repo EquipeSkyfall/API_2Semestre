@@ -322,6 +322,94 @@ class ProductControllers {
     }
   };
 
+  public getProductsWithLowStock = async (request: Request, response: Response) => {
+    try{
+      const productsWithLowStock = await prisma.produto.findMany({
+        where: {
+          produto_deletedAt: null,
+          total_estoque: {
+            lt: 11
+          }
+        },
+        select: {
+          id_produto: true, // Select only the 'id' field
+        },
+      });
+
+      console.log('Talk to me LowStock: ',productsWithLowStock)
+
+      response.status(200).json(productsWithLowStock);
+    } catch (error) {
+      console.error("Error fetching products with low stock:", error);
+      response.status(500).json({ error: "Failed to fetch products with low stock" });
+    }
+  };
+
+  public getProductsWithExpiringBatches = async (request: Request, response: Response) => {
+    try {
+        // Get today's date and calculate the target date (10 days from now)
+        const today = new Date();
+        const targetDate = new Date();
+        targetDate.setDate(today.getDate() + 10);
+
+        const productsWithExpiringBatches = await prisma.produto.findMany({
+            where: {
+                produto_deletedAt: null,
+                lotes: {
+                    some: {
+                        validade_produto: {
+                            lte: targetDate,
+                            gte: today
+                        },
+                        quantidade: {
+                            not: {
+                                equals: 0,
+                            }
+                        }
+                    }
+                }
+            },
+            select: {
+                id_produto: true, // Select only the 'id' field
+            },
+        });
+
+        // Prepare an array to hold products that pass the quantity check
+        const validProducts = [];
+
+        // Iterate over each product and check the quantity
+        for (const product of productsWithExpiringBatches) {
+            const lotes = await prisma.loteProdutos.findMany({
+                where: {
+                    id_produto: product.id_produto,
+                },
+                include: {
+                    saidas: true,
+                },
+            });
+
+            // Calculate total quantity across all lotes minus total sales
+            let totalQuantity = 0;
+            lotes.forEach(lote => {
+                const totalSaidas = lote.saidas.reduce((sum, saida) => sum + saida.quantidade_retirada, 0);
+                totalQuantity += lote.quantidade - totalSaidas;
+            });
+
+            // Check if total quantity is greater than zero
+            if (totalQuantity > 0) {
+                validProducts.push(product);
+            }
+        }
+
+        console.log('Valid products with expiring batches: ', validProducts);
+
+        response.status(200).json(validProducts);
+    } catch (error) {
+        console.error("Error fetching products with expiring batches:", error);
+        response.status(500).json({ error: "Failed to fetch products with expiring batches" });
+    }
+  };
+
 }
 
 const productController = new ProductControllers();
