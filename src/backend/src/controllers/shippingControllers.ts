@@ -1,6 +1,7 @@
 import express, { Response, Request } from 'express';
 import prisma from '../dbConnector';
 import { request } from 'http';
+import { logControllers, RequestWithUser } from './logControllers';
 
 class ShipmentControllers {
     public getShipments = async (request: Request, response: Response) => {
@@ -64,7 +65,7 @@ class ShipmentControllers {
         }
     };
 
-    public createShipment = async (request: Request, response: Response) => {
+    public createShipment = async (request: RequestWithUser, response: Response) => {
         const { motivo_saida, produtos } = request.body;
 
         try {
@@ -101,6 +102,8 @@ class ShipmentControllers {
                 data: saidaProdutosData
             });
 
+            logControllers.logActions(request.user?.id, "Saida registrada.", { id_saida: shipment.id_saida })
+
             response.status(201).json({
                 message: 'Shipment registered successfully.',
                 shipment
@@ -111,7 +114,7 @@ class ShipmentControllers {
         }
     };
 
-    public updateShipment = async (request: Request, response: Response) => {
+    public updateShipment = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
 
         const { createdAt, updatedAT, motivo_saida, produtos } = request.body
@@ -139,6 +142,9 @@ class ShipmentControllers {
                     }
                 })
             }
+
+            logControllers.logActions(request.user?.id, "Saida editada.", { id_saida: Number(id) })
+
             response.status(200).json({
                 message: 'Shipment and products updated successfully.',
                 saida: updatedSaida
@@ -149,7 +155,7 @@ class ShipmentControllers {
         }
     };
 
-    public deleteShipment = async (request: Request, response: Response) => {
+    public deleteShipment = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
 
         try {
@@ -160,6 +166,9 @@ class ShipmentControllers {
             await prisma.saida.delete({
                 where: { id_saida: Number(id) }
             })
+
+            logControllers.logActions(request.user?.id, "Saida deletada.", { id_saida: Number(id) })
+
             response.status(200).json({ message: 'Shipment deleted successfully.' })
         } catch (error) {
             response.status(500).json({ message: 'Error deleting shipment:', error })

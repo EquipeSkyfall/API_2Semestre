@@ -1,5 +1,6 @@
 import express, { Response, Request } from 'express';
 import prisma from '../dbConnector';
+import { logControllers, RequestWithUser } from './logControllers';
 
 class CategoryControllers {
     public getCategories = async (request: Request, response: Response) => {
@@ -42,7 +43,7 @@ class CategoryControllers {
         }
     };
 
-    public createCategory = async (request: Request, response: Response) => {
+    public createCategory = async (request: RequestWithUser, response: Response) => {
         try {
             const { ...categoryData } = request.body
 
@@ -50,13 +51,15 @@ class CategoryControllers {
                 data: categoryData
             })
 
+            logControllers.logActions(request.user?.id, "Categoria criada.", { id_categoria: category.id_categoria })
+
             response.status(201).json(category)
         } catch (error) {
             response.status(500).json({ message: 'Error creating category:', error })
         }
     };
 
-    public updateCategory = async (request: Request, response: Response) => {
+    public updateCategory = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
 
         const { createdAt, updatedAT, ...dataToUpdate } = request.body
@@ -67,13 +70,16 @@ class CategoryControllers {
                     ...dataToUpdate
                 }
             })
+
+            logControllers.logActions(request.user?.id, "Categoria editada.", { id_categoria: Number(id) })
+
             response.status(200).json(updatedCategory)
         } catch (error) {
             response.status(500).json({ message: 'Error updating category:', error })
         }
     };
 
-    public deleteCategory = async (request: Request, response: Response) => {
+    public deleteCategory = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
 
         try {
@@ -85,6 +91,9 @@ class CategoryControllers {
             await prisma.categoria.delete({
                 where: { id_categoria: Number(id) }
             })
+
+            logControllers.logActions(request.user?.id, "Categoria deletada.", { id_categoria: Number(id) })
+
             response.status(200).json({ message: 'Category deleted successfully.' })
         } catch (error) {
             response.status(500).json({ message: 'Error deleting category:', error })

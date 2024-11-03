@@ -7,6 +7,7 @@ import { sectorController } from '../controllers/sectorControllers';
 import { batchController } from '../controllers/batchControllers';
 import { shipmentController } from '../controllers/shippingControllers';
 import {auth, restrictedTo} from '../controllers/authControllers'
+import { logControllers } from '../controllers/logControllers';
 const router = express.Router();
 
 
@@ -145,5 +146,9 @@ router
   .get(auth,shipmentController.getShipmentById)
   .patch(auth,shipmentController.updateShipment)
   .delete(auth,shipmentController.deleteShipment)
+
+router
+  .route('/logs')
+  .get(auth,logControllers.getLogs)
 
 export default router

@@ -1,5 +1,6 @@
 import express, { Response, Request } from 'express';
 import prisma  from '../dbConnector';
+import { logControllers, RequestWithUser } from './logControllers';
 
 class SupplierControllers {
 
@@ -48,7 +49,7 @@ class SupplierControllers {
         }
     };
 
-    public createSupplier = async (request: Request, response: Response) => {
+    public createSupplier = async (request: RequestWithUser, response: Response) => {
         try {
             console.log('Full Request Body:', request.body)
             const { ...supplierData } = request.body
@@ -58,13 +59,15 @@ class SupplierControllers {
                 data: supplierData
             })
 
+            logControllers.logActions(request.user?.id, "Fornecedor registrado.", { id_saida: supplier.id_fornecedor })
+
             response.status(201).json(supplier)
         } catch (error) {
             response.status(500).json({ message: 'Error creating supplier:', error })
         }
     };
 
-    public updateSupplier = async (request: Request, response: Response) => {
+    public updateSupplier = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
 
         const { createdAt, updatedAT, ...dataToUpdate } = request.body
@@ -75,6 +78,9 @@ class SupplierControllers {
                     ...dataToUpdate
                 }
             })
+
+            logControllers.logActions(request.user?.id, "Fornecedor editado.", { id_saida: Number(id) })
+
             response.status(200).json(updatedSupplier)
         } catch (error) {
             response.status(500).json({ message: 'Error updating supplier', error})
@@ -150,7 +156,7 @@ class SupplierControllers {
         }
     };
 
-    public deleteSupplier = async (request: Request, response: Response) => {
+    public deleteSupplier = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
 
         try {
@@ -160,10 +166,17 @@ class SupplierControllers {
             const hasRelationships = hasLoteRelationships > 0
 
             if (hasRelationships) {
+                await prisma.produtosFornecedor.deleteMany({
+                    where: { id_fornecedor: Number(id) }
+                })
                 await prisma.fornecedor.update({
                     where: { id_fornecedor: Number(id) },
                     data: { fornecedor_deletedAt: new Date() }
                 })
+
+                logControllers.logActions(request.user?.id, "Fornecedor deletado.", { id_saida: Number(id) })
+
+                return response.status(200).json({ message: 'Supplier soft-deleted successfully' })
             } else {
                 await prisma.produtosFornecedor.deleteMany({
                     where: { id_fornecedor: Number(id) }
@@ -171,6 +184,9 @@ class SupplierControllers {
                 await prisma.fornecedor.delete({
                     where: { id_fornecedor: Number(id) }
                 })
+
+                logControllers.logActions(request.user?.id, "Fornecedor deletado.", { id_saida: Number(id) })
+
                 return response.status(200).json({ message: 'Supplier deleted successfully' })
             }
         } catch (error) {

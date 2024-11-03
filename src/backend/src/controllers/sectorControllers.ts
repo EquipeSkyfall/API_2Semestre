@@ -1,6 +1,7 @@
 import express, { Response, Request } from 'express';
 import prisma from '../dbConnector';
 import { request } from 'http';
+import { logControllers, RequestWithUser } from './logControllers';
 
 class SectorControllers {
     public getSectors = async (request: Request, response: Response) => {
@@ -43,7 +44,7 @@ class SectorControllers {
         }
     };
 
-    public createSector = async (request: Request, response: Response) => {
+    public createSector = async (request: RequestWithUser, response: Response) => {
         try {
             const { ...sectorData } = request.body
 
@@ -51,13 +52,15 @@ class SectorControllers {
                 data: sectorData
             })
 
+            logControllers.logActions(request.user?.id, "Setor criado.", { id_setor: sector.id_setor })
+
             response.status(201).json(sector)
         } catch (error) {
             response.status(500).json({ message: 'Error registering sector:', error })
         }
     };
 
-    public updateSector = async (request: Request, response: Response) => {
+    public updateSector = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
         
         const { createdAt, updatedAT, ...dataToUpdate } = request.body
@@ -68,13 +71,16 @@ class SectorControllers {
                     ...dataToUpdate
                 }
             })
+
+            logControllers.logActions(request.user?.id, "Setor editado.", { id_setor: Number(id) })
+
             response.status(200).json(updatedSector)
         } catch (error) {
             response.status(500).json({ message: 'Error updating sector:', error })
         }
     };
 
-    public deleteSector = async (request: Request, response: Response) => {
+    public deleteSector = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
 
         try {
@@ -86,6 +92,9 @@ class SectorControllers {
             await prisma.setor.delete({
                 where: { id_setor: Number(id) }
             })
+
+            logControllers.logActions(request.user?.id, "Setor deletado.", { id_setor: Number(id) })
+
             response.status(200).json({ message: 'Sector deleted successfully.' })
         } catch (error) {
             response.status(500).json({ message: 'Error deleting sector:', error })

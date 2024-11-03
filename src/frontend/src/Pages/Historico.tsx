@@ -1,6 +1,7 @@
 import React from 'react';
 import ShipmentsList from '../components/Shippments/ListShippments/ShipmentsList';
 import BatchesList from '../components/BatchList';
+import LogList from '../components/LogListing';
 
 const Historico = () => {
   const style = {
@@ -11,6 +12,7 @@ const Historico = () => {
     <div className='flex justify-center items-center -mt-10 space-x-4 p-4'>
       <BatchesList />
       <ShipmentsList />
+      <LogList />
     </div>
   );
 };
