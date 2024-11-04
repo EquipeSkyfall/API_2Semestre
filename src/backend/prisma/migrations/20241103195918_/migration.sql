@@ -5,28 +5,28 @@
 
 */
 -- DropForeignKey
-ALTER TABLE `systemlog` DROP FOREIGN KEY `SystemLog_id_categoria_fkey`;
+ALTER TABLE `SystemLog` DROP FOREIGN KEY `SystemLog_id_categoria_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `systemlog` DROP FOREIGN KEY `SystemLog_id_fornecedor_fkey`;
+ALTER TABLE `SystemLog` DROP FOREIGN KEY `SystemLog_id_fornecedor_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `systemlog` DROP FOREIGN KEY `SystemLog_id_produto_fkey`;
+ALTER TABLE `SystemLog` DROP FOREIGN KEY `SystemLog_id_produto_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `systemlog` DROP FOREIGN KEY `SystemLog_id_saida_fkey`;
+ALTER TABLE `SystemLog` DROP FOREIGN KEY `SystemLog_id_saida_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `systemlog` DROP FOREIGN KEY `SystemLog_id_setor_fkey`;
+ALTER TABLE `SystemLog` DROP FOREIGN KEY `SystemLog_id_setor_fkey`;
 
 -- DropForeignKey
-ALTER TABLE `systemlog` DROP FOREIGN KEY `SystemLog_id_user_fkey`;
+ALTER TABLE `SystemLog` DROP FOREIGN KEY `SystemLog_id_user_fkey`;
 
 -- DropIndex
-DROP INDEX `idx_related_ids` ON `systemlog`;
+DROP INDEX `idx_related_ids` ON `SystemLog`;
 
 -- AlterTable
-ALTER TABLE `systemlog` DROP COLUMN `id_entrada`,
+ALTER TABLE `SystemLog` DROP COLUMN `id_entrada`,
     ADD COLUMN `id_affected_user` INTEGER NULL,
     ADD COLUMN `id_lote` INTEGER NULL;
 
