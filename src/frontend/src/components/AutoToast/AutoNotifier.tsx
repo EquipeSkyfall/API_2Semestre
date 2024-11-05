@@ -9,7 +9,7 @@ function AutoNotifier() {
 
     const notify = (message, toastId) => {
         if (activeToast !== toastId) {
-            toast(message, {
+            const toastRef = toast(message, {
                 toastId,
                 position: "bottom-left",
                 autoClose: false,
@@ -22,18 +22,35 @@ function AutoNotifier() {
                 className: 'red-toast',
             });
             setActiveToast(toastId);
+        } else {
+            toast.update(toastId, {
+                render: message,
+                position: "bottom-left",
+                autoClose: false,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: 0,
+                theme: "light",
+                className: 'red-toast',
+            });
         }
     };
 
     useEffect(() => {
         if (data?.expiring.length > 0) {
             notify(`${data?.expiring.length} produto(s) próximo da validade!`, 'expiration');
+        } else {
+            toast.dismiss('expiration'); 
         }
     }, [data?.expiring]);
 
     useEffect(() => {
         if (data?.lowStock.length > 0) {
             notify(`${data?.lowStock.length} produto(s) com estoque baixo!`, 'low-stock');
+        } else {
+            toast.dismiss('low-stock'); 
         }
     }, [data?.lowStock]);
 
