@@ -130,11 +130,11 @@
 .dimension_conf label{
     display: flex;
     flex-direction: column;
-}
+}*/
 
 .dimension_conf h2{
     margin-top: 5%;
-}*/
+}
 
 .button-remove-products {
     background-color: #dc3545;
