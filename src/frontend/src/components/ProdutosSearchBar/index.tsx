@@ -5,8 +5,6 @@ import CategorySelect from '../CategorySelect';
 import SectorSelect from '../SectorSelect';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import ProductForm from '../ProductForm'; // Importando o ProductForm
-import AdicionarProdutoModal from '../AdicionarProdutoModal'; // Importando o novo modal
 import './produtossearchbar.css';
 
 interface SearchBarProps {
@@ -18,7 +16,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange }) => {
     const [categoryId, setCategoryId] = useState<number | null>(null);
     const [sectorId, setSectorId] = useState<number | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Estado para controlar o modal
     const methods = useForm();
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,20 +59,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange }) => {
         };
     }, []);
 
-    // Funções para abrir e fechar o modal
-    const handleOpenModal = () => {
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
-
     return (
         <FormProvider {...methods}>
-            <button className="searchbar-button" onClick={handleOpenModal}>
-                Adicionar Produto
-            </button>
             <div className="searchbar-wrapper">
                 <input
                     type="text"
@@ -97,10 +82,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange }) => {
                 </div>
             </div>
 
-            {/* Modal para Adicionar Produto */}
-            <AdicionarProdutoModal isOpen={isModalOpen} onClose={handleCloseModal}>
-                <ProductForm refetch={() => { /* Função de refetch se necessário */ }} />
-            </AdicionarProdutoModal>
+            
         </FormProvider>
     );
 };
