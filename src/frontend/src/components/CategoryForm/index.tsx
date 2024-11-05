@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { categorySchema, CategorySchema } from "./CategorySchema/categorySchema";
 import { Category } from "../CategoryTypes/types";
 import MutationCreateCategory from "../../Hooks/Categories/postCategoryCreationHook";
-import './styles.css';
+import './categoryform.css';
 import useUpdateCategory from "../../Hooks/Categories/patchCategoryByIdHook";
 
 interface CategoryFormProps {

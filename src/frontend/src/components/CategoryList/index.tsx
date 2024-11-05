@@ -2,8 +2,7 @@ import React from "react";
 import { Category } from "../CategoryTypes/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-
-import './styles.css';
+import './categorylist.css';
 
 interface CategoryListProps {
     categories: Category[];

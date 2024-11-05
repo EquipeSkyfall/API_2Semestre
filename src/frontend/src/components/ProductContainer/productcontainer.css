@@ -1,0 +1,24 @@
+.container-produto {
+  display: flex; /* Ativa o layout flexível */
+  justify-content: space-between; /* Distribui os itens com espaço entre eles */
+  align-items: flex-start; /* Alinha os itens no início da contêiner */
+  gap: 20px; /* Espaçamento entre os itens */
+  max-width: 97%; /* Largura máxima da contêiner */
+  height: 85vh; /* Altura adaptada */
+  margin: auto; /* Centraliza o contêiner */
+  padding: 20px; /* Adiciona espaço interno ao contêiner */
+  background-color: #f9fafb; /* Cor de fundo */
+  border-radius: 12px; /* Cantos arredondados */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra do contêiner */
+  box-sizing: border-box; /* Inclui padding e bordas nas dimensões totais */
+}
+
+@media (max-width: 1390px) {
+  .container-produto {
+      background-color: transparent;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0;
+      height: auto;
+    }
+} 

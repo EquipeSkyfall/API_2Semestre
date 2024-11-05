@@ -1,0 +1,85 @@
+.searchbar-wrapper {
+    margin-right: auto;
+    display: flex;
+    align-items: flex-start; /* Alinha os itens ao topo */
+    width: 50vh; /* Largura da barra de pesquisa */
+}
+
+.searchbar {
+    flex-grow: 1; /* Para ocupar todo o espaço disponível */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px 0 0 6px; /* Bordas arredondadas somente à esquerda */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown {
+    position: relative; /* Para posicionar o dropdown corretamente */
+}
+
+.dropdown-button {
+    padding: 10px;
+    background-color: #007bff; /* Cor do botão */
+    color: white;
+    border: 1px solid #007bff; /* Borda do botão */
+    border-left: none; /* Remover borda esquerda */
+    border-radius: 0 6px 6px 0; /* Bordas arredondadas somente à direita */
+    cursor: pointer;
+}
+
+.dropdown-content {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Garante que o dropdown fique acima de outros elementos */
+    margin-top: 5px; /* Espaço entre o botão e o dropdown */
+    width: 200px; /* Largura do dropdown */
+}
+
+.category-select, .select-field {
+    border: 1px solid #ccc;
+    background: transparent; /* Fundo transparente */
+    cursor: pointer; /* Cursor em forma de mão */
+    color: #555; /* Cor do texto */
+    width: 100%; /* Para ocupar toda a largura do dropdown */
+}
+
+.category-select:focus, .select-field:focus {
+    outline: none; /* Remover contorno ao focar */
+}
+
+/* Estilo para os botões de ação */
+.action-button {
+    margin-left: 10px;
+    padding: 10px 15px;
+    background-color: #007bff; /* Cor do botão */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Estilo para os itens do dropdown */
+.dropdown-content div {
+    padding: 10px;
+    cursor: pointer; /* Cursor em forma de mão */
+    transition: background-color 0.2s; /* Transição suave para o hover */
+}
+
+.searchbar-button {
+    margin-right: auto;
+    margin-bottom: 10px; /* Espaço entre o botão e a SearchBar */
+    padding: 10px 15px; /* Espaçamento interno do botão */
+    background-color: #007bff; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    border: none; /* Remove a borda padrão */
+    border-radius: 6px; /* Bordas arredondadas */
+    cursor: pointer; /* Muda o cursor ao passar o mouse */
+    transition: background-color 0.3s; /* Transição suave */
+}
+
+.searchbar-button:hover {
+    background-color: #0267d3; /* Cor ao passar o mouse */
+}

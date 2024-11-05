@@ -1,6 +1,6 @@
 // AdicionarProdutoModal.tsx
 import React from 'react';
-import './styles.css'; // Importando seu CSS para o modal
+import './adicionarproduto.css'; // Importando seu CSS para o modal
 
 interface AdicionarProdutoModalProps {
     isOpen: boolean;

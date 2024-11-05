@@ -7,7 +7,7 @@ import AddProductToSupplierModal from '../AddProductToSupplierModal';
 import SupplierProductsModal from '../SuplierProducsModal/SupplierProductsModal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import './styles.css';
+import './supplierlist.css';
 import SupplierSearchBar from '../SupplierSearchBar';
 
 const SupplierList: React.FC = () => {
