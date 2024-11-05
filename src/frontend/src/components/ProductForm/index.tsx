@@ -106,6 +106,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     const onSuccess = () => {
         reset();
         setPrecoVenda('')
+        setPrecoCusto('')
+        setFornecedorValue(null)
         setSuccessMessage('Produto Cadastrado com Sucesso!');
         refetch();
     };

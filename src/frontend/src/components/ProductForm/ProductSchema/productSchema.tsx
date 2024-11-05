@@ -32,6 +32,14 @@ export const productSchema = z.object({
         (value) => (value === '' ? null : Number(value)),
         z.number().optional().nullable()
     ).optional()
+}).refine((data) => {
+    if (data.id_fornecedor && data.preco_custo == null) {
+      return false;
+    }
+    return true;
+  }, {
+    message: 'Preço de Custo é obrigatório!',
+    path: ['preco_custo'],
 });
 
 
