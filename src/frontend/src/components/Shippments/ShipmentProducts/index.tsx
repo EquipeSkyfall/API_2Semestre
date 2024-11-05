@@ -92,8 +92,19 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
                 {!isLoading && !isError && products.length > 0 ? (
                     <ul className="check-shipping-products" >
                         {products.map((product) => (
-                            <li key={product.id_produto}>
-                                <label>
+                            <li key={product.id_produto}
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                padding: "8px",
+                                border: "1px dotted #ccc",
+                            }}>
+                                <label
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    width: "100%",
+                                }}>
                                     <input
                                         type="checkbox"
                                         className="checkbox"
@@ -101,7 +112,10 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
                                         onChange={() => handleCheckboxChange(product)}
                                         disabled={sentProducts.some((p) => p.id_produto === product.id_produto)}
                                     />
-                                    {product.nome_produto} - {product.total_estoque} disponíveis.
+                                    <span style={{ flexGrow: 1 }}>{product.nome_produto}</span>{" "} 
+                                    <span style={{ marginLeft: "auto" }}>
+                                        {product.total_estoque} disponíveis
+                                    </span>
                                 </label>
                             </li>
                         ))}
@@ -112,7 +126,7 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
 
                 {/* Pagination controls */}
                 {totalPages > 1 && (
-                    <div>
+                    <div className="page" >
                         <button type="button" disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
                             Anterior
                         </button>

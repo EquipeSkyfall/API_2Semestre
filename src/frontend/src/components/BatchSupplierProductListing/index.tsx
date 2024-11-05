@@ -4,6 +4,8 @@ import useGetSupplierProducts, { SupplierProduct } from "../../Hooks/Supplier/us
 import SearchBar from "../ProdutosSearchBar";
 import { BatchProductSchema } from "../BatchForm/BatchSchema/batchSchema";
 import './styles.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 interface FilterValues {
     search: string;
@@ -137,7 +139,14 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                 <SearchBar onSearchTermChange={handleSearchTermChange} />
                             </div>
                             {availableProducts.map(product => (
-                                <div key={product.id_produto}>
+                                <div key={product.id_produto}
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px",
+                                    border: "1px dotted #ccc",
+                                }}
+                                >
                                     <input
                                         type="checkbox"
                                         className="checkbox"
@@ -145,7 +154,10 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                         onChange={() => toggleProductSelection(product)}
                                         disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
                                     />
-                                    {product.produto.nome_produto} - Preço Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
+                                    <span style={{ flexGrow: 1 }}>{product.produto.nome_produto}</span>
+                                    <span style={{ marginRight: "auto" }}>
+                                        Preço Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
+                                    </span>
                                 </div>
                             ))}
 
@@ -164,6 +176,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                     Próximo
                                 </button>
                             </div>
+                            
                             <div className="add-products" >
                                 <button className="button-add-products" onClick={handleAddProducts} disabled={selectedProducts.length === 0}>
                                     Adicionar Produto(s)
@@ -179,44 +192,87 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
             <div className="dimension_conf">
                 <h2>Produtos no lote: {errors.produtos && <span className="error-message">{errors.produtos.message}</span>}</h2>
                 {addedProducts.length > 0 && (
-                    <ul>
+
+                    <ul className="container"
+                    style={{ border: '1px solid #ccc', padding: '20px' }}
+                    >
+
+                        <li className="row"> 
+                            <span>Produto</span>
+                            <span>Validade</span>
+                            <span>Quantidade</span>
+                            <span></span> 
+                        </li>
+
                         {addedProducts.map(product => {
                             const originalProduct = data?.products.find(p => p.id_produto === product.id_produto);
                             return (
-                                <li key={product.id_produto}>
-                                    <div className="dimension_conf Batch-Products">
-                                        <strong>{originalProduct?.produto.nome_produto || 'Produto Desconhecido'}</strong> {/* Display product name */}
-
-                                        <label>
-                                            Validade:
+                                <li className="row" key={product.id_produto}     
+                                >
+                                    
+                                        <strong>
+                                            {originalProduct?.produto.nome_produto || "Produto Desconhecido"}
+                                        </strong>
+                                
+                                        
                                             <input
-                                                className="form-field"
                                                 type="date"
-                                                id={`validade_${product.id_produto}`} // Use product ID for uniqueness
-                                                value={product.validade_produto && !isNaN(new Date(product.validade_produto).getTime())
-                                                    ? new Date(product.validade_produto).toISOString().slice(0, 10)
-                                                    : ''}
-                                                min={new Date(Date.now() + 86400000).toISOString().slice(0, 10)}
-                                                onChange={(e) => handleInputChange(product.id_produto, 'validade_produto', e.target.value)} // Call input change handler
+                                                id={`validade_${product.id_produto}`}
+                                                value={
+                                                    product.validade_produto
+                                                        ? new Date(product.validade_produto)
+                                                            .toISOString()
+                                                            .slice(0, 10)
+                                                        : ""
+                                                }
+                                                min={new Date(Date.now() + 86400000)
+                                                    .toISOString()
+                                                    .slice(0, 10)}
+                                                onChange={(e) =>
+                                                    handleInputChange(
+                                                        product.id_produto,
+                                                        "validade_produto",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                style={{
+                                                    padding: "5px",
+                                                    border: "1px solid #ccc",
+                                                    borderRadius: "4px",
+                                                    maxWidth: "150px",
+                                                }}
                                             />
-                                        </label>
-
-                                        <label>
-                                            Quantidade:
+                                        
+                                
+                                        
                                             <input
-                                                className="form-field required"
                                                 type="number"
                                                 min="1"
-                                                id={`quantidade_${product.id_produto}`} // Use product ID for uniqueness
-                                                value={product.quantidade} // Controlled input
-                                                onChange={(e) => handleInputChange(product.id_produto, 'quantidade', e.target.value)} // Call input change handler
+                                                id={`quantidade_${product.id_produto}`}
+                                                value={product.quantidade}
+                                                onChange={(e) =>
+                                                    handleInputChange(
+                                                        product.id_produto,
+                                                        "quantidade",
+                                                        e.target.value
+                                                    )
+                                                }
+                                                style={{
+                                                    padding: "5px",
+                                                    border: "1px solid #ccc",
+                                                    borderRadius: "4px",
+                                                    maxWidth: "60px",
+                                                }}
                                             />
-                                        </label>
-                                        {/* Remove Product Button */}
-                                        <button className="button-remove-products" onClick={() => handleRemoveProduct(product)}>
-                                            Remover
+                                        
+                                
+                                        <button
+                                            onClick={() => handleRemoveProduct(product)}
+                                            className="button-remove-products"
+                                        >
+                                            <FontAwesomeIcon icon={faTrash} />
                                         </button>
-                                    </div>
+                                  
                                 </li>
                             );
                         })}

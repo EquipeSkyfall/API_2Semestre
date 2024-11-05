@@ -36,7 +36,7 @@ const useGetProductBatches = (productIds: number[]) => {
   const location = useLocation();  
   return useQueries({
     queries: productIds.map(productId => ({
-      queryKey: ['shipments', productId],
+      queryKey: ['products', productId],
       queryFn: () => fetchProductBatches(productId, navigate, location),
       enabled: !!productId, // Only fetch if productId is truthy
     })),

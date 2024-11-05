@@ -34,15 +34,15 @@ function UserForm() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen w-screen ">
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-2 border-2 bg-slate-50 shadow-md p-10 place-items-center rounded">
+        <div className="flex items-center justify-center sm:h-screen w-screen ">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4 sm:gap-y-2 border-2 bg-slate-50 shadow-md p-5 sm:p-11 place-items-center rounded">
                 {successMessage && <p className="text-green-500 font-bold">{successMessage}</p>}
                 {serverError && <p className="text-red-500">{serverError}</p>}
                 <input
                     {...register("name")}
                     type='text'
                     placeholder="Nome"
-                    className="px-16 py-2 rounded-full shadow-md text-center placeholder-cyan-700"
+                    className="px-16 py-4 sm:py-2 rounded-full shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
 
@@ -50,7 +50,7 @@ function UserForm() {
                     {...register("email")}
                     type='email'
                     placeholder="Email"
-                    className="px-16 py-2 rounded-full shadow-md text-center placeholder-cyan-700"
+                    className="px-16 py-4 sm:py-2 rounded-full shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
@@ -58,7 +58,7 @@ function UserForm() {
                     {...register("password")}
                     type='password'
                     placeholder="Senha"
-                    className="px-16 py-2 rounded-full  shadow-md text-center placeholder-cyan-700"
+                    className="px-16 py-4 sm:py-2 rounded-full  shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
@@ -66,11 +66,11 @@ function UserForm() {
                     {...register("confirmPassword")}
                     type="password"
                     placeholder="Repita a senha"
-                    className="px-16 py-2 rounded-full shadow-md text-center placeholder-cyan-700"
+                    className="px-16 py-4 sm:py-2 rounded-full shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.confirmPassword && <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>}
                 <div className="flex flex-col text-black mb-4">
-                    <label className="font-bold px-3 text-center mb-3 mt-3">Cargos</label>
+                    <label className="font-bold px-3 text-center text-lg sm:text-base mb-3 mt-3">Cargos</label>
                     <div className="flex flex-row gap-4">
                         {['Administrador', 'Usuário', 'Gerente'].map((role) => (
                             <label key={role} className="flex items-center">
@@ -80,7 +80,7 @@ function UserForm() {
                                     value={role}
                                     className="hidden peer" //
                                 />
-                                <div className="w-4 h-4 border-2 rounded-sm flex items-center justify-center mr-2 peer-checked:bg-cyan-500 hover: peer-checked:border-cyan-500 bg-white transition duration-300 ease-in-out"></div>
+                                <div className="w-5 h-5 border-2 rounded-xl sm:w-4 sm:h-4 sm:rounded-sm flex items-center justify-center mr-2 peer-checked:bg-cyan-500 hover: peer-checked:border-cyan-500 bg-white transition duration-300 ease-in-out"></div>
                                 {role.charAt(0).toUpperCase() + role.slice(1)} {/* Capitaliza a primeira letra */}
                             </label>
                         ))}
@@ -90,13 +90,13 @@ function UserForm() {
 
                 <button
                     type="submit"
-                    className="bg-cyan-500 py-2 rounded w-full text-white animate-pulse"
+                    className="bg-cyan-500 py-4 sm:py-2 rounded w-full text-white animate-pulse"
                     disabled={isSubmitting} // Desabilita o botão durante o envio
                 >
                     {isSubmitting ? 'Carregando...' : 'Registrar'} {/* Exibe texto de carregamento ao enviar */}
                 </button>
                 <Link to='/'>
-                    <button className="text-cyan-700 mt-1 hover:text-cyan-500 transition duration-300 ease-in-out">Já possui uma conta?</button>
+                    <button className="text-cyan-700 mt-1 text-lg sm:text-base hover:text-cyan-500 transition duration-300 ease-in-out">Já possui uma conta?</button>
                 </Link>
         </form>
         </div >

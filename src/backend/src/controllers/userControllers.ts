@@ -2,6 +2,7 @@ import express, { Response, Request } from 'express';
 import prisma  from '../dbConnector'; // Make sure your prisma import is correct
 import bcrypt from 'bcrypt';
 import { JWT_SECRET } from '../secrets';
+import { logControllers, RequestWithUser } from './logControllers';
 const jwt = require('jsonwebtoken') 
 const { promisify } = require('util');
 
@@ -94,7 +95,7 @@ class UserController {
     }
   }
 
-  public updateUser = async (request: Request, response: Response) => {
+  public updateUser = async (request: RequestWithUser, response: Response) => {
     const { id } = request.params; // Get the users ID from the URL
     const { oldPassword, password, name, email, role } = request.body; // Data to update
     console.log(request.body)
@@ -135,6 +136,9 @@ if (email && email !== user.email) {
           role
         }
       });
+
+      logControllers.logActions(request.user?.id, "Usuário editado.", { id_affected_user: Number(id) })
+
       response.status(200).json(updatedUser);
     } catch (error) {
       response.status(500).json({ message: 'Error updating users', error });
@@ -142,13 +146,16 @@ if (email && email !== user.email) {
   };
 
   // Delete a users by ID
-  public deleteUser = async (request: Request, response: Response) => {
+  public deleteUser = async (request: RequestWithUser, response: Response) => {
     const { id } = request.params; // Get the users ID from the URL
 
     try {
       await prisma.users.delete({
         where: { id: Number(id) } // Delete based on ID
       });
+
+      logControllers.logActions(request.user?.id, "Usuário editado.", { id_affected_user: Number(id) })
+
       response.status(200).json({ message: 'User deleted successfully' });
     } catch (error) {
       response.status(500).json({ message: 'Error deleting users', error });

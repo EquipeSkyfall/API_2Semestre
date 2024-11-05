@@ -1,9 +1,11 @@
 // ProductsPage.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductsContainer from '../components/ProductContainer';
 
 function ProductsPage() {
-    return <ProductsContainer />;
+    return (
+        <ProductsContainer />
+    );
 }
 
 export default ProductsPage;

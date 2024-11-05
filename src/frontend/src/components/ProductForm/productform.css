@@ -1,0 +1,162 @@
+.product-form .manage-categoria-button,
+.product-form .manage-setor-button,
+.product-form .manage-fornecedor-button {
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    transition: background-color 0.5s ease;
+    margin: 5px 0; /* Ajuste a margem para 5px para trazer os botões para cima */
+}
+
+.product-form .manage-categoria-button:hover,
+.product-form .manage-setor-button:hover,
+.product-form .manage-fornecedor-button:hover {
+    background-color: #022dbe; /* Cor ao passar o mouse */
+}
+
+.button-container {
+    display: flex; /* Alinha os botões em linha */
+    gap: 10px; /* Espaçamento entre os botões */
+    margin-top: 10px; /* Espaço acima dos botões */
+}
+
+.product-form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    background-color: #f9f9f9; /* Fundo mais claro */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #333; /* Cor do título */
+}
+
+.form-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-fields-grid-segundo {
+    display: flex; /* Define o contêiner como flex */
+    gap: 15px; /* Espaço entre os itens */
+    margin-bottom: 20px; /* Espaço abaixo do grid */
+    width: 100%; /* Para garantir que ocupe toda a largura disponível */
+}
+
+.form-field-segundo {
+    flex: 1 1 100px; /* Faz com que cada campo ocupe pelo menos 300px de largura, podendo crescer ou encolher */
+    box-sizing: border-box; /* Inclui padding e border na largura total */
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-field .descricao_produto {
+    grid-column: 1 / -1; /* Faz o textarea ocupar toda a largura disponível */
+}
+
+.required label {
+    color: #e74c3c; /* Cor para campos obrigatórios */
+}
+
+.optional label {
+    color: #7f8c8d; /* Cor para campos opcionais */
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #022dbe; /* Cor do foco */
+}
+
+.mensagem-error {
+    color: #e74c3c; /* Cor das mensagens de erro */
+    font-size: 1em; /* Menor que o tamanho padrão */
+    position: absolute;
+    left: 54vh;
+    top: 4vh;
+}
+
+.submit-button {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    margin-top: -1.6em; /* Ajuste este valor conforme necessário */
+}
+
+.submit-button:hover {
+    background-color: #022dbe; /* Cor do botão */
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.success-messages {
+    color: #2ecc71; /* Cor da mensagem de sucesso */
+    font-size: 0.9em; /* Menor que o tamanho padrão */
+    position: absolute;
+    left: 53vh;
+    top: 4vh;
+}
+
+.manage-button {
+    background-color: #022dbe; /* Cor do botão */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.manage-button:hover {
+    background-color: #2980b9; /* Cor do botão ao passar o mouse */
+}
+
+.descricao_produto_lista {
+    grid-column: span 2; /* Ocupa duas colunas se estiver em um grid */
+    width: 100%; /* Garante que ocupe toda a largura disponível */
+    padding: 14px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+    background-color: #fff;
+    color: #000;
+    max-height: 150px; 
+    min-height: 150px;
+}
+
+.peso-container {
+    display: flex;
+    align-items: center; /* Alinha verticalmente */
+    justify-content: space-between; /* Move o unit-select para a direita */
+    gap: 10px; /* Adiciona um espaçamento entre o input e o select */
+}
+
+.unit-select {
+    width: 80px; /* Define uma largura adequada para o select */
+    margin-left: auto; /* Empurra o select para a direita */
+}
+

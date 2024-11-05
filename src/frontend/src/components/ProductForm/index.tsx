@@ -7,7 +7,7 @@ import CategorySelect from '../CategorySelect';
 import CategoryModal from '../CategoryModal';
 import SectorSelect from '../SectorSelect';
 import SectorModal from '../SectorModal';
-import './styles.css';  // Referência ao CSS
+import './productform.css';  // Referência ao CSS
 import SupplierSelect from '../SupplierSelect';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,8 +34,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
     useEffect(() => {
         if (!fornecedorValue) {
-          setPrecoCusto('');
-          setValue('preco_custo', undefined);
+            setPrecoCusto('');
+            setValue('preco_custo', undefined);
         }
     }, [fornecedorValue]);
 
@@ -45,56 +45,56 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
     const handlePrecoVendaChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-    
+
         // Replace invalid characters and prepare for formatting
         const numericValue = value.replace(/\D/g, '');
-    
+
         // Format as BRL currency
         const formattedValue = new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
         }).format(parseFloat(numericValue) / 100);
-    
+
         // Set the formatted currency string to state
         setPrecoVenda(formattedValue);
-    
+
         // Calculate precoNumber from the numericValue directly
         const precoNumber = parseFloat(numericValue) / 100; // Convert to number
-    
+
         // Check if precoNumber is valid and set the Zod error if not
         if (isNaN(precoNumber) || precoNumber <= 0) {
             setError('preco_venda', { type: 'manual', message: 'Preço de Venda é obrigatório.' });
             return;
         }
-        
+
         // Use setValue to set the parsed value in react-hook-form
         setValue('preco_venda', precoNumber);
     };
 
     const handlePrecoCustoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-    
+
         // Replace invalid characters and prepare for formatting
         const numericValue = value.replace(/\D/g, '');
-    
+
         // Format as BRL currency
         const formattedValue = new Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
         }).format(parseFloat(numericValue) / 100);
-    
+
         // Set the formatted currency string to state
         setPrecoCusto(formattedValue);
-    
+
         // Calculate precoNumber from the numericValue directly
         const precoNumber = parseFloat(numericValue) / 100; // Convert to number
-    
+
         // Check if precoNumber is valid and set the Zod error if not
         if (isNaN(precoNumber) || precoNumber <= 0) {
             setError('preco_custo', { type: 'manual', message: 'Preço de custo é obrigatório.' });
             return;
         }
-        
+
         // Use setValue to set the parsed value in react-hook-form
         setValue('preco_custo', precoNumber);
     };
@@ -147,7 +147,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
     const onError = (errors: any) => {
         console.error('Zod validation errors:', errors);
+        setServerError('Erro ao cadastrar o produto!');
     };
+
 
     return (
         <div>
@@ -156,10 +158,10 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     onSubmit={handleSubmit(onSubmit, onError)}
                     className="product-form"
                 >
-                    {successMessage && <p className="success-message">{successMessage}</p>}
-                    {serverError && <p className="error-message">{serverError}</p>}
+                    {successMessage && <p className="success-messages">{successMessage}</p>}
+                    {serverError && <p className="mensagem-error">{serverError}</p>}
 
-                    <h2>Registro de Produtos</h2>
+                    <h1>Registro de Produtos</h1>
 
                     <div className="form-fields-grid">
                         {/* Campos Obrigatórios */}
@@ -169,9 +171,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 {...register("nome_produto")}
                                 type='text'
                                 id="nome_produto"
-                                placeholder="Obrigatório"
+                                placeholder={errors.nome_produto ? errors.nome_produto.message : "Obrigatório"}
                             />
-                            {errors.nome_produto && <p className="error-message">{errors.nome_produto.message}</p>}
                         </div>
 
                         <div className="form-field required">
@@ -181,9 +182,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 id="preco_venda"
                                 value={precoVenda}
                                 onChange={handlePrecoVendaChange}
-                                placeholder="Obrigatório"
+                                placeholder={errors.preco_venda ? errors.preco_venda.message : "Obrigatório"}
                             />
-                            {errors.preco_venda && <p className="error-message">{errors.preco_venda.message}</p>}
                         </div>
 
                         <div className="form-field">
@@ -194,55 +194,18 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 value={precoCusto}
                                 onChange={handlePrecoCustoChange}
                                 disabled={!fornecedorValue}
-                                placeholder="Selecione um fornecedor"
+                                placeholder={errors.preco_custo ? errors.preco_custo.message : "Obrigatório"}
                             />
-                            {errors.preco_custo && <p className="error-message">{errors.preco_custo.message}</p>}
                         </div>
 
                         <div className="form-field required">
-                            <label htmlFor="altura_produto">Altura (cm)</label>
-                            <input
-                                {...register("altura_produto", { valueAsNumber: true })}
-                                type='number'
-                                id="altura_produto"
-                                placeholder="Obrigatório"
-                                min='0'
-                            />
-                            {errors.altura_produto && <p className="error-message">{errors.altura_produto.message}</p>}
-                        </div>
-
-                        <div className="form-field required">
-                            <label htmlFor="largura_produto">Largura (cm)</label>
-                            <input
-                                {...register("largura_produto", { valueAsNumber: true })}
-                                type='number'
-                                id="largura_produto"
-                                placeholder="Obrigatório"
-                                min='0'
-                            />
-                            {errors.largura_produto && <p className="error-message">{errors.largura_produto.message}</p>}
-                        </div>
-
-                        <div className="form-field required">
-                            <label htmlFor="comprimento_produto">Comprimento (cm)</label>
-                            <input
-                                {...register("comprimento_produto", { valueAsNumber: true })}
-                                type='number'
-                                id="comprimento_produto"
-                                placeholder="Obrigatório"
-                                min='0'
-                            />
-                            {errors.comprimento_produto && <p className="error-message">{errors.comprimento_produto.message}</p>}
-                        </div>
-
-                        <div className="form-field required">
-                            <label htmlFor="peso_produto">Peso</label>
+                            <label htmlFor="peso_produto">{unidadeMedida === 'L' || unidadeMedida === 'ml' ? 'Volume' : 'Peso'}</label>
                             <div className="peso-container">
                                 <input
                                     {...register("peso_produto", { valueAsNumber: true })}
                                     type='number'
                                     id="peso_produto"
-                                    placeholder="Obrigatório"
+                                    placeholder={errors.peso_produto ? errors.peso_produto.message : "Obrigatório"}
                                     min='0'
                                 />
                                 <select
@@ -257,24 +220,42 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                     <option value="ml">ML</option>
                                 </select>
                             </div>
-
-                            {errors.peso_produto && <p className="error-message">{errors.peso_produto.message}</p>}
                         </div>
 
-
-                        {/* Campos Opcionais */}
-                        <div className="form-field optional">
-                            <label htmlFor="descricao_produto">Descrição do Produto</label>
+                        <div className="form-field required">
+                            <label htmlFor="altura_produto">Altura (cm)</label>
                             <input
-                                {...register("descricao_produto")}
-                                type='text'
-                                id="descricao_produto"
-                                placeholder="Opcional"
+                                {...register("altura_produto", { valueAsNumber: true })}
+                                type='number'
+                                id="altura_produto"
+                                placeholder={errors.altura_produto ? errors.altura_produto.message : "Obrigatório"}
+                                min='0'
                             />
-                            {errors.descricao_produto && <p className="error-message">{errors.descricao_produto.message}</p>}
                         </div>
 
-                        <div className="form-field optional">
+                        <div className="form-field required">
+                            <label htmlFor="largura_produto">Largura (cm)</label>
+                            <input
+                                {...register("largura_produto", { valueAsNumber: true })}
+                                type='number'
+                                id="largura_produto"
+                                placeholder={errors.largura_produto ? errors.largura_produto.message : "Obrigatório"}
+                                min='0'
+                            />
+                        </div>
+
+                        <div className="form-field required">
+                            <label htmlFor="comprimento_produto">Comprimento (cm)</label>
+                            <input
+                                {...register("comprimento_produto", { valueAsNumber: true })}
+                                type='number'
+                                id="comprimento_produto"
+                                placeholder={errors.comprimento_produto ? errors.comprimento_produto.message : "Obrigatório"}
+                                min='0'
+                            />
+                        </div>
+
+                        <div className="form-field">
                             <label htmlFor="marca_produto">Marca do Produto</label>
                             <input
                                 {...register("marca_produto")}
@@ -282,10 +263,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 id="marca_produto"
                                 placeholder="Opcional"
                             />
-                            {errors.marca_produto && <p className="error-message">{errors.marca_produto.message}</p>}
                         </div>
 
-                        <div className="form-field optional">
+                        <div className="form-field">
                             <label htmlFor="modelo_produto">Modelo do Produto</label>
                             <input
                                 {...register("modelo_produto")}
@@ -293,10 +273,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 id="modelo_produto"
                                 placeholder="Opcional"
                             />
-                            {errors.modelo_produto && <p className="error-message">{errors.modelo_produto.message}</p>}
                         </div>
 
-                        <div className="form-field optional">
+                        <div className="form-field">
                             <label htmlFor="localizacao_estoque">Localização no Estoque</label>
                             <input
                                 {...register("localizacao_estoque")}
@@ -304,16 +283,33 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 id="localizacao_estoque"
                                 placeholder="Opcional"
                             />
-                            {errors.localizacao_estoque && <p className="error-message">{errors.localizacao_estoque.message}</p>}
                         </div>
                     </div>
-                    <div className="form-fields-grid">
+
+                    {/* Campo de descrição fora do grid */}
+                    <div className="form-field">
+                        <label htmlFor="descricao">Descrição do Produto</label>
+                        <textarea
+                            id="descricao"
+                            {...register('descricao')}
+                            className="descricao_produto_lista"
+                            placeholder="Descrição do produto"
+                        ></textarea>
+                    </div>
+
+                    <div className="form-fields-grid-segundo">
                         {/* Selecione uma Categoria */}
-                        <div className="form-field">
+                        <div className="form-field-segundo">
                             <CategorySelect refetch={refetch} />
+                            {isCategoryModalOpen && (
+                                <CategoryModal
+                                    setIsCategoryModalOpen={setIsCategoryModalOpen}
+                                    refetch={refetch}
+                                />
+                            )}
                             <button
                                 type="button"
-                                className="manage-button"
+                                className="manage-categoria-button"
                                 onClick={() => setIsCategoryModalOpen(true)}
                             >
                                 Gerenciar Categorias
@@ -321,11 +317,17 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         </div>
 
                         {/* Selecione um Setor */}
-                        <div className="form-field">
+                        <div className="form-field-segundo">
                             <SectorSelect refetch={refetch} />
+                            {isSectorModalOpen && (
+                                <SectorModal
+                                    setIsSectorModalOpen={setIsSectorModalOpen}
+                                    refetch={refetch}
+                                />
+                            )}
                             <button
                                 type="button"
-                                className="manage-button"
+                                className="manage-categoria-button"
                                 onClick={() => setIsSectorModalOpen(true)}
                             >
                                 Gerenciar Setores
@@ -333,29 +335,29 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         </div>
 
                         {/* Selecione um Fornecedor */}
-                        <div className="form-field">
-                            <SupplierSelect refetch={refetch} onChange={setFornecedorValue}/>
+                        <div className="form-field-segundo">
+                            <SupplierSelect refetch={refetch} onChange={setFornecedorValue} />
                             <button
                                 type="button"
-                                className="manage-button"
+                                className="manage-categoria-button"
                                 onClick={handleManageSuppliers}
                             >
                                 Gerenciar Fornecedores
                             </button>
                         </div>
                     </div>
+                    <div class="button-container">
+                        <button
+                            type="submit"
+                            className="submit-button"
+                            disabled={isSubmitting}
+                        >
+                            {isSubmitting ? 'Cadastrando...' : 'Cadastrar Produto'}
+                        </button>
+                    </div>
 
-                    <button
-                        type="submit"
-                        className="submit-button"
-                        disabled={isSubmitting}
-                    >
-                        {isSubmitting ? 'Cadastrando...' : 'Cadastrar Produto'}
-                    </button>
                 </form>
             </FormProvider>
-
-            {/* Modais */}
             {isCategoryModalOpen && (
                 <CategoryModal
                     setIsCategoryModalOpen={setIsCategoryModalOpen}

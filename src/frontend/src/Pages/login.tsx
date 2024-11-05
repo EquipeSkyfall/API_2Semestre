@@ -13,11 +13,11 @@ export default function Login() {
     return (
         <>
             <div className="text-center">
-                <img src="/Prostock.png" alt="" className="absolute w-80 left-1/2 transform -translate-x-44 -translate-y-1/2 opacity-35" />
-                <h1 className="relative text-8xl text-cyan-500 font-bold mt-28 -mb-48 z-10 font-['Afacad_Flux']">ProStock</h1>
+                <img src="/Prostock.png" alt="" className="absolute w-72 sm:w-80 left-1/2 transform -translate-y-1/2 sm:-translate-x-44 -translate-x-40 opacity-35" />
+                <h1 className="relative text-5xl sm:text-8xl text-cyan-500 font-bold mt-28 sm:mt-40 -mb-40 sm:-mb-28 z-10 font-['Afacad_Flux']">ProStock</h1>
             </div>
             <div className="flex">
-                <LoginForm /> {/* Substitui pelo componente de login */}
+                <LoginForm />
             </div>
         </>
     );

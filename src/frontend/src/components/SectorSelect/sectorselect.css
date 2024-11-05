@@ -1,0 +1,23 @@
+.select-field {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 0.8rem; 
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.select-field option {
+    font-size: 1em; 
+}
+
+.select-field option[value=""] {
+    font-size: 0.8rem; 
+}
+
+.form-field-setor{
+    background-color: rgb(255, 255, 255);
+    border-radius: 6px;
+}
+

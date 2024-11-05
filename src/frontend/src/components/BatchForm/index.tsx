@@ -72,22 +72,35 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                 onSubmit={handleSubmit(onSubmit, onError)}
                 className="batch-form"
             >
-                {successMessage && <p className="success-message">{successMessage}</p>}
+                {/* {successMessage && <p className="success-message">{successMessage}</p>} Removi dessa parte e coloquei no final da pagina */}
                 {serverError && <p className="error-message">{serverError}</p>}
 
-                <h2 className="color_conf">Entrada de Produtos</h2>
+                {/*  <h2 className="color_conf">Entrada de Produtos</h2> */}
 
-                    <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
+                <div className="formContainer flex flex-col text-xs md:text-base xl:flex-row justify-between gap-5">
+                    <div className="insertProducts flex-1 min-w-[300px]">   
+                        <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
+                    </div>    
 
-                    <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>
-                
-                <button
-                    type="submit"
-                    className="submit-button"
-                    disabled={isSubmitting}
-                >
-                    {isSubmitting ? 'Carregando...' : 'Cadastrar'}
-                </button>
+                    <div className="dropProducts flex-1 min-w-[300px]">
+                        <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>
+                            
+                        <div style={{
+                            marginLeft: "15px"                                
+                        }}>
+                            
+                            <button
+                            type="submit"
+                            className="submit-button"
+                            disabled={isSubmitting}
+                            >
+
+                            {isSubmitting ? 'Carregando...' : 'Cadastrar'}
+                            </button>
+                            {successMessage && <p className="success-message">{successMessage}</p>}
+                        </div>
+                    </div>
+                </div>
             </form>
         </FormProvider>
     )

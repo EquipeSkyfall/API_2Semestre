@@ -32,15 +32,15 @@ function LoginForm() {
 
     return (
         <div className="flex items-center justify-center h-screen w-screen ">
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-2 border-2 bg-slate-50 shadow-md p-11 place-items-center rounded">
-                <label className='text-2xl text-cyan-500 font-bold -mt-5 mb-5'>Login</label>
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-8 sm:gap-y-2 border-2 bg-slate-50 shadow-md p-5 sm:p-11 mt-48 sm:mt-0 place-items-center rounded">
+                <label className='text-4xl sm:text-2xl text-cyan-500 font-bold mt-2 sm:-mt-5 mb-5'>Login</label>
                 {successMessage && <p className="text-green-500 font-bold">{successMessage}</p>}
                 {serverError && <p className="text-red-500">{serverError}</p>}
                 <input
                     {...register("email")}
                     type='email'
                     placeholder="Email"
-                    className="px-16 py-2 rounded-full shadow-md text-center placeholder-cyan-700"
+                    className="px-16 py-4 sm:py-2 rounded-full shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
@@ -48,19 +48,19 @@ function LoginForm() {
                     {...register("password")}
                     type='password'
                     placeholder="Senha"
-                    className="px-16 py-2 rounded-full shadow-md text-center placeholder-cyan-700"
+                    className="px-16 py-4 -mt-5 sm:-mt-0 sm:py-2 rounded-full shadow-md text-center placeholder-cyan-700"
                 />
                 {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
                 <button
                     type="submit"
-                    className="bg-cyan-500 py-2 rounded w-full text-white animate-pulse"
+                    className="bg-cyan-500 py-4 sm:py-2 rounded w-full text-white animate-pulse"
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? 'Carregando...' : 'Entrar'}
                 </button>
                 <Link to='/cadastrar'>
-                    <button className="text-cyan-700 mt-1 hover:text-cyan-500 transition duration-300 ease-in-out">Criar Conta </button>
+                    <button className="text-cyan-700 mt-1 text-xl sm:text-lg hover:text-cyan-500 transition duration-300 ease-in-out">Criar Conta </button>
                 </Link>
             </form>
         </div>

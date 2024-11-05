@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import FetchAllCategories from '../../Hooks/Categories/fetchAllCategoriesHook'; // Adjust the path as needed
-import './styles.css';
+import FetchAllCategories from '../../Hooks/Categories/fetchAllCategoriesHook';
+import './categoryselect.css'; // Certifique-se de que está importando o CSS
 
 interface CategorySelectProps {
     refetch: () => void;
@@ -10,38 +10,39 @@ interface CategorySelectProps {
 }
 
 const CategorySelect: React.FC<CategorySelectProps> = ({ defaultValue, refetch, onChange }) => {
-    const { register, formState: { errors }, setValue } = useFormContext();
+    const { register, setValue } = useFormContext();
     const { categories, isLoading, isError, refetch: refetchCategories } = FetchAllCategories(1);
+
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedId: number | null = event.target.value ? Number(event.target.value) : null;
 
-        setValue('id_categoria', selectedId)
+        setValue('id_categoria', selectedId);
 
         if (onChange) {
-            onChange(selectedId)
+            onChange(selectedId);
         }
 
-        refetch()
+        refetch();
     };
 
     useEffect(() => {
-        refetchCategories(); // Sync with changes from the modal or other components
+        refetchCategories();
         if (defaultValue) {
-            setValue('id_categoria', defaultValue)
+            setValue('id_categoria', defaultValue);
         }
     }, [defaultValue, setValue, refetch]);
 
     return (
-        <div className="form-field optional">
-            <label htmlFor="id_categoria">Categoria</label>
+        <div className="form-field-categoria">
+            <label htmlFor="id_categoria"></label>
             <select
                 {...register('id_categoria')}
                 id="id_categoria"
-                defaultValue={ defaultValue || '' }
+                defaultValue={defaultValue || ''}
                 onChange={handleCategoryChange}
-                className='category-select'
+                className="category-select"
             >
-                <option value="">Selecione uma categoria</option>
+                <option value="">Categoria</option>
                 {isLoading ? (
                     <option disabled>Carregando categorias...</option>
                 ) : isError ? (

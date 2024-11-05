@@ -128,4 +128,27 @@ model Users{
   createdAt DateTime @default(now())
   updatedAT DateTime @updatedAt
   role String
+
+  SystemLog SystemLog[]
+}
+
+model SystemLog {
+  id_log            Int       @id @default(autoincrement())
+  data_processo     DateTime  @default(now()) 
+  action_type       String    @db.VarChar(50)  
+  id_user           Int                            
+  id_categoria      Int?                           
+  id_setor          Int?                           
+  id_produto        Int?                           
+  id_fornecedor     Int?                           
+  id_saida          Int?                           
+  id_lote           Int?
+  id_affected_user  Int?
+
+  users             Users    @relation(fields: [id_user], references: [id])
+
+  @@index([data_processo], name: "idx_data_processo")
+  @@index([id_user], name: "idx_id_user")
+  @@index([action_type], name: "idx_action_type")
+  @@index([id_categoria, id_setor, id_produto, id_fornecedor, id_saida, id_lote], name: "idx_related_ids")
 }

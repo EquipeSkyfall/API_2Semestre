@@ -13,9 +13,12 @@ import Movimentacao from "./Pages/Movimentacao";
 import PrivateRoutes from "./components/PrivateRoute";
 import axios from 'axios';
 import User from "./Pages/User";
+import AutoNotifier from "./components/AutoToast/AutoNotifier";
+
 
 axios.defaults.withCredentials = true;
 axios.defaults.credentials = "include";
+
 function App() {
   const queryClient = new QueryClient();
 
@@ -36,6 +39,7 @@ function App() {
             element={
               <>
                 <NavBar />
+
                 <Routes>
                   <Route element={<PrivateRoutes/>}>
                   <Route path="products" element={<ProductsPage />} />
@@ -48,10 +52,12 @@ function App() {
                   <Route path="*" element={<PageNotFound />} />
                   </Route>
                 </Routes>
+
               </>
             }
           />
         </Routes>
+        <AutoNotifier />
       </BrowserRouter>
     </QueryClientProvider>
 

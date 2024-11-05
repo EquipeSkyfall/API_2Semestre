@@ -1,8 +1,6 @@
 import express, { Response, Request } from 'express';
 import prisma  from '../dbConnector'; // Make sure your prisma import is correct
-import { fetchProductsWithStock } from '../helpers/getProductsHelper';
-
-
+import { logControllers, RequestWithUser } from './logControllers';
 
 class ProductControllers {
 
@@ -79,7 +77,7 @@ class ProductControllers {
       }
   };
 
-  public createProduct = async (request: Request, response: Response) => {
+  public createProduct = async (request: RequestWithUser, response: Response) => {
     try {
       // Extract supplier information from the request body
       // console.log('Full Request Body:', request.body)
@@ -91,6 +89,8 @@ class ProductControllers {
       const product = await prisma.produto.create({
         data: productData,
       });
+
+      logControllers.logActions(request.user?.id, "Produto criado.", {id_produto: product.id_produto})
 
       // If a supplier is provided, create the association in ProdutosFornecedor
       if (id_fornecedor) {
@@ -114,7 +114,7 @@ class ProductControllers {
 
 
   // FUNÇÕES DE ATUALIZAÇÃO \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-  public updateProduct = async (request: Request, response: Response) => {
+  public updateProduct = async (request: RequestWithUser, response: Response) => {
     const { id } = request.params; // Get the products ID from the URL
     console.log('update query:'+ request.params)
     // Data to update
@@ -128,6 +128,9 @@ class ProductControllers {
           ...dataToUpdate
         }
       });
+
+      logControllers.logActions(request.user?.id, "Produto editado.", {id_produto: Number(id)})
+
       response.status(200).json(updatedProduct);
     } catch (error) {
       response.status(500).json({ message: 'Error updating products', error });
@@ -203,7 +206,7 @@ class ProductControllers {
   
 
   // Delete a product by ID
-  public deleteProduct = async (request: Request, response: Response) => {
+  public deleteProduct = async (request: RequestWithUser, response: Response) => {
     const { id } = request.params; // Get the products ID from the URL
     console.log(request.params)
     try {
@@ -224,8 +227,10 @@ class ProductControllers {
             where: { id_produto: Number(id) },
             data: { produto_deletedAt: new Date() },
         });
-        return response.status(200).json({ message: 'Product soft deleted successfully' });
 
+        logControllers.logActions(request.user?.id, "Produto deletado.", {id_produto: Number(id)})
+
+        return response.status(200).json({ message: 'Product soft deleted successfully' });
       } else {
         await prisma.produtosFornecedor.deleteMany({
           where: { id_produto: Number(id) }, // Delete all supplier relationships for this product
@@ -234,6 +239,9 @@ class ProductControllers {
         await prisma.produto.delete({
             where: { id_produto: Number(id) },
         });
+
+        logControllers.logActions(request.user?.id, "Produto deletado.", {id_produto: Number(id)})
+
         return response.status(200).json({ message: 'Product deleted successfully' });
       }
 
@@ -322,6 +330,93 @@ class ProductControllers {
     }
   };
 
+  public getProductsWithLowStock = async (request: Request, response: Response) => {
+    try{
+      const productsWithLowStock = await prisma.produto.findMany({
+        where: {
+          produto_deletedAt: null,
+          total_estoque: {
+            lt: 11
+          }
+        },
+        select: {
+          id_produto: true, // Select only the 'id' field
+        },
+      });
+
+      console.log('Talk to me LowStock: ',productsWithLowStock)
+
+      response.status(200).json(productsWithLowStock);
+    } catch (error) {
+      console.error("Error fetching products with low stock:", error);
+      response.status(500).json({ error: "Failed to fetch products with low stock" });
+    }
+  };
+
+  public getProductsWithExpiringBatches = async (request: Request, response: Response) => {
+    try {
+        // Get today's date and calculate the target date (10 days from now)
+        const today = new Date();
+        const targetDate = new Date();
+        targetDate.setDate(today.getDate() + 10);
+
+        const productsWithExpiringBatches = await prisma.produto.findMany({
+            where: {
+                produto_deletedAt: null,
+                lotes: {
+                    some: {
+                        validade_produto: {
+                            lte: targetDate,
+                            gte: today
+                        },
+                        quantidade: {
+                            not: {
+                                equals: 0,
+                            }
+                        }
+                    }
+                }
+            },
+            select: {
+                id_produto: true, // Select only the 'id' field
+            },
+        });
+
+        // Prepare an array to hold products that pass the quantity check
+        const validProducts = [];
+
+        // Iterate over each product and check the quantity
+        for (const product of productsWithExpiringBatches) {
+            const lotes = await prisma.loteProdutos.findMany({
+                where: {
+                    id_produto: product.id_produto,
+                },
+                include: {
+                    saidas: true,
+                },
+            });
+
+            // Calculate total quantity across all lotes minus total sales
+            let totalQuantity = 0;
+            lotes.forEach(lote => {
+                const totalSaidas = lote.saidas.reduce((sum, saida) => sum + saida.quantidade_retirada, 0);
+                totalQuantity += lote.quantidade - totalSaidas;
+            });
+
+            // Check if total quantity is greater than zero
+            if (totalQuantity > 0) {
+                validProducts.push(product);
+            }
+        }
+
+        console.log('Valid products with expiring batches: ', validProducts);
+
+        response.status(200).json(validProducts);
+    } catch (error) {
+        console.error("Error fetching products with expiring batches:", error);
+        response.status(500).json({ error: "Failed to fetch products with expiring batches" });
+    }
+  };
 }
 
 const productController = new ProductControllers();

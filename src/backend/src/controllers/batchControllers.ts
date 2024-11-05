@@ -1,7 +1,6 @@
 import express, { Response, Request } from 'express';
 import prisma from '../dbConnector';
-import { request } from 'http';
-import { productController } from './productControllers';
+import { logControllers, RequestWithUser } from './logControllers';
 
 class BatchControllers {
 
@@ -78,7 +77,7 @@ class BatchControllers {
         }
     };
 
-    public createBatch = async (request: Request, response: Response) => {
+    public createBatch = async (request: RequestWithUser, response: Response) => {
         const { id_fornecedor, produtos } = request.body
 
         try {
@@ -115,6 +114,8 @@ class BatchControllers {
                 data: loteProdutosData
             });
 
+            logControllers.logActions(request.user?.id, "Registro de Entrada", { id_lote: lote.id_lote })
+
             response.status(201).json({
                 message: 'Batch registered successfully.',
                 lote
@@ -125,7 +126,7 @@ class BatchControllers {
         }
     };
 
-    public updateBatch = async (request: Request, response: Response) => {
+    public updateBatch = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
 
         const { createdAt, updatedAT, data_compra, produtos } = request.body
@@ -156,6 +157,9 @@ class BatchControllers {
                         }
                     })
                 }
+
+                logControllers.logActions(request.user?.id, "Entrada editada.", { id_lote: Number(id) })
+
                 return response.status(200).json({
                     message: 'Batch and products updated successfully.',
                     lote: updatedLote
@@ -168,7 +172,7 @@ class BatchControllers {
         }
     };
 
-    public deleteBatch = async (request: Request, response: Response) => {
+    public deleteBatch = async (request: RequestWithUser, response: Response) => {
         const { id } = request.params
 
         try {
@@ -184,6 +188,9 @@ class BatchControllers {
                 })
                 return response.status(200).json({ message: 'Batch deleted successfully.' })
             }
+
+            logControllers.logActions(request.user?.id, "Entrada deletada.", { id_lote: Number(id) })
+
             response.status(400).json({ message: 'Batch cannot be deleted.' })
         } catch (error) {
             response.status(500).json({ message: 'Error deleting batch:', error })
