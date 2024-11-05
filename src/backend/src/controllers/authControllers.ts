@@ -25,7 +25,7 @@ export const auth = catchAsync(async (request: RequestWithUser, response: Respon
     let token: string | undefined; // Explicitly typing token as undefined if not found
 
     // Access the authorization header correctly
-    console.log(request.headers)
+    // console.log(request.headers)
     // console.log('lal')
     
     if(
@@ -41,11 +41,11 @@ export const auth = catchAsync(async (request: RequestWithUser, response: Respon
         return response.status(401).json({ message: 'Token not provided' }); // Handle case where token is missing
     }
     // console.log(token)
-    console.log(request.cookies)
+    // console.log(request.cookies)
     try{
 
         const decoded = await promisify(jwt.verify)(token, JWT_SECRET);
-        console.log('Decoded'+decoded.id)
+        // console.log('Decoded'+decoded.id)
         const currUser: User | null = await prisma.users.findUnique({
             where: { id: Number(decoded.id) },
             select: { id: true, role: true } // Fetch the necessary fields

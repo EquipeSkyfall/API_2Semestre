@@ -12,6 +12,7 @@ import Fornecedor from "./Pages/Fornecedores";
 import Movimentacao from "./Pages/Movimentacao";
 import PrivateRoutes from "./components/PrivateRoute";
 import axios from 'axios';
+import User from "./Pages/User";
 
 axios.defaults.withCredentials = true;
 axios.defaults.credentials = "include";
@@ -43,6 +44,7 @@ function App() {
                   <Route path="Report" element={<Report />} />
                   <Route path="Historico" element={<Historico />} />
                   <Route path="fornecedor" element={<Fornecedor />} />
+                  <Route path="usuario" element={<User />} />
                   <Route path="*" element={<PageNotFound />} />
                   </Route>
                 </Routes>

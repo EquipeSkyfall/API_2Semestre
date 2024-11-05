@@ -11,7 +11,7 @@ class ProductControllers {
     const pageNumber = parseInt(page as string);
     const limitNumber = parseInt(limit as string);
     const skip = (pageNumber - 1) * limitNumber;
-    console.log('Received query:', request.query);
+    // console.log('Received query:', request.query);
 
     try {
         const whereCondition: any = { produto_deletedAt: null }; // Exclude soft-deleted products
@@ -66,7 +66,7 @@ class ProductControllers {
             },
           }))
 
-        console.log(productsWithCount)
+        // console.log(productsWithCount)
         response.status(200).json({
           products: productsWithCount,
           totalProducts,
@@ -82,11 +82,11 @@ class ProductControllers {
   public createProduct = async (request: Request, response: Response) => {
     try {
       // Extract supplier information from the request body
-      console.log('Full Request Body:', request.body)
+      // console.log('Full Request Body:', request.body)
 
       const { id_fornecedor, preco_custo, ...productData } = request.body;
 
-      console.log('Product Data:', productData);
+      // console.log('Product Data:', productData);
 
       const product = await prisma.produto.create({
         data: productData,

@@ -3,23 +3,63 @@ import prisma  from '../dbConnector'; // Make sure your prisma import is correct
 import bcrypt from 'bcrypt';
 import { JWT_SECRET } from '../secrets';
 const jwt = require('jsonwebtoken') 
+const { promisify } = require('util');
 
 
 
 class UserController {
 
   public getAllUsers = async (request: Request, response: Response) => {
+    const { page = '1', limit = '10', searchTerm = '' } = request.query;
+  // console.log(request.query)
+    // Convert query params to appropriate types
+    const pageNumber = parseInt(page as string, 10);
+    const pageSize = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * pageSize;
+  
+    const totalUsers = await prisma.users.count({
+      where: {
+        name: { contains: searchTerm as string }
+      },
+    });
+    
+    // console.log(searchTerm)
     try {
-      // Fetch data from the database using Prisma
-      const usersData = await prisma.users.findMany();
+      // Fetch data from the database using Prisma with pagination and search
+      if(!searchTerm){
+         const usersData = await prisma.users.findMany({
+          skip:(pageNumber -1) * pageSize,
+          take: pageSize
+         })
+        //  console.log(usersData) 
+         response.status(200).json({
+          users: usersData,
+          totalPages: Math.ceil(totalUsers / pageSize),
+          currentPage: pageNumber,
+        }) 
+        return
+      }
       
-      // Send the result as a JSON response
-      response.status(200).json(usersData);
+      const usersData = await prisma.users.findMany({
+        where: {
+          name: { contains: searchTerm as string }
+        },
+        skip,
+        take: pageSize,
+      });
+
+      
+  
+      response.status(200).json({
+        users: usersData,
+        totalPages: Math.ceil(totalUsers / pageSize),
+        currentPage: pageNumber,
+      });
     } catch (error) {
-      // Handle any errors that occur during the database query
       response.status(500).json({ message: 'Error fetching users', error });
     }
-  }
+  };
+
   public createUser = async (request: Request, response: Response) => {
     try {
     console.log(request.body)
@@ -56,15 +96,41 @@ class UserController {
 
   public updateUser = async (request: Request, response: Response) => {
     const { id } = request.params; // Get the users ID from the URL
-    const { password, name, role } = request.body; // Data to update
+    const { oldPassword, password, name, email, role } = request.body; // Data to update
     console.log(request.body)
     console.log(request.params)
     try {
+      const user = await prisma.users.findUnique({
+        where: { id: Number(id) },
+    });
+
+    if (!user) {
+      return response.status(404).json({ message: 'User not found' });
+  }
+
+  if (user.role !== 'Administrador' && oldPassword) {
+    const isOldPasswordCorrect = await bcrypt.compare(oldPassword, user.password);
+    if (!isOldPasswordCorrect) {
+        return response.status(400).json({ message: 'Incorrect old password' });
+    }
+}
+
+if (email && email !== user.email) {
+  const emailExists = await prisma.users.findUnique({
+      where: { email },
+  });
+  if (emailExists) {
+      return response.status(400).json({ message: 'Email already exists' });
+  }
+}
+
+
+
       const updatedUser = await prisma.users.update({
         where: { id: Number(id) }, // Update based on ID
         data: {
-          
-          password,
+          email,
+          password: password ? await bcrypt.hash(password, 10) : user.password,
           name,
           role
         }
@@ -103,6 +169,26 @@ class UserController {
   //   }
   // }
 
+public getMe = async(request:Request,response:Response) =>{
+  const token = request.cookies.jwt
+  // console.log(token)
+  const decoded = await promisify(jwt.verify)(token, JWT_SECRET);
+  console.log(decoded)
+  try{
+    const user = await prisma.users.findUnique({
+      where:{id:Number(decoded.id)}
+    })
+    if (!user) {
+      return response.status(404).json({ message: 'User not found' });
+    }
+    console.log(user)
+    response.status(200).json(user); 
+  }catch(error){
+    response.status(500).json({ message: 'Error fetching users by ID', error });
+  }
+
+}
+
   public getUserById = async (request: Request, response: Response) => {
     const { id } = request.params; // Get the users ID from the URL
     try {
@@ -119,6 +205,7 @@ class UserController {
       response.status(500).json({ message: 'Error fetching users by ID', error });
     }
   };
+
   public login = async(request:Request,response: Response) =>{
     const {email,password} = request.body
     
@@ -130,7 +217,8 @@ class UserController {
       if(!user){
         return response.status(404).json({message:'Usuário não encontrado'})
       }
-      
+      // console.log(user.password)
+      // console.log(password)
       if (!await bcrypt.compare(password, user.password)) {
         return response.status(401).json({ message: 'Usuário ou Senha incorretos' });  
       }

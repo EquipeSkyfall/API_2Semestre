@@ -19,9 +19,16 @@ router
   .get(auth,userControllers.getAllUsers)
   .post(userControllers.createUser);
 
+
+router
+  .route('/users/me')
+  .get(auth,userControllers.getMe)
+
 router
   .route('/users/login')
   .post(userControllers.login)
+
+
 
 // router
 // .route('/check-email')
