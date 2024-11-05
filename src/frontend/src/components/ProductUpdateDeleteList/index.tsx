@@ -7,6 +7,8 @@ import useDeleteProduct from '../../Hooks/Products/deleteProductByIdHook';
 import useUpdateProduct from '../../Hooks/Products/patchByIdProductHook';
 import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
 import './styles.css';
+import ProductForm from '../ProductForm';
+import AdicionarProdutoModal from '../AdicionarProdutoModal';
 
 interface Product extends ProductSchema {
     id_produto: number;
@@ -36,6 +38,15 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
     const [productToDelete, setProductToDelete] = useState<number | null>(null); // Estado para armazenar o ID do produto a ser excluído
     const updateProductMutation = useUpdateProduct();
     const deleteProductMutation = useDeleteProduct();
+    const [isProductModalOpen, setIsProductModalOpen] = useState<boolean>(false); // Estado para controlar o modal
+
+    const handleOpenModal = () => {
+        setIsProductModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsProductModalOpen(false);
+    };
 
     const handleEdit = (product: Product) => {
         setEditingProduct(product);
@@ -80,6 +91,10 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
         <div className='flex flex-col items-center border'>
             <h1>Produtos</h1>
 
+            <button className="searchbar-button" onClick={handleOpenModal}>
+                Adicionar Produto
+            </button>
+
             {/* Barra de Pesquisa */}
             <SearchBar
                 onSearchTermChange={onSearchTermChange}
@@ -119,6 +134,11 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
                     </div>
                 </div>
             )}
+
+            {/* Modal para Adicionar Produto */}
+            <AdicionarProdutoModal isOpen={isProductModalOpen} onClose={handleCloseModal}>
+                <ProductForm refetch={() => { /* Função de refetch se necessário */ }} />
+            </AdicionarProdutoModal>
 
             {/* Modal para Edição do Produto */}
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
