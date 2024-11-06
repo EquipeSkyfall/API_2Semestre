@@ -80,7 +80,7 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
         <div>
             <h2 className="align_conf">Selecionar Produtos</h2>
             <div className="product_list">
-                <SearchBar onSearchTermChange={handleSearchTermChange} />
+                {/*<SearchBar onSearchTermChange={handleSearchTermChange} />*/}
 
                 {/* Display loading state */}
                 {isLoading && <p>Carregando produtos...</p>}

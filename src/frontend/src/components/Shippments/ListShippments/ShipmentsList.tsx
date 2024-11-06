@@ -153,7 +153,7 @@ const ShipmentsList: React.FC = () => {
       {data && (
         <div className="pagination-controls py-4 flex justify-center items-center">
           <button
-            className="pagination-button"
+            className=" text-white hover:bg-cyan-600 transition duration-300 bg-cyan-500"
             disabled={page === 1}
             onClick={() => handlePageChange(page - 1)}
           >
@@ -163,7 +163,7 @@ const ShipmentsList: React.FC = () => {
             Página {page} de {data.totalPages}
           </span>
           <button
-            className="pagination-button"
+            className=" text-white hover:bg-cyan-600 transition duration-300 bg-cyan-500"
             disabled={page === data.totalPages}
             onClick={() => handlePageChange(page + 1)}
           >

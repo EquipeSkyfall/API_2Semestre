@@ -75,18 +75,14 @@ h2 {
     color: #7f8c8d; /* Cor para campos opcionais */
 }
 
-input[type="text"],
-input[type="number"],
-select {
+.input1, select{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     transition: border-color 0.3s ease;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus,
-select:focus {
+.input1:focus, select:focus{
     border-color: #022dbe; /* Cor do foco */
 }
 

@@ -47,23 +47,9 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
     );
 
     return (
-        <div className="campo-formulario required">
+        <div className="required responsive">
             <h2 className="text_conf">Fornecedor</h2>
 
-            {/* Input para selecionar fornecedor 
-            <input
-                id="nome_fornecedor"
-                type="text"
-                value={fornecedorSelecionado?.name || ''} 
-                placeholder="Selecione um fornecedor" 
-                onClick={() => {}} // Remover toggleList aqui
-                className="text_conf"
-                readOnly
-            />
-            
-            {errors.id_fornecedor && <span className="error-message">{errors.id_fornecedor.message}</span>}
-            
-            {/* Lista de fornecedores, sempre visível */}
             {listaExpandida && (
                 <div className="lista-fornecedores">
                     <SupplierSearchBar onSearchTermChange={handleSearchTermChange} resetKey={resetKey} />
