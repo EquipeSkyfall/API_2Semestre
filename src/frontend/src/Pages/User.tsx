@@ -20,9 +20,14 @@ const UsersPage = () => {
                 <h1>Lista de Usuários</h1>
                 <UserSearchBar />
             </>
-            ): <div></div>}
+            ): <></>}
             <h2>Informações do Usuário</h2> 
             <UserInfo/>
+            {user.role === 'Gerente'? (<>
+                <h1>Alertas do Sistema</h1>
+                
+            </>
+            ): <></>}
           
         </div>
     );

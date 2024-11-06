@@ -49,6 +49,10 @@ router
   .get(auth,productController.getProducts) // Generate product list with/without search terms/filters
   .post(auth,productController.createProduct); //Adds new product to database
 
+router
+  .route('/products/post-array')
+  .post(auth,productController.getProducts)
+
 // Find Products with missing data
 router
   .route('/products/missingdata') 

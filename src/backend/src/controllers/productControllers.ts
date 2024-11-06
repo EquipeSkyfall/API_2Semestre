@@ -6,6 +6,7 @@ class ProductControllers {
 
   public getProducts = async (request: Request, response: Response) => {
     const { search='', id_setor, id_categoria, id_fornecedor, forshipping, page = '1', limit = '10' } = request.query; 
+    const { productsArray = [] } = request.body;
     const pageNumber = parseInt(page as string);
     const limitNumber = parseInt(limit as string);
     const skip = (pageNumber - 1) * limitNumber;
@@ -37,6 +38,9 @@ class ProductControllers {
           whereCondition.total_estoque = {
             gt: 0,
           };
+        }
+        if (productsArray.length > 0) {
+          whereCondition.id = { in: productsArray }
         }
 
         const totalProducts = await prisma.produto.count({

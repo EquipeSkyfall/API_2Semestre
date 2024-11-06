@@ -14,6 +14,7 @@ import PrivateRoutes from "./components/PrivateRoute";
 import axios from 'axios';
 import User from "./Pages/User";
 import AutoNotifier from "./components/AutoToast/AutoNotifier";
+import { ProductIdsProvider } from "./contexts/ProductsIdsContext";
 
 
 axios.defaults.withCredentials = true;
@@ -27,38 +28,40 @@ function App() {
 
    
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          {/* Página inicial sem NavBar */}
-          <Route path="/" element={<Login />} /> {/* Use Login com maiúscula */}
-          <Route path="/cadastrar" element={<Home />} />
-          
-          {/* Rotas com NavBar */}
-          <Route
-            path="*"
-            element={
-              <>
-                <NavBar />
+      <ProductIdsProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Página inicial sem NavBar */}
+            <Route path="/" element={<Login />} /> {/* Use Login com maiúscula */}
+            <Route path="/cadastrar" element={<Home />} />
+            
+            {/* Rotas com NavBar */}
+            <Route
+              path="*"
+              element={
+                <>
+                  <NavBar />
 
-                <Routes>
-                  <Route element={<PrivateRoutes/>}>
-                  <Route path="products" element={<ProductsPage />} />
-                  <Route path="teste" element={<Teste />} />
-                  <Route path="Movimentacao" element={<Movimentacao />} />
-                  <Route path="Report" element={<Report />} />
-                  <Route path="Historico" element={<Historico />} />
-                  <Route path="fornecedor" element={<Fornecedor />} />
-                  <Route path="usuario" element={<User />} />
-                  <Route path="*" element={<PageNotFound />} />
-                  </Route>
-                </Routes>
+                  <Routes>
+                    <Route element={<PrivateRoutes/>}>
+                    <Route path="products" element={<ProductsPage />} />
+                    <Route path="teste" element={<Teste />} />
+                    <Route path="Movimentacao" element={<Movimentacao />} />
+                    <Route path="Report" element={<Report />} />
+                    <Route path="Historico" element={<Historico />} />
+                    <Route path="fornecedor" element={<Fornecedor />} />
+                    <Route path="usuario" element={<User />} />
+                    <Route path="*" element={<PageNotFound />} />
+                    </Route>
+                  </Routes>
 
-              </>
-            }
-          />
-        </Routes>
-        <AutoNotifier />
-      </BrowserRouter>
+                </>
+              }
+            />
+          </Routes>
+          <AutoNotifier />
+        </BrowserRouter>
+      </ProductIdsProvider>
     </QueryClientProvider>
 
   );

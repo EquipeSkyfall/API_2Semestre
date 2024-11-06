@@ -140,53 +140,62 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
                     <h2 className="form-header">Editar Produto</h2>
 
                     {/* Itera pelos campos principais, excluindo 'id_categoria', 'id_setor' e 'unidade_medida' */}
-                    {Object.keys(productSchema.shape)
-                        .filter(key => key !== 'id_categoria' &&
-                                key !== 'id_setor' &&
-                                key !== 'unidade_medida' &&
-                                key !== 'peso_produto' &&
-                                key !== 'id_fornecedor' && key !== 'preco_custo'
-                        ).map((key) => {
-                            const keyAsType = key as keyof Product;
-                            const isNumericField = ['preco_venda', 'altura_produto', 'largura_produto', 'comprimento_produto', 'peso_produto'].includes(key);
+                    {Object.keys(product).filter((key) => 
+                        key !== 'id_categoria' &&
+                        key !== 'id_setor' &&
+                        key !== 'unidade_medida' &&
+                        key !== 'peso_produto' &&
+                        key !== 'id_fornecedor' &&
+                        key !== 'preco_custo' &&
+                        key !== 'unidade_medida' &&
+                        key !== 'produto_deletedAt' &&
+                        key !== 'id_produto' &&
+                        key !== 'permalink_imagem' &&
+                        key !== 'total_estoque' &&
+                        key !== 'categoria' &&
+                        key !== 'setor' &&
+                        key !== 'nome_categoria' &&
+                        key !== 'nome_setor'
+                    ).map((key) => {
+                        const keyAsType = key as keyof Product;
+                        const isNumericField = ['preco_venda', 'altura_produto', 'largura_produto', 'comprimento_produto', 'peso_produto'].includes(key);
 
-                            return (
-                                <div key={key} className="custom-form-group">
-                                    <label htmlFor={keyAsType} className="form-label">
-                                        {key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, (a) => a.toUpperCase())}:
-                                    </label>
-                                    {key === 'preco_venda' ? (
-                                        <input
-                                            id={keyAsType}
-                                            value={precoVenda} // Use the state variable for formatted value
-                                            onChange={handlePrecoVendaChange} // Use the custom change handler
-                                            type="text"
-                                            placeholder="Formato: R$ 0,00"
-                                            className="form-input"
-                                        />
-                                    ) : key === 'descricao_produto' ? (
-                                        <textarea
-                                            id={keyAsType}
-                                            {...register(keyAsType)}
-                                            rows={6} // Ajuste o número de linhas para controlar a altura
-                                        />
-                                    ) : (
-                                        <input
-                                            id={keyAsType}
-                                            {...register(keyAsType, {
-                                                valueAsNumber: isNumericField,
-                                                setValueAs: (value) => value === '' ? null : value,
-                                            })}
-                                            type={isNumericField ? 'number' : 'text'}
-                                            step="0.01"
-                                            className="form-input"
-                                        />
-                                    )}
-                                    {errors[keyAsType] && <p className="error-message">{errors[keyAsType]?.message}</p>}
-                                </div>
-                            );
-                        })
-                    }
+                        return (
+                            <div key={key} className="custom-form-group">
+                                <label htmlFor={keyAsType} className="form-label">
+                                    {key.replace(/_/g, ' ').replace(/(?:^|\s)\S/g, (a) => a.toUpperCase())}:
+                                </label>
+                                {key === 'preco_venda' ? (
+                                    <input
+                                        id={keyAsType}
+                                        value={precoVenda} // Use the state variable for formatted value
+                                        onChange={handlePrecoVendaChange} // Use the custom change handler
+                                        type="text"
+                                        placeholder="Formato: R$ 0,00"
+                                        className="form-input"
+                                    />
+                                ) : key === 'descricao_produto' ? (
+                                    <textarea
+                                        id={keyAsType}
+                                        {...register(keyAsType)}
+                                        rows={6} // Ajuste o número de linhas para controlar a altura
+                                    />
+                                ) : (
+                                    <input
+                                        id={keyAsType}
+                                        {...register(keyAsType, {
+                                            valueAsNumber: isNumericField,
+                                            setValueAs: (value) => value === '' ? null : value,
+                                        })}
+                                        type={isNumericField ? 'number' : 'text'}
+                                        step="0.01"
+                                        className="form-input"
+                                    />
+                                )}
+                                {errors[keyAsType] && <p className="error-message">{errors[keyAsType]?.message}</p>}
+                            </div>
+                        );
+                    })}
                     {/* Botões de Unidade de Medida */}
                     <div key={'peso_produto'} className="custom-form-group">
                         <label htmlFor="peso_produto" className="form-label">
