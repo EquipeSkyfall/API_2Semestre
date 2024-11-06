@@ -11,7 +11,7 @@ function AutoNotifier() {
         if (activeToast !== toastId) {
             const toastRef = toast(message, {
                 toastId,
-                position: "top-right",
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: true,
                 closeOnClick: true,
@@ -25,7 +25,7 @@ function AutoNotifier() {
         } else {
             toast.update(toastId, {
                 render: message,
-                position: "top-right",
+                position: "bottom-right",
                 autoClose: 5000,
                 hideProgressBar: true,
                 closeOnClick: true,
@@ -56,7 +56,7 @@ function AutoNotifier() {
 
     return (
         <ToastContainer
-            position="top-right"
+            position="bottom-right"
             autoClose={5000}
             newestOnTop={false}
             closeOnClick
