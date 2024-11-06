@@ -35,7 +35,6 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
         setResetKey(prev => prev + 1)
         setSuccessMessage('Lote cadastrado com sucesso!');
         
-        // Limpar a mensagem após 3 segundos
         setTimeout(() => {
             setSuccessMessage('');
         }, 2000);
@@ -70,24 +69,20 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
         <FormProvider {...methods}>
             <form
                 onSubmit={handleSubmit(onSubmit, onError)}
-                className="batch-form"
-            >
-                {/* {successMessage && <p className="success-message">{successMessage}</p>} Removi dessa parte e coloquei no final da pagina */}
+                className="batch-form">
+                
                 {serverError && <p className="error-message">{serverError}</p>}
 
-                {/*  <h2 className="color_conf">Entrada de Produtos</h2> */}
 
-                <div className="formContainer flex flex-col text-xs md:text-base xl:flex-row justify-between gap-5">
-                    <div className="insertProducts flex-1 min-w-[300px]">   
+                <div className="formContainer flex flex-col xl:flex-row text-xxs text-xs md:text-base justify-between gap-5">
+                    <div className="insertProducts">   
                         <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
                     </div>    
 
-                    <div className="dropProducts flex-1 min-w-[300px]">
+                    <div className="dropProducts">
                         <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>
                             
-                        <div style={{
-                            marginLeft: "15px"                                
-                        }}>
+                        <div>
                             
                             <button
                             type="submit"
