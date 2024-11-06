@@ -238,8 +238,10 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                                     padding: "5px",
                                                     border: "1px solid #ccc",
                                                     borderRadius: "4px",
-                                                    maxWidth: "150px",
+                                                    maxWidth: "120px",
                                                 }}
+
+                                                className="teste md:text-xs"
                                             />
                                         
                                 
@@ -260,8 +262,10 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                                     padding: "5px",
                                                     border: "1px solid #ccc",
                                                     borderRadius: "4px",
-                                                    maxWidth: "60px",
+                                                    maxWidth: "40px",
                                                 }}
+
+                                                className="test md:text-xs"
                                             />
                                         
                                 

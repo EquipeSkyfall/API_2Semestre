@@ -90,3 +90,13 @@
 .row span:last-child{
     border-right: none;
 }
+
+@media (max-width: 460px) {
+    .teste {
+        width: 85px;
+    }
+
+    .test {
+        width: 65px;
+    }
+}
