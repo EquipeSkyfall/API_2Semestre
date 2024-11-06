@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE `systemlog` MODIFY `action_type` VARCHAR(50) NOT NULL;
+ALTER TABLE `systemlog` MODIFY `Action_Type` VARCHAR(50) NOT NULL;

@@ -122,7 +122,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
     );
 
     return (
-        <div className="Supplier-Products">
+        <div>
             <h2>Produtos do Fornecedor</h2>
 
             <button className="button-show-products" type="button" onClick={toggleVisibility}>
@@ -132,19 +132,19 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
             {isVisible && (
                 <>
                     {availableProducts.length > 0 ? (
-                        <div className="supplier-checkbox" >
+                        <div className="supplier-checkbox">
                             {isLoading && <p>Carregando...</p>}
                             {isError && <p className="error-message" >Erro ao carregar produtos.</p>}
-                            <div className="dimension_conf">
-                                <SearchBar onSearchTermChange={handleSearchTermChange} />
-                            </div>
+                            {/* <div className="dimension_conf "                            >
+                                <SearchBar onSearchTermChange={handleSearchTermChange}/>
+                            </div> */}
                             {availableProducts.map(product => (
                                 <div key={product.id_produto}
                                 style={{
                                     display: "flex",
                                     alignItems: "center",
                                     padding: "8px",
-                                    border: "1px dotted #ccc",
+                                    border: "1px dotted #ccc"                                    
                                 }}
                                 >
                                     <input
@@ -156,12 +156,11 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                     />
                                     <span style={{ flexGrow: 1 }}>{product.produto.nome_produto}</span>
                                     <span style={{ marginRight: "auto" }}>
-                                        Preço Custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
+                                        Preço: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
                                     </span>
                                 </div>
                             ))}
 
-                            {/* Pagination Controls */}
                             <div className="pagination">
                                 <button onClick={handlePrevPage} disabled={page === 1}>
                                     Anterior
@@ -239,8 +238,10 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                                     padding: "5px",
                                                     border: "1px solid #ccc",
                                                     borderRadius: "4px",
-                                                    maxWidth: "150px",
+                                                    maxWidth: "120px",
                                                 }}
+
+                                                className="teste md:text-xs"
                                             />
                                         
                                 
@@ -261,8 +262,10 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                                     padding: "5px",
                                                     border: "1px solid #ccc",
                                                     borderRadius: "4px",
-                                                    maxWidth: "60px",
+                                                    maxWidth: "40px",
                                                 }}
+
+                                                className="test md:text-xs"
                                             />
                                         
                                 

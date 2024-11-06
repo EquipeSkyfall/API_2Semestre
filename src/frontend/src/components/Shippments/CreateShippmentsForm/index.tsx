@@ -148,9 +148,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
       className='shipping-form'
       style={{ paddingBottom: '20px' }}
     >
-      {/* <h2 className='color_conf'>Saída de Produtos</h2> */}
 
-      {/*{successMessage && <p className="success-message">{successMessage}</p>} Removi dessa parte e coloquei no final da pagina */}
       {serverError && <p className="error-message">{serverError}</p>}
 
       {/* Reason for Outgoing Product */}
@@ -162,7 +160,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
         <option value="Venda">Venda</option>
       </select>
 
-      <div className="formContainer">
+      <div className="formContainer flex flex-col xl:flex-row text-xs md:text-base justify-between gap-5">
         <div className="insertProducts">
         <ShipmentProducts onProductsSelected={handleProductsSelected} removedProductId={removedProductId} resetKey={resetKey} />
         </div>

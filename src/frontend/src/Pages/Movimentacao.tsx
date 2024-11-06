@@ -6,9 +6,8 @@ import React, { useState } from 'react';
 Esse import pode ser removido */
 
 export default function Movimentacao() {
-    const [activeTab, setActiveTab] = useState('batch'); // Estado para gerenciar a aba ativa
+    const [activeTab, setActiveTab] = useState('batch'); 
 
-    // Estilos inline
     const styles = {
         formContainer: {
             padding: '20px',
@@ -41,13 +40,13 @@ export default function Movimentacao() {
     };
 
     return (
-        <div style={styles.formContainer}>
+        <div style={styles.formContainer} className="text-xs md:text-base" >
             <div style={styles.tabButtons}>
                 <button
                     style={activeTab === 'batch' ? { ...styles.button, ...styles.activeButton } : styles.button}
                     onClick={() => setActiveTab('batch')}
                 >
-                    Entrada de Proutos
+                    Entrada de Produtos
                 </button>
                 <button
                     style={activeTab === 'shipment' ? { ...styles.button, ...styles.activeButton } : styles.button}
