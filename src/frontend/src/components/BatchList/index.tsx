@@ -83,49 +83,51 @@ const BatchesList: React.FC = () => {
                     </tbody>
                 </table>
 
-                {selectedBatch && (
-                    <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-                        <div className="p-6 rounded-lg flex flex-col items-center justify-center text-center">
-                            <h2 className="text-3xl font-semibold text-gray-800 mb-3">Detalhes de Entrada</h2>
+                <div className='items-center mr-96'>
+                    {selectedBatch && (
+                        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+                            <div className="p-6 rounded-lg flex flex-col items-center justify-center text-center">
+                                <h2 className="text-3xl font-semibold text-gray-800 mb-3">Detalhes de Entrada</h2>
 
-                            <p className="text-gray-700 mb-1 text-lg">
-                                Data de Compra: {new Date(selectedBatch.data_compra).toLocaleDateString()}
-                            </p>
+                                <p className="text-gray-700 mb-1 text-lg">
+                                    Data de Compra: {new Date(selectedBatch.data_compra).toLocaleDateString()}
+                                </p>
 
-                            <p className="text-gray-600 text-lg mb-4">
-                                Fornecedor: <span className="text-cyan-600 font-semibold">{selectedBatch.fornecedor.razao_social}</span>
-                            </p>
+                                <p className="text-gray-600 text-lg mb-4">
+                                    Fornecedor: <span className="text-cyan-600 font-semibold">{selectedBatch.fornecedor.razao_social}</span>
+                                </p>
 
-                            <div className="w-full">
-                                {/* Cabeçalho da Tabela */}
-                                <div className="grid grid-cols-3 gap-4 text-gray-800 text-lg font-semibold pb-2">
-                                    <span>Nome do Produto</span>
-                                    <span>Validade do Produto</span>
-                                    <span>Quantidade</span>
-                                </div>
-
-                                {/* Conteúdo da Tabela */}
-                                {selectedBatch.produtos.map((loteProduto) => (
-                                    <div
-                                        key={loteProduto.produto.id_produto}
-                                        className="grid grid-cols-3 gap-4 py-2  text-gray-700 hover:text-cyan-600"
-                                    >
-                                        <span className="text-center">{loteProduto.produto.nome_produto}</span>
-                                        <span className="text-center">{loteProduto.validade_produto ? new Date(loteProduto.validade_produto).toLocaleDateString() : 'N/A'}</span>
-                                        <span className="text-center">{loteProduto.quantidade}</span>
+                                <div className="w-full">
+                                    {/* Cabeçalho da Tabela */}
+                                    <div className="grid grid-cols-3 gap-4 text-gray-800 text-lg font-semibold pb-2">
+                                        <span>Nome do Produto</span>
+                                        <span>Validade do Produto</span>
+                                        <span>Quantidade</span>
                                     </div>
-                                ))}
+
+                                    {/* Conteúdo da Tabela */}
+                                    {selectedBatch.produtos.map((loteProduto) => (
+                                        <div
+                                            key={loteProduto.produto.id_produto}
+                                            className="grid grid-cols-3 gap-4 py-2  text-gray-700 hover:text-cyan-600"
+                                        >
+                                            <span className="text-center">{loteProduto.produto.nome_produto}</span>
+                                            <span className="text-center">{loteProduto.validade_produto ? new Date(loteProduto.validade_produto).toLocaleDateString() : 'N/A'}</span>
+                                            <span className="text-center">{loteProduto.quantidade}</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    </Modal>
-                )}
+                        </Modal>
+                    )}
+                </div>
             </div>
 
             {
                 data && (
                     <div className="pagination-controls py-4 flex justify-center items-center">
                         <button
-                            className="pagination-button mx-2"
+                            className=" mx-2  text-white hover:bg-cyan-600 transition duration-300 bg-cyan-500 "
                             disabled={page === 1}
                             onClick={() => handlePageChange(page - 1)}
                         >
@@ -135,7 +137,7 @@ const BatchesList: React.FC = () => {
                             Página {page} de {data.totalPages}
                         </span>
                         <button
-                            className="pagination-button mx-2"
+                            className="bg-cyan-500  text-white hover:bg-cyan-600 transition duration-300 mx-2"
                             disabled={page === data.totalPages}
                             onClick={() => handlePageChange(page + 1)}
                         >

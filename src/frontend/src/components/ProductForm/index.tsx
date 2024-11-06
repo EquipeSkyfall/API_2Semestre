@@ -171,6 +171,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <label htmlFor="nome_produto">Nome do Produto</label>
                             <input
                                 {...register("nome_produto")}
+                                className='input1'
                                 type='text'
                                 id="nome_produto"
                                 placeholder={errors.nome_produto ? errors.nome_produto.message : "Obrigatório"}
@@ -180,6 +181,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         <div className="form-field required">
                             <label htmlFor="preco_venda">Preço de Venda</label>
                             <input
+                            className='input1'
                                 type="text"
                                 id="preco_venda"
                                 value={precoVenda}
@@ -191,6 +193,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         <div className="form-field">
                             <label htmlFor="preco_custo">Preço de Custo</label>
                             <input
+                            className='input1'
                                 type="text"
                                 id="preco_custo"
                                 value={precoCusto}
@@ -205,6 +208,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <div className="peso-container">
                                 <input
                                     {...register("peso_produto", { valueAsNumber: true })}
+                                    className='input1'
                                     type='number'
                                     id="peso_produto"
                                     placeholder={errors.peso_produto ? errors.peso_produto.message : "Obrigatório"}
@@ -228,6 +232,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <label htmlFor="altura_produto">Altura (cm)</label>
                             <input
                                 {...register("altura_produto", { valueAsNumber: true })}
+                                className='input1'
                                 type='number'
                                 id="altura_produto"
                                 placeholder={errors.altura_produto ? errors.altura_produto.message : "Obrigatório"}
@@ -240,6 +245,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <input
                                 {...register("largura_produto", { valueAsNumber: true })}
                                 type='number'
+                                className='input1'
                                 id="largura_produto"
                                 placeholder={errors.largura_produto ? errors.largura_produto.message : "Obrigatório"}
                                 min='0'
@@ -250,6 +256,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <label htmlFor="comprimento_produto">Comprimento (cm)</label>
                             <input
                                 {...register("comprimento_produto", { valueAsNumber: true })}
+                                className='input1'
                                 type='number'
                                 id="comprimento_produto"
                                 placeholder={errors.comprimento_produto ? errors.comprimento_produto.message : "Obrigatório"}
@@ -261,6 +268,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <label htmlFor="marca_produto">Marca do Produto</label>
                             <input
                                 {...register("marca_produto")}
+                                className='input1'
                                 type='text'
                                 id="marca_produto"
                                 placeholder="Opcional"
@@ -272,6 +280,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <input
                                 {...register("modelo_produto")}
                                 type='text'
+                                className='input1'
                                 id="modelo_produto"
                                 placeholder="Opcional"
                             />
@@ -283,6 +292,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 {...register("localizacao_estoque")}
                                 type='text'
                                 id="localizacao_estoque"
+                                className='input1'
                                 placeholder="Opcional"
                             />
                         </div>

@@ -32,7 +32,7 @@ function LoginForm() {
 
     return (
         <div className="flex items-center justify-center h-screen w-screen ">
-            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-8 sm:gap-y-2 border-2 bg-slate-50 shadow-md p-5 sm:p-11 mt-48 sm:mt-0 place-items-center rounded">
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-8 sm:gap-y-2 border-2 bg-slate-50 shadow-md p-5 sm:p-11 mt-20 sm:-mt-32 place-items-center rounded">
                 <label className='text-4xl sm:text-2xl text-cyan-500 font-bold mt-2 sm:-mt-5 mb-5'>Login</label>
                 {successMessage && <p className="text-green-500 font-bold">{successMessage}</p>}
                 {serverError && <p className="text-red-500">{serverError}</p>}

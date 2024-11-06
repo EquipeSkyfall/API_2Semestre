@@ -44,7 +44,7 @@ h1 {
     border-radius: 12px;
     width: 90%;
     max-width: 40vw;
-    max-height: 85vh;
+    max-height: 100vh; /*Se tirar de 100vh vai quebrar modal historico (Infelizmente) */
     overflow-y: auto; /* Permitindo rolagem vertical se o conteúdo ultrapassar */
     position: relative;
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
