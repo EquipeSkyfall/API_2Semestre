@@ -6,11 +6,31 @@ const BatchesList: React.FC = () => {
     const [selectedDate, setSelectedDate] = useState<string>('');
     const [debouncedDate, setDebouncedDate] = useState<string>('');
     const [page, setPage] = useState(1);
-    const limit = 11;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBatch, setSelectedBatch] = useState(null);
+    const [limit, setLimit] = useState(11);
 
     const { data, isLoading, isError } = useGetBatches(debouncedDate, page, limit);
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 850) { // 640px é o ponto de corte para SM
+                setLimit(7);
+            } else if (window.innerWidth <= 1200) {
+                setLimit(8);
+            } else{
+                setLimit(11)
+            }
+        };
+
+        // Adiciona o listener e chama-o inicialmente
+        window.addEventListener('resize', handleResize);
+        handleResize();
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -34,7 +54,7 @@ const BatchesList: React.FC = () => {
 
     const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedDate(event.target.value);
-        setPage(1); // Reset to the first page on date change
+        setPage(1);
     };
 
     const handlePageChange = (newPage: number) => {
@@ -45,16 +65,16 @@ const BatchesList: React.FC = () => {
     if (isError) return <p className="text-center text-red-600">Erro ao Carregar Lotes</p>;
 
     return (
-        <div className="bg-white w-1/2 h-[45rem] mt-10 rounded-lg shadow-lg text-center flex flex-col ">
-            <div className="flex-grow overflow-y-hidden p-4">
-                <h2 className="text-cyan-600 font-['Afacad_Flux']">Entradas</h2>
+        <div className="bg-white w-full md:w-1/2 md:h-[45rem] mt-5 md:mt-10 rounded-lg lg:text-base text-sm shadow-lg text-center flex flex-col ">
+            <div className="flex-grow overflow-y-hidden p-0 sm:p-4">
+                <h2 className="text-cyan-600 font-['Afacad_Flux'] pt-2 sm:pt-0">Entradas</h2>
 
                 <div className="flex justify-center -mt-2">
                     <label htmlFor="datePicker" className="mr-2 text-gray-600 mt-2">Selecione uma data:</label>
                     <input
                         type="date"
                         id="datePicker"
-                        className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                        className="border border-gray-300 rounded-lg p-2 focus:outline-none focus:border-cyan-700"
                         value={selectedDate}
                         onChange={handleDateChange}
                     />
@@ -98,14 +118,12 @@ const BatchesList: React.FC = () => {
                                 </p>
 
                                 <div className="w-full">
-                                    {/* Cabeçalho da Tabela */}
                                     <div className="grid grid-cols-3 gap-4 text-gray-800 text-lg font-semibold pb-2">
                                         <span>Nome do Produto</span>
                                         <span>Validade do Produto</span>
                                         <span>Quantidade</span>
                                     </div>
 
-                                    {/* Conteúdo da Tabela */}
                                     {selectedBatch.produtos.map((loteProduto) => (
                                         <div
                                             key={loteProduto.produto.id_produto}
@@ -146,7 +164,7 @@ const BatchesList: React.FC = () => {
                     </div>
                 )
             }
-        </div >
+        </div>
     );
 };
 
