@@ -5,8 +5,7 @@ import { logControllers, RequestWithUser } from './logControllers';
 class ProductControllers {
 
   public getProducts = async (request: Request, response: Response) => {
-    const { search='', id_setor, id_categoria, id_fornecedor, forshipping, page = '1', limit = '10' } = request.query; 
-    const { productsArray = [] } = request.body;
+    const { search='', id_setor, id_categoria, id_fornecedor, forshipping, page = '1', limit = '10' } = request.query;
     const pageNumber = parseInt(page as string);
     const limitNumber = parseInt(limit as string);
     const skip = (pageNumber - 1) * limitNumber;
@@ -38,9 +37,6 @@ class ProductControllers {
           whereCondition.total_estoque = {
             gt: 0,
           };
-        }
-        if (productsArray.length > 0) {
-          whereCondition.id = { in: productsArray }
         }
 
         const totalProducts = await prisma.produto.count({
@@ -79,6 +75,81 @@ class ProductControllers {
         console.error('Error fetching products:', error);
         response.status(500).json({ message: 'Error fetching products', error });
       }
+  };
+
+  public getAlertProducts = async (request: Request, response: Response) => {
+    const { search='', id_setor, id_categoria, page = '1', limit = '10', productsArray } = request.body;
+    const pageNumber = parseInt(page as string);
+    const limitNumber = parseInt(limit as string);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    console.log('ARRAYYYYY: ',productsArray)
+
+    try {
+      const whereCondition: any = { produto_deletedAt: null }; // Exclude soft-deleted products
+
+      // Apply filters based on query parameters
+      if (productsArray && Array.isArray(productsArray) && productsArray.length > 0) {
+        whereCondition.id_produto = {
+            in: productsArray.map((id: string) => parseInt(id)),
+        };
+      } else if (productsArray !== undefined && productsArray.length === 0) {
+          // Return an empty response if productIds is an empty array
+          return response.status(200).json({
+              products: [],
+              totalProducts: 0,
+              totalPages: 0,
+              currentPage: pageNumber,
+          });
+      }
+      if (search) {
+          whereCondition.nome_produto = {
+              contains: search,
+          };
+      }
+      if (id_setor) {
+          whereCondition.id_setor = parseInt(id_setor as string);
+      }
+      if (id_categoria) {
+          whereCondition.id_categoria = parseInt(id_categoria as string);
+      }
+
+      const totalProducts = await prisma.produto.count({
+        where: whereCondition,
+      });
+
+      const productsWithCount = await (await prisma.produto.findMany({
+        where: whereCondition,
+        skip,
+        take: limitNumber,
+        orderBy: {
+          nome_produto: 'asc',
+        },
+        include: {
+          categoria: {
+            select: {
+              nome_categoria: true,
+            },
+          },
+          setor: {
+            select: {
+              nome_setor: true,
+            },
+          },
+        },
+      }))
+
+      // console.log(productsWithCount)
+      response.status(200).json({
+        products: productsWithCount,
+        totalProducts,
+        totalPages: Math.ceil(totalProducts / limitNumber),
+        currentPage: pageNumber,
+      });
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      response.status(500).json({ message: 'Error fetching products', error });
+    }
   };
 
   public createProduct = async (request: RequestWithUser, response: Response) => {

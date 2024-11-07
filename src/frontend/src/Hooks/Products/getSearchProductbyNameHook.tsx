@@ -38,7 +38,6 @@ interface QueryParams {
     page?: number;
     limit?: number;
     forshipping?: number;
-    productsArray?: number[];
 }
 
 const useSearchProducts = (params: QueryParams) => {
@@ -47,24 +46,32 @@ const useSearchProducts = (params: QueryParams) => {
     const { data = { products: [], totalPages: 1, totalProducts: 0 }, isLoading, isError, refetch } = useQuery<ProductsResponse>({
         queryKey: ['products', params],
         queryFn: async () => {
+            
             try {
-                // Determine if we should send as GET or POST based on productsArray
-                const response = params.productsArray && params.productsArray.length > 0
-                    ? await axios.post(`http://127.0.0.1:3000/products/post-array`, { ...params, productsArray: params.productsArray }, { withCredentials: true })
-                    : await axios.get(`http://127.0.0.1:3000/products`, { params, withCredentials: true });
-                
+                const response = await axios.get(`http://127.0.0.1:3000/products`, { params, withCredentials: true });
                 return response.data || { products: [], totalPages: 1, totalProducts: 0 };
             } catch (error) {
                 if (axios.isAxiosError(error)) {
+                    // This is an Axios error
                     const errorResponse = error.response;
+
+                    // Log the status and any messages
                     console.error('Error status:', errorResponse?.status);
-                    
+                    // console.error('Error message:', errorResponse?.data?.message || 'No message available');
+
+                    // You can handle specific status codes here
                     if (errorResponse?.status === 401) {
-                        sessionStorage.clear();
+                        console.log('Unauthorized access - redirecting or handling as necessary');
+                        sessionStorage.clear()
                         navigate('/', { state: { from: location }, replace: true });
+                         
                     }
+
+                    // Optionally throw the error to make it accessible in the component
+                    // throw new Error(errorResponse?.data?.message || 'An error occurred');
                 } else {
                     console.error('An unknown error occurred:', error);
+                    // throw new Error('An unknown error occurred');
                 }
             }
         },

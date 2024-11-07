@@ -3,6 +3,7 @@
 import UserSearchBar from '../components/UserSearchBar';
 import UserInfo from '../components/UserInfo';
 import useGetUser from '../Hooks/Users/getUserHook';
+import UserProductsList from '../components/UserProductLists';
 
 const UsersPage = () => {
     const { data: user, isLoading, error } = useGetUser();
@@ -25,7 +26,7 @@ const UsersPage = () => {
             <UserInfo/>
             {user.role === 'Gerente'? (<>
                 <h1>Alertas do Sistema</h1>
-                
+                    <UserProductsList />
             </>
             ): <></>}
           

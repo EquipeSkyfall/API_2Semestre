@@ -51,7 +51,7 @@ router
 
 router
   .route('/products/post-array')
-  .post(auth,productController.getProducts)
+  .post(auth,productController.getAlertProducts)
 
 // Find Products with missing data
 router

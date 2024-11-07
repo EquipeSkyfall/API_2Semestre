@@ -42,7 +42,7 @@ function AutoNotifier() {
 
     useEffect(() => {
         if (data?.expiring.length > 0) {
-            setExpiringIds(data?.expiring.map(product => product.id));
+            setExpiringIds(data?.expiring.map(product => product.id_produto));
             notify(`${data?.expiring.length} produto(s) próximo da validade!`, 'expiration');
         } else {
             toast.dismiss('expiration');
@@ -52,7 +52,7 @@ function AutoNotifier() {
 
     useEffect(() => {
         if (data?.lowStock.length > 0) {
-            setLowStockIds(data?.lowStock.map(product => product.id));
+            setLowStockIds(data?.lowStock.map(product => product.id_produto));
             notify(`${data?.lowStock.length} produto(s) com estoque baixo!`, 'low-stock');
         } else {
             toast.dismiss('low-stock'); 

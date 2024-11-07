@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import LowStockList from "./LowStock";
+import ExpiringList from "./Expiration";
 
 export interface FilterValues {
     search: string;
@@ -8,7 +10,10 @@ export interface FilterValues {
 
 const UserProductsList: React.FC = () => {
     return (
-        <></>
+        <>
+            <LowStockList />
+            <ExpiringList />
+        </>
     );
 };
 

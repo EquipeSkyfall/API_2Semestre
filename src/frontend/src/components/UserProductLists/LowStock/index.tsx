@@ -1,14 +1,14 @@
 import React, { useCallback, useState } from "react";
 import { FilterValues } from "..";
-import useSearchProducts from "../../../Hooks/Products/getSearchProductbyNameHook";
 import { useProductIds } from "../../../contexts/ProductsIdsContext";
 import SearchBar from "../../ProdutosSearchBar";
+import useAlertProducts from "../../../Hooks/Products/getAlertProductsHook";
 
 const LowStockList: React.FC = () => {
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState<FilterValues>({ search: '', id_setor: null, id_categoria: null });
     const { lowStockIds } = useProductIds();
-    const { products, totalPages, isLoading, isError } = useSearchProducts({ ...filters, page: page, limit: 10, productsArray: lowStockIds });
+    const { products, totalPages, isLoading, isError } = useAlertProducts({ ...filters, page: page, limit: 10, productsArray: lowStockIds });
 
     const handleSearchTermChange = useCallback(
         (term: string, categoryId: number | null, sectorId: number | null) => {
@@ -24,6 +24,7 @@ const LowStockList: React.FC = () => {
 
     return (
         <>
+            <h2>Produtos com Estoque Baixo</h2>
             <SearchBar onSearchTermChange={handleSearchTermChange} />
 
             {/* Display loading state */}
@@ -32,9 +33,39 @@ const LowStockList: React.FC = () => {
             {/* Display error state */}
             {isError && <p>Erro ao carregar produtos.</p>}
 
-            {/* Display products if not loading or error */}
-            {!isLoading && !isError && products.length > 0 ? (
-                
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome do Produto</th>
+                        <th>Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {!isLoading && !isError && products.length > 0 ? (
+                        products.map((product) => (
+                            <tr key={product.id_produto}>
+                                <td>{product.id_produto}</td>
+                                <td>{product.nome_produto}</td>
+                                <td>{product.total_estoque}</td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={3}>Nenhum produto encontrado.</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+            <div className="page" >
+                <button type="button" disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}>
+                    Anterior
+                </button>
+                <span>Página {page} de {totalPages}</span>
+                <button type="button" disabled={page === totalPages} onClick={() => setPage((prev) => prev + 1)}>
+                    Próxima
+                </button>
+            </div>
         </>
     );
 };
