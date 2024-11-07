@@ -127,7 +127,7 @@ CREATE TABLE `Users` (
 CREATE TABLE `SystemLog` (
     `id_log` INTEGER NOT NULL AUTO_INCREMENT,
     `data_processo` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `action_type` VARCHAR(20) NOT NULL,
+    `action_type` VARCHAR(50) NOT NULL,
     `id_user` INTEGER NOT NULL,
     `id_categoria` INTEGER NULL,
     `id_setor` INTEGER NULL,

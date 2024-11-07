@@ -59,6 +59,9 @@ export default function NavBar() {
             <Link to='/Fornecedor'>
               <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Fornecedores</button>
             </Link>
+            <Link to='/usuario'>
+              <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Usuários</button>
+            </Link>
           </div>
         </div>
       </div>

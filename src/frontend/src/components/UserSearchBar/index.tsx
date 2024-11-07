@@ -9,7 +9,7 @@ import UsersList from "../UserList";
           <input
             className="search"
             type="text"
-            placeholder="Search movies..."
+            placeholder="Search Users..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             />

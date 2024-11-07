@@ -94,7 +94,7 @@ const ProductList: React.FC<ProductListProps> = ({
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={4} className="no-products">Nenhum produto encontrado</td>
+                                <td colSpan={9} className="no-products">Nenhum produto encontrado</td>
                             </tr>
                         )}
                     </tbody>
