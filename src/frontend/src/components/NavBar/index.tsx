@@ -38,12 +38,11 @@ export default function NavBar() {
         </div>
 
         <div
-          className={` absolute shadow-lg end-2 lg:end-auto bg-slate-50 transition-all duration-300 ease-in-out ${isOpen
-              ? "top-full opacity-100"
-              : "top-0 lg:opacity-100 opacity-0 max-h-0 overflow-hidden lg:overflow-visible"
-            }`}
-        >
-          <div className="flex flex-col lg:flex-row gap-0 lg:gap-8 lg:place-items-start items-end mt-0 p-2 lg:pr-0 lg:p-2 lg:ml-36 lg:text-lg ">
+          className={` absolute z-50 shadow-lg end-0 lg:end-auto bg-slate-50 transition-all duration-300 ease-in-out ${isOpen
+            ? "top-full opacity-100"
+            : "top-0 lg:opacity-100 opacity-0 max-h-0 overflow-hidden lg:overflow-visible"
+            }`}>
+          <div className="flex flex-col lg:flex-row mr gap-0 lg:gap-8 lg:place-items-start items-end mt-0 p-2 lg:pr-0 lg:p-2 lg:ml-36 lg:text-lg ">
             <Link to='/products'>
               <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Produtos</button>
             </Link>
