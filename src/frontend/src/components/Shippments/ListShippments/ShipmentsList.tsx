@@ -6,12 +6,34 @@ const ShipmentsList: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [debouncedDate, setDebouncedDate] = useState<string>('');
   const [page, setPage] = useState(1);
-  const limit = 11;
+  const [limit, setLimit] = useState(11);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedShipment, setSelectedShipment] = useState(null);
   const [collapsedBatches, setCollapsedBatches] = useState<{ [key: number]: boolean }>({});
 
   const { data, isLoading, isError } = useGetShipments(debouncedDate, page, limit);
+
+  useEffect(() => {
+    const handleResize = () => {
+        if (window.innerWidth <= 850) { 
+            setLimit(7);
+        } else if (window.innerWidth <=1070) {
+          setLimit (8)
+        }
+         else if (window.innerWidth <= 1200) {
+            setLimit(10);
+        } else{
+            setLimit(11)
+        }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+        window.removeEventListener('resize', handleResize);
+    };
+}, []);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -52,9 +74,9 @@ const ShipmentsList: React.FC = () => {
   if (isError) return <p className="text-center text-red-600">Erro ao Carregar as Saídas.</p>;
 
   return (
-    <div className="bg-white w-1/2 h-[45rem] mt-10 rounded-lg shadow-lg flex flex-col text-center">
-      <div className="flex-grow overflow-y-hidden p-4">
-        <h2 className="text-cyan-600 font-['Afacad_Flux']">Saídas</h2>
+    <div className="bg-white w-full md:w-1/2 md:h-[45rem] mt-5 md:mt-10 rounded-lg lg:text-base text-sm shadow-lg text-center flex flex-col">
+      <div className="flex-grow overflow-y-hidden p-0 sm:p-4">
+        <h2 className="text-cyan-600 font-['Afacad_Flux'] pt-2 sm:pt-0">Saídas</h2>
 
         <div className="flex justify-center -mt-2">
           <label htmlFor="datePicker" className="mr-2 text-gray-600 mt-2">Selecione uma data:</label>
