@@ -1,0 +1,264 @@
+.h2 {
+    font-size: 3rem;
+    color: #333;
+    margin-bottom: 0.5em;
+    display: block;
+    width: 100%;
+}
+
+/* Overlay do Modal */
+.overlay-fundo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal - Container */
+.conteudo-modal-edit {
+    background-color: #fff;
+    width: 50%;
+    height: auto;
+    padding: 1.5rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    transition: width 0.3s ease;
+}
+
+/* Cabeçalho do Formulário */
+.form-header {
+    grid-column: span 2;
+    font-size: 3rem;
+    color: #333;
+    text-align: left;
+}
+
+/* Grupos de Formulário */
+.custom-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.custom-non-form-group {
+    grid-column: span 2;
+}
+
+/* Rótulo dos Campos */
+.form-label {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #555;
+}
+
+/* Inputs e Textarea */
+.form-input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+/* Contêiner Peso - Alinhar Peso e Unidade Lado a Lado */
+.peso-container1 {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* Espaço entre o campo de peso e o seletor de unidade */
+}
+
+/* Campo de entrada de peso */
+.form-input1 {
+    flex: 1;
+    /* Ocupar o máximo possível do espaço restante */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+}
+
+/* Seletor de unidade */
+.unit-select {
+    width: 25%;
+    /* Proporção do seletor de unidade em relação ao campo de peso */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    font-size: 1rem;
+    color: #333;
+    box-sizing: border-box;
+}
+
+/* Focus */
+.form-input1:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+textarea.form-input {
+    resize: vertical;
+}
+
+/* Mensagem de Erro */
+.error-message {
+    color: #e74c3c;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+/* Ações do Formulário - Botões */
+.form-actions {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+/* Botões */
+.custom-btn-primary,
+.custom-btn-secondary {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn-primary {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+.custom-btn-primary:hover {
+    background-color: #1c98ab;
+}
+
+.custom-btn-secondary {
+    background-color: #f1f1f1;
+    color: #333;
+    border: 1px solid #ddd;
+}
+
+.custom-btn-secondary:hover {
+    background-color: #4e5757;
+}
+
+.form-group {
+    margin-top: -7%;
+}
+
+select,
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.custom-btn-primary,
+.custom-btn-secondary {
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    width: 100%;
+    
+}
+
+.custom-btn-primary {
+    background-color: #22d3ee;
+    color: white;
+}
+
+.custom-btn-secondary {
+    background-color: #7f8c8d;
+    color: white;
+}
+
+.custom-btn-primary:hover,
+.custom-btn-secondary:hover {
+    opacity: 0.9;
+}
+
+.custom-btn-primary,
+.custom-btn-secondary {
+    margin-top: 2%;
+}
+
+@media (max-width: 1200px) {
+    .form-header {
+        margin-bottom: -10px;
+    }
+
+    .form-input {
+        margin-bottom: -1%;
+    }
+    
+
+
+    .custom-btn-primary,
+    .custom-btn-secondary {
+        margin-top: -5%;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .custom-btn-primary,
+    .custom-btn-secondary {
+        margin-top: 1%;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-header {
+        margin-bottom: -10px;
+    }
+
+    .form-input {
+        margin-bottom: -1%;
+    }
+    
+
+
+    .custom-btn-primary,
+    .custom-btn-secondary {
+        margin-top: -5%;
+    }
+}
+
+
+@media (max-width: 480px) {
+
+    .custom-btn-primary,
+    .custom-btn-secondary {
+        margin-top: -5%;
+    }
+
+    .conteudo-modal-edit{
+        overflow-y: hidden;
+    }
+}

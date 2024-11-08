@@ -3,6 +3,7 @@ import useGetSupplierProducts from '../../Hooks/Supplier/useGetSupplierProducts'
 import useDeleteProductFromSupplier from '../../Hooks/Supplier/useDeleteProductFromSupplier';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import './supplierproductsmodal.css'
 
 
 interface SupplierProductsModalProps {
@@ -51,9 +52,9 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="modal-overlay">
-            <div className="modal-content">
-                <button className="close-button" onClick={onClose}>
+        <div className="modal-overlay-supplier-produto">
+            <div className="modal-content-supplier-produto rounded-lg">
+                <button className="fechar-modal rounded-full" onClick={onClose}>
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
                 <h2>Produtos do Fornecedor</h2>
@@ -103,8 +104,15 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                         </ul>
 
                         {/* Controles de paginação */}
-                        <div className="pagination flex justify-between mt-4 text-xl">
-                            <button onClick={handlePrevPage} disabled={page === 1} className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md">
+                        <div className="flex justify-between mt-4 text-xl">
+                            <button
+                                onClick={handlePrevPage}
+                                disabled={page === 1}
+                                className={`px-4 py-2 rounded-md text-white ${page === 1
+                                        ? "bg-gray-300 cursor-not-allowed" // Quando desabilitado, botão cinza
+                                        : "bg-blue-500 hover:bg-blue-600 cursor-pointer" // Quando habilitado, botão azul
+                                    }`}
+                            >
                                 Anterior
                             </button>
                             <span>
@@ -112,11 +120,16 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                             </span>
                             <button
                                 onClick={handleNextPage}
-                                disabled={page === data?.totalPages} className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded-md"
+                                disabled={page === data?.totalPages}
+                                className={`px-4 py-2 rounded-md text-white ${page === data?.totalPages
+                                        ? "bg-gray-300 cursor-not-allowed" // Quando desabilitado, botão cinza
+                                        : "bg-blue-500 hover:bg-blue-600 cursor-pointer" // Quando habilitado, botão azul
+                                    }`}
                             >
                                 Próximo
                             </button>
                         </div>
+
                     </>
                 )}
 

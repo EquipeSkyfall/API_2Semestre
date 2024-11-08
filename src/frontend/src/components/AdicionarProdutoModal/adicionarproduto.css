@@ -1,3 +1,4 @@
+/* 
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -7,16 +8,46 @@
     background-color: rgba(0, 0, 0, 0.7);
     display: flex;
     z-index: 1000;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-conteudo {
-    background: #463535;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     width: 50%;
     height: 100%;
     position: fixed;
     right: 0;
     top: 0;
+    background-color: #fff;
+    padding: 20px;
+    overflow-y: auto;
+    transition: width 0.3s ease;
+} */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    z-index: 1000;
+    
+}
+
+.modal-conteudo {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    width: 50%;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: #fff;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
 }
 
 /* .botao-fechar {
@@ -60,3 +91,66 @@
     transform: rotate(45deg) scale(1.1);
 }
 
+/* Responsividade do conteúdo do modal */
+@media (max-width: 1200px) {
+    .modal-conteudo {
+        width: 70%;
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-conteudo {
+        width: 90%;
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-conteudo {
+        width: 100%;
+        padding: 10px;
+        border-radius: 0;
+    }
+}
+
+/* Estilo do botão de fechar */
+.botao-fechar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #aaa;
+    padding: 5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.botao-fechar i {
+    font-size: 1.6rem;
+}
+
+.botao-fechar:hover {
+    color: #ff0000;
+    transform: rotate(45deg) scale(1.1);
+}
+
+/* Estilo do corpo do modal */
+.corpo-modal-edit {
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+/* Responsividade do corpo do modal */
+@media (max-width: 480px) {
+    .modal-conteudo{
+        overflow-y: auto;
+    }
+
+    .corpo-modal-edit {
+        padding: 10px;
+    }
+}

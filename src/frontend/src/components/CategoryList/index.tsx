@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState, useMemo } from "react";
 import { Category } from "../CategoryTypes/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import './categorylist.css';
 
 interface CategoryListProps {
     categories: Category[];
@@ -12,6 +11,7 @@ interface CategoryListProps {
     handlePageChange: (newPage: number) => void;
     onDelete: (id_categoria: number) => void;
     onEdit: (category: Category) => void;
+    successMessage?: string;
 }
 
 const CategoryList: React.FC<CategoryListProps> = React.memo(({
@@ -22,58 +22,95 @@ const CategoryList: React.FC<CategoryListProps> = React.memo(({
     handlePageChange,
     onDelete,
     onEdit,
+    successMessage,
 }) => {
-    return (
-        <>
-            <div>
-                <h1 className="text-center mb-4">Lista de Categorias</h1>
-            </div>
-            <div className="category-list">
-                <ul>
-                    {categories.length > 0 ? (
-                        categories.map((category: Category) => (
-                            <li key={category.id_categoria} className="category-item">
-                                <span className="category-name truncate" title={category.nome_categoria}>
-                                    {category.nome_categoria} |{" "}
-                                    <span className="truncate" title={category.descricao_categoria}>
-                                        {category.descricao_categoria}
-                                    </span>
-                                </span>
-                                <div className="category-actions">
-                                    <button onClick={() => onEdit(category)} className="edit-btn">
-                                        <FontAwesomeIcon icon={faPencilAlt} className="edit-icon" />
-                                    </button>
-                                    <button onClick={() => onDelete(category.id_categoria)} className="delete-btn">
-                                        <FontAwesomeIcon icon={faTrashAlt} className="delete-icon" />
-                                    </button>
-                                </div>
-                            </li>
-                        ))
-                    ) : (
-                        <li>Não há categorias registradas.</li>
-                    )}
-                </ul>
+    const [searchTerm, setSearchTerm] = useState("");
 
-                {/* Paginação */}
-                <div className="pagination-controls">
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="pagination-btn"
-                    >
-                        Voltar
-                    </button>
-                    <span>{totalPages > 0 ? `Página ${currentPage} de ${totalPages}` : ''}</span>
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage >= totalPages}
-                        className="pagination-btn"
-                    >
-                        Avançar
-                    </button>
+    // Filtra as categorias com base no termo de pesquisa
+    const filteredCategories = useMemo(() => {
+        return categories.filter(category =>
+            category.nome_categoria.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            category.descricao_categoria.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [searchTerm, categories]);
+
+    return (
+        <div className="mt-8">
+            {/* Exibe a mensagem de sucesso, se existir */}
+            {successMessage && (
+                <div className="bg-green-500 text-white text-center p-2 rounded mb-4">
+                    {successMessage}
                 </div>
+            )}
+
+            {/* Barra de pesquisa */}
+            <div className="mb-4">
+                <input
+                    type="text"
+                    placeholder="Pesquisar categorias..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="px-4 py-2 border border-gray-300 rounded-md w-full sm:w-1/2"
+                />
             </div>
-        </>
+
+            <div className="overflow-x-auto">
+                <table className="min-w-full table-auto border-collapse bg-white shadow-sm rounded-lg">
+                    <thead>
+                        <tr className="bg-cyan-500">
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-white w-1/4 sm:w-1/3">Nome</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-white w-1/2 sm:w-1/3">Descrição</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-white w-1/4 sm:w-1/3">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredCategories.length > 0 ? (
+                            filteredCategories.map((category: Category) => (
+                                <tr key={category.id_categoria} className="border-b hover:bg-gray-50">
+                                    <td className="px-4 py-2 text-sm text-gray-700 truncate" style={{ maxWidth: '200px' }} title={category.nome_categoria}>
+                                        {category.nome_categoria}
+                                    </td>
+                                    <td className="px-4 py-2 text-sm text-gray-700 truncate" style={{ maxWidth: '300px' }} title={category.descricao_categoria}>
+                                        {category.descricao_categoria}
+                                    </td>
+                                    <td className="px-4 py-2 text-sm text-gray-700 flex items-center gap-2">
+                                        <button onClick={() => onEdit(category)} className="text-blue-500 hover:text-blue-700">
+                                            <FontAwesomeIcon icon={faPencilAlt} />
+                                        </button>
+                                        <button onClick={() => onDelete(category.id_categoria)} className="text-red-500 hover:text-red-700">
+                                            <FontAwesomeIcon icon={faTrashAlt} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={3} className="px-4 py-2 text-center text-gray-500">Não há categorias registradas.</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Paginação */}
+            <div className="flex justify-start items-center mt-4 space-x-4">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-700 disabled:bg-gray-300"
+                >
+                    Voltar
+                </button>
+                <span className="text-sm text-gray-600">{totalPages > 0 ? `Página ${currentPage} de ${totalPages}` : ''}</span>
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage >= totalPages}
+                    className="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-700 disabled:bg-gray-300"
+                >
+                    Avançar
+                </button>
+            </div>
+        </div>
     );
 });
 

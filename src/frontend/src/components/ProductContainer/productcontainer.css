@@ -5,7 +5,7 @@
   gap: 20px; /* Espaçamento entre os itens */
   max-width: 97%; /* Largura máxima da contêiner */
   height: 85vh; /* Altura adaptada */
-  margin: auto; /* Centraliza o contêiner */
+  margin: 40px auto; /* Centraliza o contêiner com um espaço maior no topo */
   padding: 20px; /* Adiciona espaço interno ao contêiner */
   background-color: #f9fafb; /* Cor de fundo */
   border-radius: 12px; /* Cantos arredondados */
@@ -13,12 +13,21 @@
   box-sizing: border-box; /* Inclui padding e bordas nas dimensões totais */
 }
 
-@media (max-width: 1390px) {
-  .container-produto {
-      background-color: transparent;
-      border-radius: 0;
-      box-shadow: none;
-      padding: 0;
-      height: auto;
-    }
-} 
+@media (max-width: 1200px) {
+  .container-produto{
+    height: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-produto{
+    height: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .container-produto{
+    height: auto;
+  }
+}
+

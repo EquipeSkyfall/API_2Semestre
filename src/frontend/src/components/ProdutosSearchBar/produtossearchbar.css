@@ -18,13 +18,20 @@
 }
 
 .dropdown-button {
-    padding: 10px;
-    background-color: #007bff; /* Cor do botão */
-    color: white;
-    border: 1px solid #007bff; /* Borda do botão */
+    margin-top: 4px;
+    padding: 11.5px 14px; /* Ajuste o padding para dar mais espaço ao conteúdo */
+    background-color: #007bff; /* Cor de fundo azul */
+    color: white; /* Cor do texto */
+    gap: 5px;
+    border: 1px solid #007bff; /* Cor da borda */
     border-left: none; /* Remover borda esquerda */
-    border-radius: 0 6px 6px 0; /* Bordas arredondadas somente à direita */
+    border-radius: 0 4px 4px 0; /* Bordas arredondadas */
     cursor: pointer;
+    font-size: 0.875rem; /* Fonte um pouco menor */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease; /* Transição suave na cor de fundo */
 }
 
 .dropdown-content {
@@ -82,4 +89,93 @@
 
 .searchbar-button:hover {
     background-color: #0267d3; /* Cor ao passar o mouse */
+}
+
+
+@media (max-width: 768px) {
+    /* Ajuste para a SearchBar */
+    .searchbar-wrapper {
+        width: 100%; /* A largura fica 100% em telas pequenas */
+    }
+
+    .searchbar-button {
+        width: 100%; /* Faz o botão ocupar toda a largura disponível em telas pequenas */
+    }
+
+    .dropdown-button {
+        padding: 11.4px 6px; /* Ajuste o padding para dar mais espaço ao conteúdo */
+    }
+
+    /* Ajustes no dropdown */
+    .dropdown-menu {
+        position: absolute;  /* Faz com que o dropdown se posicione fora do fluxo normal */
+        top: 100%; /* Coloca o dropdown logo abaixo do botão */
+        left: 0;
+        right: 0; /* Garante que o dropdown ocupe a mesma largura do botão */
+        z-index: -1000; /* Garante que o dropdown ficará acima de outros conteúdos */
+        margin-top: 5px; /* Pequeno espaço entre o botão e o dropdown */
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adiciona sombra para destacar o dropdown */
+        width: 100%;  /* Pode ser ajustado conforme necessário */
+    }
+
+    /* Caso o dropdown tenha mais de uma lista */
+    .dropdown-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f1f1f1; /* Adiciona efeito hover */
+    }
+}
+
+/* Responsividade */
+@media (max-width: 360px) {
+    /* Ajuste para a SearchBar */
+    .searchbar-wrapper {
+        width: 100%; /* A largura fica 100% em telas pequenas */
+    }
+
+    .searchbar {
+        width: 33%;  /* Limita a largura do SearchBar a 1/3 da tela */
+        max-width: 300px;  /* Limita a largura máxima do SearchBar */
+        padding: 8px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    .searchbar-button {
+        width: 100%; /* Faz o botão ocupar toda a largura disponível em telas pequenas */
+    }
+
+    .dropdown-button {
+        padding: 9.5px 6px; /* Ajuste o padding para dar mais espaço ao conteúdo */
+    }
+
+    /* Ajustes no dropdown */
+    .dropdown-menu {
+        position: absolute;  /* Faz com que o dropdown se posicione fora do fluxo normal */
+        top: 100%; /* Coloca o dropdown logo abaixo do botão */
+        left: 0;
+        right: 0; /* Garante que o dropdown ocupe a mesma largura do botão */
+        z-index: -1000; /* Garante que o dropdown ficará acima de outros conteúdos */
+        margin-top: 5px; /* Pequeno espaço entre o botão e o dropdown */
+        background-color: white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Adiciona sombra para destacar o dropdown */
+        width: 100%;  /* Pode ser ajustado conforme necessário */
+    }
+
+    /* Caso o dropdown tenha mais de uma lista */
+    .dropdown-item {
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f1f1f1; /* Adiciona efeito hover */
+    }
 }

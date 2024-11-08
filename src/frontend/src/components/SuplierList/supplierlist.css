@@ -1,11 +1,10 @@
-
-
 .list-items1 {
     list-style: none;
     padding: 0;
     margin: 0;
     margin-left: -100px;
-    width: 100%; /* A lista ocupa a largura total do container */
+    width: 100%;
+    /* A lista ocupa a largura total do container */
 }
 
 .list-item1 {
@@ -16,13 +15,44 @@
     border: 1px solid #ccc;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    width: 100%; /* Faz com que cada item ocupe toda a largura disponível */
-    margin-left: 0; /* Remover margem à esquerda */
-    margin-right: 0; /* Remover margem à direita, se necessário */
+    width: 100%;
+    /* Faz com que cada item ocupe toda a largura disponível */
+    margin-left: 0;
+    /* Remover margem à esquerda */
+    margin-right: 0;
+    /* Remover margem à direita, se necessário */
 }
 
 .list-item:hover {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Outros estilos permanecem inalterados */
+
+.controles-pagina {
+    justify-content: center;
+}
+
+.pagina-botao {
+    padding: 4px 12px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s ease;
+    font-size: 1rem;
+}
+
+.pagina-botao:hover {
+    background-color: #022dbe;
+}
+
+.pagina-botao:disabled {
+    background-color: grey;
+    cursor: not-allowed;
+}
+
+.pagina-botao:disabled:hover {
+    background-color: rgb(177, 177, 177);
+    cursor: not-allowed;
+}

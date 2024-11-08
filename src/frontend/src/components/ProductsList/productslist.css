@@ -5,20 +5,30 @@
     text-align: left;
 }
 
-/* Ajuste da tabela */
 .info-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px; /* Remover a margem à direita */
-    padding-left: 0; /* Remover padding, se houver */
-    font-size: 0.8rem; /* Ajustar o tamanho da fonte da tabela, se necessário */
+    margin: 10px auto;
+    font-size: 0.8rem;
     text-align: center;
 }
 
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    overflow-x: auto;
+    display: block;
+}
 
 .info-table th, .info-table td {
     border: 1px solid #e1e1e1;
-    padding: 4px 6px; /* Reduzir o padding para células menores */
+    padding: 0.5% 0.5%;
+    min-width: 120px;
+    max-width: 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .info-table th {
@@ -26,29 +36,30 @@
     color: white;
     font-weight: bold;
     text-align: center;
-    font-size: 0.75rem; /* Tamanho da fonte no cabeçalho um pouco maior */
+    font-size: 0.85rem;
 }
 
 .info-table td {
     background-color: #fff;
-    font-size: 0.85rem; /* Diminuir ainda mais a fonte nas células */
+    font-size: 0.9rem;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .info-table tr:nth-child(even) {
-    background-color: #f9f9f9; /* Cor alternada para as linhas */
+    background-color: #f9f9f9;
 }
 
-/* Adicionando hover para linhas */
 .info-table tr:hover {
     background-color: #f1f1f1;
 }
 
 .additional-info {
-    font-size: 0.65rem; /* Fonte menor para informações adicionais */
+    font-size: 0.6rem;
     color: #666;
 }
-
-
 
 .item-name {
     font-size: 1em;
@@ -70,38 +81,36 @@
     padding: 8px 12px;
     margin-right: 5px;
     border-radius: 4px;
-    border: 1px solid transparent; /* Define um contorno transparente */
+    border: 1px solid transparent;
     cursor: pointer;
-    transition: background-color 0.3s ease, border 0.3s ease; /* Adiciona transição para o contorno */
-    background-color: transparent; /* Remove a cor de fundo */
+    transition: background-color 0.3s ease, border 0.3s ease;
+    background-color: transparent;
 }
 
 .edit-button {
-    color: #007bff; /* Define a cor do texto */
+    color: #007bff;
     transition: background-color 0.3s ease;
 }
 
 .edit-button:hover {
-    color: #022dbe; /* Adiciona um leve fundo ao passar o mouse */
-  
+    color: #022dbe;
 }
 
 .delete-button {
-    color: #dc3545; /* Define a cor do texto */
+    color: #dc3545;
     transition: background-color 0.3s ease;
 }
 
 .delete-button:hover {
-    color: #8d212c; /* Adiciona um leve fundo ao passar o mouse */
+    color: #8d212c;
 }
 
-
-.controles-pagina {
-    margin-top: 0.4em; /* Reduzido para 0.2em */
+.controles-pagina-lista {
+    margin-top: 0.4em;
     display: flex;
-    align-items: center; /* Alinha verticalmente os itens no centro */
+    align-items: center;
     justify-content: left;
-    gap: 0.8rem; /* Espaçamento entre botões */
+    gap: 0.8rem;
 }
 
 .pagination-button {
@@ -123,8 +132,6 @@
     background-color: grey;
 }
 
-
-/* Animações */
 @keyframes fadeInZoom {
     0% {
         opacity: 0;
@@ -150,11 +157,13 @@
 .product-details {
     background-color: #1f2937;
     padding: 20px;
-    border-radius: 8px; 
-    color: #f9fafb; 
-    width: 52vh; 
-    height: 70vh; 
-    margin-top: -13vh;
+    border-radius: 8px;
+    color: #f9fafb;
+    max-width: 180%;
+    width: 180%;
+    max-height: 120%;
+    height: auto;
+    margin-top: -35%;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     animation: fadeInZoom 0.4s ease forwards;
 }
@@ -166,31 +175,31 @@
 .list-container {
     display: flex;
     margin-right: auto;
-    height: 61vh;
+    height: auto;
     border-radius: 12px;
-    background-color: #f9fafb; 
+    background-color: #f9fafb;
     justify-content: space-between;
-    gap: 10vh;
+    gap: 10%;
 }
 
 .product-details p {
     margin: 10px 0;
-    line-height: 1.6; 
+    line-height: 1.6;
 }
 
 .product-details strong {
-    color: #007bff; 
+    color: #007bff;
 }
 
 .product-details button {
     margin-top: 15px;
     padding: 10px 20px;
-    background-color: #007bff; 
+    background-color: #007bff;
     border: none;
     border-radius: 6px;
     color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease;
 }
 
 .product-details button:hover {
@@ -200,8 +209,296 @@
 input:disabled, 
 select:disabled, 
 textarea:disabled {
-    background-color: #a8a8a860; /* Cor de fundo mais escura */
-    color: #bbb; /* Cor do texto mais clara */
-    opacity: 1; /* Evita opacidade reduzida */
-    cursor: not-allowed; /* Cursor indicando bloqueado */
+    background-color: #a8a8a860;
+    color: #bbb;
+    opacity: 1;
+    cursor: not-allowed;
 }
+
+@media (max-width: 1200px) {
+    .titulo {
+        font-size: 3rem;
+    }
+
+    .h2 {
+        text-align: center;
+        font-size: 2rem;
+    }
+
+    .product-details {
+        max-width: 100%;
+        margin-top: 15px;
+        padding: 20px;
+        order: 2;
+    }
+
+    .list-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .info-table {
+        font-size: 0.75rem;
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .info-table th, .info-table td {
+        min-width: 120px;
+        font-size: 0.75rem;
+        padding: 1% 1%;
+        text-align: center;
+    }
+
+    .item-name {
+        font-size: 1rem;
+    }
+
+    .item-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .edit-button, .delete-button {
+        padding: 8px 15px;
+        width: 40px;
+        font-size: 1rem;
+    }
+
+    .controles-pagina-lista {
+        justify-content: center;
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+
+    .pagination-button {
+        padding: 5px 15px;
+        font-size: 1rem;
+    }
+
+    .product-details p {
+        font-size: 1rem;
+        margin: 15px 0;
+        line-height: 1.5;
+    }
+
+    .product-details strong {
+        font-size: 1.1rem;
+        color: #007bff;
+    }
+
+    .product-details button {
+        margin-top: 15px;
+        padding: 10px 15px;
+        font-size: 1rem;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .product-details button:hover {
+        background-color: #022dbe;
+    }
+}
+
+@media (max-width: 768px) {
+    .titulo {
+        font-size: 1.8rem;
+    }
+
+    .h2 {
+        text-align: center;
+        font-size: 1.8rem;
+    }
+
+    .product-details {
+        width: 90%;
+        margin-top: 10px;
+        padding: 15px;
+        word-wrap: break-word;
+        display: block;
+    }
+
+    .info-table {
+        width: 100%;
+        font-size: 0.8rem;
+        table-layout: auto;
+        border-collapse: collapse;
+    }
+
+    .info-table th, .info-table td {
+        padding: 1% 1%;
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    .info-table th {
+        font-weight: bold;
+    }
+
+    .info-table td {
+        background-color: #fff;
+    }
+
+    .info-table th:nth-child(n+3), .info-table td:nth-child(n+3) {
+        display: none;
+    }
+
+    .info-table th:nth-child(9), .info-table td:nth-child(9) {
+        display: table-cell;
+        padding: 0.5% 1%;
+    }
+
+    .info-table th:nth-child(-n+3), .info-table td:nth-child(-n+3) {
+        width: 163px;
+        word-wrap: break-word;
+    }
+
+    .item-name {
+        font-size: 0.9rem;
+    }
+
+    .item-actions {
+        display: flex;
+        gap: 4px;
+    }
+
+    .edit-button, .delete-button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .controles-pagina-lista {
+        justify-content: center;
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+
+    .pagination-button {
+        padding: 3px 10px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 360px) {
+    /* Ajustando o título */
+    .titulo {
+        font-size: 1.6rem; /* Tamanho menor para telas pequenas */
+    }
+
+    .h2 {
+        text-align: center;
+        font-size: 2.2rem; /* Menor tamanho para o subtítulo */
+    }
+
+    .product-details {
+        max-width: 100%;
+        margin-top: 10px;
+        word-wrap: break-word; /* Força a quebra de linha se o texto for grande */
+    }
+
+    .info-table {
+        width: 100%;
+        table-layout: fixed; /* Força a tabela a ter largura fixa */
+        font-size: 0.8rem;
+        border-collapse: collapse;
+    }
+
+    .info-table th, .info-table td {
+        width: 120px; /* Largura fixa para todas as células */
+        overflow: hidden; /* Garante que o texto não ultrapasse os limites da célula */
+        text-overflow: ellipsis; /* Adiciona os três pontinhos (...) quando o texto é cortado */
+        white-space: nowrap; /* Impede que o texto quebre dentro da célula */
+        word-wrap: break-word; /* Permite quebra de linha nas células se necessário */
+    }
+
+    .info-table td {
+        background-color: #fff;
+        font-size: 0.8rem; /* Tamanho de fonte menor para as células */
+    }
+
+    .info-table th {
+        font-size: 0.8rem;
+        padding: 1% 2%;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    /* Esconde todas as colunas além de Nome, Fabricante e Ações */
+    .info-table th:nth-child(n+3), .info-table td:nth-child(n+3) {
+        display: none;
+    }
+
+    .info-table th:nth-child(9), .info-table td:nth-child(9) {
+        display: table-cell;
+        padding: 0.5% 1%; /* Ajusta o padding para a coluna de Ações */
+    }
+
+    /* Ajusta a largura das 3 primeiras colunas (Nome, Fabricante e Ações) */
+    .info-table th:nth-child(-n+3), .info-table td:nth-child(-n+3) {
+        width: 120px; /* Largura das colunas fixas */
+        word-wrap: break-word; /* Permite quebra de linha dentro das células */
+    }
+
+    .item-name {
+        font-size: 0.9rem; /* Diminui o tamanho da fonte dos itens */
+    }
+
+    .item-actions {
+        display: flex;
+        gap: 5px; /* Menor espaço entre os botões de ação */
+    }
+
+    .edit-button, .delete-button {
+        padding: 6px 12px; /* Ajusta o tamanho do botão */
+        gap: 5px;
+        width: 35px; /* Botões menores */
+        font-size: 0.9rem; /* Ajuste do tamanho da fonte do botão */
+    }
+
+    /* Ajuste nos controles de paginação */
+    .controles-pagina-lista {
+        justify-content: center;
+        padding: 8px 12px; /* Menor padding nos controles */
+        font-size: 0.9rem; /* Tamanho da fonte ajustado */
+    }
+
+    .pagination-button {
+        padding: 3px 10px; /* Ajuste do padding do botão de paginação */
+        font-size: 0.9rem; /* Fonte menor */
+    }
+
+    .product-details p {
+        font-size: 0.8rem;
+        margin: 10px 0;
+        line-height: 1.4; 
+    }
+    
+    .product-details strong {
+        font-size: 1rem;
+        color: #007bff; 
+    }
+    
+    .product-details button {
+        margin-top: 10px;
+        padding: 8px 10px;
+        font-size: 0.8rem;
+        background-color: #007bff; 
+        border: none;
+        border-radius: 6px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease; 
+    }
+    
+    .product-details button:hover {
+        background-color: #022dbe;
+    }
+
+}
+

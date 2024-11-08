@@ -106,8 +106,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
     const onSuccess = () => {
         reset();
         setPrecoVenda('')
-        setPrecoCusto('')
-        setFornecedorValue(null)
         setSuccessMessage('Produto Cadastrado com Sucesso!');
         refetch();
     };
@@ -163,7 +161,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     {successMessage && <p className="success-messages">{successMessage}</p>}
                     {serverError && <p className="mensagem-error">{serverError}</p>}
 
-                    <h1>Registro de Produtos</h1>
+                    <h2 className='h2'>Registro de Produtos</h2>
 
                     <div className="form-fields-grid">
                         {/* Campos Obrigatórios */}
@@ -171,8 +169,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <label htmlFor="nome_produto">Nome do Produto</label>
                             <input
                                 {...register("nome_produto")}
-                                className='input1'
                                 type='text'
+                                className='input1'
                                 id="nome_produto"
                                 placeholder={errors.nome_produto ? errors.nome_produto.message : "Obrigatório"}
                             />
@@ -181,8 +179,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         <div className="form-field required">
                             <label htmlFor="preco_venda">Preço de Venda</label>
                             <input
-                            className='input1'
                                 type="text"
+                                className='input1'
                                 id="preco_venda"
                                 value={precoVenda}
                                 onChange={handlePrecoVendaChange}
@@ -193,8 +191,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         <div className="form-field">
                             <label htmlFor="preco_custo">Preço de Custo</label>
                             <input
-                            className='input1'
                                 type="text"
+                                className='input1'
                                 id="preco_custo"
                                 value={precoCusto}
                                 onChange={handlePrecoCustoChange}
@@ -208,9 +206,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <div className="peso-container">
                                 <input
                                     {...register("peso_produto", { valueAsNumber: true })}
-                                    className='input1'
                                     type='number'
                                     id="peso_produto"
+                                    className='input2'
                                     placeholder={errors.peso_produto ? errors.peso_produto.message : "Obrigatório"}
                                     min='0'
                                 />
@@ -232,8 +230,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <label htmlFor="altura_produto">Altura (cm)</label>
                             <input
                                 {...register("altura_produto", { valueAsNumber: true })}
-                                className='input1'
                                 type='number'
+                                className='input1'
                                 id="altura_produto"
                                 placeholder={errors.altura_produto ? errors.altura_produto.message : "Obrigatório"}
                                 min='0'
@@ -256,8 +254,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <label htmlFor="comprimento_produto">Comprimento (cm)</label>
                             <input
                                 {...register("comprimento_produto", { valueAsNumber: true })}
-                                className='input1'
                                 type='number'
+                                className='input1'
                                 id="comprimento_produto"
                                 placeholder={errors.comprimento_produto ? errors.comprimento_produto.message : "Obrigatório"}
                                 min='0'
@@ -268,8 +266,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <label htmlFor="marca_produto">Marca do Produto</label>
                             <input
                                 {...register("marca_produto")}
-                                className='input1'
                                 type='text'
+                                className='input1'
                                 id="marca_produto"
                                 placeholder="Opcional"
                             />
@@ -291,8 +289,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <input
                                 {...register("localizacao_estoque")}
                                 type='text'
-                                id="localizacao_estoque"
                                 className='input1'
+                                id="localizacao_estoque"
                                 placeholder="Opcional"
                             />
                         </div>
@@ -342,7 +340,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 className="manage-categoria-button"
                                 onClick={() => setIsSectorModalOpen(true)}
                             >
-                                Gerenciar Setores
+                                Gerenciar Os Setores
                             </button>
                         </div>
 

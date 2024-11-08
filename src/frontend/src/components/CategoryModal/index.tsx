@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CategoryList from '../CategoryList';
 import useDeleteCategory from '../../Hooks/Categories/deleteCategoryByIdHook';
-import useUpdateCategory from '../../Hooks/Categories/patchCategoryByIdHook';
 import FetchAllCategories from '../../Hooks/Categories/fetchAllCategoriesHook';
 import { Category } from '../CategoryTypes/types';
 import CategoryForm from '../CategoryForm';
@@ -18,8 +17,8 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
     setIsCategoryModalOpen,
     refetch,
 }) => {
+    const [isFormVisible, setIsFormVisible] = useState(true); 
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-    const [isEditing, setIsEditing] = useState(false);
     const deleteCategoryMutation = useDeleteCategory();
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 5;
@@ -30,18 +29,17 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
     const [categoryToDelete, setCategoryToDelete] = useState<number | null>(null);
 
     useEffect(() => {
-        refetchCategories(); // Ensure categories are re-fetched on modal open
-    }, [currentPage, isEditing]);
+        refetchCategories();
+    }, [currentPage]);
 
     const closeModal = () => {
-        console.log('Fechando modal...');
         setIsCategoryModalOpen(false);
         refetch();
     };
 
     const handleEdit = (category: Category) => {
         setEditingCategory(category);
-        setIsEditing(true);
+        setIsFormVisible(true);
     };
 
     const handleDelete = (id_categoria: number) => {
@@ -53,9 +51,9 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
         if (categoryToDelete !== null) {
             try {
                 await deleteCategoryMutation.mutateAsync(categoryToDelete);
-                refetch();
+                setShowConfirmModal(false);
                 refetchCategories();
-                setShowConfirmModal(false); // Fecha o modal após a confirmação
+                refetch();
             } catch (error) {
                 console.error('Erro tentando deletar categoria:', error);
             }
@@ -63,56 +61,75 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
     };
 
     const cancelDelete = () => {
-        setShowConfirmModal(false); // Fecha o modal sem deletar
+        setShowConfirmModal(false);
     };
 
     const handleSuccess = () => {
-        setEditingCategory(null);  // Limpa o estado de edição
-        setIsEditing(false);       // Sai do modo de edição
-        refetch();                 // Refaz o fetch das categorias
-        refetchCategories();       // Atualiza a lista de categorias
+        setEditingCategory(null);
+        refetchCategories();
+        refetch();
+    };
+
+    const getModalTitle = () => {
+        return editingCategory ? 'Editar Categoria' : isFormVisible ? 'Criar Nova Categoria' : 'Lista de Categorias';
+    };
+
+    const getButtonStyle = (isFormButton: boolean) => {
+        if (editingCategory) return 'bg-gray-300 text-gray-800';
+
+        return isFormButton
+            ? isFormVisible ? 'bg-cyan-500 text-white' : 'bg-gray-300 text-gray-800'
+            : !isFormVisible ? 'bg-cyan-500 text-white' : 'bg-gray-300 text-gray-800';
     };
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-            <div className="bg-white rounded-lg shadow-lg w-4/5 max-w-4xl p-6 relative">
-                {/* Botão de fechar modal (X) no canto superior direito do modal */}
-                <button className="close-button-category" onClick={closeModal}>
+            <div className="bg-white rounded-lg shadow-lg w-full max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl p-4 sm:p-6 md:p-8 relative" style={{ height: '80vh', maxHeight: '600px' }}>
+                <button className="fechar absolute top-4 right-4" onClick={closeModal}>
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
+                
+                <h1 className="text-xl sm:text-2xl md:text-3xl mb-4">{getModalTitle()}</h1>
 
-                <div className="flex space-x-6">
-                    {/* Formulário de Cadastro (Esquerda) */}
-                    <div className="w-1/2">
-                        <CategoryForm
-                            refetch={() => handleSuccess()}
-                            editingCategory={editingCategory}
-                            setIsEditing={setIsEditing}
-                            onCancelEdit={() => {
-                                setEditingCategory(null);
-                                setIsEditing(false);
-                            }}
-                        />
-                    </div>
-
-                    {/* Lista de Categorias (Direita) */}
-                    <div className="w-1/2">
-                        <CategoryList
-                            categories={categories}
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            itemsPerPage={5}
-                            handlePageChange={setCurrentPage}
-                            onDelete={handleDelete}
-                            onEdit={handleEdit}
-                        />
-                    </div>
+                <div className="flex justify-start mb-4 space-x-2">
+                    <button
+                        className={`px-4 py-2 rounded-md ${getButtonStyle(true)}`}
+                        onClick={() => setIsFormVisible(true)}
+                    >
+                        Criar Nova Categoria
+                    </button>
+                    <button
+                        className={`px-4 py-2 rounded-md ${getButtonStyle(false)}`}
+                        onClick={() => setIsFormVisible(false)}
+                    >
+                        Ver Lista de Categorias
+                    </button>
                 </div>
 
-                {/* Modal de Confirmação de Exclusão */}
+                {isFormVisible ? (
+                    <CategoryForm
+                        refetch={handleSuccess}
+                        editingCategory={editingCategory}
+                        onCancelEdit={() => {
+                            setEditingCategory(null);
+                            setIsFormVisible(false);
+                        }}
+                    />
+                ) : (
+                    <CategoryList
+                        categories={categories}
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        itemsPerPage={5}
+                        handlePageChange={setCurrentPage}
+                        onDelete={handleDelete}
+                        onEdit={handleEdit}
+                    />
+                )}
+
                 {showConfirmModal && (
-                    <div className="fixed inset-0 flex justify-center items-center z-60">
-                        <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
+                    <div className="fixed inset-0 flex justify-center items-center z-60 bg-black bg-opacity-50">
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 sm:w-3/4 md:w-1/2 lg:w-1/3 xl:w-1/4">
                             <h2 className="text-center text-xl mb-4">Confirmação de Exclusão</h2>
                             <p className="text-center mb-4">Tem certeza que deseja excluir esta categoria?</p>
                             <div className="flex justify-center space-x-4">

@@ -51,12 +51,13 @@ const ProductList: React.FC<ProductListProps> = ({
     };
 
     return (
+        
         <div className="list-container">
             <div className="product-list">
                 <table className="info-table">
                     <thead>
                         <tr>
-                            <th>Nome do Produto</th>
+                            <th>Produto</th>
                             <th>Fabricante</th>
                             <th>ID</th>
                             <th>Qtd. Estoque</th>
@@ -94,13 +95,13 @@ const ProductList: React.FC<ProductListProps> = ({
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={9} className="no-products">Nenhum produto encontrado</td>
+                                <td colSpan={4} className="no-products">Nenhum produto encontrado</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
 
-                <div className="controles-pagina">
+                <div className="controles-pagina-lista">
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
