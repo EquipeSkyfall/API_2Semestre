@@ -114,12 +114,12 @@ const ShipmentsList: React.FC = () => {
 
         {selectedShipment && (
           <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-            <div className="p-6 rounded-lg flex flex-col items-center justify-center text-center">
-              <h3 className="text-3xl font-semibold text-gray-800 mb-3">Detalhes de Saída</h3>
-              <p className="text-gray-700 mb-1 text-lg">
+            <div className="p-2 sm:p-6 text-xs sm:text-sm lg:text-base rounded-lg flex flex-col items-center justify-center text-center">
+              <h2 className="text-lg md:text-3xl font-semibold text-gray-800 mb-3">Detalhes de Saída</h2>
+              <p className="text-gray-700 mb-1 text-base md:text-lg">
                 Data da Venda: {new Date(selectedShipment.data_venda).toLocaleDateString()}
               </p>
-              <p className="text-gray-600 text-lg mb-4">
+              <p className="text-gray-600 text-base md:text-lg mb-4">
                 Motivo da Saída: <span className="text-cyan-600 font-semibold"> {selectedShipment.motivo_saida} </span>
               </p>
 
@@ -141,20 +141,20 @@ const ShipmentsList: React.FC = () => {
                     const isCollapsed = collapsedBatches[id_produto] || false;
 
                     return (
-                      <div key={id_produto} className="w-full flex flex-col items-start mb-4 ml">
+                      <div key={id_produto} className="w-full flex flex-col items-start mb-4 border-b-2">
                         <div
-                          className="flex justify-between items-center w-full px-4 py-2 text-lg font-medium text-gray-800 cursor-pointer hover:text-cyan-600 transition-colors"
+                          className="flex justify-between items-center border-b-black w-full px-2 sm:px-4 sm:py-2 py-1 text-sm sm:text-lg font-medium text-gray-800 cursor-pointer hover:text-cyan-600 transition-colors"
                           onClick={() => toggleCollapse(id_produto)}
                         >
                           <span className='flex-grow text-left'>Produto: {nome_produto}</span>
-                          <span className="text-left ">Quantidade Retirada: {totalQuantidadeRetirada}</span>
-                          <span className="ml-24">{isCollapsed ? '▼' : '▲'}</span>
+                          <span className="text-left pl-4 sm:pl-0">Quantidade Retirada: {totalQuantidadeRetirada}</span>
+                          <span className="ml-18 sm:ml-24">{isCollapsed ? '▼' : '▲'}</span>
                         </div>
 
                         {isCollapsed && (
                           <ul className="space-y-2">
                             {lotes.map(({ id_lote, quantidade_retirada }) => (
-                              <li key={`${id_lote}-${quantidade_retirada}`} className="flex text-gray-600 w-full px-4">
+                              <li key={`${id_lote}-${quantidade_retirada}`} className="flex text-gray-600 w-full px-4 pb-2">
                                 <span className="flex-1">ID Lote: {id_lote}</span>
                                 <span className="flex-2 w-10 text-cyan-600">|</span>
                                 <span className="flex-2">Quantidade Retirada: {quantidade_retirada}</span>

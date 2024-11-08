@@ -55,6 +55,12 @@ h1 {
     box-sizing: border-box; /* Inclui o padding no tamanho total */
 }
 
+@media (max-width:900px) { /*se você mudar isto rossi, você nunca mais encosta em css*/
+    .modal-content{
+        max-width: 90vw;
+    }
+}
+
 /* Textarea específico para a descrição do produto */
 .custom-modal-content textarea.descricao-produto {
     width: 100%;

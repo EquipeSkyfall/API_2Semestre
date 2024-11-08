@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import useGetLogs from "../../Hooks/Logs/getLogs";
 import { set } from "zod";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const LogList: React.FC = () => {
     const [selectedDate, setSelectedDate] = useState<string>('');
@@ -53,7 +55,7 @@ const LogList: React.FC = () => {
 
     const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedDate(event.target.value);
-        setPage(1); // Reset to the first page on date change
+        setPage(1); 
     };
 
     const handlePageChange = (newPage: number) => {
@@ -82,7 +84,9 @@ const LogList: React.FC = () => {
                     <div
                         className="modal-content !max-w-screen-md 2xl:!max-w-screen-md relative justify-start items-end h-5/6 2xl:h-full p-6 overflow-y-hidden"
                         onClick={(e) => e.stopPropagation()}>
-                        <button className="close-button absolute top-4 right-4" onClick={closeModal}>X</button>
+                        <button className="close-button absolute top-4 right-4" onClick={closeModal}>
+                            <FontAwesomeIcon icon={faTimes}/>
+                        </button>
                         <div className="">
                             <h2 className="font-semibold font-['Afacad_Flux'] text-cyan-600 mb-4">Logs do Sistema</h2>
                             <div className="mb-4">
@@ -102,7 +106,7 @@ const LogList: React.FC = () => {
                         ) : isError ? (
                             <p>Erro ao Carregar Logs</p>
                         ) : (
-                            <table className="mr-2 sm:mr-0 sm:w-full text-[0.52rem] sm:text-sm md:text-sm 2xl:text-base "> 
+                            <table className="-ml-4  sm:mr-0 sm:w-full text-[0.55rem] sm:text-sm md:text-sm 2xl:text-base "> 
                                 <thead>
                                     <tr>
                                         <th>Data do processo</th>

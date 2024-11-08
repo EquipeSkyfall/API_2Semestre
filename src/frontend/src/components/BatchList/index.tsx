@@ -23,7 +23,6 @@ const BatchesList: React.FC = () => {
             }
         };
 
-        // Adiciona o listener e chama-o inicialmente
         window.addEventListener('resize', handleResize);
         handleResize();
 
@@ -106,19 +105,19 @@ const BatchesList: React.FC = () => {
                 <div className='items-center mr-96'>
                     {selectedBatch && (
                         <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-                            <div className="p-6 rounded-lg flex flex-col items-center justify-center text-center">
-                                <h2 className="text-3xl font-semibold text-gray-800 mb-3">Detalhes de Entrada</h2>
+                            <div className="p-2 sm:p-6 text-xs sm:text-sm lg:text-base rounded-lg flex flex-col items-center justify-center text-center">
+                                <h2 className="text-lg md:text-3xl font-semibold text-gray-800 mb-3">Detalhes de Entrada</h2>
 
-                                <p className="text-gray-700 mb-1 text-lg">
+                                <p className="text-gray-700 mb-1 text-base md:text-lg">
                                     Data de Compra: {new Date(selectedBatch.data_compra).toLocaleDateString()}
                                 </p>
 
-                                <p className="text-gray-600 text-lg mb-4">
+                                <p className="text-gray-600 text-base md:text-lg mb-4">
                                     Fornecedor: <span className="text-cyan-600 font-semibold">{selectedBatch.fornecedor.razao_social}</span>
                                 </p>
 
-                                <div className="w-full">
-                                    <div className="grid grid-cols-3 gap-4 text-gray-800 text-lg font-semibold pb-2">
+                                <div className="max-w-96">
+                                    <div className="grid grid-cols-3 gap-4 text-gray-800 text-sm sm:text-lg font-semibold pb-4">
                                         <span>Nome do Produto</span>
                                         <span>Validade do Produto</span>
                                         <span>Quantidade</span>
