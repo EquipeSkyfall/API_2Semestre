@@ -2,7 +2,7 @@
     margin-right: auto;
     display: flex;
     align-items: baseline; /* Alinha os itens ao topo */
-    width: 50vh; /* Largura da barra de pesquisa */
+    width: 40vh; /* Largura da barra de pesquisa */
 }
 
 .searchbar {

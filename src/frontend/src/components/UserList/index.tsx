@@ -55,7 +55,7 @@ const UsersList = ({ query }) => {
       </ul>
 
       {data && (
-        <div className="pagination-controls py-4 flex justify-center items-center mt-4">
+        <div className="pagination-controls py-6 flex justify-center items-center mt-4">
           <button
             className={`mx-2 px-4 py-2 rounded ${page === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-cyan-500 text-white hover:bg-cyan-600"
               }`}

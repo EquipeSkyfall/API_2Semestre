@@ -61,13 +61,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange }) => {
 
     return (
         <FormProvider {...methods}>
-            <div className="searchbar-wrapper !w-96">
+            <div className="searchbar-wrapper w-full">
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={handleChange}
                     placeholder="Pesquisar"
-                    className="searchbar"
+                    className="searchbar w-[65%]"
                 />
                 <div className="dropdown">
                     <button onClick={toggleDropdown} className="dropdown-button">
