@@ -39,3 +39,82 @@
 .shipping-form button:hover {
     background-color: #38bdf8;
 }
+
+
+.flex-dimension {
+    display: flex;
+    gap: 2%;
+    flex-wrap: wrap;
+}
+
+.flex-dimension h2{
+    font-size: larger;
+}
+
+.button-send-remessas{
+    margin-top: 1%;
+}
+
+/*to mexendo a partir daqui pro 'row' lá*/
+
+.check-unity-dimension{
+    margin-top: 10%;
+    margin-left: -300%;
+}
+
+.check-unity-align{
+    margin-top: 30%;
+}
+
+@media (max-width: 1040px){
+    .check-unity-align{
+        margin-top: 50%;
+    }
+}
+
+@media (max-width: 880px){
+    .check-unity-dimension{
+        margin-left: -340%;
+    }
+}
+
+@media (max-width: 760px){
+    .check-unity-dimension{
+        margin-left: -306%;
+    }
+}
+
+@media (max-width: 470px){
+    .check-unity-align{
+        margin-top: 70%;
+    }
+    .check-unity-dimension{
+        margin-left: -340%;
+    }
+}
+
+@media (max-width: 380px) {
+    .div-position{
+        margin-left: -8%;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .button-send-remessas{
+        margin-left: -9%;
+    }
+
+    .div-position{
+        margin-left: -12%;
+    }
+
+    .button-send-remessas{
+        margin-left: 1%;
+    }
+
+    .text-align{
+        margin-left: 1%;
+        font-size: x-large;
+    }
+}

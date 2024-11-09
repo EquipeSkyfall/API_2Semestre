@@ -1,15 +1,15 @@
 .searchbar-wrapper {
     margin-right: auto;
     display: flex;
-    align-items: flex-start; /* Alinha os itens ao topo */
+    align-items: baseline; /* Alinha os itens ao topo */
     width: 50vh; /* Largura da barra de pesquisa */
 }
 
 .searchbar {
-    flex-grow: 1; /* Para ocupar todo o espaço disponível */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 6px 0 0 6px; /* Bordas arredondadas somente à esquerda */
+    border-right: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -19,12 +19,16 @@
 
 .dropdown-button {
     padding: 10px;
-    background-color: #007bff; /* Cor do botão */
+    background-color: #22d3ee; /* Cor do botão */
     color: white;
-    border: 1px solid #007bff; /* Borda do botão */
+    border: 1px solid #22d3ee; /* Borda do botão */
     border-left: none; /* Remover borda esquerda */
     border-radius: 0 6px 6px 0; /* Bordas arredondadas somente à direita */
     cursor: pointer;
+}
+
+.dropdown-button:hover {
+    background-color: #38bdf8;
 }
 
 .dropdown-content {
@@ -46,6 +50,10 @@
     width: 100%; /* Para ocupar toda a largura do dropdown */
 }
 
+.category-select:hover, .select-field:hover {
+    background-color: #ececec;
+}
+
 .category-select:focus, .select-field:focus {
     outline: none; /* Remover contorno ao focar */
 }
@@ -54,7 +62,7 @@
 .action-button {
     margin-left: 10px;
     padding: 10px 15px;
-    background-color: #007bff; /* Cor do botão */
+    background-color: #22d3ee; /* Cor do botão */
     color: white;
     border: none;
     border-radius: 5px;
@@ -72,7 +80,7 @@
     margin-right: auto;
     margin-bottom: 10px; /* Espaço entre o botão e a SearchBar */
     padding: 10px 15px; /* Espaçamento interno do botão */
-    background-color: #007bff; /* Cor de fundo */
+    background-color: #22d3ee; /* Cor de fundo */
     color: white; /* Cor do texto */
     border: none; /* Remove a borda padrão */
     border-radius: 6px; /* Bordas arredondadas */
@@ -81,5 +89,18 @@
 }
 
 .searchbar-button:hover {
-    background-color: #0267d3; /* Cor ao passar o mouse */
+    background-color: #38bdf8; /* Cor ao passar o mouse */
+}
+
+/*responsividade*/
+
+@media (max-width: 900px) {
+    .searchbar-wrapper {
+
+        flex-wrap: wrap;
+    }
+    
+    .searchbar {
+        width: 30%;
+    }
 }

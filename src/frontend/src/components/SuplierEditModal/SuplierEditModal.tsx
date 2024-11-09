@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useUpdateSupplier from '../../Hooks/Supplier/useUpdateSupplier';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import './supliereditmodal.css'
 
 interface EditSupplierModalProps {
   supplier: FornecedorFormValues | null;
@@ -81,9 +82,9 @@ const EditSupplierModal: React.FC<EditSupplierModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <button className="close-button" onClick={onClose}>
+    <div className="-supplier">
+      <div className="modal-content-supplier">
+        <button className="fechar-modal" onClick={onClose}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
         <h2 className='mb-5'>Editar Fornecedor</h2>

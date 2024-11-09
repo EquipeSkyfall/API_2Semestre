@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import ProductList from '../ProductsList';
 import SearchBar from '../ProdutosSearchBar';
-import Modal from '../Modal';
 import EditProduct from './EditProduct';
 import useDeleteProduct from '../../Hooks/Products/deleteProductByIdHook';
 import useUpdateProduct from '../../Hooks/Products/patchByIdProductHook';
 import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
-import './styles.css';
+import './productupdatedeletelist.css';
 import ProductForm from '../ProductForm';
 import AdicionarProdutoModal from '../AdicionarProdutoModal';
+import EditModal from '../EditModal';
+import './productupdatedeletelist.css'
 
 interface Product extends ProductSchema {
     id_produto: number;
@@ -49,9 +50,11 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
     };
 
     const handleEdit = (product: Product) => {
+        console.log('Editing product:', product);  // Verifique se o produto está sendo passado corretamente
         setEditingProduct(product);
         setIsModalOpen(true);
     };
+
 
     const handleUpdate = async (updatedProduct: Product) => {
         try {
@@ -89,7 +92,7 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
 
     return (
         <div className='flex flex-col items-center border'>
-            <h1>Produtos</h1>
+            <h2 className='h2'>Produtos</h2>
 
             <button className="searchbar-button" onClick={handleOpenModal}>
                 Adicionar Produto
@@ -137,20 +140,21 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
 
             {/* Modal para Adicionar Produto */}
             <AdicionarProdutoModal isOpen={isProductModalOpen} onClose={handleCloseModal}>
-                <ProductForm refetch={() => { /* Função de refetch se necessário */ }} />
+                <ProductForm refetch={refetch} />
             </AdicionarProdutoModal>
 
             {/* Modal para Edição do Produto */}
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                {editingProduct && (
+            <EditModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} content={
+                editingProduct && (
                     <EditProduct
                         product={editingProduct}
                         onUpdate={handleUpdate}
                         onClose={() => setIsModalOpen(false)}
                         refetch={refetch}
                     />
-                )}
-            </Modal>
+                )
+            } />
+
         </div>
     );
 };

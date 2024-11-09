@@ -1,3 +1,4 @@
+/* Estilos gerais para botões de gerenciamento */
 .product-form .manage-categoria-button,
 .product-form .manage-setor-button,
 .product-form .manage-fornecedor-button {
@@ -10,52 +11,56 @@
     width: 100%;
     font-size: 1rem;
     transition: background-color 0.5s ease;
-    margin: 5px 0; /* Ajuste a margem para 5px para trazer os botões para cima */
+    margin: 5px 0;
 }
 
 .product-form .manage-categoria-button:hover,
 .product-form .manage-setor-button:hover,
 .product-form .manage-fornecedor-button:hover {
-    background-color: #022dbe; /* Cor ao passar o mouse */
+    background-color: #022dbe;
 }
 
 .button-container {
-    display: flex; /* Alinha os botões em linha */
-    gap: 10px; /* Espaçamento entre os botões */
-    margin-top: 10px; /* Espaço acima dos botões */
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
 }
 
 .product-form {
     display: flex;
     flex-direction: column;
     padding: 20px;
-
-    background-color: #f9f9f9; /* Fundo mais claro */
+    background-color: #f9f9f9;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    height: 100vh;
 }
 
 h2 {
-    text-align: center;
-    color: #333; /* Cor do título */
+    grid-column: span 2;
+    font-size: 3rem;
+    color: #333;
+    text-align: left;
+    margin-bottom: 0.5em;
 }
 
 .form-fields-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 15px;
+    gap: 10px;
     margin-bottom: 20px;
 }
 
 .form-fields-grid-segundo {
-    display: flex; /* Define o contêiner como flex */
-    gap: 15px; /* Espaço entre os itens */
-    margin-bottom: 20px; /* Espaço abaixo do grid */
-    width: 100%; /* Para garantir que ocupe toda a largura disponível */
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    width: 100%;
 }
 
 .form-field-segundo {
-    flex: 1 1 100px; /* Faz com que cada campo ocupe pelo menos 300px de largura, podendo crescer ou encolher */
-    box-sizing: border-box; /* Inclui padding e border na largura total */
+    flex: 1 1 100px;
+    box-sizing: border-box;
 }
 
 .form-field {
@@ -64,59 +69,58 @@ h2 {
 }
 
 .form-field .descricao_produto {
-    grid-column: 1 / -1; /* Faz o textarea ocupar toda a largura disponível */
+    grid-column: 1 / -1;
 }
 
 .required label {
-    color: #e74c3c; /* Cor para campos obrigatórios */
+    color: #e74c3c;
 }
 
 .optional label {
-    color: #7f8c8d; /* Cor para campos opcionais */
+    color: #7f8c8d;
 }
 
-.input1, select{
+.input1, select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     transition: border-color 0.3s ease;
 }
 
-.input1:focus, select:focus{
-    border-color: #022dbe; /* Cor do foco */
+.input1:focus, select:focus {
+    border-color: #022dbe;
 }
 
 .mensagem-error {
-    color: #e74c3c; /* Cor das mensagens de erro */
-    font-size: 1em; /* Menor que o tamanho padrão */
+    color: #e74c3c;
+    font-size: 1em;
     position: absolute;
-    left: 54vh;
-    top: 4vh;
+    right: 10vh;
+    top: 3vh;
 }
 
 .submit-button {
     width: 100%;
     background-color: #007bff;
     color: white;
-    margin-top: -1.6em; /* Ajuste este valor conforme necessário */
+    margin-top: 1em;
 }
 
 .submit-button:hover {
-    background-color: #022dbe; /* Cor do botão */
-    color: white;
+    background-color: #022dbe;
     transition: background-color 0.3s ease;
 }
 
 .success-messages {
-    color: #2ecc71; /* Cor da mensagem de sucesso */
-    font-size: 0.9em; /* Menor que o tamanho padrão */
+    color: #2ecc71;
+    font-size: 0.9em;
     position: absolute;
-    left: 53vh;
-    top: 4vh;
+    right: 10vh;
+    top: 3vh;
 }
 
 .manage-button {
-    background-color: #022dbe; /* Cor do botão */
+    background-color: #022dbe;
     color: white;
     border: none;
     border-radius: 4px;
@@ -126,12 +130,12 @@ h2 {
 }
 
 .manage-button:hover {
-    background-color: #2980b9; /* Cor do botão ao passar o mouse */
+    background-color: #2980b9;
 }
 
 .descricao_produto_lista {
-    grid-column: span 2; /* Ocupa duas colunas se estiver em um grid */
-    width: 100%; /* Garante que ocupe toda a largura disponível */
+    grid-column: span 2;
+    width: 100%;
     padding: 14px;
     margin-bottom: 20px;
     border-radius: 8px;
@@ -140,19 +144,86 @@ h2 {
     font-size: 16px;
     background-color: #fff;
     color: #000;
-    max-height: 150px; 
-    min-height: 150px;
+    min-height: 180px;
+    max-height: 180px;
 }
 
 .peso-container {
     display: flex;
-    align-items: center; /* Alinha verticalmente */
-    justify-content: space-between; /* Move o unit-select para a direita */
-    gap: 10px; /* Adiciona um espaçamento entre o input e o select */
+    align-items: center;
+    gap: 10px;
 }
 
 .unit-select {
-    width: 80px; /* Define uma largura adequada para o select */
-    margin-left: auto; /* Empurra o select para a direita */
+    width: 15%;
 }
 
+.peso, .input2 {
+    width: 40vh;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+    .form-header {
+        margin-bottom: -10px;
+    }
+
+    .input1, .peso, .input2, .unit-select {
+        width: 100%;
+    }
+
+    .submit-button{
+        margin-top: -3%;
+    }
+
+    .custom-btn-primary,
+    .custom-btn-secondary {
+        margin-top: -5%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .custom-btn-primary,
+    .custom-btn-secondary {
+        margin-top: 1%;
+    }
+    
+}
+
+@media (max-width: 768px) {
+    .form-header {
+        margin-bottom: -10px;
+    }
+
+    .input1, .peso, .input2, .unit-select {
+        width: 100%;
+    }
+
+    .custom-btn-primary,
+    .custom-btn-secondary {
+        margin-top: -5%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-header {
+        font-size: 2rem;
+    }
+
+    .input1, .peso, .input2, .unit-select {
+        width: 100%;
+    }
+
+    .submit-button{
+        margin-top: -5%;
+    }
+
+    .custom-btn-primary,
+    .custom-btn-secondary {
+        margin-top: -5%;
+    }
+}

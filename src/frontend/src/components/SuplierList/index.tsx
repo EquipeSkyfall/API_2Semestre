@@ -127,11 +127,11 @@ const SupplierList: React.FC = () => {
         )}
       </div>
 
-      <div className="pagination-controls">
+      <div className="controles-pagina">
         <button
           onClick={handlePrevPage}
           disabled={page === 1}
-          className='pagination-button'
+          className='pagina-botao'
         >
           Anterior
         </button>
@@ -141,7 +141,7 @@ const SupplierList: React.FC = () => {
         <button
           onClick={handleNextPage}
           disabled={page === data?.totalPages}
-          className='pagination-button'
+          className='pagina-botao'
         >
           Próximo
         </button>

@@ -1,0 +1,95 @@
+/* Overlay do modal */
+.overlay-fundo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Conteúdo principal do modal */
+.conteudo-modal-edit {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    width: 50%;
+    height: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Ajustes para responsividade */
+@media (max-width: 1200px) {
+    .conteudo-modal-edit {
+        width: 70%;
+        max-width: 700px;
+        right: 0; /* Modal ainda fica alinhado à direita, mas com largura menor */
+    }
+}
+
+@media (max-width: 768px) {
+    .conteudo-modal-edit {
+        width: 90%;
+        max-width: 600px;
+        right: 0; /* Modal ainda fica alinhado à direita, mas com largura menor */
+    }
+}
+
+@media (max-width: 480px) {
+    .conteudo-modal-edit {
+        width: 100%;
+        max-width: 100%;
+        right: 0; /* Ajuste para o modal ocupar toda a largura */
+        top: 0;
+        padding: 10px;
+        border-radius: 0; /* Remove bordas arredondadas em telas muito pequenas */
+    }
+}
+
+/* Botão de fechar do modal */
+.botao-fechar-produto {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    border: none;
+    background: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #aaa;
+    padding: 5px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Ícone do botão de fechar */
+.botao-fechar-produto i {
+    font-size: 1.6rem;
+}
+
+/* Efeitos ao passar o mouse no botão de fechar */
+.botao-fechar-produto:hover {
+    color: #ff0000;
+    background-color: transparent;
+    transform: rotate(45deg) scale(1.1);
+}
+
+/* Corpo do modal */
+.corpo-modal-edit {
+    padding: 20px;
+    overflow-y: auto;
+    height: 100%;
+}
+
+/* Responsividade do corpo */
+@media (max-width: 480px) {
+    .corpo-modal-edit {
+        padding: 10px;
+    }
+}

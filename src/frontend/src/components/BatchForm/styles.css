@@ -27,11 +27,11 @@
 .insertProducts,
 .dropProducts {
     flex: 1;
+    min-width: 300px;
 }
 
+.dimension-submit {
+    margin-top: 1%;
+    width: 98%;
 
-@media (max-width: 460px) {
-    .text-xxs{
-        font-size: 0.575rem;
-    }
 }

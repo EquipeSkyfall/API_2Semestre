@@ -4,6 +4,7 @@ import useAddProductsToSupplier from '../../Hooks/Supplier/useAddProductsToSuppl
 import useSearchProducts from '../../Hooks/Products/getSearchProductbyNameHook';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import './addproducttosuppliermodal.css'
 
 interface AddProductToSupplierModalProps {
   supplierId: number;
@@ -23,7 +24,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
   const { control, handleSubmit, register, reset, watch, setValue, setError } = useForm<ProductFormValues>();
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [page, setPage] = useState(1);
-  const [limit] = useState(6); // Set your desired limit for products per page
+  const [limit] = useState(7); // Set your desired limit for products per page
   const [precoCusto, setPrecoCusto] = useState<Record<number, string>>({});
   const { products, isLoading, totalPages } = useSearchProducts({ search: watch('search') || '', id_fornecedor: supplierId, page: page, limit: limit });
   const { mutate: addProductsToSupplier } = useAddProductsToSupplier();
@@ -101,8 +102,8 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay bg-slate-950">
-      <div className="modal-content bg-slate-950">
+    <div className="modal-overlay-product">
+      <div className="modal-content-product">
         <button className="close-button" onClick={onClose}>
           <FontAwesomeIcon icon={faTimes} />
         </button>
@@ -161,25 +162,50 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
             </ul>
           )}
 
-          <div className="pagination-controls mt-5">
-            <button className='px-3 py-2 bg-gray-400 hover:bg-gray-500 transition duration-300 ease-in-out text-white border-none 
-            rounded-md cursor-pointer text-base justify' type="button" onClick={handlePreviousPage} disabled={page === 1}>
-              Anterior
-            </button>
-            <span>Página {currentPageState} de {totalPages}</span>
-            <button className='px-3 py-2 bg-cyan-400 hover:bg-cyan-600 transition duration-300 ease-in-out text-white border-none 
-            rounded-md cursor-pointer text-base justify ml-2' type="button" onClick={handleNextPage}>
-              Próximo
-            </button>
-            <div className='w-1/4'></div>
-            <button className='px-3 py-2 bg-red-400 hover:bg-red-700 transition duration-300 ease-in-out text-white border-none rounded-md cursor-pointer text-base justify mt-2'
-              type="button" onClick={onClose}>
-              Cancelar
-            </button>
-            <button className='px-3 py-2 bg-green-500 text-white hover:bg-green-700 transition duration-300 ease-in-out border-none rounded-md cursor-pointer text-base justify mt-2 ml-2' type="submit">
-              Adicionar
-            </button>
-          </div>
+<div className="mt-5 flex flex-col justify-center items-center">
+  {/* Linha superior com os botões "Anterior" e "Próximo" */}
+  <div className="flex items-center justify-center space-x-4 mb-4">
+    <button
+      className="px-6 py-2 bg-gray-400 hover:bg-gray-500 transition duration-300 ease-in-out text-white border-none rounded-md cursor-pointer text-base"
+      type="button"
+      onClick={handlePreviousPage}
+      disabled={page === 1}
+    >
+      Anterior
+    </button>
+
+    <span className="text-base">
+      Página {currentPageState} de {totalPages}
+    </span>
+
+    <button
+      className="px-6 py-2 bg-cyan-400 hover:bg-cyan-600 transition duration-300 ease-in-out text-white border-none rounded-md cursor-pointer text-base"
+      type="button"
+      onClick={handleNextPage}
+    >
+      Próximo
+    </button>
+  </div>
+
+  {/* Linha inferior com os botões "Cancelar" e "Adicionar" */}
+  <div className="flex items-center justify-center space-x-4">
+    <button
+      className="px-16 py-3 bg-red-400 hover:bg-red-700 transition duration-300 ease-in-out text-white border-none rounded-md cursor-pointer text-lg"
+      type="button"
+      onClick={onClose}
+    >
+      Cancelar
+    </button>
+
+    <button
+      className="px-16 py-3 bg-green-500 text-white hover:bg-green-700 transition duration-300 ease-in-out border-none rounded-md cursor-pointer text-lg"
+      type="submit"
+    >
+      Adicionar
+    </button>
+  </div>
+</div>
+
         </form>
       </div>
     </div>

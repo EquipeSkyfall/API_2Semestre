@@ -23,3 +23,23 @@
     max-width: 100px;
 }
 
+
+/*responsividade*/
+
+@media (max-width: 385px) {
+    .product_list{
+        margin-right: 2%;
+        margin-left: -12%;
+    }
+}
+
+@media (max-width: 361px) {
+    .product_list{
+        margin-right: 5%;
+        margin-left: -14%;
+    }
+
+    .align_conf{
+        margin-left: -20%;
+    }
+}

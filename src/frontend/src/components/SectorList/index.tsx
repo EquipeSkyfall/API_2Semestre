@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { Sector } from '../SectorTypes/types';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,62 +21,80 @@ const SectorList: React.FC<SectorListProps> = ({
     onDelete,
     onEdit,
 }) => {
-    return (
-        <div>
-            <h1 className="text-center mb-4">Lista de Setores</h1>
-            <div className="sector-list bg-[#f9f9f9] rounded-lg p-4 shadow-md">
-                <ul className="space-y-2">
-                    {sectors.length > 0 ? (
-                        sectors.map((sector) => (
-                            <li
-                                key={sector.id_setor}
-                                className="sector-item flex justify-between items-center p-2 border-b last:border-none"
-                            >
-                                <span className="sector-name font-medium">
-                                    {sector.nome_setor}
-                                </span>
-                                <div className="category-actions space-x-2">
-                                    <button
-                                        onClick={() => onEdit(sector)}
-                                        className="edit-btn"
-                                        style={{ color: '#22d3ee' }} // Azul claro
-                                    >
-                                        <FontAwesomeIcon icon={faPencilAlt} />
-                                    </button>
-                                    <button
-                                        onClick={() => onDelete(sector.id_setor)}
-                                        className="delete-btn"
-                                        style={{ color: '#f44336' }} // Vermelho
-                                    >
-                                        <FontAwesomeIcon icon={faTrashAlt} />
-                                    </button>
-                                </div>
-                            </li>
-                        ))
-                    ) : (
-                        <li className="text-center text-gray-500">Não há setores registrados.</li>
-                    )}
-                </ul>
+    const [searchTerm, setSearchTerm] = useState('');
 
-                <div className="pagination-controls flex justify-between items-center pt-4">
-                    <button
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                        className="pagination-btn px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 disabled:opacity-50"
-                    >
-                        Voltar
-                    </button>
-                    <span>
-                        {totalPages > 0 && `Página ${currentPage} de ${totalPages}`}
-                    </span>
-                    <button
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage >= totalPages}
-                        className="pagination-btn px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 disabled:opacity-50"
-                    >
-                        Avançar
-                    </button>
-                </div>
+    // Filtra os setores com base no termo de pesquisa
+    const filteredSectors = useMemo(() => {
+        return sectors.filter(sector =>
+            sector.nome_setor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (sector.nome_setor && sector.nome_setor.toLowerCase().includes(searchTerm.toLowerCase()))
+        );
+    }, [searchTerm, sectors]);
+
+    return (
+        <div className="mt-8">
+            {/* Barra de pesquisa */}
+            <div className="mb-4">
+                <input
+                    type="text"
+                    placeholder="Pesquisar setores..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="px-4 py-2 border border-gray-300 rounded-md w-full sm:w-1/2"
+                />
+            </div>
+
+            <div className="overflow-x-auto">
+                <table className="min-w-full table-auto border-collapse bg-white shadow-sm rounded-lg">
+                    <thead>
+                        <tr className="bg-cyan-500">
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-white">Nome do Setor</th>
+                            <th className="px-4 py-2 text-left text-sm font-semibold text-white">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredSectors.length > 0 ? (
+                            filteredSectors.map((sector: Sector) => (
+                                <tr key={sector.id_setor} className="border-b hover:bg-gray-50">
+                                    <td className="px-4 py-2 text-sm text-gray-700" title={sector.nome_setor}>
+                                        {sector.nome_setor}
+                                    </td>
+                                    <td className="px-4 py-2 text-sm text-gray-700">
+                                        <button onClick={() => onEdit(sector)} className="text-blue-500 hover:text-blue-700 mr-2">
+                                            <FontAwesomeIcon icon={faPencilAlt} />
+                                        </button>
+                                        <button onClick={() => onDelete(sector.id_setor)} className="text-red-500 hover:text-red-700">
+                                            <FontAwesomeIcon icon={faTrashAlt} />
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={2} className="px-4 py-2 text-center text-gray-500">Não há setores registrados.</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+
+            {/* Paginação */}
+            <div className="flex justify-start items-center mt-4 space-x-4">
+                <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 1}
+                    className="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-700 disabled:bg-gray-300"
+                >
+                    Voltar
+                </button>
+                <span className="text-sm text-gray-600">{totalPages > 0 ? `Página ${currentPage} de ${totalPages}` : ''}</span>
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage >= totalPages}
+                    className="px-4 py-2 bg-cyan-500 text-white rounded-md hover:bg-cyan-700 disabled:bg-gray-300"
+                >
+                    Avançar
+                </button>
             </div>
         </div>
     );
