@@ -1,43 +1,38 @@
-// import { z } from 'zod';
-// import { zodResolver } from '@hookform/resolvers/zod';
-// import { useForm } from 'react-hook-form';
-// import { useState } from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
 import useGetUser from '../../Hooks/Users/getUserHook';
 import EditUserButton from '../UserEditButton';
-
-
-
-// UserInfo.js
-// import { useNavigate, Link } from 'react-router-dom';
-// import { useEffect } from 'react';
+import { useState } from 'react';
 
 function UserInfo() {
   const { data: user, isLoading, error } = useGetUser();
-//   const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false); // Estado para controle de edição
 
-//   useEffect(() => {
-//     if (error) {
-//       // Redirect to login if there's an error (e.g., not authenticated)
-//       navigate('/login');
-//     }
-//   }, [error, navigate]);
+  if (isLoading) return <p>Carregando...</p>;
+  if (error) return <p>Erro ao carregar as informações do usuário</p>;
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading user information.</p>;
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+  };
 
   return (
-    <div>
-
-      <EditUserButton user={user} currentUser={user}/>
-      
-        <div>
-          <p><strong>Name:</strong> {user.name}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Email:</strong> {user.id}</p>
-          {/* Add more fields as needed */}
-        </div>
-      {/* <Link to="/">Back to Home</Link> */}
+    <div
+      className='bg-white p-5 rounded-md shadow-md flex text-xl flex-col items-start duration-300 relative h-[15vw] w-[20vw]'
+    >
+      <div className="mb-2">
+        <p className="font-semibold">Nome:</p>
+        <p>{user.name}</p>
+      </div>
+      <div className="mb-2">
+        <p className="font-semibold">Email:</p>
+        <p>{user.email}</p>
+      </div>
+      <div>
+        <p className="font-semibold">ID:</p>
+        <p>{user.id}</p>
+      </div>
+      {/* Ícone para abrir/fechar o formulário de edição */}
+      <div className="absolute top-[5%] left-[90%]" onClick={handleEditToggle}>
+        <EditUserButton user={user} currentUser={user} />
+      </div>
     </div>
   );
 }

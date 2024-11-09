@@ -6,56 +6,78 @@ import useDeleteUser from "../../Hooks/Users/deleteUserHook";
 
 const UsersList = ({ query }) => {
   const [page, setPage] = useState(1);
-  // const [editingUserId, setEditingUserId] = useState(null); // Track which user is being edited
   const { data, isLoading, error } = useGetUsers({ page, searchTerm: query });
   const { data: currentUser } = useGetUser();
   const deleteUserMutation = useDeleteUser();
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading users</p>;
-  // console.log(currentUser)
+  const USERS_PER_PAGE = 5;
+
+  if (isLoading) return <p>Carregando...</p>;
+  if (error) return <p>Erro ao carregar os usuários</p>;
+
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
+    if (window.confirm("Você tem certeza que gostaria de deletar este usuário?")) {
       deleteUserMutation.mutate(id);
     }
   };
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
+
   return (
-    <>
-      <ul>
+    <div className="flex flex-col justify-between h-full pt-4">
+      <ul className="flex-grow">
         {data?.users?.length > 0 ? (
-          data.users.map((user) => (
+          data.users.slice(0, USERS_PER_PAGE).map((user) =>
             currentUser.id !== user.id ? (
-              <li key={user.id}>
-                <span>{user.name}</span>
+              <li key={user.id} className="border-b p-2 flex justify-between items-center">
+                <span className="hover:text-cyan-600">{user.name}</span>
                 {(currentUser.role === "Administrador" && user.role !== "Administrador") ? (
-                  <>
-                    <EditUserButton 
-                      user={user} 
-                      currentUser={currentUser} 
-                    />
-                    <button onClick={() => handleDelete(user.id)}>Delete</button>
-                  </>
+                  <div className="space-x-5">
+                    <div className="absolute">
+                      <EditUserButton user={user} currentUser={currentUser} />
+                    </div>
+                    <button
+                      className="text-red-500 hover:text-red-700 transition"
+                      onClick={() => handleDelete(user.id)}
+                    >
+                      Deletar
+                    </button>
+                  </div>
                 ) : null}
               </li>
             ) : null
-          ))
+          )
         ) : (
-          <li>No users available</li>
+          <li>Nenhum usuário disponível</li>
         )}
       </ul>
-      
-      <div className="pagination">
-        {Array.from({ length: data.totalPages }).map((_, index) => (
+
+      {data && (
+        <div className="pagination-controls py-4 flex justify-center items-center mt-4">
           <button
-            key={index}
-            onClick={() => setPage(index + 1)}
-            disabled={index + 1 === page}
+            className={`mx-2 px-4 py-2 rounded ${page === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-cyan-500 text-white hover:bg-cyan-600"
+              }`}
+            disabled={page === 1}
+            onClick={() => handlePageChange(page - 1)}
           >
-            {index + 1}
+            Anterior
           </button>
-        ))}
-      </div>
-    </>
+          <span className="text-gray-600">
+            Página {page} de {data.totalPages}
+          </span>
+          <button
+            className={`mx-2 px-4 py-2 rounded ${page === data.totalPages ? "bg-gray-300 cursor-not-allowed" : "bg-cyan-500 text-white hover:bg-cyan-600"
+              }`}
+            disabled={page === data.totalPages}
+            onClick={() => handlePageChange(page + 1)}
+          >
+            Próxima
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 

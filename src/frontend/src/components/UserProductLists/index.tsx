@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import LowStockList from "./LowStock";
 import ExpiringList from "./Expiration";
 
@@ -10,10 +10,14 @@ export interface FilterValues {
 
 const UserProductsList: React.FC = () => {
     return (
-        <>
-            <LowStockList />
-            <ExpiringList />
-        </>
+        <div className="flex space-x-4">
+            <div className="flex-1">
+                <LowStockList />
+            </div>
+            <div className="flex-1">
+                <ExpiringList />
+            </div>
+        </div>
     );
 };
 

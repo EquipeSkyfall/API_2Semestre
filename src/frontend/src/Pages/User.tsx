@@ -8,28 +8,34 @@ import UserProductsList from '../components/UserProductLists';
 const UsersPage = () => {
     const { data: user, isLoading, error } = useGetUser();
     // const [page, setPage] = useState(1);
-    
+
     // const [query, setQuery] = useState("");
-    if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Error loading users</p>;
+    if (isLoading) return <p>Carregando...</p>;
+    if (error) return <p>Erro ao carregar Usuários</p>;
     // console.log(user)
-    
+
     return (
-        <div className="users-page">
-            
-            {user.role === 'Gerente' || user.role === 'Administrador'? (<>
-                <h1>Lista de Usuários</h1>
-                <UserSearchBar />
-            </>
-            ): <></>}
-            <h2>Informações do Usuário</h2> 
-            <UserInfo/>
-            {user.role === 'Gerente'? (<>
-                <h1>Alertas do Sistema</h1>
-                    <UserProductsList />
-            </>
-            ): <></>}
-          
+        <div className="users-page p-5">
+            <div className='flex justify-center space-x-4'>
+                <div className='flex flex-col'>
+                    {user.role === 'Gerente' || user.role === 'Administrador' ? (<>
+                        <h1 className='text-cyan-600 font-["Afacad_Flux"] mr-0 text-center'>Lista de Usuários</h1>
+                        <UserSearchBar />
+                    </>
+                    ) : <></>}
+                </div>
+                <div className='flex flex-col'>
+                    {user.role === 'Gerente' ? (<>
+                        <h1 className='text-cyan-600 font-["Afacad_Flux"] mr-0 text-center'>Alertas do Sistema</h1>
+                        <UserProductsList />
+                    </>
+                    ) : <></>}
+                </div>
+                <div className='flex flex-col'>
+                    <h1 className=' text-cyan-600 font-["Afacad_Flux"] mr-0 text-center'>Informações do Usuário</h1>
+                    <UserInfo />
+                </div>
+            </div >
         </div>
     );
 };

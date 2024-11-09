@@ -61,7 +61,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearchTermChange }) => {
 
     return (
         <FormProvider {...methods}>
-            <div className="searchbar-wrapper">
+            <div className="searchbar-wrapper !w-96">
                 <input
                     type="text"
                     value={searchTerm}
