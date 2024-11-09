@@ -35,6 +35,7 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
         setResetKey(prev => prev + 1)
         setSuccessMessage('Lote cadastrado com sucesso!');
         
+        // Limpar a mensagem após 3 segundos
         setTimeout(() => {
             setSuccessMessage('');
         }, 2000);
@@ -69,24 +70,28 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
         <FormProvider {...methods}>
             <form
                 onSubmit={handleSubmit(onSubmit, onError)}
-                className="batch-form">
-                
+                className="batch-form"
+            >
+                {/* {successMessage && <p className="success-message">{successMessage}</p>} Removi dessa parte e coloquei no final da pagina */}
                 {serverError && <p className="error-message">{serverError}</p>}
 
+                {/*  <h2 className="color_conf">Entrada de Produtos</h2> */}
 
-                <div className="formContainer flex flex-col xl:flex-row text-xxs text-xs md:text-base justify-between gap-5">
-                    <div className="insertProducts">   
+                <div className="formContainer flex flex-col text-xs md:text-base xl:flex-row justify-between gap-5">
+                    <div className="insertProducts flex-1 min-w-[300px]">   
                         <BatchSupplierList refetch={() => {}} onChange={handleSupplierChange} resetKey={resetKey}/>
                     </div>    
 
-                    <div className="dropProducts">
+                    <div className="dropProducts flex-1 min-w-[300px]">
                         <BatchSupplierProductList refetch={() => {}} supplierId={supplierId}/>
                             
-                        <div>
+                        <div style={{
+                            marginLeft: "1%"                                
+                        }}>
                             
                             <button
                             type="submit"
-                            className="submit-button"
+                            className="submit-button dimension-submit"
                             disabled={isSubmitting}
                             >
 

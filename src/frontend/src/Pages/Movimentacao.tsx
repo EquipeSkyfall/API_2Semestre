@@ -10,43 +10,44 @@ export default function Movimentacao() {
 
     const styles = {
         formContainer: {
-            padding: '20px',
+            padding: '2%',
         },
         tabButtons: {
             display: 'flex',
-            marginBottom: '1rem',
+            marginBottom: '1%',
         },
         button: {
-            padding: '0.5rem 1rem',
-            marginRight: '0.5rem',
+            marginLeft: '2%',
+            padding: '0.5% 1%',
+            marginRight: '0.5%',
             cursor: 'pointer',
             border: 'none',
             backgroundColor: '#f0f0f0',
-            borderRadius: '5px',
+            borderRadius: '2%',
         },
         activeButton: {
-            backgroundColor: '#007bff',
+            backgroundColor: '#38bdf8',
             color: 'white',
         },
         tabContent: {
-            padding: '20px',
+            padding: '2%',
         },
         insertProducts: {
-            marginBottom: '20px',
+            marginBottom: '2%',
         },
         dropProducts: {
-            marginBottom: '20px',
+            marginBottom: '2%',
         },
     };
 
     return (
-        <div style={styles.formContainer} className="text-xs md:text-base" >
+        <div style={styles.formContainer}>
             <div style={styles.tabButtons}>
                 <button
                     style={activeTab === 'batch' ? { ...styles.button, ...styles.activeButton } : styles.button}
                     onClick={() => setActiveTab('batch')}
                 >
-                    Entrada de Produtos
+                    Entrada de Proutos
                 </button>
                 <button
                     style={activeTab === 'shipment' ? { ...styles.button, ...styles.activeButton } : styles.button}
