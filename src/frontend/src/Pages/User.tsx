@@ -19,7 +19,7 @@ const UsersPage = () => {
             <div className='lg:flex justify-center space-x-4'>
                 <div className='flex flex-col'>
                     {user.role === 'Gerente' || user.role === 'Administrador' ? (<>
-                        <h1 className='text-cyan-600 font-["Afacad_Flux"] mr-0 text-center text-2xl xl:text-4xl '>Lista de Usuários</h1>
+                        <h1 className='text-cyan-600 font-["Afacad_Flux"] mr-0 text-center text-2xl xl:text-4xl md:mt-0 !mt-10 '>Lista de Usuários</h1>
                         <UserSearchBar />
                     </>
                     ) : <></>}
