@@ -16,23 +16,23 @@ const UsersPage = () => {
 
     return (
         <div className="users-page p-5">
-            <div className='flex justify-center space-x-4'>
+            <div className='lg:flex justify-center space-x-4'>
                 <div className='flex flex-col'>
                     {user.role === 'Gerente' || user.role === 'Administrador' ? (<>
-                        <h1 className='text-cyan-600 font-["Afacad_Flux"] mr-0 text-center'>Lista de Usuários</h1>
+                        <h1 className='text-cyan-600 font-["Afacad_Flux"] mr-0 text-center text-2xl xl:text-4xl '>Lista de Usuários</h1>
                         <UserSearchBar />
                     </>
                     ) : <></>}
                 </div>
                 <div className='flex flex-col'>
                     {user.role === 'Gerente' ? (<>
-                        <h1 className='text-cyan-600 font-["Afacad_Flux"] mr-0 text-center'>Alertas do Sistema</h1>
+                        <h1 className='text-cyan-600 font-["Afacad_Flux"] mr-0 text-center text-2xl xl:text-4xl md:mt-0 !mt-10'>Alertas do Sistema</h1>
                         <UserProductsList />
                     </>
                     ) : <></>}
                 </div>
                 <div className='flex flex-col'>
-                    <h1 className=' text-cyan-600 font-["Afacad_Flux"] mr-0 text-center'>Informações do Usuário</h1>
+                    <h1 className=' text-cyan-600 font-["Afacad_Flux"] mr-0 text-center text-2xl xl:text-4xl md:mt-0 !mt-10'>Informações do Usuário</h1>
                     <UserInfo />
                 </div>
             </div >

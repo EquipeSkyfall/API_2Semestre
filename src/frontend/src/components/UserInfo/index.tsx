@@ -15,7 +15,7 @@ function UserInfo() {
 
   return (
     <div
-      className='bg-white p-5 rounded-md shadow-md flex text-xl flex-col items-start duration-300 relative h-[15vw] w-[20vw]'
+      className='bg-white p-5 rounded-md shadow-md flex text-xl flex-col items-start duration-300 relative xl:h-[15vw] xl:w-[20vw]'
     >
       <div className="mb-2">
         <p className="font-semibold">Nome:</p>
@@ -30,7 +30,7 @@ function UserInfo() {
         <p>{user.id}</p>
       </div>
       {/* Ícone para abrir/fechar o formulário de edição */}
-      <div className="absolute top-[5%] left-[90%]" onClick={handleEditToggle}>
+      <div className="absolute top-[5%] left-[85%]  sm:left-[90%]" onClick={handleEditToggle}>
         <EditUserButton user={user} currentUser={user} />
       </div>
     </div>

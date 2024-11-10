@@ -10,7 +10,7 @@ export interface FilterValues {
 
 const UserProductsList: React.FC = () => {
     return (
-        <div className="flex space-x-4">
+        <div className="md:flex lg:space-x-4">
             <div className="flex-1">
                 <LowStockList />
             </div>

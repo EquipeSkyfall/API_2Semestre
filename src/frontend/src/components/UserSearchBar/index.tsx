@@ -6,11 +6,11 @@ const UserSearchBar = function Search() {
   const [query, setQuery] = useState("");
   return (
     <>
-      <div className="bg-white w-[25vw] h-[30vw] rounded-md shadow-md p-10">
+      <div className="bg-white rounded-md shadow-md flex flex-col items-center transition-all duration-300 relative 2xl:h-[30vw] lg:h-[45vw] lg:w-[25vw] md:h-[60vw] ml-4 sm:ml-6 lg:ml-0 md:w-[90vw] sm:h-[60vw] sm:w-[90vw] h-[150vw] w-[80vw] p-10 2xl:pt-[15%]">
         <input
-          className="search w-full rounded shadow-md border-cyan-700 border-2 p-2 "
+          className="search w-full rounded shadow-md p-2 py-2.3 "
           type="text"
-          placeholder="Search Users..."
+          placeholder="Procurar Usuários..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
