@@ -9,7 +9,7 @@ interface CategoriesResponse {
     totalCategories: number;
 }
 
-const FetchAllCategories = (page: number, limit: number | string = 'all') => {
+const FetchAllCategories = (search: string, page: number, limit: number | string = 'all') => {
     const navigate = useNavigate();
     const location = useLocation();
     const { data = { categories: [], totalPages: 1, totalCategories: 0 }, isLoading, isError, refetch } = useQuery<CategoriesResponse>({
@@ -18,7 +18,7 @@ const FetchAllCategories = (page: number, limit: number | string = 'all') => {
             
             
             try{
-            const response = await axios.get(`http://127.0.0.1:3000/categories?page=${page}&limit=${limit}`,{withCredentials:true})
+            const response = await axios.get(`http://127.0.0.1:3000/categories?search=${search}&page=${page}&limit=${limit}`,{withCredentials:true})
             return response.data || { categories: [], totalPages: 1, totalCategories: 0 }
             }catch(error){
                 if (axios.isAxiosError(error)){

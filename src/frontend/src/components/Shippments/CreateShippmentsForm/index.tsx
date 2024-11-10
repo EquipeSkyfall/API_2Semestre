@@ -294,7 +294,8 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
                       </ul>
                     )}
                     <button
-                      onClick={() => handleRemoveProduct(product)}
+                      type="button"
+                      onClick={() => handleRemoveProduct(product.id_produto)}
                       style={{
                         backgroundColor: '#dc3545',
                         color: '#fff',

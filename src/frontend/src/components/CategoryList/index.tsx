@@ -1,13 +1,13 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Category } from "../CategoryTypes/types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 
 interface CategoryListProps {
+    searchTerm: (search: string) => void;
     categories: Category[];
     currentPage: number;
     totalPages: number;
-    itemsPerPage: number;
     handlePageChange: (newPage: number) => void;
     onDelete: (id_categoria: number) => void;
     onEdit: (category: Category) => void;
@@ -15,24 +15,30 @@ interface CategoryListProps {
 }
 
 const CategoryList: React.FC<CategoryListProps> = React.memo(({
+    searchTerm,
     categories,
     currentPage,
     totalPages,
-    itemsPerPage,
     handlePageChange,
     onDelete,
     onEdit,
     successMessage,
 }) => {
-    const [searchTerm, setSearchTerm] = useState("");
+    const [search, setSearch] = useState('');
 
-    // Filtra as categorias com base no termo de pesquisa
-    const filteredCategories = useMemo(() => {
-        return categories.filter(category =>
-            category.nome_categoria.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            category.descricao_categoria.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    }, [searchTerm, categories]);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            searchTerm(search);
+        }, 300);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [search, searchTerm]);
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(event.target.value);
+    };
 
     return (
         <div className="mt-8">
@@ -44,12 +50,12 @@ const CategoryList: React.FC<CategoryListProps> = React.memo(({
             )}
 
             {/* Barra de pesquisa */}
-            <div className="mb-4">
+            <div className="form-field mb-4">
                 <input
                     type="text"
                     placeholder="Pesquisar categorias..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={search}
+                    onChange={handleSearchChange}
                     className="px-4 py-2 border border-gray-300 rounded-md w-full sm:w-1/2"
                 />
             </div>
@@ -64,8 +70,8 @@ const CategoryList: React.FC<CategoryListProps> = React.memo(({
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredCategories.length > 0 ? (
-                            filteredCategories.map((category: Category) => (
+                        {categories.length > 0 ? (
+                            categories.map((category: Category) => (
                                 <tr key={category.id_categoria} className="border-b hover:bg-gray-50">
                                     <td className="px-4 py-2 text-sm text-gray-700 truncate" style={{ maxWidth: '200px' }} title={category.nome_categoria}>
                                         {category.nome_categoria}

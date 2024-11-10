@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import CategoryList from '../CategoryList';
 import useDeleteCategory from '../../Hooks/Categories/deleteCategoryByIdHook';
 import FetchAllCategories from '../../Hooks/Categories/fetchAllCategoriesHook';
@@ -20,17 +20,24 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
     const [isFormVisible, setIsFormVisible] = useState(true); 
     const [editingCategory, setEditingCategory] = useState<Category | null>(null);
     const deleteCategoryMutation = useDeleteCategory();
+    const [search, setSearch] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 5;
 
-    const { categories, totalPages, isLoading, isError, refetch: refetchCategories } = FetchAllCategories(currentPage, itemsPerPage);
+    const { categories, totalPages, isLoading, isError, refetch: refetchCategories } = FetchAllCategories(search, currentPage, itemsPerPage);
 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState<number | null>(null);
 
+    const handleSearchTermChange = useCallback((search: string) => {
+        setSearch(search);
+        setCurrentPage(1);
+      },[]
+    );
+
     useEffect(() => {
         refetchCategories();
-    }, [currentPage]);
+    }, [currentPage, search]);
 
     const closeModal = () => {
         setIsCategoryModalOpen(false);
@@ -117,10 +124,10 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                     />
                 ) : (
                     <CategoryList
+                        searchTerm={handleSearchTermChange}
                         categories={categories}
                         currentPage={currentPage}
                         totalPages={totalPages}
-                        itemsPerPage={5}
                         handlePageChange={setCurrentPage}
                         onDelete={handleDelete}
                         onEdit={handleEdit}

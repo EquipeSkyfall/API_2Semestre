@@ -1,10 +1,11 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Sector } from '../SectorTypes/types';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
 interface SectorListProps {
+    searchTerm: (search: string) => void;
     sectors: Sector[];
     currentPage: number;
     totalPages: number;
@@ -14,6 +15,7 @@ interface SectorListProps {
 }
 
 const SectorList: React.FC<SectorListProps> = ({
+    searchTerm,
     sectors,
     currentPage,
     totalPages,
@@ -21,25 +23,31 @@ const SectorList: React.FC<SectorListProps> = ({
     onDelete,
     onEdit,
 }) => {
-    const [searchTerm, setSearchTerm] = useState('');
+    const [search, setSearch] = useState('');
 
-    // Filtra os setores com base no termo de pesquisa
-    const filteredSectors = useMemo(() => {
-        return sectors.filter(sector =>
-            sector.nome_setor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (sector.nome_setor && sector.nome_setor.toLowerCase().includes(searchTerm.toLowerCase()))
-        );
-    }, [searchTerm, sectors]);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            searchTerm(search);
+        }, 300);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [search, searchTerm]);
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(event.target.value);
+    };
 
     return (
         <div className="mt-8">
             {/* Barra de pesquisa */}
-            <div className="mb-4">
+            <div className="form-field mb-4">
                 <input
                     type="text"
                     placeholder="Pesquisar setores..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={search}
+                    onChange={handleSearchChange}
                     className="px-4 py-2 border border-gray-300 rounded-md w-full sm:w-1/2"
                 />
             </div>
@@ -53,8 +61,8 @@ const SectorList: React.FC<SectorListProps> = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredSectors.length > 0 ? (
-                            filteredSectors.map((sector: Sector) => (
+                        {sectors.length > 0 ? (
+                            sectors.map((sector: Sector) => (
                                 <tr key={sector.id_setor} className="border-b hover:bg-gray-50">
                                     <td className="px-4 py-2 text-sm text-gray-700" title={sector.nome_setor}>
                                         {sector.nome_setor}

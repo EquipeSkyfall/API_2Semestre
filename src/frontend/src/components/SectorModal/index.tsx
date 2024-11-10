@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import SectorList from '../SectorList';
 import useDeleteSector from '../../Hooks/Sectors/deleteSectorByIdHook';
 import FetchAllSectors from '../../Hooks/Sectors/fetchAllSectorsHook';
@@ -20,17 +20,24 @@ const SectorModal: React.FC<SectorModalProps> = ({
     const [isFormVisible, setIsFormVisible] = useState(true);
     const [editingSector, setEditingSector] = useState<Sector | null>(null);
     const deleteSectorMutation = useDeleteSector();
+    const [search, setSearch] = useState<string>('');
     const [currentPage, setCurrentPage] = useState<number>(1);
     const itemsPerPage = 5;
 
-    const { sectors, totalPages, isLoading, isError, refetch: refetchSectors } = FetchAllSectors(currentPage, itemsPerPage);
+    const { sectors, totalPages, isLoading, isError, refetch: refetchSectors } = FetchAllSectors(search, currentPage, itemsPerPage);
 
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [sectorToDelete, setSectorToDelete] = useState<number | null>(null);
 
+    const handleSearchTermChange = useCallback((search: string) => {
+        setSearch(search);
+        setCurrentPage(1);
+      },[]
+    );
+
     useEffect(() => {
         refetchSectors();
-    }, [currentPage]);
+    }, [currentPage, search]);
 
     const closeModal = () => {
         setIsSectorModalOpen(false);
@@ -117,10 +124,10 @@ const SectorModal: React.FC<SectorModalProps> = ({
                     />
                 ) : (
                     <SectorList
+                        searchTerm={handleSearchTermChange}
                         sectors={sectors}
                         currentPage={currentPage}
                         totalPages={totalPages}
-                        itemsPerPage={5}
                         handlePageChange={setCurrentPage}
                         onDelete={handleDelete}
                         onEdit={handleEdit}

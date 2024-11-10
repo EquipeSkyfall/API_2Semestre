@@ -18,15 +18,19 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
     onClose,
 }) => {
     const [page, setPage] = useState(1);
-    const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { search: '', page: page, limit: 7 });
+    const [search, setSearch] = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState(search);
+    const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { search: debouncedSearch, page: page, limit: 7 });
     const { mutate: deleteProduct } = useDeleteProductFromSupplier();
-    const [searchTerm, setSearchTerm] = useState('');
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [productToDelete, setProductToDelete] = useState<number | null>(null);
 
-    const filteredProducts = data?.products.filter((product) =>
-        product.produto.nome_produto.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedSearch(search);
+        }, 300);
+        return () => clearTimeout(handler);
+    }, [search]);
 
     const handleDelete = (id_produto: number) => {
         setProductToDelete(id_produto);
@@ -62,8 +66,8 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                 <input
                     type="text"
                     placeholder="Procurando Produtos..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                     className='mt-2 mb-2 border rounded-md p-2'
                 />
 
@@ -71,12 +75,12 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                     <p className='mt-2 mb-2'>Carregando Produtos...</p>
                 ) : isError ? (
                     <p className='mt-2 mb-2'>Erro ao carregar Produtos.</p>
-                ) : filteredProducts.length === 0 ? (
+                ) : data?.products.length === 0 ? (
                     <p className='mt-2 mb-2'>Produtos não encontrados.</p>
                 ) : (
                     <>
                         <ul className="overflow-hidden">
-                            {filteredProducts.map((product) => (
+                            {data?.products.map((product) => (
                                 <li key={product.id_produto}>
                                     <div className="grid grid-cols-4 items-center p-2 bg-gray-100 rounded-md shadow-md mb-2">
                                         <div className='text-left'>
