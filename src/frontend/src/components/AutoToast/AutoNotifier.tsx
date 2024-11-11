@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useFetchAlertProducts from '../../Hooks/Products/getProductAlert';
 import { useProductIds } from '../../contexts/ProductsIdsContext';
+import useGetUser from '../../Hooks/Users/getUserHook';
 
 function AutoNotifier() {
     const { data } = useFetchAlertProducts();
@@ -59,8 +60,12 @@ function AutoNotifier() {
             setLowStockIds([]);
         }
     }, [data?.lowStock]);
+    const { data: user } = useGetUser();
+    const isAllowed = user && (user.role === 'Administrador' || user.role === 'Gerente');
 
     return (
+        <>
+        {isAllowed && (
         <ToastContainer
             position="bottom-right"
             autoClose={5000}
@@ -70,7 +75,9 @@ function AutoNotifier() {
             pauseOnFocusLoss={false}
             draggable
             theme="light"
-        />
+        />)
+        }
+        </>
     );
 }
 

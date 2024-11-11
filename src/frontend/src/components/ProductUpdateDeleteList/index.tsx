@@ -10,6 +10,7 @@ import ProductForm from '../ProductForm';
 import AdicionarProdutoModal from '../AdicionarProdutoModal';
 import EditModal from '../EditModal';
 import './productupdatedeletelist.css'
+import useGetUser from '../../Hooks/Users/getUserHook';
 
 interface Product extends ProductSchema {
     id_produto: number;
@@ -40,7 +41,7 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
     const updateProductMutation = useUpdateProduct();
     const deleteProductMutation = useDeleteProduct();
     const [isProductModalOpen, setIsProductModalOpen] = useState<boolean>(false); // Estado para controlar o modal
-
+    
     const handleOpenModal = () => {
         setIsProductModalOpen(true);
     };
@@ -89,14 +90,17 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
         setShowConfirmModal(false); // Fechar o modal de confirmação
         setProductToDelete(null); // Limpar o ID do produto
     };
+    const { data: user, isLoading, error } = useGetUser();
+    const isAllowed = user && (user.role === 'Administrador' || user.role === 'Gerente');
 
     return (
         <div className='flex flex-col items-center border'>
             <h2 className='h2 !text-cyan-600'>Produtos</h2>
             <div className='lg:flex lg:justify-start lg:w-full lg:pr-[25vw]'>
+               {isAllowed &&
                 <button className="searchbar-button lg:!mt-1 lg:!mb-0" onClick={handleOpenModal}>
                     Adicionar Produto
-                </button>
+                </button>}
 
                 {/* Barra de Pesquisa */}
                 <SearchBar

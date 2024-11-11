@@ -4,6 +4,7 @@ import { ProductSchema } from '../ProductForm/ProductSchema/productSchema';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import useGetUser from '../../Hooks/Users/getUserHook';
 
 interface ProductListing extends ProductSchema {
     id_produto: number;
@@ -49,7 +50,8 @@ const ProductList: React.FC<ProductListProps> = ({
             setExpandedProductId(productId);
         }
     };
-
+    const { data: user, isLoading, error } = useGetUser();
+    const canEditOrDelete = user && (user.role === 'Administrador' || user.role === 'Gerente');
     return (
         
         <div className="list-container">
@@ -61,11 +63,11 @@ const ProductList: React.FC<ProductListProps> = ({
                             <th>Fabricante</th>
                             <th>ID</th>
                             <th>Qtd. Estoque</th>
-                            <th>Data (Entrada)</th>
-                            <th>Data (Saída)</th>
+                            {/* <th>Data (Entrada)</th> */}
+                            {/* <th>Data (Saída)</th> */}
                             <th>Preço</th>
-                            <th>Atualizado</th>
-                            <th>Ações</th>
+                            {/* <th>Atualizado</th> */}
+                            {canEditOrDelete && <th>Ações</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -78,19 +80,21 @@ const ProductList: React.FC<ProductListProps> = ({
                                     <td>{product.marca_produto}</td>
                                     <td>{product.id_produto}</td>
                                     <td>{product.total_estoque}</td>
-                                    <td>2024-01-01</td>
-                                    <td>2024-01-10</td>
+                                    {/* <td>2024-01-01</td> */}
+                                    {/* <td>2024-01-10</td> */}
                                     <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}</td>
-                                    <td>2024-10-20</td>
+                                    {/* <td>2024-10-20</td> */}
 
-                                    <td className="item-actions">
-                                        <button onClick={() => onEdit(product)} className="edit-button">
-                                            <FontAwesomeIcon icon={faPencilAlt} />
-                                        </button>
-                                        <button onClick={() => onDelete(product.id_produto)} className="delete-button">
-                                            <FontAwesomeIcon icon={faTrashAlt} />
-                                        </button>
-                                    </td>
+                                    {canEditOrDelete && (
+                                        <td className="item-actions">
+                                            <button onClick={() => onEdit(product)} className="edit-button">
+                                                <FontAwesomeIcon icon={faPencilAlt} />
+                                            </button>
+                                            <button onClick={() => onDelete(product.id_produto)} className="delete-button">
+                                                <FontAwesomeIcon icon={faTrashAlt} />
+                                            </button>
+                                        </td>
+                                    )}
                                 </tr>
                             ))
                         ) : (

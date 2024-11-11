@@ -22,7 +22,7 @@ function UserForm() {
     const onSuccess = () => {
         reset();
         setSuccessMessage('Usuário registrado com sucesso!');
-        navigate('/products'); // Redireciona para a rota /products
+        navigate('/');
     };
 
     // Use the custom mutation hook

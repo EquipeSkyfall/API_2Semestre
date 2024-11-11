@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useGetUser from "../../Hooks/Users/getUserHook";
+import LogoutButton from "../LogoutButton";
 
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: user, isLoading, error } = useGetUser();
+  const isAllowed = user && (user.role === 'Administrador' || user.role === 'Gerente');
 
   return (
     <nav className="bg-slate-50 p-4 mb-5 shadow-lg relative">
@@ -46,11 +50,15 @@ export default function NavBar() {
             <Link to='/products'>
               <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Produtos</button>
             </Link>
-            <Link to='/Historico'>
-              <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Histórico</button>
-            </Link>
+            
             <Link to='/Movimentacao'>
               <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Movimentações</button>
+            </Link>
+            {isAllowed &&
+            (
+              <>
+              <Link to='/Historico'>
+              <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Histórico</button>
             </Link>
             <Link to='/Report'>
               <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Relatórios</button>
@@ -58,9 +66,14 @@ export default function NavBar() {
             <Link to='/Fornecedor'>
               <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Fornecedores</button>
             </Link>
+            </>)
+            }
             <Link to='/usuario'>
               <button className="lg:hover:border-r-transparent hover:border-r-4 lg:hover:border-b-4 hover:border-r-cyan-400 lg:hover:border-b-cyan-400 lg:pb-2 -mr-2  lg:-mr-0 bordernav">Usuários</button>
             </Link>
+        
+           <LogoutButton/>
+          
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@ import useGetLogs from "../../Hooks/Logs/getLogs";
 import { set } from "zod";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+// import useGetUser from "../../Hooks/Users/getUserHook";
 
 const LogList: React.FC = () => {
     const [selectedDate, setSelectedDate] = useState<string>('');
@@ -69,7 +70,7 @@ const LogList: React.FC = () => {
     const closeModal = () => {
         setIsModalOpen(false);
     };
-
+  
     return (
         <div>
             <button

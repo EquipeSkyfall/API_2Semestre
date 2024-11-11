@@ -253,7 +253,14 @@ public getMe = async(request:Request,response:Response) =>{
     }
   };
 
-
+  public logOut = async(request:Request,response: Response) =>{
+    response.clearCookie('jwt', {
+      httpOnly: true,  
+      secure: true,     
+      sameSite: 'None' as 'none', 
+    });
+    response.status(200).json({ message: 'Successfully logged out' });
+  }
 
   
 }
