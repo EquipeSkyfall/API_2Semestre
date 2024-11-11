@@ -42,7 +42,7 @@
 </div>
 
 ## 📌 MVP <a name="mvp"><a>
-https://github.com/user-attachments/assets/b51e998a-a811-425a-9317-c16eb2ccfd24
+https://github.com/user-attachments/assets/951e44fd-dcea-4527-9a95-96a1718e3428
 
 
 ## 📜 Product Backlog <a name="backlog"><a>
