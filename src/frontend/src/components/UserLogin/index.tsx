@@ -59,9 +59,9 @@ function LoginForm() {
                 >
                     {isSubmitting ? 'Carregando...' : 'Entrar'}
                 </button>
-                <Link to='/cadastrar'>
+                {/* <Link to='/cadastrar'>
                     <button className="text-cyan-700 mt-1 text-xl sm:text-lg hover:text-cyan-500 transition duration-300 ease-in-out">Criar Conta </button>
-                </Link>
+                </Link> */}
             </form>
         </div>
     );

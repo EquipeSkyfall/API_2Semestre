@@ -29,6 +29,9 @@ router
   .route('/users/login')
   .post(userControllers.login)
 
+router
+  .route('/users/logout')
+  .post(userControllers.logOut)
 
 
 // router
@@ -71,7 +74,7 @@ router
   .route('/products/:id')
   .get(auth,productController.getProductById) // Pulls product info by ID
   .patch(auth,productController.updateProduct) // Updates product by ID
-  .delete(auth,restrictedTo('Gerente'),productController.deleteProduct) // Deletes product by ID
+  .delete(auth,restrictedTo('Gerente','Administrador'),productController.deleteProduct) // Deletes product by ID
 
 // Editing product/supplier relationships for unique product
 router
@@ -88,13 +91,13 @@ router
 router
   .route('/suppliers')
   .get(auth,supplierController.getSuppliers)
-  .post(auth,supplierController.createSupplier)
+  .post(auth,restrictedTo('Gerente','Administrador'),supplierController.createSupplier)
 
 router
   .route('/suppliers/:id')
   .get(auth,supplierController.getSupplierById)
-  .patch(auth,supplierController.updateSupplier)
-  .delete(auth,supplierController.deleteSupplier)
+  .patch(auth,restrictedTo('Gerente','Administrador'),supplierController.updateSupplier)
+  .delete(auth,restrictedTo('Gerente','Administrador'),supplierController.deleteSupplier)
 
 router
   .route('/suppliers/:id/products')
@@ -135,7 +138,7 @@ router
 // Batch routes
 router
   .route('/batches')
-  .get(auth,batchController.getBatches)
+  .get(auth,restrictedTo('Gerente','Administrador'),batchController.getBatches)
   .post(auth,batchController.createBatch)
 
 router
@@ -149,7 +152,7 @@ router
 // Shipment routes
 router
   .route('/shipments')
-  .get(auth,shipmentController.getShipments)
+  .get(auth,restrictedTo('Gerente','Administrador'),shipmentController.getShipments)
   .post(auth,shipmentController.createShipment)
 
 router
@@ -160,6 +163,6 @@ router
 
 router
   .route('/logs')
-  .get(auth,logControllers.getLogs)
+  .get(auth,restrictedTo('Gerente','Administrador'),logControllers.getLogs)
 
 export default router

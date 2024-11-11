@@ -52,14 +52,16 @@ function App() {
                     <Route path="fornecedor" element={<Fornecedor />} />
                     <Route path="usuario" element={<User />} />
                     <Route path="*" element={<PageNotFound />} />
+
                     </Route>
                   </Routes>
-
+                   
+                  <AutoNotifier />
                 </>
               }
             />
           </Routes>
-          <AutoNotifier />
+          
         </BrowserRouter>
       </ProductIdsProvider>
     </QueryClientProvider>

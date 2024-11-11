@@ -16,13 +16,13 @@ function UserForm() {
         resolver: zodResolver(signUpSchema),
     });
 
-    const navigate = useNavigate(); // Hook para navegação
+    // const navigate = useNavigate(); // Hook para navegação
 
     // Callback para submissão bem-sucedida
     const onSuccess = () => {
         reset();
         setSuccessMessage('Usuário registrado com sucesso!');
-        navigate('/products'); // Redireciona para a rota /products
+        // navigate('/');
     };
 
     // Use the custom mutation hook
@@ -72,7 +72,7 @@ function UserForm() {
                 <div className="flex flex-col text-black mb-4">
                     <label className="font-bold px-3 text-center text-lg sm:text-base mb-3 mt-3">Cargos</label>
                     <div className="flex flex-row gap-4">
-                        {['Administrador', 'Usuário', 'Gerente'].map((role) => (
+                        {[ 'Usuário', 'Gerente'].map((role) => (
                             <label key={role} className="flex items-center">
                                 <input
                                     {...register("role")}
@@ -95,9 +95,16 @@ function UserForm() {
                 >
                     {isSubmitting ? 'Carregando...' : 'Registrar'} {/* Exibe texto de carregamento ao enviar */}
                 </button>
-                <Link to='/'>
+                {/* <Link to='/'>
                     <button className="text-cyan-700 mt-1 text-lg sm:text-base hover:text-cyan-500 transition duration-300 ease-in-out">Já possui uma conta?</button>
-                </Link>
+                </Link> */}
+                <Link to='/products'>
+                <button
+                type='button'
+                className="text-cyan-700 mt-1 text-lg sm:text-base hover:text-cyan-500 transition duration-300 ease-in-out"
+                disabled={isSubmitting} 
+                >{isSubmitting ? 'Carregando...' : 'Voltar'}</button></Link>
+
         </form>
         </div >
     );
