@@ -6,7 +6,7 @@
 
 
 
-###  ⏳ Status do projeto: 2/4 Sprint 
+###  ⏳ Status do projeto: 3/4 Sprint 
     
 
 ## 📑 Sumário
