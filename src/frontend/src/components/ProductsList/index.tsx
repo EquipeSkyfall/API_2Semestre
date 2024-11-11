@@ -53,16 +53,16 @@ const ProductList: React.FC<ProductListProps> = ({
     const { data: user, isLoading, error } = useGetUser();
     const canEditOrDelete = user && (user.role === 'Administrador' || user.role === 'Gerente');
     return (
-        
+
         <div className="list-container">
             <div className="product-list">
                 <table className="info-table">
                     <thead>
                         <tr>
                             <th>Produto</th>
-                            <th>Fabricante</th>
-                            <th>ID</th>
-                            <th>Qtd. Estoque</th>
+                            <th className='hidden sm:table-cell'>Fabricante</th>
+                            <th className='hidden sm:table-cell'>ID</th>
+                            <th className="!hidden md:!table-cell">Qtd. Estoque</th>
                             {/* <th>Data (Entrada)</th> */}
                             {/* <th>Data (Saída)</th> */}
                             <th>Preço</th>
@@ -77,14 +77,12 @@ const ProductList: React.FC<ProductListProps> = ({
                                     <td onClick={() => toggleExpand(product.id_produto)} className="item-name">
                                         {product.nome_produto}
                                     </td>
-                                    <td>{product.marca_produto}</td>
-                                    <td>{product.id_produto}</td>
-                                    <td>{product.total_estoque}</td>
-                                    {/* <td>2024-01-01</td> */}
-                                    {/* <td>2024-01-10</td> */}
-                                    <td>{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}</td>
-                                    {/* <td>2024-10-20</td> */}
-
+                                    <td className='hidden sm:table-cell'>{product.marca_produto}</td> {/* Fabricante */}
+                                    <td className='hidden sm:table-cell'>{product.id_produto}</td> {/* ID */}
+                                    <td className="hidden md:table-cell">{product.total_estoque}</td> {/* Qtd. Estoque */}
+                                    <td className=''>
+                                        {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}
+                                    </td> {/* Preço */}
                                     {canEditOrDelete && (
                                         <td className="item-actions">
                                             <button onClick={() => onEdit(product)} className="edit-button">

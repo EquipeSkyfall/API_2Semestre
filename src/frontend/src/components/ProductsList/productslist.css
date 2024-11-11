@@ -345,9 +345,6 @@ textarea:disabled {
         background-color: #fff;
     }
 
-    .info-table th:nth-child(n+3), .info-table td:nth-child(n+3) {
-        display: none;
-    }
 
     .info-table th:nth-child(9), .info-table td:nth-child(9) {
         display: table-cell;
@@ -434,15 +431,12 @@ textarea:disabled {
     }
 
     /* Esconde todas as colunas além de Nome, Fabricante e Ações */
-    .info-table th:nth-child(n+3), .info-table td:nth-child(n+3) {
-        display: none;
-    }
 
     .info-table th:nth-child(9), .info-table td:nth-child(9) {
         display: table-cell;
         padding: 0.5% 1%; /* Ajusta o padding para a coluna de Ações */
     }
-
+    
     /* Ajusta a largura das 3 primeiras colunas (Nome, Fabricante e Ações) */
     .info-table th:nth-child(-n+3), .info-table td:nth-child(-n+3) {
         width: 120px; /* Largura das colunas fixas */
