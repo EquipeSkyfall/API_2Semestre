@@ -159,7 +159,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                             {availableProducts.map(product => (
                                 <div key={product.id_produto}
                                 style={{
-                                    display: "flex",
+                                    display: "",
                                     alignItems: "center",
                                     padding: "8px",
                                     border: "1px dotted #ccc"                                    

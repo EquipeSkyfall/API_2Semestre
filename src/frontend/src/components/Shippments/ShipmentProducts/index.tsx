@@ -101,7 +101,7 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
                             }}>
                                 <label
                                 style={{
-                                    display: "flex",
+                                    display: "  ",
                                     alignItems: "center",
                                     width: "100%",
                                 }}>
