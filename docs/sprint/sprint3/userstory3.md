@@ -8,7 +8,7 @@ Este documento descreve as **User Stories** desenvolvidas durante a **Sprint 3**
 |----------------|----------------------------------------------------------------------------------------------------------------------|----------------------|----------------------------|
 | Média          | Como gerente, quero receber notificações automáticas quando o estoque de um item estiver abaixo do nível mínimo      | 10                   | R8                         |
 | Média          | Como gerente, quero ser notificado automaticamente quando produtos estiverem próximos da data de validade            | 10                   | R9                         |
-| Baixa          | Como gerente, quero registrar locais de armazenamento, fornecedores e setores                                       | 15                   | R4                         |
+| Média          | Como gerente, quero registrar locais de armazenamento, fornecedores e setores                                       | 15                   | R4                         |
 | Média          | Como administrador, quero manter um registro detalhado de compras e um log de alterações no sistema                  | 15                   | R10                        |
 | Média          | Como administrador, quero que os usuários do sistema tenham diferentes níveis de acesso (administrador, gerente, funcionário) | 15                   | R1                         |
 
