@@ -32,7 +32,7 @@
 }
 
 .info-table th {
-    background-color: #007bff;
+    background-color:#22d3ee;
     color: white;
     font-weight: bold;
     text-align: center;
@@ -118,14 +118,14 @@
     border-radius: 6px;
     border: none;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: #22d3ee;
     color: white;
     transition: background-color 0.3s ease;
     font-size: 1rem;
 }
 
 .pagination-button:hover {
-    background-color: #022dbe;
+    background-color: #22b4ca;
 }
 
 .pagination-button:disabled {
@@ -188,13 +188,13 @@
 }
 
 .product-details strong {
-    color: #007bff;
+    color: #2bd0e9;
 }
 
 .product-details button {
     margin-top: 15px;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #2fb9ce;
     border: none;
     border-radius: 6px;
     color: #fff;
@@ -203,7 +203,7 @@
 }
 
 .product-details button:hover {
-    background-color: #022dbe;
+    background-color: #25a1b4;
 }
 
 input:disabled, 
@@ -286,14 +286,14 @@ textarea:disabled {
 
     .product-details strong {
         font-size: 1.1rem;
-        color: #007bff;
+        color: #2bd0e9;
     }
 
     .product-details button {
         margin-top: 15px;
         padding: 10px 15px;
         font-size: 1rem;
-        background-color: #007bff;
+        background-color: #22d3ee;
         border: none;
         border-radius: 6px;
         color: #fff;
@@ -302,7 +302,7 @@ textarea:disabled {
     }
 
     .product-details button:hover {
-        background-color: #022dbe;
+        background-color: #22b4ca;
     }
 }
 
@@ -387,6 +387,10 @@ textarea:disabled {
 
 @media (max-width: 360px) {
     /* Ajustando o título */
+
+    .list-container{
+        margin-right: 12%;
+    }
     .titulo {
         font-size: 1.6rem; /* Tamanho menor para telas pequenas */
     }
@@ -481,14 +485,14 @@ textarea:disabled {
     
     .product-details strong {
         font-size: 1rem;
-        color: #007bff; 
+        color: #2bd0e9; 
     }
     
     .product-details button {
         margin-top: 10px;
         padding: 8px 10px;
         font-size: 0.8rem;
-        background-color: #007bff; 
+        background-color: #22d3ee; 
         border: none;
         border-radius: 6px;
         color: #fff;
@@ -497,7 +501,7 @@ textarea:disabled {
     }
     
     .product-details button:hover {
-        background-color: #022dbe;
+        background-color: #25a1b4;
     }
 
 }

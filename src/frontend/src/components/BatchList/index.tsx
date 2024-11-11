@@ -66,7 +66,7 @@ const BatchesList: React.FC = () => {
     return (
         <div className="bg-white w-full md:w-1/2 md:h-[45rem] mt-5 md:mt-10 rounded-lg lg:text-base text-sm shadow-lg text-center flex flex-col ">
             <div className="flex-grow overflow-y-hidden p-0 sm:p-4">
-                <h2 className="text-cyan-600 font-['Afacad_Flux'] pt-2 sm:pt-0">Entradas</h2>
+                <h2 className="text-cyan-600 font-['Afacad_Flux'] text-center pt-2 sm:pt-0">Entradas</h2>
 
                 <div className="flex justify-center -mt-2">
                     <label htmlFor="datePicker" className="mr-2 text-gray-600 mt-2">Selecione uma data:</label>

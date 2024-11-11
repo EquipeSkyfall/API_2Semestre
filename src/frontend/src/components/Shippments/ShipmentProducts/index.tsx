@@ -93,29 +93,33 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
                     <ul className="check-shipping-products" >
                         {products.map((product) => (
                             <li key={product.id_produto}
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                padding: "8px",
-                                border: "1px dotted #ccc",
-                            }}>
-                                <label
                                 style={{
-                                    display: "  ",
+                                    display: "flex",
                                     alignItems: "center",
-                                    width: "100%",
+                                    padding: "8px",
+                                    border: "1px dotted #ccc",
                                 }}>
+                                <label
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        width: "100%",
+                                    }}>
                                     <input
                                         type="checkbox"
-                                        className="checkbox"
+                                        className="checkbox flex justify-between w-1/12"
                                         checked={selectedProducts.some((p) => p.id_produto === product.id_produto)}
                                         onChange={() => handleCheckboxChange(product)}
                                         disabled={sentProducts.some((p) => p.id_produto === product.id_produto)}
                                     />
-                                    <span style={{ flexGrow: 1 }}>{product.nome_produto}</span>{" "} 
-                                    <span style={{ marginLeft: "auto" }}>
-                                        {product.total_estoque} disponíveis
-                                    </span>
+                                    <div style={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
+                                        <div>
+                                            <span style={{ flexGrow: 1 }}>{product.nome_produto}</span>{" "}
+                                        </div>
+                                        <span style={{ marginLeft: "auto" }}>
+                                            {product.total_estoque} disponíveis
+                                        </span>
+                                    </div>
                                 </label>
                             </li>
                         ))}

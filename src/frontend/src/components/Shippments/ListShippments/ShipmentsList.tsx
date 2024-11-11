@@ -76,10 +76,10 @@ const ShipmentsList: React.FC = () => {
   return (
     <div className="bg-white w-full md:w-1/2 md:h-[45rem] mt-5 md:mt-10 rounded-lg lg:text-base text-sm shadow-lg text-center flex flex-col">
       <div className="flex-grow overflow-y-hidden p-0 sm:p-4">
-        <h2 className="text-cyan-600 font-['Afacad_Flux'] pt-2 sm:pt-0">Saídas</h2>
+        <h2 className="text-cyan-600 font-['Afacad_Flux'] text-center pt-2 sm:pt-0">Saídas</h2>
 
-        <div className="flex justify-center -mt-2">
-          <label htmlFor="datePicker" className="mr-2 text-gray-600 mt-2">Selecione uma data:</label>
+        <div className="flex justify-center -mt-2 ">
+          <label htmlFor="datePicker" className="mr-2 text-gray-600  mt-2">Selecione uma data:</label>
           <input
             type="date"
             id="datePicker"
@@ -141,13 +141,13 @@ const ShipmentsList: React.FC = () => {
                     const isCollapsed = collapsedBatches[id_produto] || false;
 
                     return (
-                      <div key={id_produto} className="w-full flex flex-col items-start mb-4 border-b-2">
+                      <div key={id_produto} className="w-[27vw] flex flex-col items-start mb-4 border-b-2">
                         <div
-                          className="flex justify-between items-center border-b-black w-full px-2 sm:px-4 sm:py-2 py-1 text-sm sm:text-lg font-medium text-gray-800 cursor-pointer hover:text-cyan-600 transition-colors"
+                          className="flex justify-between items-center border-b-black w-full px-2 sm:px-4 sm:py-2 py-1 text-sm sm:text-base font-medium text-gray-800 cursor-pointer hover:text-cyan-600 transition-colors"
                           onClick={() => toggleCollapse(id_produto)}
                         >
                           <span className='flex-grow text-left'>Produto: {nome_produto}</span>
-                          <span className="text-left pl-4 sm:pl-0">Quantidade Retirada: {totalQuantidadeRetirada}</span>
+                          <span className="text-left sm:pl-0">Quantidade Retirada: {totalQuantidadeRetirada}</span>
                           <span className="ml-18 sm:ml-24">{isCollapsed ? '▼' : '▲'}</span>
                         </div>
 

@@ -150,7 +150,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
             {isVisible && (
                 <div className="supplier-checkbox">
                     <div className="dimension_conf ">
-                        <SearchBar onSearchTermChange={handleSearchTermChange}/>
+                        <SearchBar onSearchTermChange={handleSearchTermChange} />
                     </div>
                     {availableProducts.length > 0 ? (
                         <>
@@ -158,24 +158,30 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                             {isError && <p className="error-message" >Erro ao carregar produtos.</p>}
                             {availableProducts.map(product => (
                                 <div key={product.id_produto}
-                                style={{
-                                    display: "",
-                                    alignItems: "center",
-                                    padding: "8px",
-                                    border: "1px dotted #ccc"                                    
-                                }}
+                                    style={{
+                                        display: "flex",
+                                        width: '100%',
+                                        alignItems: "center",
+                                        padding: "8px",
+                                        border: "1px dotted #ccc"
+                                    }}
                                 >
                                     <input
+                                        style={{ width: 'fit-content' }}
                                         type="checkbox"
                                         className="checkbox"
                                         checked={selectedProducts.some(p => p.id_produto === product.id_produto)}
                                         onChange={() => toggleProductSelection(product)}
                                         disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
                                     />
-                                    <span style={{ flexGrow: 1 }}>{product.produto.nome_produto}</span>
-                                    <span style={{ marginRight: "auto" }}>
-                                        Preço: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
-                                    </span>
+                                    <div style={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
+                                        <span style={{ flexGrow: 1 }}>{product.produto.nome_produto}</span>
+                                        <div className="flex justify-between w-1/6 ">
+                                            <span style={{ marginRight: "auto"}}>
+                                                Preço: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             ))}
 
@@ -194,7 +200,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                     Próximo
                                 </button>
                             </div>
-                            
+
                             <div className="add-products" >
                                 <button type="button" className="button-add-products" onClick={handleAddProducts} disabled={selectedProducts.length === 0}>
                                     Adicionar Produto(s)
@@ -212,90 +218,90 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                 {addedProducts.length > 0 && (
 
                     <ul className="container"
-                    style={{ border: '1px solid #ccc', padding: '20px' }}
+                        style={{ border: '1px solid #ccc', padding: '20px' }}
                     >
 
-                        <li className="row"> 
+                        <li className="row">
                             <span>Produto</span>
                             <span>Validade</span>
                             <span>Quantidade</span>
-                            <span></span> 
+                            <span></span>
                         </li>
 
                         {addedProducts.map(product => {
                             const originalProduct = addedProductsNames.find(p => p.id_produto === product.id_produto);
                             return (
-                                <li className="row" key={product.id_produto}     
+                                <li className="row" key={product.id_produto}
                                 >
-                                    
-                                        <strong>
-                                            {originalProduct?.nome_produto || "Produto Desconhecido"}
-                                        </strong>
-                                
-                                        
-                                            <input
-                                                type="date"
-                                                id={`validade_${product.id_produto}`}
-                                                value={
-                                                    product.validade_produto
-                                                        ? new Date(product.validade_produto)
-                                                            .toISOString()
-                                                            .slice(0, 10)
-                                                        : ""
-                                                }
-                                                min={new Date(Date.now() + 86400000)
+
+                                    <strong>
+                                        {originalProduct?.nome_produto || "Produto Desconhecido"}
+                                    </strong>
+
+
+                                    <input
+                                        type="date"
+                                        id={`validade_${product.id_produto}`}
+                                        value={
+                                            product.validade_produto
+                                                ? new Date(product.validade_produto)
                                                     .toISOString()
-                                                    .slice(0, 10)}
-                                                onChange={(e) =>
-                                                    handleInputChange(
-                                                        product.id_produto,
-                                                        "validade_produto",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                style={{
-                                                    padding: "5px",
-                                                    border: "1px solid #ccc",
-                                                    borderRadius: "4px",
-                                                    maxWidth: "120px",
-                                                }}
+                                                    .slice(0, 10)
+                                                : ""
+                                        }
+                                        min={new Date(Date.now() + 86400000)
+                                            .toISOString()
+                                            .slice(0, 10)}
+                                        onChange={(e) =>
+                                            handleInputChange(
+                                                product.id_produto,
+                                                "validade_produto",
+                                                e.target.value
+                                            )
+                                        }
+                                        style={{
+                                            padding: "5px",
+                                            border: "1px solid #ccc",
+                                            borderRadius: "4px",
+                                            maxWidth: "120px",
+                                        }}
 
-                                                className="teste md:text-xs"
-                                            />
-                                        
-                                
-                                        
-                                            <input
-                                                type="number"
-                                                min="1"
-                                                id={`quantidade_${product.id_produto}`}
-                                                value={product.quantidade}
-                                                onChange={(e) =>
-                                                    handleInputChange(
-                                                        product.id_produto,
-                                                        "quantidade",
-                                                        e.target.value
-                                                    )
-                                                }
-                                                style={{
-                                                    padding: "5px",
-                                                    border: "1px solid #ccc",
-                                                    borderRadius: "4px",
-                                                    maxWidth: "40px",
-                                                }}
+                                        className="teste md:text-xs"
+                                    />
 
-                                                className="test md:text-xs"
-                                            />
-                                        
-                                
-                                        <button
-                                            type="button"
-                                            onClick={() => handleRemoveProduct(product)}
-                                            className="button-remove-products"
-                                        >
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                  
+
+
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        id={`quantidade_${product.id_produto}`}
+                                        value={product.quantidade}
+                                        onChange={(e) =>
+                                            handleInputChange(
+                                                product.id_produto,
+                                                "quantidade",
+                                                e.target.value
+                                            )
+                                        }
+                                        style={{
+                                            padding: "5px",
+                                            border: "1px solid #ccc",
+                                            borderRadius: "4px",
+                                            maxWidth: "40px",
+                                        }}
+
+                                        className="test md:text-xs"
+                                    />
+
+
+                                    <button
+                                        type="button"
+                                        onClick={() => handleRemoveProduct(product)}
+                                        className="button-remove-products"
+                                    >
+                                        <FontAwesomeIcon icon={faTrash} />
+                                    </button>
+
                                 </li>
                             );
                         })}

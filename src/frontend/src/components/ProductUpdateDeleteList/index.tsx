@@ -92,16 +92,15 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
 
     return (
         <div className='flex flex-col items-center border'>
-            <h2 className='h2 !text-cyan-600'>Produtos</h2>
-            <div className='lg:flex lg:justify-start lg:w-full lg:pr-[25vw]'>
-                <button className="searchbar-button lg:!mt-1 lg:!mb-0" onClick={handleOpenModal}>
+            <h2 className='h2 !text-5xl !text-cyan-600'>Produtos</h2>
+            <div className=' lg:justify-start lg:w-full lg:pr-[25vw]'>
+                <button className="searchbar-button lg:!-mt-3 lg:!mb-0" onClick={handleOpenModal}>
                     Adicionar Produto
                 </button>
-
-                {/* Barra de Pesquisa */}
-                <SearchBar
-                    onSearchTermChange={onSearchTermChange}
-                />
+                    {/* Barra de Pesquisa */}
+                    <SearchBar
+                        onSearchTermChange={onSearchTermChange}
+                    />
             </div>
 
             {/* Lista de Produtos */}
@@ -116,28 +115,30 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
             />
 
             {/* Modal de Confirmação de Exclusão */}
-            {showConfirmModal && (
-                <div className="fixed inset-0 flex justify-center items-center z-60">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-1/3">
-                        <h2 className="text-center text-xl mb-4">Confirmação de Exclusão</h2>
-                        <p className="text-center mb-4">Tem certeza que deseja excluir este produto?</p>
-                        <div className="flex justify-center space-x-4">
-                            <button
-                                onClick={confirmDelete}
-                                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-                            >
-                                Sim
-                            </button>
-                            <button
-                                onClick={cancelDelete}
-                                className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
-                            >
-                                Não
-                            </button>
+            {
+                showConfirmModal && (
+                    <div className="fixed inset-0 flex justify-center items-center z-60">
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-1/2 sm:w-1/4">
+                            <h2 className="text-center text-xl mb-4">Confirmação de Exclusão</h2>
+                            <p className="text-center mb-4">Tem certeza que deseja excluir este produto?</p>
+                            <div className="flex justify-center space-x-4">
+                                <button
+                                    onClick={confirmDelete}
+                                    className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                                >
+                                    Sim
+                                </button>
+                                <button
+                                    onClick={cancelDelete}
+                                    className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+                                >
+                                    Não
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             {/* Modal para Adicionar Produto */}
             <AdicionarProdutoModal isOpen={isProductModalOpen} onClose={handleCloseModal}>
@@ -156,7 +157,7 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
                 )
             } />
 
-        </div>
+        </div >
     );
 };
 

@@ -50,7 +50,7 @@ const ProductList: React.FC<ProductListProps> = ({
         }
     };
 
-    return (
+    return (   
         
         <div className="list-container">
             <div className="product-list">

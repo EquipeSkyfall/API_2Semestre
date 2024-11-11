@@ -4,7 +4,7 @@
   align-items: flex-start; /* Alinha os itens no início da contêiner */
   gap: 20px; /* Espaçamento entre os itens */
   max-width: 97%; /* Largura máxima da contêiner */
-  height: 85vh; /* Altura adaptada */
+  height: 86vh; /* Altura adaptada */
   margin: 40px auto; /* Centraliza o contêiner com um espaço maior no topo */
   padding: 20px; /* Adiciona espaço interno ao contêiner */
   background-color: #f9fafb; /* Cor de fundo */
@@ -21,13 +21,14 @@
 
 @media (max-width: 768px) {
   .container-produto{
-    height: auto;
+    height: 86vh;
   }
 }
 
 @media (max-width: 360px) {
   .container-produto{
     height: auto;
+    width: auto;
   }
 }
 

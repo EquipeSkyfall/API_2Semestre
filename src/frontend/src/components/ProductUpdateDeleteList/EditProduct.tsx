@@ -114,7 +114,7 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
                 <button className="botao-fechar-produto" onClick={onClose}>
                     <i className="fas fa-times"></i>
                 </button>
-                    <h2 className="form-header">Editar Produto</h2>
+                    <h2 className="form-header !text-cyan-600">Editar Produto</h2>
 
                     {/* Campos principais */}
                     {Object.keys(product).filter((key) =>
@@ -209,8 +209,8 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
                         <textarea
                             id="descricao_produto"
                             {...register('descricao_produto')}
-                            rows={6} // Ajuste o número de linhas para controlar a altura
-                            className="descricao_produto_lista" // Pode definir uma classe CSS específica para estilo
+                            rows={2}
+                            className="descricao_produto_lista" 
                         />
                         {errors['descricao_produto'] && <p className="error-message">{errors['descricao_produto']?.message}</p>}
                     </div>
@@ -226,9 +226,9 @@ const EditProduct: React.FC<EditProductProps> = ({ product, onUpdate, onClose, r
                     </div>
 
 
-                    <div className="form-actions">
-                        <button type="button" className="custom-btn-secondary" onClick={onClose}>Cancelar</button>
-                        <button type="submit" className="custom-btn-primary">Atualizar</button>
+                    <div className="form-actions 2xl:!-mt-2 2xl:text-sm">
+                        <button type="button" className="custom-btn-secondary 2xl:!-[60%] 2xl:!w-[40%]" onClick={onClose}>Cancelar</button>
+                        <button type="submit" className="custom-btn-primary 2xl:!-[60%] 2xl:!w-[40%]">Atualizar</button>
                     </div>
                 </form>
             </FormProvider>
