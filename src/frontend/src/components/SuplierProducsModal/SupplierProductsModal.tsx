@@ -18,19 +18,15 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
     onClose,
 }) => {
     const [page, setPage] = useState(1);
-    const [search, setSearch] = useState('');
-    const [debouncedSearch, setDebouncedSearch] = useState(search);
-    const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { search: debouncedSearch, page: page, limit: 7 });
+    const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { search: '', page: page, limit: 9 });
     const { mutate: deleteProduct } = useDeleteProductFromSupplier();
+    const [searchTerm, setSearchTerm] = useState('');
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [productToDelete, setProductToDelete] = useState<number | null>(null);
 
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedSearch(search);
-        }, 300);
-        return () => clearTimeout(handler);
-    }, [search]);
+    const filteredProducts = data?.products.filter((product) =>
+        product.produto.nome_produto.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     const handleDelete = (id_produto: number) => {
         setProductToDelete(id_produto);
@@ -56,47 +52,45 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
     if (!isOpen) return null;
 
     return (
-        <div className="modal-overlay-supplier-produto">
-            <div className="modal-content-supplier-produto rounded-lg">
-                <button className="fechar-modal rounded-full" onClick={onClose}>
+        <div className="modal-overlay-supplier-produto text-xs md:text-sm inset-0 flex">
+            <div className="modal-content-supplier-produto !max-w-screen-md w-full 2xl:!max-w-screen-md relative">
+                <button className="close-button" onClick={onClose}>
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
-                <h2>Produtos do Fornecedor</h2>
-
-                <input
+                <h2 className="text-2xl font-bold text-cyan-600 text-center mb-4">Adicionar Produtos ao Fornecedor</h2>                <input
                     type="text"
                     placeholder="Procurando Produtos..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className='mt-2 mb-2 border rounded-md p-2'
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="mb-5 text-center w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
                 />
 
                 {isLoading ? (
                     <p className='mt-2 mb-2'>Carregando Produtos...</p>
                 ) : isError ? (
                     <p className='mt-2 mb-2'>Erro ao carregar Produtos.</p>
-                ) : data?.products.length === 0 ? (
+                ) : filteredProducts.length === 0 ? (
                     <p className='mt-2 mb-2'>Produtos não encontrados.</p>
                 ) : (
                     <>
-                        <ul className="overflow-hidden">
-                            {data?.products.map((product) => (
+                        <ul className="sm:w-[100%] sm:-translate-x-0 w-[120%] -translate-x-6">
+                            {filteredProducts.map((product) => (
                                 <li key={product.id_produto}>
                                     <div className="grid grid-cols-4 items-center p-2 bg-gray-100 rounded-md shadow-md mb-2">
                                         <div className='text-left'>
-                                            <strong className="text-lg font-semibold text-gray-800">
+                                            <strong className="text-sm md:text-base 2xl:text-lg font-semibold text-gray-800">
                                                 {product.produto.nome_produto}
                                             </strong>
                                         </div>
                                         <div className="text-center">
                                             <p className="text-sm text-gray-600 mr-10">ID: {product.id_produto}</p>
                                         </div>
-                                        <div className="text-sm text-gray-600 -ml-10">
+                                        <div className="text-xs sm:text-sm  text-gray-600 -ml-10">
                                             Preço de custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
                                         </div>
-                                        <div>
+                                        <div className='ml-0 sm:ml-24'>
                                             <button
-                                                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium transition-colors duration-300"
+                                                className="px-2 py-2 bg-red-500 hover:bg-red-600 text-white rounded-md text-sm font-medium transition-colors duration-300"
                                                 onClick={() => handleDelete(product.id_produto)}
                                             >
                                                 Remover
@@ -108,27 +102,21 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                         </ul>
 
                         {/* Controles de paginação */}
-                        <div className="flex justify-between mt-4 text-xl">
+                        <div className="pagination flex justify-center items-center mt-4 2xl:text-xl text-base">
                             <button
                                 onClick={handlePrevPage}
                                 disabled={page === 1}
-                                className={`px-4 py-2 rounded-md text-white ${page === 1
-                                        ? "bg-gray-300 cursor-not-allowed" // Quando desabilitado, botão cinza
-                                        : "bg-blue-500 hover:bg-blue-600 cursor-pointer" // Quando habilitado, botão azul
-                                    }`}
+                                className="px-3 py-2 bg-gray-300 hover:bg-gray-400 !rounded-md"
                             >
                                 Anterior
                             </button>
-                            <span>
+                            <span className="mx-4">
                                 Página {page} de {data?.totalPages}
                             </span>
                             <button
                                 onClick={handleNextPage}
                                 disabled={page === data?.totalPages}
-                                className={`px-4 py-2 rounded-md text-white ${page === data?.totalPages
-                                        ? "bg-gray-300 cursor-not-allowed" // Quando desabilitado, botão cinza
-                                        : "bg-blue-500 hover:bg-blue-600 cursor-pointer" // Quando habilitado, botão azul
-                                    }`}
+                                className="px-3 py-2 bg-gray-300 hover:bg-gray-400 !rounded-md"
                             >
                                 Próximo
                             </button>

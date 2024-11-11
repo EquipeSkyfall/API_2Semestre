@@ -18,16 +18,33 @@ interface BatchSupplierProductListProps {
     supplierId: number | null;
 }
 
+interface BatchProductsNames {
+    id_produto: number
+    nome_produto: string;
+}
+
 const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ refetch, supplierId }) => {
     const { clearErrors, formState: { errors }, setValue } = useFormContext();
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState<FilterValues>({ search: '', id_setor: null, id_categoria: null })
     const [selectedProducts, setSelectedProducts] = useState<SupplierProduct[]>([]);
+    const [addedProductsNames, setAddedProductsNames] = useState<BatchProductsNames[]>([]);
     const [addedProducts, setAddedProducts] = useState<BatchProductSchema[]>([]);
     const [availableProducts, setAvailableProducts] = useState<SupplierProduct[]>([])
     const [isVisible, setIsVisible] = useState(true);
 
     const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { ...filters, page: page, limit: 10 });
+
+    useEffect(() => {
+        const newAddedProductsNames = addedProducts.map(product => {
+            const originalProduct = data?.products.find(p => p.id_produto === product.id_produto);
+            return {
+                id_produto: product.id_produto,
+                nome_produto: originalProduct?.produto.nome_produto || "Produto Desconhecido",
+            };
+        });
+        setAddedProductsNames(newAddedProductsNames);
+    }, [addedProducts]);
 
     useEffect(() => {
         if (data && data.products) {
@@ -42,6 +59,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
 
     useEffect(() => {
         setAddedProducts([])
+        setAddedProductsNames([])
         setSelectedProducts([])
         setIsVisible(true)
     }, [supplierId]);
@@ -130,69 +148,46 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
             </button>
 
             {isVisible && (
-                <>
+                <div className="supplier-checkbox">
+                    <div className="dimension_conf ">
+                        <SearchBar onSearchTermChange={handleSearchTermChange}/>
+                    </div>
                     {availableProducts.length > 0 ? (
-                        <div className="supplier-checkbox">
+                        <>
                             {isLoading && <p>Carregando...</p>}
                             {isError && <p className="error-message" >Erro ao carregar produtos.</p>}
-                            {/* <div className="dimension_conf "                            >
-                                <SearchBar onSearchTermChange={handleSearchTermChange}/>
-                            </div>
                             {availableProducts.map(product => (
                                 <div key={product.id_produto}
-                                
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: "8px",
+                                    border: "1px dotted #ccc"                                    
+                                }}
                                 >
-                                    {product.produto.nome_produto}
-                                    
+                                    <input
+                                        type="checkbox"
+                                        className="checkbox"
+                                        checked={selectedProducts.some(p => p.id_produto === product.id_produto)}
+                                        onChange={() => toggleProductSelection(product)}
+                                        disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
+                                    />
+                                    <span style={{ flexGrow: 1 }}>{product.produto.nome_produto}</span>
+                                    <span style={{ marginRight: "auto" }}>
                                         Preço: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
-                                    
-
-                                    <input
-                                        type="checkbox"
-                                        className="checkbox"
-                                        checked={selectedProducts.some(p => p.id_produto === product.id_produto)}
-                                        onChange={() => toggleProductSelection(product)}
-                                        disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
-                                    />
-                                    
-                                </div>
-                            ))} */}
-
-                            {availableProducts.map(product => (
-                                <div key={product.id_produto}
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        padding: "8px",
-                                        border: "1px dotted #ccc",
-                                        width: "100%"                                 
-                                    }}
-                                >
-                                    <input
-                                        style={{ width: "fit-content" }}
-                                        type="checkbox"
-                                        className="checkbox"
-                                        checked={selectedProducts.some(p => p.id_produto === product.id_produto)}
-                                        onChange={() => toggleProductSelection(product)}
-                                        disabled={addedProducts.some((p) => p.id_produto === product.id_produto)}
-                                    />
-                                    <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }} >
-                                        <span style={{ flexGrow: 1 }}>{product.produto.nome_produto}</span>
-                                        <span style={{ marginRight: "auto" }}>
-                                            Preço: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
-                                        </span>
-                                    </div>
+                                    </span>
                                 </div>
                             ))}
 
                             <div className="pagination">
-                                <button onClick={handlePrevPage} disabled={page === 1}>
+                                <button type="button" onClick={handlePrevPage} disabled={page === 1}>
                                     Anterior
                                 </button>
                                 <span>
                                     Página {data?.currentPage} de {data?.totalPages}
                                 </span>
                                 <button
+                                    type="button"
                                     onClick={handleNextPage}
                                     disabled={page === data?.totalPages}
                                 >
@@ -201,15 +196,15 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                             </div>
                             
                             <div className="add-products" >
-                                <button className="button-add-products" onClick={handleAddProducts} disabled={selectedProducts.length === 0}>
+                                <button type="button" className="button-add-products" onClick={handleAddProducts} disabled={selectedProducts.length === 0}>
                                     Adicionar Produto(s)
                                 </button>
                             </div>
-                        </div>
+                        </>
                     ) : (
                         <p className="error-message" >Não há produtos para adicionar.</p>
                     )}
-                </>
+                </div>
             )}
 
             <div className="dimension_conf">
@@ -228,13 +223,13 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                         </li>
 
                         {addedProducts.map(product => {
-                            const originalProduct = data?.products.find(p => p.id_produto === product.id_produto);
+                            const originalProduct = addedProductsNames.find(p => p.id_produto === product.id_produto);
                             return (
                                 <li className="row" key={product.id_produto}     
                                 >
                                     
                                         <strong>
-                                            {originalProduct?.produto.nome_produto || "Produto Desconhecido"}
+                                            {originalProduct?.nome_produto || "Produto Desconhecido"}
                                         </strong>
                                 
                                         
@@ -294,6 +289,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                         
                                 
                                         <button
+                                            type="button"
                                             onClick={() => handleRemoveProduct(product)}
                                             className="button-remove-products"
                                         >

@@ -3,8 +3,6 @@ import useSearchProducts from "../../../Hooks/Products/getSearchProductbyNameHoo
 import { useCallback, useEffect, useState } from "react";
 import { ProductSchema } from "../../ProductForm/ProductSchema/productSchema";
 import './styles.css'
-
-
 interface Product extends ProductSchema {
     id_produto: number;
     total_estoque: number;
@@ -100,7 +98,6 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
                                 alignItems: "center",
                                 padding: "8px",
                                 border: "1px dotted #ccc",
-                                width: "100%"                                 
                             }}>
                                 <label
                                 style={{
@@ -109,19 +106,16 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
                                     width: "100%",
                                 }}>
                                     <input
-                                        style={{ width: "fit-content" }}
                                         type="checkbox"
                                         className="checkbox"
                                         checked={selectedProducts.some((p) => p.id_produto === product.id_produto)}
                                         onChange={() => handleCheckboxChange(product)}
                                         disabled={sentProducts.some((p) => p.id_produto === product.id_produto)}
                                     />
-                                    <div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
-                                        <span style={{ flexGrow: 1 }}>{product.nome_produto}</span>{" "} 
-                                        <span style={{ marginLeft: "auto" }}>
-                                            {product.total_estoque} disponíveis
-                                        </span>
-                                    </div>
+                                    <span style={{ flexGrow: 1 }}>{product.nome_produto}</span>{" "} 
+                                    <span style={{ marginLeft: "auto" }}>
+                                        {product.total_estoque} disponíveis
+                                    </span>
                                 </label>
                             </li>
                         ))}
