@@ -1,0 +1,7 @@
+| **ID** | **Nome**                                 | **Quem**       | **O Que**                                                              | **Para**                                         | **Estimativa (horas)** |
+|--------|-----------------------------------------|----------------|-----------------------------------------------------------------------|--------------------------------------------------|-------------------------|
+| 1      | Notificação de Estoque Baixo             | Gerente        | Receber notificações automáticas quando o estoque estiver baixo       | Tomar decisões rápidas para reposição            | 10                      |
+| 2      | Notificação de Validade Próxima          | Gerente        | Receber notificações sobre produtos próximos da data de validade      | Priorizar a venda desses produtos                | 10                      |
+| 3      | Registro de Locais e Fornecedores        | Gerente        | Registrar locais de armazenamento, fornecedores e setores             | Melhorar a organização e controle logístico      | 15                      |
+| 4      | Registro de Compras e Log de Alterações  | Administrador  | Manter um registro detalhado de compras e um log de alterações        | Garantir rastreabilidade e auditoria             | 15                      |
+| 5      | Níveis de Acesso Diferenciados           | Administrador  | Atribuir diferentes níveis de acesso aos usuários (admin, gerente, funcionário) | Controlar o acesso a funcionalidades do sistema  | 15                      |
