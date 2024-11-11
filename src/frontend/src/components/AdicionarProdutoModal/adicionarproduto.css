@@ -95,6 +95,7 @@
 @media (max-width: 1200px) {
     .modal-conteudo {
         width: 70%;
+        overflow-y: auto;
         max-width: 700px;
     }
 }
@@ -102,12 +103,14 @@
 @media (max-width: 768px) {
     .modal-conteudo {
         width: 90%;
+        overflow-y: auto;
         max-width: 600px;
     }
 }
 
 @media (max-width: 480px) {
     .modal-conteudo {
+        overflow-y: auto;
         width: 100%;
         padding: 10px;
         border-radius: 0;

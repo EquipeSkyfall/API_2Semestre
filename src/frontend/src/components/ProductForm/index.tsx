@@ -340,7 +340,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                                 className="manage-categoria-button"
                                 onClick={() => setIsSectorModalOpen(true)}
                             >
-                                Gerenciar Os Setores
+                                Gerenciar Setores
                             </button>
                         </div>
 

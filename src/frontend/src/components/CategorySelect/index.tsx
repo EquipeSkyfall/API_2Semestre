@@ -11,7 +11,7 @@ interface CategorySelectProps {
 
 const CategorySelect: React.FC<CategorySelectProps> = ({ defaultValue, refetch, onChange }) => {
     const { register, setValue } = useFormContext();
-    const { categories, isLoading, isError, refetch: refetchCategories } = FetchAllCategories(1);
+    const { categories, isLoading, isError, refetch: refetchCategories } = FetchAllCategories('', 1, 'all'); // Passando search como string vazia e limit como 'all'
 
     const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedId: number | null = event.target.value ? Number(event.target.value) : null;
@@ -26,11 +26,27 @@ const CategorySelect: React.FC<CategorySelectProps> = ({ defaultValue, refetch, 
     };
 
     useEffect(() => {
-        refetchCategories();
         if (defaultValue) {
             setValue('id_categoria', defaultValue);
         }
-    }, [defaultValue, setValue, refetch]);
+        // Evita refetch repetido a menos que necessário
+        refetchCategories();
+    }, [defaultValue, setValue, refetchCategories]);
+
+    // Log para depuração
+    useEffect(() => {
+        if (isLoading) {
+            console.log('Carregando categorias...');
+        }
+
+        if (isError) {
+            console.error('Erro ao carregar categorias');
+        }
+
+        if (categories.length > 0) {
+            console.log('Categorias carregadas:', categories);
+        }
+    }, [isLoading, isError, categories]);
 
     return (
         <div className="form-field-categoria">

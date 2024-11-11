@@ -11,7 +11,7 @@ interface SectorSelectProps {
 
 const SectorSelect: React.FC<SectorSelectProps> = ({ defaultValue, refetch, onChange }) => {
     const { register, setValue } = useFormContext();
-    const { sectors, isLoading, isError, refetch: refetchSectors } = FetchAllSectors(1);
+    const { sectors, isLoading, isError, refetch: refetchSectors } = FetchAllSectors('', 1, 'all');
 
     const handleSectorChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedId: number | null = event.target.value ? Number(event.target.value) : null;
@@ -26,11 +26,28 @@ const SectorSelect: React.FC<SectorSelectProps> = ({ defaultValue, refetch, onCh
     };
 
     useEffect(() => {
-        refetchSectors();
         if (defaultValue) {
             setValue('id_setor', defaultValue);
         }
-    }, [defaultValue, setValue, refetch]);
+        // Evita refetch repetido a menos que necessário
+        refetchSectors();
+    }, [defaultValue, setValue, refetchSectors]);
+
+    // Log para depuração
+    useEffect(() => {
+        if (isLoading) {
+            console.log('Carregando categorias...');
+        }
+
+        if (isError) {
+            console.error('Erro ao carregar categorias');
+        }
+
+        if (sectors.length > 0) {
+            console.log('Categorias carregadas:', sectors);
+        }
+    }, [isLoading, isError, sectors]);
+
 
     return (
         <div className="form-field-setor">
