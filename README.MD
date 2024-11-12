@@ -6,7 +6,7 @@
 
 
 
-###  ⏳ Status do projeto: 1/4 Sprint 
+###  ⏳ Status do projeto: 3/4 Sprint 
     
 
 ## 📑 Sumário
@@ -16,48 +16,56 @@
 - [Product Backlog](#backlog)
 - [Equipe](#equipe)
 
+
+## 🏥 Dores do Cliente 
+<p>Organizações enfrentam grandes desafios no gerenciamento de estoque, especialmente quando processos manuais resultam em erros e inconsistências, comprometendo a precisão e a rastreabilidade. A falta de um sistema centralizado dificulta a eficiência operacional e o relacionamento com fornecedores, tornando a gestão de contratos e reposições menos eficaz. Além disso, a ausência de dados claros limita decisões estratégicas sobre níveis de estoque e compras, prejudicando o planejamento. A solução proposta busca resolver esses problemas por meio de automação e relatórios estratégicos, aprimorando o controle e proporcionando insights valiosos para melhorar a eficiência e a tomada de decisões.</p>
+
 ## 👁 Visão do Projeto <a name="visao-do-projeto"></a>
 <p>Nosso projeto é um Sistema de Controle de Estoque focado em fornecer uma gestão integrada e eficiente para organizações. A solução permitirá o registro e controle automatizado de produtos, acompanhamento de movimentações de estoque e cadastro de fornecedores. O sistema também contará com relatórios estratégicos, gerando insights para otimizar o nível de estoque e melhorar a tomada de decisões. Com uma interface amigável e relatórios claros, o sistema visa facilitar o controle de estoque em tempo real, aumentando a eficiência operacional e reduzindo erros manuais.</p> 
 
 ## 💻 Tecnologias utilizadas <a name="tecnologias"></a>
 <div align="center">
-<img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/Jira-217346?style=for-the-badge&logo=Jira&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/Microsoft_Teams-6264A7?style=for-the-badge&logo=microsoft-teams&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/Photoshop-239120?style=for-the-badge&logo=adobe-photoshop&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/Canva-239120?&style=for-the-badge&logo=canva&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/Microsoft Excel-000000?style=for-the-badge&logo=microsoft-excel&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/html5-000000?style=for-the-badge&logo=html5&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/css3-000000?style=for-the-badge&logo=css3&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/prisma-000000?style=for-the-badge&logo=prisma&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/typescript-000000?style=for-the-badge&logo=typescript&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/javascript-000000?style=for-the-badge&logo=javascript&logoColor=black&color=2271B3">
-<img src="https://img.shields.io/badge/node.js-000000?style=for-the-badge&logo=node.js&logoColor=black&color=2271B3">
+<img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Jira-217346?style=for-the-badge&logo=Jira&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Microsoft_Teams-6264A7?style=for-the-badge&logo=microsoft-teams&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Photoshop-239120?style=for-the-badge&logo=adobe-photoshop&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/Canva-239120?&style=for-the-badge&logo=canva&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/html5-000000?style=for-the-badge&logo=html5&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/css3-000000?style=for-the-badge&logo=css3&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/prisma-000000?style=for-the-badge&logo=prisma&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/typescript-000000?style=for-the-badge&logo=typescript&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/javascript-000000?style=for-the-badge&logo=javascript&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/node.js-000000?style=for-the-badge&logo=node.js&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/react-000000?style=for-the-badge&logo=react&logoColor=black&color=06b6d4">
+<img src="https://img.shields.io/badge/tailwind-000000?style=for-the-badge&logo=tailwindcss&logoColor=black&color=06b6d4">
+
 
 
 </div>
 
 ## 📌 MVP <a name="mvp"><a>
-<img src="https://github.com/EquipeSkyfall/API_2Semestre/blob/main/docs/sprint/sprint1_mvp.gif">
+https://github.com/user-attachments/assets/b37e3a54-71e6-4e6a-af47-2dc13da82c8c
+
 
 ## 📜 Product Backlog <a name="backlog"><a>
 
-| RANK | SPRINT | PRIORIDADE | ITEM | USER STORY (NOME) | STATUS |
-| :---: | :----: | :--------: | :--: | :----------------------------: | :----: |
-| 1   |   1    |   Alta      |   1   | Cadastro de Usuários                    | ✅     |
-| 2   |   1    |   Alta      |   2   | Cadastro Detalhado de Produtos no Estoque | ✅     |
-| 3   |   2    |   Alta      |   3   | Criação do Banco de Dados               |        |
-| 4   |   2    |   Alta      |   4   | Acesso aos Itens Disponíveis no Estoque |        |
-| 5   |   2    |   Alta      |   5   | Organização de Produtos em Estrutura Hierárquica de Categorias |        |
-| 6   |   2    |   Baixa     |   6   | Registro de Entradas e Saídas de Produtos no Estoque |        |
-| 7  |   2    |   Média     |   7   | Notificação Automática de Estoque Mínimo |        |
-| 8  |   2    |   Média     |   8   | Notificação de Produtos Próximos à Validade |        |
-| 9   |   3    |   Baixa     |   9   | Registro de Locais de Armazenamento, Fornecedores e Setores |        |
-| 10  |   3    |   Média     |   10   | Registro de Compras e Log de Alterações para Auditorias |        |
-| 11   |   4    |   Baixa     |   11   | Geração de Relatórios Detalhados sobre Estoque e Compras |        |
-| 12  |   4    |   Média     |   12   | Previsão de Demandas e Planejamento de Compras |        |
+| RANK | SPRINT | PRIORIDADE | ITEM | USER STORY (NOME)                                           | STATUS |
+|:----:|:------:|:----------:|:----:|:-----------------------------------------------------------:|:------:|
+| 1    |   1    |   Alta     |  1   | Cadastro de Usuários                                        | ✅     |
+| 2    |   1    |   Alta     |  2   | Registro de Produtos no Estoque                             | ✅     |
+| 3    |   2    |   Alta     |  3   | Acesso aos Itens Disponíveis no Estoque                     | ✅     |
+| 4    |   2    |   Média    |  4   | Organização de Produtos em Estrutura Hierárquica de Categorias | ✅     |
+| 5    |   2    |   Média    |  5   | Registro de Entradas e Saídas de Produtos no Estoque        | ✅     |
+| 6    |   2    |   Média    |  6   | Registro de Locais de Armazenamento, Fornecedores e Setores | ✅     |
+| 7    |   3    |   Média    |  7   | Notificação Automática de Estoque Mínimo                    |   ✅      |
+| 8    |   3    |   Média    |  8   | Notificação de Produtos Próximos à Data de Validade         |    ✅     |
+| 9    |   3    |   Média    |  9   | Log de Alterações para Auditorias                           |    ✅     |
+| 10   |   3    |   Média    | 10   | Diferentes Níveis de Acesso no Sistema                      |    ✅     |
+| 11   |   4    |   Baixa    | 11   | Geração de Relatórios Detalhados sobre Estoque e Compras    |        |
+| 12   |   4    |   Baixa    | 12   | Previsão de Demandas e Planejamento de Compras              |        |
+
 
 
 ## 👥 Equipe <a name="equipe"><a>
