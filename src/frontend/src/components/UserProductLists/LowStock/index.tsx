@@ -47,7 +47,7 @@ const LowStockList: React.FC = () => {
 
     return (
         <div className="bg-white p-5 text-sm 2xl:text-base rounded-md shadow-md flex flex-col items-center transition-all duration-300 relative 2xl:h-[30vw] lg:h-[45vw] lg:w-[25vw] md:h-[60vw] md:w-[45vw] sm:h-[70vw] sm:w-[90vw] h-[210vw] w-[80vw]">
-            <h2 className="text-lg 2xl:text-2xl font-semibold mb-4 text-cyan-600">Produtos com Estoque Baixo</h2>
+            <h2 className="text-lg 2xl:text-2xl font-semibold mb-4 text-cyan-600 text-center">Produtos com Estoque Baixo</h2>
             <SearchBar onSearchTermChange={handleSearchTermChange}/>
 
             {isLoading && <p>Carregando produtos...</p>}

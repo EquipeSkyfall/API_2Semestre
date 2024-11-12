@@ -96,9 +96,9 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
     return (
         <div className='flex flex-col items-center border'>
             <h2 className='h2 !text-5xl !text-cyan-600'>Produtos</h2>
-            <div className='lg:flex lg:justify-start lg:w-full lg:pr-[25vw]'>
+            <div className='lg:flex lg:justify-start lg:w-full 2xl:gap-4 lg:pr-[25vw]'>
                {isAllowed &&
-                <button className="searchbar-button lg:!mt-1 lg:!mb-0" onClick={handleOpenModal}>
+                <button className="searchbar-button lg:!mt-1 lg:!mb-0 " onClick={handleOpenModal}>
                     Adicionar Produto
                 </button>}
 

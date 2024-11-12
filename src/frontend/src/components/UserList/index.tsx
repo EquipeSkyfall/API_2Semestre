@@ -47,7 +47,7 @@ const UsersList = ({ query }) => {
     };
 
     return (
-        <div className="flex flex-col justify-between pt-4 ">
+        <div className="flex flex-col justify-between pt-4 h-full w-full ">
             <ul className="flex-grow">
                 {data?.users?.length > 0 ? (
                     data.users.map((user) =>
@@ -76,19 +76,19 @@ const UsersList = ({ query }) => {
             </ul>
 
             {data && (
-                <div className="pagination-controls flex justify-between items-center mt-2 text-sm 2xl:text-base w-full">
+                <div className="pagination-controls !flex !justify-between !items-center h-0 !text-sm 2xl:!text-base">
                     <button
-                        className={`mx-3 py-2 px-2 sm:py-2 sm:px-4 rounded ${page === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-cyan-500 text-white hover:bg-cyan-600"}`}
+                        className={`py-2 px-2 sm:py-2 sm:px-4 rounded bg-cyan-500 hover:bg-cyan-600 text-white`}
                         disabled={page === 1}
                         onClick={() => handlePageChange(page - 1)}
                     >
                         Anterior
                     </button>
-                    <span className="text-gray-600 2xl:text-base text-xs">
+                    <span className="text-gray-600 2xl:text-base w-52 text-center text-xs">
                         Página {page} de {data.totalPages}
                     </span>
                     <button
-                        className={`mx-3 px-2 py-2 rounded ${page === data.totalPages ? "bg-gray-300 cursor-not-allowed" : "bg-cyan-500 text-white hover:bg-cyan-600"}`}
+                        className={`py-2 px-2 sm:py-2 sm:px-4 rounded bg-cyan-500 hover:bg-cyan-600 text-white`}
                         disabled={page === data.totalPages}
                         onClick={() => handlePageChange(page + 1)}
                     >

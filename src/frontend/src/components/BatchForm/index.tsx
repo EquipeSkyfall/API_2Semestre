@@ -91,7 +91,7 @@ const BatchForm: React.FC<BatchFormProps> = ({ refetch }) => {
                             
                             <button
                             type="submit"
-                            className="submit-button dimension-submit"
+                            className="submit-button dimension-submit !bg-cyan-400 hover:!bg-cyan-600"
                             disabled={isSubmitting}
                             >
 

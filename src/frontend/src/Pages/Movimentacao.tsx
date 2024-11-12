@@ -46,12 +46,14 @@ export default function Movimentacao() {
                 <button
                     style={activeTab === 'batch' ? { ...styles.button, ...styles.activeButton } : styles.button}
                     onClick={() => setActiveTab('batch')}
+                    className="!rounded"
                 >
                     Entrada de Proutos
                 </button>
                 <button
                     style={activeTab === 'shipment' ? { ...styles.button, ...styles.activeButton } : styles.button}
                     onClick={() => setActiveTab('shipment')}
+                    className="!rounded"
                 >
                     Saida de Produtos
                 </button>

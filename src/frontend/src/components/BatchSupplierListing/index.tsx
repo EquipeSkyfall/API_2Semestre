@@ -14,7 +14,7 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
     const { clearErrors, formState: { errors }, setValue } = useFormContext();
     const [paginaAtual, setPagina] = useState(1);
     const [search, setSearch] = useState<string>('');
-    const { data, isLoading, isError } = useSuppliers({search, page: paginaAtual, limit: 10});
+    const { data, isLoading, isError } = useSuppliers({ search, page: paginaAtual, limit: 10 });
     const [fornecedorSelecionado, setFornecedorSelecionado] = useState<{ id: number | null; name: string | null } | null>(null);
 
     const [listaExpandida, setListaExpandida] = useState(true); // Inicializar como true para exibir a lista por padrão
@@ -41,9 +41,9 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
     const handlePaginaAnterior = () => setPagina((prev) => Math.max(prev - 1, 1));
 
     const handleSearchTermChange = useCallback((search: string) => {
-            setSearch(search);
-            setPagina(1);
-        },[]
+        setSearch(search);
+        setPagina(1);
+    }, []
     );
 
     return (
@@ -64,8 +64,7 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
                                     <li
                                         key={supplier.id_fornecedor}
                                         onClick={() => handleFornecedorSelect(supplier.id_fornecedor, supplier.razao_social)}
-                                        style={{ cursor: 'pointer', padding: '5px', border: '1px solid white', margin: '5px 0' }}
-                                    >
+                                        className="!rounded cursor-pointer p-2 m-1 border-white"                                    >
                                         {supplier.razao_social}
                                     </li>
                                 ))}
