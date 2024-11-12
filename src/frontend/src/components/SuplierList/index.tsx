@@ -113,7 +113,6 @@ const SupplierList: React.FC = () => {
                 </div>
               </div>
 
-              {/* Botões de editar e excluir, centralizados */}
               <div className="flex justify-center mt-3 space-x-2">
                 <button
                   onClick={() => openModal(supplier, 'isEditModalOpen')}

@@ -18,7 +18,7 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
     onClose,
 }) => {
     const [page, setPage] = useState(1);
-    const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { search: '', page: page, limit: 9 });
+    const { data, isLoading, isError } = useGetSupplierProducts(supplierId, { search: '', page: page, limit: 6 });
     const { mutate: deleteProduct } = useDeleteProductFromSupplier();
     const [searchTerm, setSearchTerm] = useState('');
     const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -57,7 +57,7 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                 <button className="close-button" onClick={onClose}>
                     <FontAwesomeIcon icon={faTimes} />
                 </button>
-                <h2 className="text-2xl font-bold text-cyan-600 text-center mb-4">Adicionar Produtos ao Fornecedor</h2>                <input
+                <h2 className="text-xl font-bold text-cyan-600 text-center mb-4">Adicionar Produtos ao Fornecedor</h2>                <input
                     type="text"
                     placeholder="Procurando Produtos..."
                     value={searchTerm}
@@ -83,9 +83,9 @@ const SupplierProductsModal: React.FC<SupplierProductsModalProps> = ({
                                             </strong>
                                         </div>
                                         <div className="text-center">
-                                            <p className="text-sm text-gray-600 mr-10">ID: {product.id_produto}</p>
+                                            <p className="text-sm text-gray-600 mr-8">ID: {product.id_produto}</p>
                                         </div>
-                                        <div className="text-xs sm:text-sm  text-gray-600 -ml-10">
+                                        <div className="pl-5 text-xs sm:text-sm  text-gray-600 -ml-10">
                                             Preço de custo: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
                                         </div>
                                         <div className='ml-0 sm:ml-24'>

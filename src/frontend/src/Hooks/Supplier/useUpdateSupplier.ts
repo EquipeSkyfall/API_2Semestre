@@ -13,7 +13,7 @@ const updateSupplier = async (supplier: UpdateSupplierPayload) => {
   return response.data;
 };
 
-const useUpdateSupplier = () => {
+const useUpdateSupplier = (onSuccess: () => void, setServerError: unknown) => {
   const queryClient = useQueryClient();
 
   return useMutation(

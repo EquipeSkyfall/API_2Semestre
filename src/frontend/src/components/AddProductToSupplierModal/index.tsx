@@ -10,6 +10,7 @@ interface AddProductToSupplierModalProps {
   supplierId: number;
   isOpen: boolean;
   onClose: () => void;
+  
 }
 
 interface ProductFormValues {
@@ -24,7 +25,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
   const { control, handleSubmit, register, reset, watch, setValue, setError } = useForm<ProductFormValues>();
   const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
   const [page, setPage] = useState(1);
-  const [limit] = useState(8);
+  const [limit] = useState(7);
   const [precoCusto, setPrecoCusto] = useState<Record<number, string>>({});
   const { products, isLoading, totalPages } = useSearchProducts({
     search: watch('search') || '',
@@ -101,14 +102,14 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
 
   return (
     <div className="modal-overlay-product text-xs md:text-sm inset-0 flex justify-center items-center">
-  <div className="modal-content-product w-full sm:max-w-screen-md h-5/6 sm:h-auto flex flex-col">
-    <button className="close-button" onClick={onClose}>
+  <div className="modal-content-product w-full sm:max-w-screen-md h-5/6 sm:h-auto flex flex-col !overflow-x-hidden">
+    <button className="close-button !-right-5 sm:!-right-0 !-top-2 sm:!-top-0" onClick={onClose}>
       <FontAwesomeIcon icon={faTimes} />
     </button>
-    <h2 className="font-['Afacad_Flux'] text-cyan-600 text-center mb-4">Adicionar Produtos ao Fornecedor</h2>
+    <h2 className="font-['Afacad_Flux'] text-cyan-600 text-center mb-2">Adicionar Produtos ao Fornecedor</h2>
 
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col h-full overflow-y-auto">
-      <div className="w-11/12 mx-auto mb-4">
+      <div className="w-11/12 mx-auto mb-1">
         <input
           id="product-search"
           type="text"
@@ -121,7 +122,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
       {isLoading ? (
         <p className="text-center text-cyan-600">Procurando Produtos...</p>
       ) : (
-        <ul className="space-y-1 flex-grow overflow-y-auto px-4">
+        <ul className="space-y-2 flex-grow overflow-y-auto px-0 !mb-2">
           {products.map((product) => (
             <li className="flex items-center justify-between bg-gray-100 p-4 rounded-md shadow-md" key={product.id_produto}>
               <label className="flex items-center space-x-3 text-gray-800">
@@ -137,8 +138,8 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
               </label>
 
               {selectedProducts.includes(product.id_produto) && (
-                <div className="flex flex-col sm:flex-row w-full sm:w-60 space-y-2 mt-2 sm:mt-0">
-                  <label className="text-lg font-['Afacad_Flux'] text-cyan-700">
+                <div className="flex flex-col pl-2 sm:pl-0 sm:flex-row w-full sm:w-60 space-y-2 mt-2 sm:mt-0">
+                  <label className="text-base sm:text-lg font-['Afacad_Flux'] text-cyan-700">
                     Preço de Custo:
                   </label>
                   <Controller
@@ -152,7 +153,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
                         onChange={(e) => handlePrecoCustoChange(product.id_produto, e)}
                         type="text"
                         placeholder="Formato: R$ 0,00"
-                        className="text-xs sm:text-base p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                        className="!text-xs sm:text-base p-2 w-full rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                       />
                     )}
                   />
@@ -170,7 +171,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
             handlePrevPage();
           }}
           disabled={page === 1}
-          className="px-3 py-2 bg-gray-300 hover:bg-gray-400 rounded-md"
+          className="px-3 py-2 bg-gray-300 hover:bg-gray-400 !rounded"
         >
           Anterior
         </button>
@@ -181,7 +182,7 @@ const AddProductToSupplierModal: React.FC<AddProductToSupplierModalProps> = ({
             handleNextPage();
           }}
           disabled={page === totalPages}
-          className="px-3 py-2 bg-gray-300 hover:bg-gray-400 rounded-md"
+          className="px-3 py-2 bg-gray-300 hover:bg-gray-400 !rounded"
         >
           Próximo
         </button>

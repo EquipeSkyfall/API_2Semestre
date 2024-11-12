@@ -98,7 +98,6 @@ const FornecedorForm: React.FC = () => {
 
   return (
     <div>
-      {/* Apenas o botão que abre o modal será mantido */}
       <button
         onClick={openModal}
         className="bg-cyan-400 text-white p-2 rounded-md transition-colors"
