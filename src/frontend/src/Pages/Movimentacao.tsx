@@ -48,7 +48,7 @@ export default function Movimentacao() {
                     onClick={() => setActiveTab('batch')}
                     className="!rounded"
                 >
-                    Entrada de Proutos
+                    Entrada de Produtos
                 </button>
                 <button
                     style={activeTab === 'shipment' ? { ...styles.button, ...styles.activeButton } : styles.button}

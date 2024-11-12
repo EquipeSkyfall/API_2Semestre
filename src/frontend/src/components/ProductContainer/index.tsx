@@ -35,7 +35,7 @@ const ProductsContainer: React.FC = () => {
     );
 
     return (
-        <div className="container-produto !mt-0 !overflow-x-hidden 2xl:overflow-y-hidden">
+        <div className="container-produto !mt-0 !overflow-x-hidden 2xl:!overflow-y-hidden">
             {/* Memoized ProductForm to prevent re-render during search
             <div className='product-form-container'>
                 <MemoizedProductForm refetch={refetch} />

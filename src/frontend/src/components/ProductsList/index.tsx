@@ -56,7 +56,7 @@ const ProductList: React.FC<ProductListProps> = ({
 
         <div className="list-container">
             <div className="product-list">
-                <table className="info-table">
+                <table className="info-table rounded-lg">
                     <thead>
                         <tr>
                             <th>Produto</th>
