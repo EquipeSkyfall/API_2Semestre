@@ -141,7 +141,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
 
     return (
         <div>
-            <h2>Produtos do Fornecedor</h2>
+            <h2 className="text-cyan-500">Produtos do Fornecedor</h2>
 
             <button className="button-show-products" type="button" onClick={toggleVisibility}>
                 {isVisible ? 'Esconder Produtos' : 'Mostrar Produtos'}
@@ -176,7 +176,7 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
                                     />
                                     <div style={{ display: "flex", justifyContent: "space-between", width: '100%' }}>
                                         <span style={{ flexGrow: 1 }}>{product.produto.nome_produto}</span>
-                                        <div className="flex justify-between w-1/6 ">
+                                        <div className="flex justify-between w-1/5 ">
                                             <span style={{ marginRight: "auto"}}>
                                                 Preço: {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_custo)}
                                             </span>

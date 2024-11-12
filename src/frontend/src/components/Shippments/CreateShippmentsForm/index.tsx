@@ -53,19 +53,18 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
   };
 
   const fillBatches = (id_produto, batches, quantity) => {
-    console.log(quantity)
     batches.map(batch => {
       if (batch.quantidadeDisponivel < quantity) {
-        handleBatchSelection(id_produto, batch.id_lote, batch.quantidadeDisponivel)
-        quantity -= batch.quantidadeDisponivel
+        handleBatchSelection(id_produto, batch.id_lote, batch.quantidadeDisponivel);
+        quantity -= batch.quantidadeDisponivel;
       } else if (quantity === 0) {
-        handleBatchSelection(id_produto, batch.id_lote, 0)
+        handleBatchSelection(id_produto, batch.id_lote, 0);
       } else {
-        handleBatchSelection(id_produto, batch.id_lote, quantity)
-        quantity -= quantity
+        handleBatchSelection(id_produto, batch.id_lote, quantity);
+        quantity -= quantity; // Ajuste para garantir que a quantidade seja zerada corretamente
       }
-    })
-  }
+    });
+  };
 
   const handleBatchSelection = (id_produto, id_lote, quantidade_retirada) => {
     setBatchSelections(prevSelections => {
@@ -74,22 +73,19 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
       );
       const updatedSelections = [...prevSelections];
 
-      // If the batch is already selected, update quantity
       if (existingSelectionIndex > -1) {
         updatedSelections[existingSelectionIndex].quantidade_retirada = quantidade_retirada;
 
         if (quantidade_retirada === 0) {
-          // If quantity is 0, remove the selection and uncheck
           updatedSelections.splice(existingSelectionIndex, 1);
           setCheckedBatches(prev => prev.filter(
             batch => !(batch.id_produto === id_produto && batch.id_lote === id_lote)
           ));
         }
       } else if (quantidade_retirada > 0) {
-        // If the batch is not selected and quantity is greater than 0, add it to selections
         const newSelection = { id_produto, id_lote, quantidade_retirada };
         updatedSelections.push(newSelection);
-        setCheckedBatches(prev => [...prev, { id_produto, id_lote }]); // Check the batch
+        setCheckedBatches(prev => [...prev, { id_produto, id_lote }]);
       }
 
       const totalQuantity = updatedSelections
@@ -97,14 +93,11 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
         .reduce((sum, selection) => sum + selection.quantidade_retirada, 0);
 
       setProductQuantities(prev => ({ ...prev, [id_produto]: totalQuantity }));
-
-      // Update the form value with the new selections
       setValue('produtos', updatedSelections);
 
-      return updatedSelections; // Return the updated selections
+      return updatedSelections;
     });
-  };
-
+};
   const onSuccess = () => {
     reset();
     setSuccessMessage('Produto Cadastrado com Sucesso!');
@@ -154,7 +147,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
       {serverError && <p className="error-message">{serverError}</p>}
 
       {/* Reason for Outgoing Product */}
-      <h2 className='align_conf text-align'>Motivo para a saída do produto</h2>
+      <h2 className='align_conf text-align text-cyan-500'>Motivo para a saída do produto</h2>
       <select {...register('motivo_saida')} defaultValue="" required>
         <option value="" disabled>Selecione um motivo</option>
         <option value="Produto Fora da Validade">Produto fora da validade</option>
@@ -167,12 +160,12 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
           <ShipmentProducts onProductsSelected={handleProductsSelected} removedProductId={removedProductId} resetKey={resetKey} />
         </div>
 
-        <div className="dropProducts div-position" >
+        <div className="dropProducts div-position mt-2" >
           <h2 className='align_conf'>Produtos selecionados:</h2>
           {shipmentProducts.length === 0 ? (
             <p>Nenhum produto selecionado.</p>
           ) : (
-            <ul className="container"
+            <ul className="container !rounded"
               style={{ border: '1px solid #ccc', padding: '20px' }}
             >
 
@@ -189,11 +182,10 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
                 return (
                   <li className='row' key={product.id_produto}>
-
-                    <strong onClick={() => toggleExpand(product.id_produto)}>
+                    <strong className='tex-center' onClick={() => toggleExpand(product.id_produto)}>
                       {product.nome_produto} - ID: {product.id_produto}
                     </strong>
-                    <strong onClick={() => toggleExpand(product.id_produto)}>
+                    <strong className='text-center' onClick={() => toggleExpand(product.id_produto)}>
                       {product.total_estoque}
                     </strong>
 
@@ -205,7 +197,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
                           padding: "5px",
                           border: "1px solid #ccc",
                           borderRadius: "4px",
-                          maxWidth: "60px",
+                          maxWidth: "80px",
                         }}
 
                         type='number'
@@ -219,7 +211,7 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         }}
                       />
                     </div>
-                    {expandedProductId === product.id_produto && (
+                   {/* {expandedProductId === product.id_produto && (
                       <ul className='check-unity-align'>
                         {isLoading ? (
                           <p>Loading batches...</p>
@@ -228,97 +220,60 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
                         ) : batches.length === 0 ? (
                           <p>No batches available for this product.</p>
                         ) : (
-                          batches.map(batch => {
-                            const isChecked = checkedBatches.some(
-                              checkedBatch => checkedBatch.id_produto === product.id_produto && checkedBatch.id_lote === batch.id_lote
+                          *batches.map(batch => {
+                            const isChecked = batchSelections.some(
+                              selection => selection.id_produto === product.id_produto && selection.id_lote === batch.id_lote
                             );
-                            const currentQuantity = batchSelections.find(selection => selection.id_produto === product.id_produto && selection.id_lote === batch.id_lote)?.quantidade_retirada || 0;
+                            const currentQuantity = batchSelections.find(
+                              selection => selection.id_produto === product.id_produto && selection.id_lote === batch.id_lote
+                            )?.quantidade_retirada || 0;
 
                             return (
-                              <div className="check-unity-dimension">
-                                <li key={batch.id_lote}>
-                                  <label>
-                                    <input
-                                      type="checkbox"
-                                      className="checkbox"
-                                      checked={isChecked}
-                                      onChange={(e) => {
-                                        const isChecked = e.target.checked;
-                                        const quantity = isChecked ? 1 : 0; // Set quantity to 1 when checked, 0 when unchecked
-
-                                        handleBatchSelection(product.id_produto, batch.id_lote, quantity);
-
-                                        // If checked, ensure the quantity input reflects this
-                                        if (isChecked) {
-                                          setCheckedBatches(prev => {
-                                            const newBatch = { id_produto: product.id_produto, id_lote: batch.id_lote };
-                                            return [...new Set([...prev, newBatch])]; // Ensure the batch (id_produto + id_lote) is added without duplicates
-                                          });
-                                        } else {
-                                          setCheckedBatches(prev =>
-                                            prev.filter(b => !(b.id_produto === product.id_produto && b.id_lote === batch.id_lote)) // Remove the batch by matching both id_produto and id_lote
-                                          );
-                                        }
-                                      }}
-                                    />
-                                    ID do Lote: {batch.id_lote} - Disponível: {batch.quantidadeDisponivel} unidade
-                                    <input
-                                      type="number"
-                                      min="0"
-                                      max={batch.quantidadeDisponivel}
-                                      placeholder="Qtd"
-                                      value={currentQuantity} // Bind the input value to the current quantity
-                                      onChange={(e) => {
-                                        const quantity = Number(e.target.value);
-                                        handleBatchSelection(product.id_produto, batch.id_lote, quantity);
-
-                                        // Automatically check the checkbox if quantity is greater than 0
-                                        if (quantity > 0) {
-                                          setCheckedBatches(prev => {
-                                            const newBatch = { id_produto: product.id_produto, id_lote: batch.id_lote };
-                                            return [...new Set([...prev, newBatch])]; // Ensure the batch (id_produto + id_lote) is added without duplicates
-                                          });
-                                        } else {
-                                          setCheckedBatches(prev =>
-                                            prev.filter(b => !(b.id_produto === product.id_produto && b.id_lote === batch.id_lote))
-                                          );
-                                        }
-                                      }}
-                                    />
-                                  </label>
-                                </li>
+                              <div key={batch.id_lote} className="flex -mt-20 items-center border-b border-gray-200">
+                                <div className="flex items-center space-x-2">
+                                  <input
+                                    type="checkbox"
+                                    checked={isChecked}
+                                    onChange={(e) => {
+                                      const quantity = e.target.checked ? 1 : 0;
+                                      handleBatchSelection(product.id_produto, batch.id_lote, quantity);
+                                    }}
+                                    className="form-checkbox h-4 w-4 text-cyan-500"
+                                  />
+                                  <span className="text-sm text-gray-700">Lote ID: {batch.id_lote}</span>
+                                </div>
+                                <span className='text-gray-700 p-2'>|</span>
+                                <div className="flex items-center space-x-4">
+                                  <span className="text-sm text-gray-500">Disponível: {batch.quantidadeDisponivel}</span>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    max={batch.quantidadeDisponivel}
+                                    value={currentQuantity}
+                                    onChange={(e) => handleBatchSelection(product.id_produto, batch.id_lote, Number(e.target.value))}
+                                    className="w-16 p-1 border rounded text-center text-sm"
+                                  />
+                                </div>
                               </div>
                             );
                           })
                         )}
                       </ul>
                     )}
+                    */} 
                     <button
                       type="button"
                       onClick={() => handleRemoveProduct(product.id_produto)}
-                      style={{
-                        backgroundColor: '#dc3545',
-                        color: '#fff',
-                        padding: '6px 12px',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        transition: 'background-color 0.3s',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        maxWidth: '10px'
-                      }}
+                      className="flex items-center justify-center w-9 h-9 !bg-red-600 text-white hover:!bg-red-800 rounded-full focus:outline-none"
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
-
                   </li>
                 );
               })}
             </ul>
           )}
-
-          <button style={{ marginTop: '20px' }} type="submit" className='button-send-remessas'>Enviar Remessas</button>
+          <button type="submit" className='button-send-remessas !rounded-md'>Enviar Remessas</button>
           {successMessage && <p className="success-message">{successMessage}</p>}
 
         </div>
