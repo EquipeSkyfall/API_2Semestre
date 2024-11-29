@@ -8,6 +8,7 @@ import { batchController } from '../controllers/batchControllers';
 import { shipmentController } from '../controllers/shippingControllers';
 import {auth, restrictedTo} from '../controllers/authControllers'
 import { logControllers } from '../controllers/logControllers';
+import { getMostSoldCategories, getMostSoldProducts, getProductSalesOverTime } from '../controllers/analyticsControllets';
 const router = express.Router();
 
 
@@ -165,4 +166,14 @@ router
   .route('/logs')
   .get(auth,restrictedTo('Gerente','Administrador'),logControllers.getLogs)
 
+
+router
+  .route('/analytics/most-sold-products')
+  .get(getMostSoldProducts)
+
+router
+  .get('/analytics/most-sold-categories', getMostSoldCategories);
+
+router
+  .get('/analytics/sales-over-time/:id_produto', getProductSalesOverTime);
 export default router
