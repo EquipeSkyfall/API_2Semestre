@@ -36,8 +36,8 @@ const ProductReport: React.FC = () => {
 
   // Configurações do gráfico
   const options = {
-    title: 'Produtos Mais Vendidos', // Título do gráfico
-    chartArea: { width: '70%' }, // Ajuste da área do gráfico
+     // Título do gráfico
+    chartArea: { width: '80%' }, // Ajuste da área do gráfico
     hAxis: {
       title: 'Produto', // Título do eixo X
       minValue: 0,
@@ -48,17 +48,18 @@ const ProductReport: React.FC = () => {
     legend: {
       position: 'top', // Posição da legenda
     },
+    colors: ['#06b6d4']
   };
 
   return (
     <div>
       <button
         onClick={() => navigate('/report')} // Navegar para a página de Report
-        className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        className="mt-4 !m-4 px-6 py-2 !ml-14 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors"
       >
         Relatório de Categorias
       </button>
-      <h1 className="text-center my-8">Produtos Mais Vendidos</h1> {/* Título centralizado */}
+      <h1 className="text-center text-cyan-600 font-['Afacad_Flux']">Produtos Mais Vendidos</h1> {/* Título centralizado */}
 
       {/* Gráfico para exibir os produtos mais vendidos */}
       <Chart
@@ -70,15 +71,15 @@ const ProductReport: React.FC = () => {
       />
 
       {/* Tabela de produtos mais vendidos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8 w-[100%]">
         {mostSoldProducts.map((product) => (
           <div
             key={product.nome_produto}
-            className="bg-white shadow-md rounded-md p-4 border border-gray-200"
+            className="bg-white transition-transform duration-300 hover:scale-[102%] shadow-md rounded-md p-4 border border-gray-200"
           >
-            <h2 className="text-xl font-semibold">{product.nome_produto}</h2>
+            <h2 className="text-xl font-semibold hover:text-cyan-600 transition-colors">{product.nome_produto}</h2>
             <p className="text-gray-500">{product.descricao_produto}</p>
-            <p className="mt-2 font-medium">Total Vendido: {product.total_sold}</p>
+            <p className="mt-2 font-medium ">Total Vendido: {product.total_sold}</p>
           </div>
         ))}
       </div>

@@ -22,7 +22,6 @@ const Report: React.FC = () => {
       const response = await axios.get('http://127.0.0.1:3000/analytics/most-sold-categories');
       setMostSoldCategories(response.data);
 
-      // Formatar os dados para o gráfico
       const formattedData = response.data.map((category: Category) => [
         category.nome_categoria,
         category.total_sold,
@@ -54,12 +53,12 @@ const Report: React.FC = () => {
     <div>
       <button
         onClick={goToProductReport}
-        className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        className="mt-4 !m-4 px-6 py-2 bg-cyan-500 !ml-14 text-white rounded-md hover:bg-cyan-600 transition-colors"
       >
-      Produtos Mais Vendidos
+        Produtos Mais Vendidos
       </button>
 
-      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Categorias Mais Vendidas</h1>
+      <h1 style={{ textAlign: 'center' }} className="text-cyan-600 font-['Afacad_Flux']">Categorias Mais Vendidas</h1>
 
       {/* Gráfico das categorias mais vendidas */}
       <Chart
@@ -68,94 +67,31 @@ const Report: React.FC = () => {
         height="400px"
         data={chartData}
         options={{
-          title: 'Categorias Mais Vendidas',
+          legend: {
+            position: 'top',
+          },
           hAxis: {
             title: 'Categoria',
           },
           vAxis: {
             title: 'Total Vendido',
           },
+          colors: ['#06b6d4'],
         }}
       />
 
-      {/* Tabelas das categorias mais vendidas, lado a lado */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          marginTop: '20px',
-          gap: '10px',
-        }}
-      >
-        {/* Primeira metade */}
-        <div style={{ flex: '0 0 45%', overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <thead>
-              <tr style={{ backgroundColor: '#f4f4f4', textAlign: 'center' }}>
-                <th style={{ border: '1px solid #ddd', padding: '5px' }}>Categoria</th>
-                <th style={{ border: '1px solid #ddd', padding: '5px' }}>Vendas</th>
-              </tr>
-            </thead>
-            <tbody>
-              {firstHalf.map((category, index) => (
-                <tr
-                  key={category.nome_categoria}
-                  style={{
-                    backgroundColor: index % 2 === 0 ? '#ffffff' : '#f9f9f9',
-                  }}
-                >
-                  <td style={{ border: '1px solid #ddd', padding: '5px' }}>
-                    {category.nome_categoria}
-                  </td>
-                  <td
-                    style={{
-                      border: '1px solid #ddd',
-                      padding: '5px',
-                      textAlign: 'center',
-                    }}
-                  >
-                    {category.total_sold}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Segunda metade */}
-        <div style={{ flex: '0 0 45%', overflowX: 'auto' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
-            <thead>
-              <tr style={{ backgroundColor: '#f4f4f4', textAlign: 'center' }}>
-                <th style={{ border: '1px solid #ddd', padding: '5px' }}>Categoria</th>
-                <th style={{ border: '1px solid #ddd', padding: '5px' }}>Vendas</th>
-              </tr>
-            </thead>
-            <tbody>
-              {secondHalf.map((category, index) => (
-                <tr
-                  key={category.nome_categoria}
-                  style={{
-                    backgroundColor: index % 2 === 0 ? '#ffffff' : '#f9f9f9',
-                  }}
-                >
-                  <td style={{ border: '1px solid #ddd', padding: '5px' }}>
-                    {category.nome_categoria}
-                  </td>
-                  <td
-                    style={{
-                      border: '1px solid #ddd',
-                      padding: '5px',
-                      textAlign: 'center',
-                    }}
-                  >
-                    {category.total_sold}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-8 w-[100%]">
+        {mostSoldCategories.map((category) => (
+          <div
+            key={category.nome_categoria}
+            className="bg-white transition-transform duration-300 hover:scale-[102%] shadow-md rounded-md p-4 border border-gray-200"
+          >
+            <h2 className="text-xl transition-colors">
+              Categoria: <span className='font-semibold hover:text-cyan-600'>{category.nome_categoria}</span>
+            </h2>
+            <p className="mt-2 font-medium">Total Vendido: {category.total_sold}</p>
+          </div>
+        ))}
       </div>
     </div>
   );
