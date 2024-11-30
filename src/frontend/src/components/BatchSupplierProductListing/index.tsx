@@ -141,9 +141,9 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
 
     return (
         <div>
-            <h2 className="text-cyan-500">Produtos do Fornecedor</h2>
+            <h2 className="text-cyan-600 font-['Afacad_Flux']">Produtos do Fornecedor</h2>
 
-            <button className="button-show-products" type="button" onClick={toggleVisibility}>
+            <button className="button-show-products mt-7" type="button" onClick={toggleVisibility}>
                 {isVisible ? 'Esconder Produtos' : 'Mostrar Produtos'}
             </button>
 
@@ -214,7 +214,9 @@ const BatchSupplierProductList: React.FC<BatchSupplierProductListProps> = ({ ref
             )}
 
             <div className="dimension_conf">
-                <h2>Produtos no lote: {errors.produtos && <span className="error-message">{errors.produtos.message}</span>}</h2>
+                <h2 className="text-cyan-600 font-['Afacad_Flux']">
+                    Produtos no lote: {errors.produtos && <span className="error-message">{errors.produtos.message}</span>}
+                </h2>
                 {addedProducts.length > 0 && (
 
                     <ul className="container"

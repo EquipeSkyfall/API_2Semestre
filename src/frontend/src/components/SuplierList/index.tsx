@@ -69,7 +69,7 @@ const SupplierList: React.FC = () => {
   return (
     <div className="flex-1 p-5 bg-gray-100 rounded-lg shadow-md max-h-[80vh] overflow-y-auto box-border ml-10 mr-10 mt-8 mb-10">
       <div className="relative flex items-center mb-4">
-        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-xl sm:text-2xl md:text-3xl font-semibold truncate">
+        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-2xl sm:text-2xl md:text-3xl lg:text-5xl text-cyan-600 font-['Afacad_flux'] truncate">
           Lista de Fornecedores
         </h1>
         <div className="ml-auto hidden sm:block">
@@ -89,7 +89,7 @@ const SupplierList: React.FC = () => {
           suppliers.map((supplier: Supplier) => (
             <li key={supplier.id_fornecedor} className="bg-white p-4 rounded-lg shadow-md flex flex-col relative">
               <div className="item-summary flex flex-col justify-between">
-                <p className="item-name text-lg font-semibold">{supplier.razao_social}</p>
+                <p className="item-name text-lg font-semibold !text-cyan-600">{supplier.razao_social}</p>
                 <p className="item-details">Nome Fantasia: {supplier.nome_fantasia || 'Não Informado'}</p>
                 <p className="item-details">CNPJ: {supplier.cnpj_fornecedor}</p>
                 <p className="item-details">Endereço: {supplier.endereco_fornecedor || 'Não Informado'}</p>
@@ -99,13 +99,13 @@ const SupplierList: React.FC = () => {
 
                 <div className="item-actions flex justify-between mt-3 space-x-2">
                   <button
-                    className='px-4 py-1 bg-cyan-400 hover:bg-sky-400 text-white rounded-md text-xs w-full'
+                    className='px-4 py-3 bg-cyan-400 hover:bg-cyan-500 transition-colors text-white rounded-md text-xs sm:text-sm md:text-md lg:text-lg w-full'
                     onClick={() => openModal(supplier, 'isProductModalOpen')}
                   >
                     Adicionar Produtos
                   </button>
                   <button
-                    className='px-4 py-1 bg-cyan-400 hover:bg-sky-400 text-white rounded-md text-xs w-full'
+                    className='px-4 py-3 bg-cyan-400 hover:bg-cyan-500 transition-colors text-white rounded-md text-xs sm:text-sm md:text-md lg:text-lg w-full'
                     onClick={() => openModal(supplier, 'isViewProductsModalOpen')}
                   >
                     Ver Produtos
@@ -116,13 +116,13 @@ const SupplierList: React.FC = () => {
               <div className="flex justify-center mt-3 space-x-2">
                 <button
                   onClick={() => openModal(supplier, 'isEditModalOpen')}
-                  className="edit-button px-2 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-400"
+                  className="edit-button px-2 py-2 lg:text-2xl md:text-lg sm:text-md text-sm bg-blue-500 text-white rounded-md hover:bg-blue-400"
                 >
                   <FontAwesomeIcon icon={faPencilAlt} />
                 </button>
                 <button
                   onClick={() => handleDelete(supplier.id_fornecedor)}
-                  className="delete-button px-2 py-1 text-sm bg-red-500 text-white rounded-md hover:bg-red-400"
+                  className="delete-button px-2 py-1 lg:text-2xl bg-red-500 text-white rounded-md hover:bg-red-400"
                 >
                   <FontAwesomeIcon icon={faTrashAlt} />
                 </button>
@@ -135,21 +135,21 @@ const SupplierList: React.FC = () => {
         )}
       </div>
 
-      <div className="pagination-controls flex justify-center mt-4">
+      <div className="pagination-controls text-center align-middle flex justify-center mt-4 gap-3 md:gap-10">
         <button
           onClick={handlePrevPage}
           disabled={page === 1}
-          className='pagination-button px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 mr-2'
+          className='pagination-button !py-3 !px-1 md:!px-4 md:!py-3 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 mr-2'
         >
           Anterior
         </button>
-        <span>
+        <span className='mt-3 text-center align-middle'>
           Página {data?.currentPage} de {data?.totalPages}
         </span>
         <button
           onClick={handleNextPage}
           disabled={page === data?.totalPages}
-          className='pagination-button px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 ml-2'
+          className='pagination-button !py-3 !px-1 md:!px-4 md:!py-3 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 ml-2'
         >
           Próximo
         </button>

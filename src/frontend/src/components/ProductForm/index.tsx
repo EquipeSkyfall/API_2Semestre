@@ -161,7 +161,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     {successMessage && <p className="success-messages">{successMessage}</p>}
                     {serverError && <p className="mensagem-error">{serverError}</p>}
 
-                    <h2 className='h2'>Registro de Produtos</h2>
+                    <h2 className='h2 font-["Afacad_Flux"] !text-cyan-600'>Registro de Produtos</h2>
 
                     <div className="form-fields-grid">
                         {/* Campos Obrigatórios */}
@@ -319,7 +319,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             )}
                             <button
                                 type="button"
-                                className="manage-categoria-button"
+                                className="manage-categoria-button !bg-cyan-400 hover:!bg-cyan-600 !transition-colors"
                                 onClick={() => setIsCategoryModalOpen(true)}
                             >
                                 Gerenciar Categorias
@@ -337,7 +337,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             )}
                             <button
                                 type="button"
-                                className="manage-categoria-button"
+                                className="manage-categoria-button !bg-cyan-400 hover:!bg-cyan-600 !transition-colors"
                                 onClick={() => setIsSectorModalOpen(true)}
                             >
                                 Gerenciar Setores
@@ -349,7 +349,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                             <SupplierSelect refetch={refetch} onChange={setFornecedorValue} />
                             <button
                                 type="button"
-                                className="manage-categoria-button"
+                                className="manage-categoria-button !bg-cyan-400 hover:!bg-cyan-600 !transition-colors"
                                 onClick={handleManageSuppliers}
                             >
                                 Gerenciar Fornecedores
@@ -359,7 +359,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ refetch }) => {
                     <div class="button-container">
                         <button
                             type="submit"
-                            className="submit-button"
+                            className="submit-button !bg-cyan-400 hover:!bg-cyan-600 !transition-colors "
                             disabled={isSubmitting}
                         >
                             {isSubmitting ? 'Cadastrando...' : 'Cadastrar Produto'}

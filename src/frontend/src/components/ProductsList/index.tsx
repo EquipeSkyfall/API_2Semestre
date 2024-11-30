@@ -107,7 +107,7 @@ const ProductList: React.FC<ProductListProps> = ({
                     <button
                         onClick={() => handlePageChange(currentPage - 1)}
                         disabled={currentPage === 1}
-                        className="pagination-button"
+                        className="pagination-button !py-3"
                     >
                         Voltar
                     </button>
@@ -115,7 +115,7 @@ const ProductList: React.FC<ProductListProps> = ({
                     <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage >= totalPages}
-                        className="pagination-button"
+                        className="pagination-button !py-3"
                     >
                         Avançar
                     </button>

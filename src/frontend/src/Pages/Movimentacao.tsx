@@ -41,19 +41,19 @@ export default function Movimentacao() {
     };
 
     return (
-        <div style={styles.formContainer}>
+        <div style={styles.formContainer} >
             <div style={styles.tabButtons}>
                 <button
                     style={activeTab === 'batch' ? { ...styles.button, ...styles.activeButton } : styles.button}
                     onClick={() => setActiveTab('batch')}
-                    className="!rounded"
+                    className="!rounded !px-5 lg:!text-lg"
                 >
                     Entrada de Produtos
                 </button>
                 <button
                     style={activeTab === 'shipment' ? { ...styles.button, ...styles.activeButton } : styles.button}
                     onClick={() => setActiveTab('shipment')}
-                    className="!rounded"
+                    className="!rounded !px-5 lg:!text-lg"
                 >
                     Saida de Produtos
                 </button>

@@ -147,8 +147,8 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
       {serverError && <p className="error-message">{serverError}</p>}
 
       {/* Reason for Outgoing Product */}
-      <h2 className='align_conf text-align text-cyan-500'>Motivo para a saída do produto</h2>
-      <select {...register('motivo_saida')} defaultValue="" required>
+      <h2 className="align_conf text-align text-cyan-500 font-['Afacad_Flux']">Motivo para a saída do produto</h2>
+      <select {...register('motivo_saida')} defaultValue="" className='text-gray-400' required>
         <option value="" disabled>Selecione um motivo</option>
         <option value="Produto Fora da Validade">Produto fora da validade</option>
         <option value="Produto Com Defeito">Produto com defeito</option>
@@ -160,8 +160,8 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
           <ShipmentProducts onProductsSelected={handleProductsSelected} removedProductId={removedProductId} resetKey={resetKey} />
         </div>
 
-        <div className="dropProducts div-position mt-2" >
-          <h2 className='align_conf'>Produtos selecionados:</h2>
+        <div className="dropProducts div-position" >
+          <h2 className="align_conf text-cyan-600 mb-5">Produtos selecionados:</h2>
           {shipmentProducts.length === 0 ? (
             <p>Nenhum produto selecionado.</p>
           ) : (
@@ -182,14 +182,14 @@ const ShipmentForm: React.FC<ProductFormProps> = ({ refetch }) => {
 
                 return (
                   <li className='row' key={product.id_produto}>
-                    <strong className='tex-center' onClick={() => toggleExpand(product.id_produto)}>
+                    <strong className='tex-center hover:text-cyan-600 transition-colors duration-300' onClick={() => toggleExpand(product.id_produto)}>
                       {product.nome_produto} - ID: {product.id_produto}
                     </strong>
-                    <strong className='text-center' onClick={() => toggleExpand(product.id_produto)}>
+                    <strong className='text-center hover:text-cyan-600 transition-colors duration-300' onClick={() => toggleExpand(product.id_produto)}>
                       {product.total_estoque}
                     </strong>
 
-                    <div className='form-field'>
+                    <div className='form-field -mt-2'>
                       {/* Quantidade que irá sair: */}
                       <input
 

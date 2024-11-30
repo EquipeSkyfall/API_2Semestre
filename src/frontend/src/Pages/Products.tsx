@@ -4,7 +4,7 @@ import ProductsContainer from '../components/ProductContainer';
 
 function ProductsPage() {
     return (
-        <div className='!overflow-x-hidden !overflow-y-hidden'>
+        <div className='!overflow-x-hidden -mt-10 !overflow-y-hidden'>
             <ProductsContainer />
         </div>
     );

@@ -78,7 +78,7 @@ const ShipmentProducts: React.FC<ShipmentProductsProps> = ({ onProductsSelected,
 
     return (
         <div>
-            <h2 className="align_conf">Selecionar Produtos</h2>
+            <h2 className="align_conf text-cyan-600 ">Selecionar Produtos</h2>
             <div className="product_list">
                 {/*<SearchBar onSearchTermChange={handleSearchTermChange} />*/}
 

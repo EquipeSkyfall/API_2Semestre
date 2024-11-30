@@ -2,22 +2,21 @@
     padding: 8px;
     border-radius: 6px;
     border: 1px solid #ddd;
-    font-size: 0.8rem; /* Tamanho da fonte reduzido para o select */
+    font-size: 0.8rem; 
     height: 40px;
     width: 100%;
     box-sizing: border-box;
 }
 
 .supplier-select option {
-    font-size: 1em; /* Tamanho de fonte para as opções */
+    font-size: 1em; 
 }
 
 .supplier-select option[value=""] {
-    font-size: 0.8rem; /* Tamanho maior para "Selecione uma categoria" */
+    font-size: 0.8rem; 
 }
 
 .title-supplier {
-    font-size: 0.5rem; /* Diminui o tamanho da fonte */
-    font-weight: bold;
-    margin-bottom: 10px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 6px;
 }

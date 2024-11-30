@@ -48,7 +48,7 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
 
     return (
         <div className="required responsive">
-            <h2 className="text_conf text-cyan-500">Fornecedor</h2>
+            <h2 className="text_conf text-cyan-600 font-['Afacad_Flux']">Fornecedor</h2>
 
             {listaExpandida && (
                 <div className="lista-fornecedores">
@@ -70,13 +70,13 @@ const ListaFornecedores: React.FC<ListaFornecedoresProps> = ({ refetch, onChange
                                 ))}
                             </ul>
                             <div className="pagination">
-                                <button onClick={handlePaginaAnterior} className="!rounded" disabled={paginaAtual === 1}>
+                                <button onClick={handlePaginaAnterior} className="!rounded hover:!bg-cyan-500" disabled={paginaAtual === 1}>
                                     Anterior
                                 </button>
                                 <span>
                                     Página {paginaAtual} de {data.totalPages}
                                 </span>
-                                <button onClick={handleProximaPagina} className="!rounded" disabled={paginaAtual === data.totalPages}>
+                                <button onClick={handleProximaPagina} className="!rounded hover:!bg-cyan-500" disabled={paginaAtual === data.totalPages}>
                                     Próxima
                                 </button>
                             </div>

@@ -94,7 +94,7 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
     const isAllowed = user && (user.role === 'Administrador' || user.role === 'Gerente');
 
     return (
-        <div className='flex flex-col items-center border'>
+        <div className='flex flex-col items-center border '>
             <h2 className='h2 !text-5xl !text-cyan-600'>Produtos</h2>
             <div className='lg:flex lg:justify-start lg:w-full 2xl:gap-14 lg:pr-[25vw]'>
                {isAllowed &&

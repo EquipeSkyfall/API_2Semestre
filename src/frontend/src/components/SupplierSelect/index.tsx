@@ -29,7 +29,7 @@ const SupplierSelect: React.FC<SupplierSelectProps> = ({ refetch, onChange }) =>
             <select
                 {...register('id_fornecedor')}
                 onChange={handleSupplierChange}
-                className="supplier-select"
+                className="supplier-select bg-white hover:bg-slate-200"
             >
                 <option value="">Fornecedor</option>
                 {isLoading ? (
