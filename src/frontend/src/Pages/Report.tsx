@@ -1,8 +1,16 @@
-import ReportContainer from '../components/ReportContainer';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ReportPage from '../components/ReportContainer';
+import ProductReport from '../components/ReportMostSoldProduct';
 
-function ReportPage() {
-    return <ReportContainer />;
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<ReportPage />} />
+        <Route path="/product-report" element={<ProductReport />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default ReportPage;
- 
+export default App;
