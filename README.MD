@@ -18,7 +18,27 @@
 
 
 ## 🏥 Dores do Cliente 
-<p>Organizações enfrentam grandes desafios no gerenciamento de estoque, especialmente quando processos manuais resultam em erros e inconsistências, comprometendo a precisão e a rastreabilidade. A falta de um sistema centralizado dificulta a eficiência operacional e o relacionamento com fornecedores, tornando a gestão de contratos e reposições menos eficaz. Além disso, a ausência de dados claros limita decisões estratégicas sobre níveis de estoque e compras, prejudicando o planejamento. A solução proposta busca resolver esses problemas por meio de automação e relatórios estratégicos, aprimorando o controle e proporcionando insights valiosos para melhorar a eficiência e a tomada de decisões.</p>
+## Verificar
+**Problemas Identificados**:
+- **Erros e Inconsistências**: Os processos manuais levam a falhas frequentes, comprometendo a precisão e a rastreabilidade de itens no estoque.
+- **Falta de Centralização**: A ausência de um sistema centralizado dificulta a eficiência operacional, afetando a produtividade e a comunicação entre setores.
+- **Ineficiência no Relacionamento com Fornecedores**: A gestão de contratos e o controle de reposições são prejudicados pela falta de organização e dados acessíveis.
+- **Decisões Estratégicas Prejudicadas**: Sem dados claros e estruturados, as decisões sobre níveis de estoque e planejamento de compras são limitadas, afetando o desempenho da organização.
+
+## Planejar
+**Objetivos**:
+- **Automação do Controle de Estoque**: Implementar um sistema que minimize a entrada de dados manual, reduzindo erros e melhorando a rastreabilidade dos itens.
+- **Centralização dos Processos**: Criar um sistema centralizado que permita a integração dos dados de estoque, contratos e fornecedores, facilitando a gestão e a tomada de decisões.
+- **Melhoria no Relacionamento com Fornecedores**: Estruturar um módulo específico para gestão de contratos e reabastecimento, tornando os processos mais ágeis e eficientes.
+- **Disponibilização de Dados Estratégicos**: Desenvolver relatórios analíticos e dashboards que ofereçam insights sobre níveis de estoque, rotatividade e tendências, suportando decisões estratégicas de compras e planejamento.
+
+## Controlar
+**Ações para Garantir a Efetividade**:
+- **Monitoramento do Sistema de Automação**: Avaliar a eficácia da automação implementada, medindo a redução de erros e inconsistências nos registros de estoque.
+- **Verificação da Centralização de Dados**: Acompanhar se todos os setores estão utilizando o sistema centralizado de maneira eficiente, garantindo a adesão e facilitando a integração dos processos.
+- **Avaliação do Relacionamento com Fornecedores**: Monitorar a gestão de contratos e o tempo de resposta para reposições, assegurando que o relacionamento com fornecedores esteja otimizado.
+- **Análise dos Relatórios Estratégicos**: Revisar regularmente os relatórios para garantir que os dados ofereçam insights relevantes, possibilitando ajustes rápidos nas estratégias de estoque e compras, conforme necessário.
+
 
 ## 👁 Visão do Projeto <a name="visao-do-projeto"></a>
 <p>Nosso projeto é um Sistema de Controle de Estoque focado em fornecer uma gestão integrada e eficiente para organizações. A solução permitirá o registro e controle automatizado de produtos, acompanhamento de movimentações de estoque e cadastro de fornecedores. O sistema também contará com relatórios estratégicos, gerando insights para otimizar o nível de estoque e melhorar a tomada de decisões. Com uma interface amigável e relatórios claros, o sistema visa facilitar o controle de estoque em tempo real, aumentando a eficiência operacional e reduzindo erros manuais.</p> 
