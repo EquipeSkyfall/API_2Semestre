@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import useGetUser from '../../Hooks/Users/getUserHook';
+import { Link } from 'react-router-dom';
 
 interface ProductListing extends ProductSchema {
     id_produto: number;
@@ -141,7 +142,9 @@ const ProductList: React.FC<ProductListProps> = ({
                                 <p><strong>Peso:</strong> {product.peso_produto} {product.unidade_medida}</p>
                                 <p><strong>Preço Venda:</strong> {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(product.preco_venda)}</p>
                                 <p><strong>Estoque Disponível:</strong> {product.total_estoque}</p>
+                                <Link to='/Fornecedor'>
                                 <button>Ver Fornecedores</button>
+                                </Link>
                             </div>
                         ))}
                 </div>

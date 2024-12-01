@@ -9,7 +9,9 @@ import './productupdatedeletelist.css';
 import ProductForm from '../ProductForm';
 import AdicionarProdutoModal from '../AdicionarProdutoModal';
 import EditModal from '../EditModal';
-import './productupdatedeletelist.css'
+import './productupdatedeletelist.css';
+import SectorModal from '../SectorModal';  // Corrigir a importação para SectorModal
+import CategoryModal from '../CategoryModal'; // Corrigir a importação para CategoryModal
 import useGetUser from '../../Hooks/Users/getUserHook';
 
 interface Product extends ProductSchema {
@@ -40,22 +42,17 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
     const [productToDelete, setProductToDelete] = useState<number | null>(null); // Estado para armazenar o ID do produto a ser excluído
     const updateProductMutation = useUpdateProduct();
     const deleteProductMutation = useDeleteProduct();
-    const [isProductModalOpen, setIsProductModalOpen] = useState<boolean>(false); // Estado para controlar o modal
-    
-    const handleOpenModal = () => {
-        setIsProductModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsProductModalOpen(false);
-    };
+    const [isProductModalOpen, setIsProductModalOpen] = useState<boolean>(false); // Estado para controlar o modal de produto
+    const [isCategoryModalOpen, setIsCategoryModalOpen] = useState<boolean>(false); // Estado para controlar o modal de categoria
+    const [isSectorModalOpen, setIsSectorModalOpen] = useState<boolean>(false); // Estado para controlar o modal de setor
+    const handleOpenModal = () => setIsProductModalOpen(true);
+    const handleCloseModal = () => setIsProductModalOpen(false);
 
     const handleEdit = (product: Product) => {
         console.log('Editing product:', product);  // Verifique se o produto está sendo passado corretamente
         setEditingProduct(product);
         setIsModalOpen(true);
     };
-
 
     const handleUpdate = async (updatedProduct: Product) => {
         try {
@@ -90,23 +87,40 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
         setShowConfirmModal(false); // Fechar o modal de confirmação
         setProductToDelete(null); // Limpar o ID do produto
     };
+
     const { data: user, isLoading, error } = useGetUser();
     const isAllowed = user && (user.role === 'Administrador' || user.role === 'Gerente');
 
     return (
-        <div className='flex flex-col items-center border '>
-            <h2 className='h2 !text-5xl !text-cyan-600'>Produtos</h2>
-            <div className='lg:flex lg:justify-start lg:w-full 2xl:gap-14 lg:pr-[25vw]'>
-               {isAllowed &&
-                <button className="searchbar-button lg:!mt-1 lg:!mb-0 " onClick={handleOpenModal}>
-                    Adicionar Produto
-                </button>}
-
-                {/* Barra de Pesquisa */}
-                <SearchBar
-                    onSearchTermChange={onSearchTermChange}
-                />
+        <div className="flex flex-col items-center border">
+            <h2 className="h2 !text-5xl !text-cyan-600">Produtos</h2>
+            <div className="lg:flex lg:justify-start lg:w-full lg:gap-4 lg:pr-[25vw]">
+                {isAllowed && (
+                    <>
+                        <button
+                            className="searchbar-button lg:!mt-1 lg:!mb-0"
+                            onClick={() => setIsProductModalOpen(true)}
+                        >
+                            Adicionar Produto
+                        </button>
+                        <button
+                            className="searchbar-button lg:!mt-1 lg:!mb-0"
+                            onClick={() => setIsCategoryModalOpen(true)}
+                        >
+                            Gerenciar Categorias
+                        </button>
+                        <button
+                            className="searchbar-button lg:!mt-1 lg:!mb-0"
+                            onClick={() => setIsSectorModalOpen(true)}
+                        >
+                            Gerenciar Setores
+                        </button>
+                    </>
+                )}
             </div>
+            <SearchBar
+                onSearchTermChange={onSearchTermChange}
+            />
 
             {/* Lista de Produtos */}
             <ProductList
@@ -162,6 +176,18 @@ const ProductsUpdateAndDelete: React.FC<ProductsUpdateAndDeleteProps> = ({
                 )
             } />
 
+            {isCategoryModalOpen && (
+                <CategoryModal
+                    setIsCategoryModalOpen={setIsCategoryModalOpen}
+                    refetch={refetch}
+                />
+            )}
+            {isSectorModalOpen && (
+                <SectorModal
+                    setIsSectorModalOpen={setIsSectorModalOpen}
+                    refetch={refetch}
+                />
+            )}
         </div >
     );
 };
