@@ -16,6 +16,7 @@ import User from "./Pages/User";
 import AutoNotifier from "./components/AutoToast/AutoNotifier";
 import { ProductIdsProvider } from "./contexts/ProductsIdsContext";
 import ProductReport from './components/ReportMostSoldProduct'; // Importando o novo componente
+import SalesReport from "./components/SalesReport";             //importando novo novo componente
 
 axios.defaults.withCredentials = true;
 axios.defaults.credentials = "include";
@@ -48,6 +49,7 @@ function App() {
                       <Route path="fornecedor" element={<Fornecedor />} />
                       <Route path="usuario" element={<User />} />
                       <Route path="product-report" element={<ProductReport />} /> {/* Nova rota para o relatório de produtos */}
+                      <Route path="/sales-report" element={<SalesReport />} />  {/*Nova rota para gráfico detalhado*/}
                       <Route path="*" element={<PageNotFound />} />
                     </Route>
                   </Routes>

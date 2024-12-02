@@ -58,6 +58,13 @@ const Report: React.FC = () => {
         Produtos Mais Vendidos
       </button>
 
+      <button
+        onClick={() => navigate('/sales-report')} // Navegar para a página de Report
+        className="mt-4 !m-4 px-6 py-2 !ml-14 bg-cyan-500 text-white rounded-md hover:bg-cyan-600 transition-colors"
+      >
+        Gráfico Detalhado
+      </button>
+
       <h1 style={{ textAlign: 'center' }} className="text-cyan-600 font-['Afacad_Flux']">Categorias Mais Vendidas</h1>
 
       {/* Gráfico das categorias mais vendidas */}
