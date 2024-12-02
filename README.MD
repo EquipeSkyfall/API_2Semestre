@@ -6,7 +6,7 @@
 
 
 
-###  ⏳ Status do projeto: 3/4 Sprint 
+###  ⏳ Status do projeto: 4/4 Sprint ✅
     
 
 ## 📑 Sumário
@@ -66,7 +66,7 @@
 </div>
 
 ## 📌 MVP <a name="mvp"><a>
-https://github.com/user-attachments/assets/b37e3a54-71e6-4e6a-af47-2dc13da82c8c
+https://github.com/user-attachments/assets/9477eb3c-56ed-4b77-9797-7812304e6bef
 
 
 ## 📜 Product Backlog <a name="backlog"><a>
@@ -83,8 +83,8 @@ https://github.com/user-attachments/assets/b37e3a54-71e6-4e6a-af47-2dc13da82c8c
 | 8    |   3    |   Média    |  8   | Notificação de Produtos Próximos à Data de Validade         |    ✅     |
 | 9    |   3    |   Média    |  9   | Log de Alterações para Auditorias                           |    ✅     |
 | 10   |   3    |   Média    | 10   | Diferentes Níveis de Acesso no Sistema                      |    ✅     |
-| 11   |   4    |   Baixa    | 11   | Geração de Relatórios Detalhados sobre Estoque e Compras    |        |
-| 12   |   4    |   Baixa    | 12   | Previsão de Demandas e Planejamento de Compras              |        |
+| 11   |   4    |   Baixa    | 11   | Geração de Relatórios Detalhados sobre Estoque e Compras    |     ✅   |
+| 12   |   4    |   Baixa    | 12   | Previsão de Demandas e Planejamento de Compras              |     ✅   |
 
 
 
