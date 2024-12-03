@@ -16,7 +16,7 @@ const SalesReport: React.FC = () => {
   // Função para buscar as vendas por data
   const fetchSalesData = async (date: string) => {
     try {
-      const response = await axios.get('http://127.0.0.1:3000/analytics/sales-over-time/2');
+      const response = await axios.get('http://127.0.0.1:3000/analytics/sales-over-time/3');
       setSalesData(response.data);
     } catch (error) {
       console.error('Erro ao buscar dados de vendas:', error);
